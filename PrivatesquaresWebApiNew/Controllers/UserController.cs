@@ -17,7 +17,7 @@ namespace PrivatesquaresWebApiNew.Controllers
     public class UserController : ApiController
     {
         private IUserServices userServices;
-
+            
         public UserController()
         {
             userServices = new UserServices(new UserRepositary());
