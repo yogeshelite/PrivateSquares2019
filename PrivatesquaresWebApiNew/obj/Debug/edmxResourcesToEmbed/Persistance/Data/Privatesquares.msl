@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EWT_PSQNEWModelStoreContainer" CdmEntityContainer="EWT_PSQNEWEntities">
+    <FunctionImportMapping FunctionImportName="InterestCategories" FunctionName="EWT_PSQNEWModel.Store.InterestCategories">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EWT_PSQNEWModel.InterestCategories_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LoginAuthenticate" FunctionName="EWT_PSQNEWModel.Store.LoginAuthenticate">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EWT_PSQNEWModel.LoginAuthenticate_Result">
+          <ScalarProperty Name="Response" ColumnName="Response" />
+          <ScalarProperty Name="Success" ColumnName="Success" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="RegisterUser" FunctionName="EWT_PSQNEWModel.Store.RegisterUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EWT_PSQNEWModel.RegisterUser_Result">
+          <ScalarProperty Name="Response" ColumnName="Response" />
+          <ScalarProperty Name="Success" ColumnName="Success" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SaveUserProfile" FunctionName="EWT_PSQNEWModel.Store.SaveUserProfile">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EWT_PSQNEWModel.SaveUserProfile_Result">
+          <ScalarProperty Name="Response" ColumnName="Response" />
+          <ScalarProperty Name="Success" ColumnName="Success" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UserInterestedCategory" FunctionName="EWT_PSQNEWModel.Store.UserInterestedCategory">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EWT_PSQNEWModel.UserInterestedCategory_Result">
+          <ScalarProperty Name="InterestCatId" ColumnName="InterestCatId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SaveProfile" FunctionName="EWT_PSQNEWModel.Store.SaveProfile">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EWT_PSQNEWModel.SaveProfile_Result">
+          <ScalarProperty Name="Response" ColumnName="Response" />
+          <ScalarProperty Name="Success" ColumnName="Success" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SaveUserInterest" FunctionName="EWT_PSQNEWModel.Store.SaveUserInterest" />
+  </EntityContainerMapping>
+</Mapping>

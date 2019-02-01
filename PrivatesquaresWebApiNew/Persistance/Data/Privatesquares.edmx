@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EWT_PSQNEWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="InterestCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="privatesquares" />
+        <Function Name="LoginAuthenticate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="privatesquares">
+          <Parameter Name="Mobile" Type="varchar" Mode="In" />
+          <Parameter Name="OTP" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RegisterUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="privatesquares">
+          <Parameter Name="UserMobile" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SaveProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="privatesquares">
+          <Parameter Name="UserId" Type="bigint" Mode="In" />
+          <Parameter Name="FirstName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="LastName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="ProfileImage" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="EmailId" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="ProfessionalCatId" Type="bigint" Mode="In" />
+          <Parameter Name="Title" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="ProfessionalKeywordId" Type="bigint" Mode="In" />
+          <Parameter Name="CityId" Type="bigint" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="GenderId" Type="bigint" Mode="In" />
+          <Parameter Name="DOB" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SaveUserInterest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="privatesquares" />
+        <Function Name="SaveUserProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="privatesquares">
+          <Parameter Name="UserId" Type="bigint" Mode="In" />
+          <Parameter Name="FirstName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="LastName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="ProfileImage" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="EmailId" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="ProfessionalCatId" Type="bigint" Mode="In" />
+          <Parameter Name="Title" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="ProfessionalKeywordId" Type="bigint" Mode="In" />
+          <Parameter Name="CityId" Type="bigint" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="GenderId" Type="bigint" Mode="In" />
+          <Parameter Name="DOB" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="UserInterestedCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="privatesquares">
+          <Parameter Name="userId" Type="bigint" Mode="In" />
+        </Function>
+        <EntityContainer Name="EWT_PSQNEWModelStoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EWT_PSQNEWModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EWT_PSQNEWEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="InterestCategories" ReturnType="Collection(EWT_PSQNEWModel.InterestCategories_Result)" />
+          <FunctionImport Name="LoginAuthenticate" ReturnType="Collection(EWT_PSQNEWModel.LoginAuthenticate_Result)">
+            <Parameter Name="Mobile" Mode="In" Type="String" />
+            <Parameter Name="OTP" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RegisterUser" ReturnType="Collection(EWT_PSQNEWModel.RegisterUser_Result)">
+          <Parameter Name="UserMobile" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SaveUserProfile" ReturnType="Collection(EWT_PSQNEWModel.SaveUserProfile_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int64" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="ProfileImage" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="EmailId" Mode="In" Type="String" />
+            <Parameter Name="ProfessionalCatId" Mode="In" Type="Int64" />
+            <Parameter Name="Title" Mode="In" Type="String" />
+            <Parameter Name="ProfessionalKeywordId" Mode="In" Type="Int64" />
+            <Parameter Name="CityId" Mode="In" Type="Int64" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="GenderId" Mode="In" Type="Int64" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="UserInterestedCategory" ReturnType="Collection(EWT_PSQNEWModel.UserInterestedCategory_Result)">
+          <Parameter Name="userId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SaveProfile" ReturnType="Collection(EWT_PSQNEWModel.SaveProfile_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int64" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="ProfileImage" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="EmailId" Mode="In" Type="String" />
+            <Parameter Name="ProfessionalCatId" Mode="In" Type="Int64" />
+            <Parameter Name="Title" Mode="In" Type="String" />
+            <Parameter Name="ProfessionalKeywordId" Mode="In" Type="Int64" />
+            <Parameter Name="CityId" Mode="In" Type="Int64" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="GenderId" Mode="In" Type="Int64" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SaveUserInterest" />
+        </EntityContainer>
+        <ComplexType Name="InterestCategories_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="LoginAuthenticate_Result">
+          <Property Type="String" Name="Response" Nullable="false" MaxLength="45" />
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="RegisterUser_Result">
+          <Property Type="String" Name="Response" Nullable="true" MaxLength="5" />
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SaveUserProfile_Result">
+          <Property Type="String" Name="Response" Nullable="false" MaxLength="15" />
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="UserInterestedCategory_Result">
+          <Property Type="Int64" Name="InterestCatId" Nullable="true" />
+          <Property Type="Int64" Name="UserId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SaveProfile_Result">
+          <Property Type="String" Name="Response" Nullable="false" MaxLength="12" />
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EWT_PSQNEWModelStoreContainer" CdmEntityContainer="EWT_PSQNEWEntities" >
+          <FunctionImportMapping FunctionImportName="InterestCategories" FunctionName="EWT_PSQNEWModel.Store.InterestCategories">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EWT_PSQNEWModel.InterestCategories_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LoginAuthenticate" FunctionName="EWT_PSQNEWModel.Store.LoginAuthenticate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EWT_PSQNEWModel.LoginAuthenticate_Result">
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RegisterUser" FunctionName="EWT_PSQNEWModel.Store.RegisterUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EWT_PSQNEWModel.RegisterUser_Result">
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SaveUserProfile" FunctionName="EWT_PSQNEWModel.Store.SaveUserProfile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EWT_PSQNEWModel.SaveUserProfile_Result">
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UserInterestedCategory" FunctionName="EWT_PSQNEWModel.Store.UserInterestedCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EWT_PSQNEWModel.UserInterestedCategory_Result">
+                <ScalarProperty Name="InterestCatId" ColumnName="InterestCatId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SaveProfile" FunctionName="EWT_PSQNEWModel.Store.SaveProfile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EWT_PSQNEWModel.SaveProfile_Result">
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SaveUserInterest" FunctionName="EWT_PSQNEWModel.Store.SaveUserInterest" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

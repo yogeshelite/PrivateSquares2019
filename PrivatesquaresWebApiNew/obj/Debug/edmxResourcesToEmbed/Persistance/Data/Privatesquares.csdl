@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EWT_PSQNEWModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="EWT_PSQNEWEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="InterestCategories" ReturnType="Collection(EWT_PSQNEWModel.InterestCategories_Result)" />
+    <FunctionImport Name="LoginAuthenticate" ReturnType="Collection(EWT_PSQNEWModel.LoginAuthenticate_Result)">
+      <Parameter Name="Mobile" Mode="In" Type="String" />
+      <Parameter Name="OTP" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="RegisterUser" ReturnType="Collection(EWT_PSQNEWModel.RegisterUser_Result)">
+      <Parameter Name="UserMobile" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SaveUserProfile" ReturnType="Collection(EWT_PSQNEWModel.SaveUserProfile_Result)">
+      <Parameter Name="UserId" Mode="In" Type="Int64" />
+      <Parameter Name="FirstName" Mode="In" Type="String" />
+      <Parameter Name="LastName" Mode="In" Type="String" />
+      <Parameter Name="ProfileImage" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="EmailId" Mode="In" Type="String" />
+      <Parameter Name="ProfessionalCatId" Mode="In" Type="Int64" />
+      <Parameter Name="Title" Mode="In" Type="String" />
+      <Parameter Name="ProfessionalKeywordId" Mode="In" Type="Int64" />
+      <Parameter Name="CityId" Mode="In" Type="Int64" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+      <Parameter Name="GenderId" Mode="In" Type="Int64" />
+      <Parameter Name="DOB" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="UserInterestedCategory" ReturnType="Collection(EWT_PSQNEWModel.UserInterestedCategory_Result)">
+      <Parameter Name="userId" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="SaveProfile" ReturnType="Collection(EWT_PSQNEWModel.SaveProfile_Result)">
+      <Parameter Name="UserId" Mode="In" Type="Int64" />
+      <Parameter Name="FirstName" Mode="In" Type="String" />
+      <Parameter Name="LastName" Mode="In" Type="String" />
+      <Parameter Name="ProfileImage" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="EmailId" Mode="In" Type="String" />
+      <Parameter Name="ProfessionalCatId" Mode="In" Type="Int64" />
+      <Parameter Name="Title" Mode="In" Type="String" />
+      <Parameter Name="ProfessionalKeywordId" Mode="In" Type="Int64" />
+      <Parameter Name="CityId" Mode="In" Type="Int64" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+      <Parameter Name="GenderId" Mode="In" Type="Int64" />
+      <Parameter Name="DOB" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SaveUserInterest" />
+  </EntityContainer>
+  <ComplexType Name="InterestCategories_Result">
+    <Property Type="Int64" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LoginAuthenticate_Result">
+    <Property Type="String" Name="Response" Nullable="false" MaxLength="45" />
+    <Property Type="Boolean" Name="Success" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="RegisterUser_Result">
+    <Property Type="String" Name="Response" Nullable="true" MaxLength="5" />
+    <Property Type="Boolean" Name="Success" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SaveUserProfile_Result">
+    <Property Type="String" Name="Response" Nullable="false" MaxLength="15" />
+    <Property Type="Boolean" Name="Success" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="UserInterestedCategory_Result">
+    <Property Type="Int64" Name="InterestCatId" Nullable="true" />
+    <Property Type="Int64" Name="UserId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SaveProfile_Result">
+    <Property Type="String" Name="Response" Nullable="false" MaxLength="12" />
+    <Property Type="Boolean" Name="Success" Nullable="true" />
+  </ComplexType>
+</Schema>
