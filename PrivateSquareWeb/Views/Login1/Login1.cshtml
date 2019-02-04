@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+
+}
+<link href="~/Content/Login/Login.css" rel="stylesheet" />
+<div class="signin-wrapper">
+
+    <div class="signin-box">
+        <img src="~/Content/img/logo.png" alt="logo" class="logo-width">
+        <!-- <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2> -->
+        <h2 class="signin-title-primary">Welcome back!</h2>
+        <h3 class="signin-title-secondary">Sign in to continue.</h3>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Enter your email">
+        </div><!-- form-group -->
+        <div class="form-group mg-b-50">
+            <input type="password" class="form-control" placeholder="Enter your password">
+        </div><!-- form-group -->
+        <a href="business.html" class="btn btn-primary btn-block btn-signin">Sign In</a>
+        <p class="mg-b-0">Don't have an account? <a href="signup.html">Sign Up</a></p>
+    </div><!-- signin-box -->
+
+</div><!-- signin-wrapper -->
