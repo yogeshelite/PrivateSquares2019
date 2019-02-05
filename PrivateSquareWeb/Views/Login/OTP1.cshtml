@@ -1,8 +1,10 @@
-﻿@model PrivateSquareWeb.Models.UserRegisterModel
+﻿
+@model PrivateSquareWeb.Models.UserRegisterModel
+
 @{
     /**/
 
-    ViewBag.Title = "Login";
+    ViewBag.Title = "OTP";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
@@ -39,56 +41,23 @@
     <title>Slim Responsive Bootstrap 4 Admin Template</title>
 
     <!-- Vendor css -->
-    @Styles.Render("~/Content/css")
+    <link href="~/Content/Login/Login.css" rel="stylesheet">
+    <link href="../lib/Ionicons/css/ionicons.css" rel="stylesheet">
+
+    <!-- Slim CSS -->
+    <link rel="stylesheet" href="../css/slim.css">
 
 </head>
 <body>
     @using (Html.BeginForm("UserRegister", "Login", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-
         <div class="signin-wrapper">
 
             <div class="signin-box signup">
                 <img src="~/Content/img/logo.png" alt="logo" class="logo-width">
                 <!-- <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2> -->
-                <div class="ps-step-one">
-                    <h3 class="signin-title-primary">Get Started!</h3>
-                    <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
-
-                    <!-- <div class="row row-xs mg-b-10"> -->
-                    <!-- <div class="col-sm"><input type="text" class="form-control" placeholder="Firstname"></div> -->
-                    <!-- <div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Lastname"></div> -->
-                    <!-- </div> -->
-                    <!-- row -->
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                    <div class="row row-xs mg-b-10">
-                        @*<div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Mobile"></div>*@
-                        @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "Mobile" })
-                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
-                    </div><br />
-                    <!-- row -->
-
-                <button class="btn btn-primary btn-block btn-signin" type="button" id="step-2"
-                        onclick="location.href='@Url.Action("OTP", "Login")'"> Sign Up</button>
-
-                @*<button class="btn btn-primary btn-block btn-signin" id="step-2">Sign Up</button>*@
-
-                    <div class="signup-separator"><span>or signup using</span></div>
-
-                    <div class="tx-20 tx-center">
-                        <a href="" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
-                        <a href="" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
-                        <a href="" class="tx-danger mg-r-5"><i class="fa fa-google-plus"></i></a>
-                        <a href="" class="tx-danger mg-r-5"><i class="fa fa-pinterest"></i></a>
-                        <a href="" class="tx-inverse mg-r-5"><i class="fa fa-github"></i></a>
-                        <a href="" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
-                    </div>
-
-                    <p class="mg-t-40 mg-b-0 tx-center">Already have an account? <a href="page-signin.html">Sign In</a></p>
-                </div>
-                <div class="ps-step-two" style="display:none">
+                <div class="ps-step-two">
                     <h3 class="signin-title-primary">One Time Password</h3>
                     <h5 class="signin-title-secondary lh-4">Enter OTP and set your password</h5>
 
@@ -96,6 +65,27 @@
                         <div class="col-lg"><input type="text" class="form-control" placeholder="OTP"></div>
                     </div><!-- row -->
 
+
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm-12"><button class="btn btn-primary float-right" id="next-2">Next</button></div>
+                    </div>
+
+
+                    <!-- <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p> -->
+                </div>
+                <div class="ps-step-two" style="display:none">
+                    <h3 class="signin-title-primary">One Time Password</h3>
+                    <h5 class="signin-title-secondary lh-4">Enter OTP and set your password</h5>
+
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-lg"><input type="text" class="form-control" placeholder="OTP"></div>
+                        <!-- <div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Lastname"></div> -->
+                    </div><!-- row -->
+                    <!-- <div class="row row-xs mg-b-10"> -->
+                    <!-- <div class="col-sm"><input type="password" class="form-control" placeholder="Password"></div> -->
+                    <!-- <div class="col-sm mg-t-10 mg-sm-t-0"><input type="password" class="form-control" placeholder="Confirm Password"></div> -->
+                    <!-- </div> -->
+                    <!-- row -->
 
                     <div class="row row-xs mg-b-10">
                         <div class="col-sm-12"><button class="btn btn-primary pull-right" id="next-2">Next</button></div>
@@ -135,18 +125,18 @@
                         </div>
                     </div><!-- row -->
 
-                <div class="row row-xs mg-b-10">
-                    <div class="col-sm"><input type="text" class="form-control" placeholder="Title"></div>
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm"><input type="title" class="form-control" placeholder="Title"></div>
 
                         <div class="col-sm"><input type="password" class="form-control" placeholder="Professional Keyboard"> </div>
 
                     </div><!-- row -->
 
-                <div class="row row-xs mg-b-10">
-                    <div class="col-sm"><input type="text" class="form-control" placeholder="City"></div>
-                    <div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Interests"></div>
-                </div><!-- row -->
-                <div class="row row-xs mg-b-10">
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm"><input type="title" class="form-control" placeholder="City"></div>
+                        <div class="col-sm mg-t-10 mg-sm-t-0"><input type="interests" class="form-control" placeholder="Interests"></div>
+                    </div><!-- row -->
+                    <div class="row row-xs mg-b-10">
 
 
                         <div class="col-sm"><button class="btn btn-secondary btn-block mg-b-10" id="skip-3">Skip</button></div>
@@ -226,7 +216,5 @@
         });
     </script>
 
-
 </body>
 </html>
-
