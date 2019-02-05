@@ -15,6 +15,7 @@ namespace PrivatesquaresWebApiNew.Models
         public string ProfessionalKeyword { get; set; }
         public long CityId { get; set; }
         public string PinCode { get; set; }
+        public long UserId { get; set; }
         public string Operation { get; set; }
     }
 }
