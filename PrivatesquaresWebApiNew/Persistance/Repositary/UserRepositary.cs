@@ -10,7 +10,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 {
     public class UserRepositary : GenericRepository<EWT_PSQNEWEntities>, IUserRepositary
     {
-      
+
+
 
 
 
@@ -36,6 +37,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         //{
         //    return Context.GetUserProducts(user.UserId);
         //}
+
+        public IEnumerable<GetAllInterest_Result> GetAllInterest()
+        {
+            return Context.GetAllInterest().ToList();
+        }
         public LoginAuthenticate_Result LoginAuthenticte(UserRegisterModel ObjModel)
         {
             var RESULT = Context.LoginAuthenticate(ObjModel.Mobile, ObjModel.Otp);
@@ -85,5 +91,6 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         SaveUserInterest_Result SaveUserInterest(UserInterestModel objModel);
         SaveProduct_Result SaveProduct(ProductModel objModel);
         IEnumerable<GetUsersProfileList_Result> GetUserProfileList();
+        IEnumerable<GetAllInterest_Result> GetAllInterest();
     }
 }
