@@ -1,4 +1,4 @@
-﻿@model PrivateSquareWeb.Models.Login
+﻿@model PrivateSquareWeb.Models.UserRegisterModel
 @{
     /**/
 
@@ -47,162 +47,167 @@
 
 </head>
 <body>
+    @using (Html.BeginForm("UserRegister", "Login", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="signin-wrapper">
+        <div class="signin-wrapper">
 
-        <div class="signin-box signup">
-            <img src="~/Content/img/logo.png" alt="logo" class="logo-width">
-            <!-- <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2> -->
-            <div class="ps-step-one">
-                <h3 class="signin-title-primary">Get Started!</h3>
-                <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
+            <div class="signin-box signup">
+                <img src="~/Content/img/logo.png" alt="logo" class="logo-width">
+                <!-- <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2> -->
+                <div class="ps-step-one">
+                    <h3 class="signin-title-primary">Get Started!</h3>
+                    <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
 
-                <!-- <div class="row row-xs mg-b-10"> -->
-                <!-- <div class="col-sm"><input type="text" class="form-control" placeholder="Firstname"></div> -->
-                <!-- <div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Lastname"></div> -->
-                <!-- </div> -->
-                <!-- row -->
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                <div class="row row-xs mg-b-10">
-                    @*<div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Mobile"></div>*@
-                    @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "Mobile" })
-                    @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
-                </div><br />
-                <!-- row -->
-
-                <button class="btn btn-primary btn-block btn-signin" type="button" id="step-2"
-                        onclick="location.href='@Url.Action("OTP", "Login")'"> Sign Up</button>
-
-                @*<button class="btn btn-primary btn-block btn-signin" id="step-2">Sign Up</button>*@
-
-                <div class="signup-separator"><span>or signup using</span></div>
-
-                <div class="tx-20 tx-center">
-                    <a href="" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
-                    <a href="" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
-                    <a href="" class="tx-danger mg-r-5"><i class="fa fa-google-plus"></i></a>
-                    <a href="" class="tx-danger mg-r-5"><i class="fa fa-pinterest"></i></a>
-                    <a href="" class="tx-inverse mg-r-5"><i class="fa fa-github"></i></a>
-                    <a href="" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
-                </div>
-
-                <p class="mg-t-40 mg-b-0 tx-center">Already have an account? <a href="page-signin.html">Sign In</a></p>
-            </div>
-            <div class="ps-step-two" style="display:none">
-                <h3 class="signin-title-primary">One Time Password</h3>
-                <h5 class="signin-title-secondary lh-4">Enter OTP and set your password</h5>
-
-                <div class="row row-xs mg-b-10">
-                    <div class="col-lg"><input type="text" class="form-control" placeholder="OTP"></div>
-                </div><!-- row -->
-
-
-                <div class="row row-xs mg-b-10">
-                    <div class="col-sm-12"><button class="btn btn-primary pull-right" id="next-2">Next</button></div>
-                </div>
-
-
-                <!-- <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p> -->
-            </div>
-
-
-
-
-
-
-            <div class="ps-step-third" style="display:none">
-                <h3 class="signin-title-primary">PS Profile</h3>
-                <h5 class="signin-title-secondary lh-4">Creating a professional and marketable PS profile</h5>
-
-
-                <div class="set-profile">
-                    <img src="../img/img0.jpg" class="img-fluid rounded-circle" alt="">
-                </div>
-
-
-                <div class="row row-xs mg-b-10">
-                    <div class="col-sm"><input type="text" class="form-control" placeholder="Email"></div>
-                    <!-- <div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Lastname"></div>  -->
-                    <div class="col-sm mg-t-10 mg-sm-t-0">
-                        <select class="form-control select2 select2-hidden-accessible" data-placeholder="Professional Category" tabindex="-1" aria-hidden="true">
-                            <option label="Professional Category"></option>
-                            <option value="Bussiness">Bussiness</option>
-                            <option value="Software Developer">Software Developer</option>
-                            <option value="Programmer">Programmer</option>
-
-                        </select>
-
-                    </div>
-                </div><!-- row -->
-
-                <div class="row row-xs mg-b-10">
-                    <div class="col-sm"><input type="title" class="form-control" placeholder="Title"></div>
-
-                    <div class="col-sm"><input type="password" class="form-control" placeholder="Professional Keyboard"> </div>
-
-                </div><!-- row -->
-
-                <div class="row row-xs mg-b-10">
-                    <div class="col-sm"><input type="title" class="form-control" placeholder="City"></div>
-                    <div class="col-sm mg-t-10 mg-sm-t-0"><input type="interests" class="form-control" placeholder="Interests"></div>
-                </div><!-- row -->
-                <div class="row row-xs mg-b-10">
-
-
-                    <div class="col-sm"><button class="btn btn-secondary btn-block mg-b-10" id="skip-3">Skip</button></div>
-                    <div class="col-sm"><button class="btn btn-primary btn-block mg-b-10" id="next-3">Next</button></div>
-                </div>
-
-
-                <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p>
-            </div>
-
-            <div class="ps-step-fourth" style="display:none">
-                <h3 class="signin-title-primary">Get Started!</h3>
-                <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
-
-                <div class="row row-xs mg-b-10">
-                    <div class="col-lg"><input type="text" class="form-control" placeholder="Enter Promo Codes"></div>
+                    <!-- <div class="row row-xs mg-b-10"> -->
+                    <!-- <div class="col-sm"><input type="text" class="form-control" placeholder="Firstname"></div> -->
                     <!-- <div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Lastname"></div> -->
-                </div><!-- row -->
+                    <!-- </div> -->
+                    <!-- row -->
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="row row-xs mg-b-10">
+                        @*<div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Mobile"></div>*@
+                        @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "Mobile" })
+                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                    </div><br />
+                    <!-- row -->
+
+                    @*<button class="btn btn-primary btn-block btn-signin" type="button" id="step-2"
+                            onclick="location.href='@Url.Action("UserRegister", "Login")'">
+                        Sign Up
+                    </button>*@
+                    <input type="submit" value="Sign Up" class="btn btn-primary btn-block btn-signin" />
+                    @*<button class="btn btn-primary btn-block btn-signin" id="step-2">Sign Up</button>*@
+
+                    <div class="signup-separator"><span>or signup using</span></div>
+
+                    <div class="tx-20 tx-center">
+                        <a href="" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
+                        <a href="" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
+                        <a href="" class="tx-danger mg-r-5"><i class="fa fa-google-plus"></i></a>
+                        <a href="" class="tx-danger mg-r-5"><i class="fa fa-pinterest"></i></a>
+                        <a href="" class="tx-inverse mg-r-5"><i class="fa fa-github"></i></a>
+                        <a href="" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
+                    </div>
+
+                    <p class="mg-t-40 mg-b-0 tx-center">Already have an account? <a href="page-signin.html">Sign In</a></p>
+                </div>
+                <div class="ps-step-two" style="display:none">
+                    <h3 class="signin-title-primary">One Time Password</h3>
+                    <h5 class="signin-title-secondary lh-4">Enter OTP and set your password</h5>
+
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-lg"><input type="text" class="form-control" placeholder="OTP"></div>
+                    </div><!-- row -->
 
 
-                <div class="row row-xs mg-b-10">
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm-12"><button class="btn btn-primary pull-right" id="next-2">Next</button></div>
+                    </div>
 
 
-                    <div class="col-sm"><a href="business.html" class="btn btn-secondary btn-block mg-b-10">Skip</a></div>
-                    <div class="col-sm"><a href="business.html" class="btn btn-primary btn-block mg-b-10">Next</a></div>
+                    <!-- <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p> -->
                 </div>
 
 
-                <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p>
-            </div>
-
-
-
-            <div class="ps-step-fifth" style="display:none">
-                <h3 class="signin-title-primary">Get Started</h3>
-                <p class="text-center">Follows hashtags you're interest in to see this content at the top of your field</p>
 
 
 
 
-                <div class="row row-xs mg-b-10">
-                    <div class="col-sm-12 text-center"><button class="btn btn-primary" id="next-6">Get Started</button></div>
+                <div class="ps-step-third" style="display:none">
+                    <h3 class="signin-title-primary">PS Profile</h3>
+                    <h5 class="signin-title-secondary lh-4">Creating a professional and marketable PS profile</h5>
+
+
+                    <div class="set-profile">
+                        <img src="../img/img0.jpg" class="img-fluid rounded-circle" alt="">
+                    </div>
+
+
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm"><input type="text" class="form-control" placeholder="Email"></div>
+                        <!-- <div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Lastname"></div>  -->
+                        <div class="col-sm mg-t-10 mg-sm-t-0">
+                            <select class="form-control select2 select2-hidden-accessible" data-placeholder="Professional Category" tabindex="-1" aria-hidden="true">
+                                <option label="Professional Category"></option>
+                                <option value="Bussiness">Bussiness</option>
+                                <option value="Software Developer">Software Developer</option>
+                                <option value="Programmer">Programmer</option>
+
+                            </select>
+
+                        </div>
+                    </div><!-- row -->
+
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm"><input type="title" class="form-control" placeholder="Title"></div>
+
+                        <div class="col-sm"><input type="password" class="form-control" placeholder="Professional Keyboard"> </div>
+
+                    </div><!-- row -->
+
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm"><input type="title" class="form-control" placeholder="City"></div>
+                        <div class="col-sm mg-t-10 mg-sm-t-0"><input type="interests" class="form-control" placeholder="Interests"></div>
+                    </div><!-- row -->
+                    <div class="row row-xs mg-b-10">
+
+
+                        <div class="col-sm"><button class="btn btn-secondary btn-block mg-b-10" id="skip-3">Skip</button></div>
+                        <div class="col-sm"><button class="btn btn-primary btn-block mg-b-10" id="next-3">Next</button></div>
+                    </div>
+
+
+                    <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p>
                 </div>
 
-                <p class="text-center"><a href="">Not now</a></p>
+                <div class="ps-step-fourth" style="display:none">
+                    <h3 class="signin-title-primary">Get Started!</h3>
+                    <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
 
-            </div>
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-lg"><input type="text" class="form-control" placeholder="Enter Promo Codes"></div>
+                        <!-- <div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Lastname"></div> -->
+                    </div><!-- row -->
+
+
+                    <div class="row row-xs mg-b-10">
+
+
+                        <div class="col-sm"><a href="business.html" class="btn btn-secondary btn-block mg-b-10">Skip</a></div>
+                        <div class="col-sm"><a href="business.html" class="btn btn-primary btn-block mg-b-10">Next</a></div>
+                    </div>
+
+
+                    <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p>
+                </div>
+
+
+
+                <div class="ps-step-fifth" style="display:none">
+                    <h3 class="signin-title-primary">Get Started</h3>
+                    <p class="text-center">Follows hashtags you're interest in to see this content at the top of your field</p>
 
 
 
 
-        </div><!-- signin-box -->
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm-12 text-center"><button class="btn btn-primary" id="next-6">Get Started</button></div>
+                    </div>
 
-    </div><!-- signin-wrapper -->
+                    <p class="text-center"><a href="">Not now</a></p>
 
+                </div>
+
+
+
+
+            </div><!-- signin-box -->
+
+        </div><!-- signin-wrapper -->
+    }
     <script src="../lib/jquery/js/jquery.js"></script>
     <script src="../lib/popper.js/js/popper.js"></script>
     <script src="../lib/bootstrap/js/bootstrap.js"></script>
