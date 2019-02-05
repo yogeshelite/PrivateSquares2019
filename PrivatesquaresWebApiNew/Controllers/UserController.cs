@@ -164,5 +164,30 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendJson = Json(sendResponse);
             return sendJson;
         }
+
+
+
+        [Route("api/User/GetAllInterest")]
+        [HttpPost]
+        public IHttpActionResult GetAllInterest(RequestModel requestModel)
+        {
+
+            //var data = requestModel.Data;
+            //ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetAllInterest()), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+        [Route("api/User/GetAllInterestCategory")]
+        [HttpPost]
+        public IHttpActionResult GetAllInterestCategory(RequestModel requestModel)
+        {
+
+            //var data = requestModel.Data;
+            //ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetAllInterestCategory()), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
     }
 }
