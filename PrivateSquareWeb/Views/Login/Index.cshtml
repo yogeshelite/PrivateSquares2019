@@ -39,11 +39,7 @@
     <title>Slim Responsive Bootstrap 4 Admin Template</title>
 
     <!-- Vendor css -->
-    <link href="~/Content/Login/Login.css" rel="stylesheet">
-    <link href="../lib/Ionicons/css/ionicons.css" rel="stylesheet">
-
-    <!-- Slim CSS -->
-    <link rel="stylesheet" href="~/Content/Login/Login.css">
+    @Styles.Render("~/Content/css")
 
 </head>
 <body>
@@ -72,7 +68,9 @@
                 <!-- row -->
 
                 <button class="btn btn-primary btn-block btn-signin" type="button" id="step-2"
-                        onclick="location.href='@Url.Action("OTP", "Login")'"> Sign Up</button>
+                        onclick="location.href='@Url.Action("OTP", "Login")'">
+                    Sign Up
+                </button>
 
                 @*<button class="btn btn-primary btn-block btn-signin" id="step-2">Sign Up</button>*@
 
@@ -137,15 +135,15 @@
                 </div><!-- row -->
 
                 <div class="row row-xs mg-b-10">
-                    <div class="col-sm"><input type="title" class="form-control" placeholder="Title"></div>
+                    <div class="col-sm"><input type="text" class="form-control" placeholder="Title"></div>
 
                     <div class="col-sm"><input type="password" class="form-control" placeholder="Professional Keyboard"> </div>
 
                 </div><!-- row -->
 
                 <div class="row row-xs mg-b-10">
-                    <div class="col-sm"><input type="title" class="form-control" placeholder="City"></div>
-                    <div class="col-sm mg-t-10 mg-sm-t-0"><input type="interests" class="form-control" placeholder="Interests"></div>
+                    <div class="col-sm"><input type="text" class="form-control" placeholder="City"></div>
+                    <div class="col-sm mg-t-10 mg-sm-t-0"><input type="text" class="form-control" placeholder="Interests"></div>
                 </div><!-- row -->
                 <div class="row row-xs mg-b-10">
 
@@ -226,6 +224,7 @@
             $(".ps-step-third").show();
         });
     </script>
+
 
 </body>
 </html>

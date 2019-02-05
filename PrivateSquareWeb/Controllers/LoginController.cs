@@ -11,14 +11,7 @@ namespace PrivateSquareWeb.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            if (ModelState.IsValid == false)
-            {
-
-                //write code to update student 
-
-                return RedirectToAction("Index");
-            }
-
+        
             return View();
         }
 
