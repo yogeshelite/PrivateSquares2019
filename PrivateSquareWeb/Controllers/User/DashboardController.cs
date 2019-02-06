@@ -13,5 +13,16 @@ namespace PrivateSquareWeb.Controllers.User
         {
             return View();
         }
+
+        public ActionResult PersonalProfile()
+        {
+            return View();
+        }
+
+        public ActionResult MyBusiness()
+        {
+            return View();
+        }
+
     }
 }
