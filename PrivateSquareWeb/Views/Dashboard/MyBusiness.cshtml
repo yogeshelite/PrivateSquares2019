@@ -1,141 +1,146 @@
-﻿
+﻿@model PrivateSquareWeb.Models.BusinessModel
 @{
     ViewBag.Title = "MyBusiness";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using (Html.BeginForm("SaveBussiness", "Dashboard", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="slim-mainpanel">
+        <div class="container">
+            <div class="slim-pageheader">
+                <ol class="breadcrumb slim-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Business</li>
+                </ol>
+                <h6 class="slim-pagetitle">Business</h6>
+            </div>
+            <div class="section-wrapper">
+                <div class="form-layout">
+                    <div class="row">
 
-<div class="slim-mainpanel">
-    <div class="container">
-        <div class="slim-pageheader">
-            <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Business</li>
-            </ol>
-            <h6 class="slim-pagetitle">Business</h6>
-        </div>
-        <div class="section-wrapper">
-            <div class="form-layout">
-                <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <img src="~/theme/img/img0.jpg" class="img-fluid" alt="">
+                            <div class="col-lg-12 mg-t-21 p-0">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile3">
+                                    <label class="custom-file-label custom-file-label-inverse" for="customFile">Upload Business Logo</label>
+                                </div><!-- custom-file -->
+                            </div><!-- col -->
+                        </div>
+                        <div class="col-sm-6 col-md-9">
+                            <label class="section-title">Business Info</label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Business Name: <span class="tx-danger">*</span></label>
 
-                    <div class="col-sm-6 col-md-3">
-                        <img src="~/theme/img/img0.jpg" class="img-fluid" alt="">
-                        <div class="col-lg-12 mg-t-21 p-0">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile3">
-                                <label class="custom-file-label custom-file-label-inverse" for="customFile">Upload Business Logo</label>
-                            </div><!-- custom-file -->
-                        </div><!-- col -->
-                    </div>
-                    <div class="col-sm-6 col-md-9">
-                        <label class="section-title">Business Info</label>
-                        <hr />
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Business Name: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="businessname" value="" placeholder="Enter business name">
-                                </div>
-                            </div><!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Phone: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="phone" value="" placeholder="Enter phone number">
-                                </div>
-                            </div><!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Email address: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="email" value="" placeholder="Enter email address">
-                                </div>
-                            </div><!-- col-4 -->
+                                        <input class="form-control" type="text" name="businessname" value="" placeholder="Enter business name">
+                                    </div>
+                                </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Phone: <span class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="phone" value="" placeholder="Enter phone number">
+                                    </div>
+                                </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Email address: <span class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="email" value="" placeholder="Enter email address">
+                                    </div>
+                                </div><!-- col-4 -->
 
-                            <div class="col-lg-4">
-                                <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
-                                    <select class="form-control select2" data-placeholder="Choose country">
-                                        <option label="Choose country"></option>
-                                        <option value="USA">United States of America</option>
-                                        <option value="UK">United Kingdom</option>
-                                        <option value="China">China</option>
-                                        <option value="Japan">Japan</option>
-                                    </select>
-                                </div>
-                            </div><!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">State: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="state" value="" placeholder="Enter state">
-                                </div>
-                            </div><!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">City: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="city" value="" placeholder="Enter city">
-                                </div>
-                            </div><!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Pin Code: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="Pincode" value="" placeholder="Enter Pin Code">
-                                </div>
-                            </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group mg-b-10-force">
+                                        <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
+                                        <select class="form-control select2" data-placeholder="Choose country">
+                                            <option label="Choose country"></option>
+                                            <option value="USA">United States of America</option>
+                                            <option value="UK">United Kingdom</option>
+                                            <option value="China">China</option>
+                                            <option value="Japan">Japan</option>
+                                        </select>
+                                    </div>
+                                </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">State: <span class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="state" value="" placeholder="Enter state">
+                                    </div>
+                                </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">City: <span class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="city" value="" placeholder="Enter city">
+                                    </div>
+                                </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Pin Code: <span class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="Pincode" value="" placeholder="Enter Pin Code">
+                                    </div>
+                                </div><!-- col-4 -->
 
-                            <div class="col-lg-8">
-                                <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="address" value="" placeholder="Enter address">
-                                </div>
-                            </div><!-- col-8 -->
+                                <div class="col-lg-8">
+                                    <div class="form-group mg-b-10-force">
+                                        <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="address" value="" placeholder="Enter address">
+                                    </div>
+                                </div><!-- col-8 -->
+
+                            </div>
 
                         </div>
 
-                    </div>
+                        <div class="col-12 mg-t-21">
 
-                    <div class="col-12 mg-t-21">
-                       
-                        <div class="row">
-                         
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="form-control-label">Professional Category: <span class="tx-danger">*</span></label>
-                                    <select class="form-control select2-show-search" data-placeholder="Choose one ">
-                                        <option label="Choose one"></option>
-                                        <option value="Arts & Crafts">Arts & Crafts</option>
-                                        <option value="Automotive">Automotive</option>
-                                        <option value="Baby">Baby</option>
-                                        <option value="Beauty & Personal Care">Beauty & Personal Care</option>
-                                        <option value="Books">Books</option>
-                                    </select>
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Professional Category: <span class="tx-danger">*</span></label>
+                                        <select class="form-control select2-show-search" data-placeholder="Choose one " name="ddlProfessionalCat">
+                                            <option label="Choose one"></option>
+                                            <option value="Arts & Crafts">Arts & Crafts</option>
+                                            <option value="Automotive">Automotive</option>
+                                            <option value="Baby">Baby</option>
+                                            <option value="Beauty & Personal Care">Beauty & Personal Care</option>
+                                            <option value="Books">Books</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="form-group">
-                                    <label class="form-control-label">Professional Keywords: <span class="tx-danger">*</span></label>
-                                    <select class="form-control select2" data-placeholder="Choose Keywords" multiple>
-                                        <option value="Keyword 1">Keyword 1</option>
-                                        <option value="Keyword 2">Keyword 2</option>
-                                        <option value="Keyword 3">Keyword 3</option>
-                                    </select>
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Professional Keywords: <span class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="Keywords" value="" placeholder="Keywords">
+
+                                        @*<select class="form-control select2" data-placeholder="Choose Keywords" multiple>
+                                                <option value="Keyword 1">Keyword 1</option>
+                                                <option value="Keyword 2">Keyword 2</option>
+                                                <option value="Keyword 3">Keyword 3</option>
+                                            </select>*@
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
-                                    <textarea class="form-control desc-height" type="text" name="description" value="" placeholder="Enter description"></textarea>
-                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
+                                        <textarea class="form-control desc-height" type="text" name="description" value="" placeholder="Enter description"></textarea>
+                                    </div>
+                                </div><!-- col-12 -->
                             </div><!-- col-12 -->
-                        </div><!-- col-12 -->
-                    </div>
+                        </div>
 
-                </div><!-- row -->
+                    </div><!-- row -->
 
-                <div class="form-layout-footer">
-                    <button class="btn btn-primary bd-0">Save</button>
-                    <button class="btn btn-secondary bd-0">Cancel</button>
-                </div><!-- form-layout-footer -->
-            </div><!-- form-layout -->
-        </div><!-- section-wrapper -->
+                    <div class="form-layout-footer">
+                        <input type="submit" class="btn btn-primary bd-0" value="Save"/>
+                        <button class="btn btn-secondary bd-0">Cancel</button>
+                    </div><!-- form-layout-footer -->
+                </div><!-- form-layout -->
+            </div><!-- section-wrapper -->
+        </div>
+
     </div>
-
-</div>
-
+}

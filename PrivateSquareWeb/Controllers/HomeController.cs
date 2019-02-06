@@ -38,5 +38,11 @@ namespace PrivateSquareWeb.Controllers
 
             return View();
         }
+
+        public ActionResult MyBusinessList()
+        {
+            ViewBag.AllUsers = GetAllUsers();
+            return View();
+        }
     }
 }

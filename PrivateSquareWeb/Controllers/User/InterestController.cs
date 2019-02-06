@@ -82,7 +82,7 @@ namespace PrivateSquareWeb.Controllers.User
                 return View("Index");
 
             }
-            return View();
+            return RedirectToAction("Index", "Home"); ;
         }
         //private ResponseModel GetApiResponse(string Url, String Data)
         //{
