@@ -9,7 +9,12 @@ namespace PrivateSquareWeb
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/theme/lib/jquery/js/jquery.js",
+                        "~/theme/lib/popper.js/js/popper.js",
+                        "~/theme/lib/bootstrap/js/bootstrap.js",
+                        "~/theme/lib/jquery.cookie/js/jquery.cookie.js",
+                        "~/theme/lib/select2/js/select2.full.min.js",
+                        "~/theme/js/slim.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -23,8 +28,11 @@ namespace PrivateSquareWeb
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/theme/lib/font-awesome/css/font-awesome.css",
+                      "~/theme/lib/Ionicons/css/ionicons.css",
+                      "~/theme/lib/select2/css/select2.min.css",
+                      "~/theme/css/slim.css"));
+                
 
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -38,3 +46,4 @@ namespace PrivateSquareWeb
         }
     }
 }
+
