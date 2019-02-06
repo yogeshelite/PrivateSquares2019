@@ -1,4 +1,5 @@
-﻿using PrivatesquaresWebApiNew.Models;
+﻿using Newtonsoft.Json;
+using PrivatesquaresWebApiNew.Models;
 using PrivatesquaresWebApiNew.Persistance.Data;
 using PrivatesquaresWebApiNew.Persistance.Repositary;
 using System;
@@ -67,6 +68,24 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.SaveProduct(objModel);
             return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
         }
+
+        public ResponseModel GetUsersProfile()
+        {
+            var _result = _instance.GetUserProfileList();
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel GetAllInterest()
+        {
+            var _result = _instance.GetAllInterest();
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel GetAllInterestCategory()
+        {
+            var _result = _instance.GetAllInterestCategory();
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -76,6 +95,9 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel SaveBusiness(BusinessModel objModel);
         ResponseModel SaveUserInterest(UserInterestModel objModel);
         ResponseModel SaveProduct(ProductModel objModel);
+        ResponseModel GetUsersProfile();
+        ResponseModel GetAllInterest();
+        ResponseModel GetAllInterestCategory();
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 
