@@ -48,6 +48,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.InterestCategories().ToList();
         }
 
+        public IEnumerable<GetNetwork_Result> GetNetwork(NetworkModel networkModel)
+        {
+            return Context.GetNetwork(networkModel.LogInUserId).ToList();
+        }
+
         public LoginAuthenticate_Result LoginAuthenticte(UserRegisterModel ObjModel)
         {
             var RESULT = Context.LoginAuthenticate(ObjModel.Mobile, ObjModel.Otp);
@@ -65,6 +70,13 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         }
 
+        public SaveNetwork_Result SaveNetwork(NetworkModel objModel)
+        {
+            return Context.SaveNetwork(objModel.LogInUserId, objModel.UserId, objModel.UserProfileId,objModel.Operation).FirstOrDefault();
+
+
+        }
+
         public SaveProduct_Result SaveProduct(ProductModel objModel)
         {
             return Context.SaveProduct(objModel.Id, objModel.ProductName, objModel.ProductCatId, objModel.ProductImage, objModel.SellingPrice, objModel.DiscountPrice, objModel.BusinessId, objModel.UserId, objModel.Operation).FirstOrDefault();
@@ -73,7 +85,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public SaveProfile_Result SaveProfile(UserProfileModel ObjModel)
         {
-            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB).FirstOrDefault();
+            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB, ObjModel.Location).FirstOrDefault();
         }
 
         public SaveUserInterest_Result SaveUserInterest(UserInterestModel objModel)
@@ -99,5 +111,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetUsersProfileList_Result> GetUserProfileList();
         IEnumerable<GetAllInterest_Result> GetAllInterest();
         IEnumerable<InterestCategories_Result> GetAllInterestCategory();
+        SaveNetwork_Result SaveNetwork(NetworkModel objModel);
+        IEnumerable<GetNetwork_Result> GetNetwork(NetworkModel networkModel);
     }
+   
 }

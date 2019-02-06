@@ -189,5 +189,27 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendJson = Json(sendResponse);
             return sendJson;
         }
+        [Route("api/User/SaveNetwork")]
+        [HttpPost]
+        public IHttpActionResult SaveNetwork(RequestModel requestModel)
+        {
+
+            var data = requestModel.Data;
+            NetworkModel objNetworkModel = JsonConvert.DeserializeObject<NetworkModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.SaveNetwork(objNetworkModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+        [Route("api/User/GetNetwork")]
+        [HttpPost]
+        public IHttpActionResult GetNetwork(RequestModel requestModel)
+        {
+
+            var data = requestModel.Data;
+            NetworkModel objNetworkModel = JsonConvert.DeserializeObject<NetworkModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetNetwork(objNetworkModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
     }
 }

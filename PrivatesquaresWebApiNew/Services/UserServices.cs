@@ -86,6 +86,18 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.GetAllInterestCategory();
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel SaveNetwork(NetworkModel objModel)
+        {
+            var _result = _instance.SaveNetwork(objModel);
+            return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
+        }
+
+        public ResponseModel GetNetwork(NetworkModel networkModel)
+        {
+            var _result = _instance.GetNetwork(networkModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -98,6 +110,8 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel GetUsersProfile();
         ResponseModel GetAllInterest();
         ResponseModel GetAllInterestCategory();
+        ResponseModel SaveNetwork(NetworkModel objModel);
+        ResponseModel GetNetwork(NetworkModel objModel);
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 
