@@ -23,6 +23,11 @@ namespace PrivateSquareWeb.Controllers.User
         {
             return View();
         }
+        public ActionResult Product()
+        {
+            return View();
+        }
+
 
     }
 }

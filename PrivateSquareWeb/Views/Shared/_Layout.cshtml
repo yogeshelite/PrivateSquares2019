@@ -34,8 +34,21 @@
         // Select2 by showing the search
         $('.select2-show-search').select2({
           minimumResultsForSearch: ''
+          });
+          //
+          // Datepicker
+          $('.fc-datepicker').datepicker({
+              showOtherMonths: true,
+              selectOtherMonths: true
+          });
+
+          $('#datepickerNoOfMonths').datepicker({
+              showOtherMonths: true,
+              selectOtherMonths: true,
+              numberOfMonths: 2
+          });
         });
-      });
+
     </script>
 </body>
 </html>

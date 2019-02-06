@@ -14,6 +14,7 @@ namespace PrivateSquareWeb
                         "~/theme/lib/bootstrap/js/bootstrap.js",
                         "~/theme/lib/jquery.cookie/js/jquery.cookie.js",
                         "~/theme/lib/select2/js/select2.full.min.js",
+                        "~/theme/lib/jquery-ui/js/jquery-ui.js",
                         "~/theme/js/slim.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

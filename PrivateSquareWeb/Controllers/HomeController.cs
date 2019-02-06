@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PrivateSquareWeb.CommonCls;
+using PrivateSquareWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,9 +13,18 @@ namespace PrivateSquareWeb.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.AllUsers = GetAllUsers();
             return View();
         }
+        public List<UsersProfileModel> GetAllUsers()
+        {
+            var GetAllUserList = new List<UsersProfileModel>();
+            var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUsersProfile, "");
+            GetAllUserList = JsonConvert.DeserializeObject<List<UsersProfileModel>>(ObjResponse.Response);
+            return GetAllUserList;
 
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

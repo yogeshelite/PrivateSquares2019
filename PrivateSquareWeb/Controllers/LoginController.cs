@@ -17,7 +17,12 @@ namespace PrivateSquareWeb.Controllers
 
             return View();
         }
-
+        public PartialViewResult SidebarValue()
+        {
+            //UserSubscribePlain = GetUserSubscriptionPlan();
+            //ViewBag.UserSubscribePlain = UserSubscribePlain;
+            return PartialView("~\\Views\\Shared\\_OTP.cshtml");
+        }
         [HttpPost]
         public ActionResult UserRegister(UserRegisterModel ObjModel)
         {
@@ -35,8 +40,8 @@ namespace PrivateSquareWeb.Controllers
                 }
                 Session["OtpData"] = ObjResponse.Response;
                 Session["Mobile"] = ObjModel.Mobile;
-
-                //return View("OTP");
+                ViewBag.OtpMessage = ObjResponse.Response;
+                // return View();
                 return RedirectToAction("OTP");
             }
 
@@ -48,7 +53,9 @@ namespace PrivateSquareWeb.Controllers
             String Mobile = (string)Session["Mobile"];
             //Session["OtpData"] = OtpCheck;
             //Session["Mobile"] = Mobile;
+            UserRegisterModel ObjModel = new UserRegisterModel();
             ViewBag.OtpMessage = OtpCheck;
+            //return PartialView("_OTP", ObjModel);
             return View();
         }
         [HttpPost]
@@ -75,6 +82,7 @@ namespace PrivateSquareWeb.Controllers
                 Services.SetCookie(this.ControllerContext.HttpContext, "usrName", ArrResponse[1]);
 
                 ViewBag.LoginMessage = "Login Success";
+               return RedirectToAction("Index", "Interest");
             }
             else
             {
