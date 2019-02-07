@@ -98,6 +98,12 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.GetNetwork(networkModel);
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel GetUserbusiness(BusinessModel objModel)
+        {
+            var _result = _instance.GetUserbusiness(objModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -107,6 +113,7 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel SaveBusiness(BusinessModel objModel);
         ResponseModel SaveUserInterest(UserInterestModel objModel);
         ResponseModel SaveProduct(ProductModel objModel);
+        ResponseModel GetUserbusiness(BusinessModel objModel);
         ResponseModel GetUsersProfile();
         ResponseModel GetAllInterest();
         ResponseModel GetAllInterestCategory();

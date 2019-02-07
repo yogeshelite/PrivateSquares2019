@@ -97,8 +97,14 @@ namespace PrivateSquareWeb
         }
         public static HttpCookie GetCookie(HttpContextBase httpContext, string name)
         {
-            if (httpContext.Request.Cookies.AllKeys.Contains(name)) return httpContext.Request.Cookies[name];
-            return null;
+            if (httpContext.Request.Cookies.AllKeys.Contains(name))
+            {
+               // return httpContext.Request.Cookies.Get(name);
+                   return httpContext.Request.Cookies[name];
+
+            }
+            else
+                return null;
 
 
         }

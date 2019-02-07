@@ -25,14 +25,14 @@
                     <button class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
                 <div class="row row-sm mrg-btm-20">
-                    @foreach (var Users in ViewBag.AllUsers)
+                    @foreach (var Users in ViewBag.UsersBusiness)
                     {
                         <div class="col-sm-6 col-lg-4 mg-b-20">
                             <div class="card-contact card-min-height">
                                 <div class="tx-center">
-                                    <a href=""><img src="~/theme/img/logo1.jpg" class="card-img" alt=""></a>
-                                    <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">@Users.Name</a></h5>
-                                    <p>@Users.Profession</p>
+                                    <a href=""><img src="~/DocImg/@Users.BusinessLogo" class="card-img" alt=""></a>
+                                    <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">@Users.BusinessName</a></h5>
+                                    @*<p>@Users.Profession</p>*@
                                     <p>@Users.Location</p>
                                     <p class="contact-social">
                                         <a href=""><i class="fa fa-facebook"></i></a>
@@ -47,7 +47,7 @@
                                     <span class="text-center">@Users.ProfessionalKeyword</span>
                                 </p><!-- contact-item -->
                                 <div class="hobbie-item">
-                                    <span class="hobbies">@Users.InterestName</span>@*<span class="hobbies">Music</span><span class="hobbies">Books</span>*@
+                                    <span class="hobbies">@*@Users.InterestName*@</span>@*<span class="hobbies">Music</span><span class="hobbies">Books</span>*@
                                 </div><!-- contact-item -->
                                 <button class="btn btn-outline-primary btn-block ps-btn-radius ps-btn-wdth-100"><i class=""></i> Get In Touch</button>
 

@@ -165,8 +165,6 @@ namespace PrivatesquaresWebApiNew.Controllers
             return sendJson;
         }
 
-
-
         [Route("api/User/GetAllInterest")]
         [HttpPost]
         public IHttpActionResult GetAllInterest(RequestModel requestModel)
@@ -211,5 +209,19 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendJson = Json(sendResponse);
             return sendJson;
         }
+
+        [Route("api/User/GetUserBusiness")]
+        [HttpPost]
+        // public IHttpActionResult Registeration(RequestModel requestModel)
+        public IHttpActionResult GetUserBusiness(RequestModel requestModel)
+        {
+
+            var data = requestModel.Data;
+            BusinessModel objProductModel = JsonConvert.DeserializeObject<BusinessModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetUserbusiness(objProductModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
     }
 }

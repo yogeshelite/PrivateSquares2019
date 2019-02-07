@@ -25,6 +25,17 @@ namespace PrivateSquareWeb.Controllers
             return GetAllUserList;
 
         }
+        public List<BusinessModel> GetUsersBusiness()
+        {
+            var GetUserBusinessList = new List<BusinessModel>();
+            BusinessModel objmodel = new BusinessModel();
+            objmodel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext,"usrId").Value);
+            var _request =JsonConvert.SerializeObject(objmodel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUserBusiness, _request);
+            GetUserBusinessList = JsonConvert.DeserializeObject<List<BusinessModel>>(ObjResponse.Response);
+            return GetUserBusinessList;
+
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -41,7 +52,8 @@ namespace PrivateSquareWeb.Controllers
 
         public ActionResult MyBusinessList()
         {
-            ViewBag.AllUsers = GetAllUsers();
+            
+            ViewBag.UsersBusiness = GetUsersBusiness();
             return View();
         }
     }
