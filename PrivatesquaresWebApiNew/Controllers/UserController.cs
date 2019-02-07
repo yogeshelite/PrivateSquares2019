@@ -223,5 +223,17 @@ namespace PrivatesquaresWebApiNew.Controllers
             return sendJson;
         }
 
+        [Route("api/User/GetProfile")]
+        [HttpPost]
+        // public IHttpActionResult Registeration(RequestModel requestModel)
+        public IHttpActionResult GetProfile(RequestModel requestModel)
+        {
+
+            var data = requestModel.Data;
+            UserProfileModel objProfileModel = JsonConvert.DeserializeObject<UserProfileModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetUserProfile(objProfileModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
     }
 }
