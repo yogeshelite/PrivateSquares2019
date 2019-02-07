@@ -14,8 +14,11 @@ namespace PrivateSquareWeb
         public const string ApiGetUsersProfile = "User/GetUsersProfile";
         public const string ApiSaveUserInterest = "User/SaveUserInterest";
         public const string ApiGetUserProfile = "User/GetUserProfile";
+        public const string ApiSaveProfile = "User/SaveProfile";
         public const string ApiSaveBusiness = "User/SaveBusiness";
         public const string ApiGetUserBusiness = "User/GetUserBusiness";
+        public const string ApiSaveProduct = "User/SaveProduct";
+        public const string ApiSaveNetwork = "User/SaveNetwork";
 
 
 

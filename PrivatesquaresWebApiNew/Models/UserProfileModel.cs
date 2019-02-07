@@ -22,6 +22,9 @@ namespace PrivatesquaresWebApiNew.Models
         public long GenderId { get; set; }
         public DateTime DOB { get; set; }
         public string Location { get; set; }
+        public string Phone { get; set; }
+        public string Pincode { get; set; }
+        public long CountryId { get; set; }
 
     }
 }

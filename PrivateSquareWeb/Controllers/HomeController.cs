@@ -29,8 +29,8 @@ namespace PrivateSquareWeb.Controllers
         {
             var GetUserBusinessList = new List<BusinessModel>();
             BusinessModel objmodel = new BusinessModel();
-            objmodel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext,"usrId").Value);
-            var _request =JsonConvert.SerializeObject(objmodel);
+            objmodel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUserBusiness, _request);
             GetUserBusinessList = JsonConvert.DeserializeObject<List<BusinessModel>>(ObjResponse.Response);
             return GetUserBusinessList;
@@ -52,9 +52,33 @@ namespace PrivateSquareWeb.Controllers
 
         public ActionResult MyBusinessList()
         {
-            
+
             ViewBag.UsersBusiness = GetUsersBusiness();
             return View();
+        }
+        public ActionResult ProductList()
+        {
+            ViewBag.UsersBusiness = GetUsersBusiness();
+            return View();
+        }
+        public ActionResult NetworkList()
+        {
+            ViewBag.AllUsers = GetAllUsers();
+            return View();
+        }
+        [HttpPost]
+        public JsonResult AddNetwork(NetworkModel objNetworkModel)
+        {
+            
+            objNetworkModel.LogInUserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            objNetworkModel.Operation = "insert";
+            var _request = JsonConvert.SerializeObject(objNetworkModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveNetwork, _request);
+            if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+            {
+            }
+            String Response = "[{\"Response\":\"" + ObjResponse.Response + "\"}]";
+            return Json(Response);
         }
     }
 }

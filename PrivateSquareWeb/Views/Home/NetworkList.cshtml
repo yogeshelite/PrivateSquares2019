@@ -1,27 +1,9 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model PrivateSquareWeb.Models.UsersProfileModel
+@{
+    ViewBag.Title = "Network Page";
 }
-<script type="text/javascript">
-    function AddNetwork(userId, ProfileId) {
-        $.ajax({
-            url: "../../Home/AddNetwork",
-            type: "POST",
-            data: {
-                UserId: userId,
-                UserProfileId: ProfileId
 
-            },
-            success: function (result) {
-                var resp = JSON.parse(result);
-                if (resp[0].Response) {
-                    // document.getElementById("LblOtp").innerText = resp[0].Response;
-                    alert("Add Network Successfully")
 
-                }
-            }
-        });
-    }
-</script>
 <div class="slim-mainpanel">
     <div class="container">
         <div class="manager-header">
@@ -67,8 +49,7 @@
                                 <div class="hobbie-item">
                                     <span class="hobbies">@Users.InterestName</span>@*<span class="hobbies">Music</span><span class="hobbies">Books</span>*@
                                 </div><!-- contact-item -->
-                                <input type="submit" value="Get In Touch" onclick="AddNetwork(@Users.UserId,@Users.Id)" class="btn btn-outline-primary btn-block ps-btn-radius ps-btn-wdth-100">
-                                <i class=""></i>
+                                <button class="btn btn-outline-primary btn-block ps-btn-radius ps-btn-wdth-100"><i class=""></i> Get In Touch</button>
 
 
                             </div><!-- card -->
