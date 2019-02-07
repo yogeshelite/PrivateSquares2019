@@ -110,6 +110,51 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.GetUserProfile(objModel);
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel GetBusiness(BusinessModel objModel)
+        {
+            var _result = _instance.GetUserbusiness(objModel);
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel GetProduct(ProductModel objModel)
+        {
+            var _result = _instance.GetProduct(objModel);
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel GetUserInterest(UserInterestModel objModel)
+        {
+            var _result = _instance.GetUserInterest(objModel);
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel UpdateUserInterest(UserInterestModel objModel)
+        {
+            var _result = new SaveUserInterest_Result();
+
+            try
+
+            {
+
+                _result = _instance.UpdateUserInterest(objModel);
+            }
+
+            catch (Exception ex)
+
+            {
+
+                String Exception = ex.ToString();
+
+                _result.Response = Exception;
+
+            }
+
+            return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
+        }
     }
     public interface IUserServices
     {
@@ -126,6 +171,14 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel SaveNetwork(NetworkModel objModel);
         ResponseModel GetNetwork(NetworkModel objModel);
         ResponseModel GetUserProfile(UserProfileModel objModel);
+        ResponseModel GetBusiness(BusinessModel objModel);
+
+        ResponseModel GetProduct(ProductModel objModel);
+
+        ResponseModel GetUserInterest(UserInterestModel objModel);
+
+        ResponseModel UpdateUserInterest(UserInterestModel objModel);
+
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

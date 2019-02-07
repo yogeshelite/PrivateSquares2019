@@ -70,13 +70,13 @@
                         @*@Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })*@
                     </div><br />
                     <!-- row -->
-
-                    <button class="btn btn-primary btn-block btn-signin" type="button" id="step-2"
-                            onclick="location.href='@Url.Action("OTP", "Login")'">
-                        Login
-                    </button>
+                    @*<button class="btn btn-primary btn-block btn-signin" type="button" id="step-2"
+                onclick="location.href='@Url.Action("OTP", "Login")'">
+            Login
+        </button>*@
+                    <button class="btn btn-primary btn-block btn-signin" id="step-2">Sign Up</button>
                     <p class="mg-t-40 mg-b-0 tx-center">Don't have an account? click <a href="page-signin.html">Register</a> to Sign Up </p>
-                    @*<button class="btn btn-primary btn-block btn-signin" id="step-2">Sign Up</button>*@
+
 
                     <div class="signup-separator"><span>or signup using</span></div>
 
@@ -93,7 +93,7 @@
                 </div>
                 <div class="ps-step-two" style="display:none">
                     @{
-                        Html.RenderPartial("_OTP");
+                       // Html.RenderPartial("_OTP");
                     }
 
                     <!-- <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p> -->

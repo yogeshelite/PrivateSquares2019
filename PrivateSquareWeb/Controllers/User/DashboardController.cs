@@ -17,6 +17,17 @@ namespace PrivateSquareWeb.Controllers.User
         {
             return View();
         }
+        public List<UserProfileModel> GetUserProfile()
+        {
+            var GetUserProfile = new List<UserProfileModel>();
+            UserProfileModel objUserProfile = new UserProfileModel();
+            objUserProfile.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext,"usrId").Value);
+            var _request = JsonConvert.SerializeObject(objUserProfile);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProfile, _request);
+            GetUserProfile = JsonConvert.DeserializeObject<List<UserProfileModel>>(ObjResponse.Response);
+            return GetUserProfile;
+
+        }
         public ActionResult Product()
         {
             return View();
@@ -49,7 +60,41 @@ namespace PrivateSquareWeb.Controllers.User
         }
         public ActionResult PersonalProfile()
         {
-            return View();
+            List<UserProfileModel> UserProfile = GetUserProfile();
+            UserProfileModel objModel = new UserProfileModel();
+            if (UserProfile == null )
+            {
+
+            }
+            else
+            {
+                
+                objModel.FirstName = UserProfile[0].FirstName;
+                objModel.LastName = UserProfile[0].LastName;
+                objModel.Location = UserProfile[0].Location;
+                objModel.DOB = UserProfile[0].DOB;
+                objModel.ProfessionalCatId = UserProfile[0].ProfessionalCatId;
+                objModel.Pincode = UserProfile[0].Pincode;
+                objModel.EmailId = UserProfile[0].EmailId;
+                objModel.Description = UserProfile[0].Description;
+                objModel.Phone = UserProfile[0].Phone;
+                objModel.CountryId = UserProfile[0].CountryId;
+
+                //FormCollection frmColl = new FormCollection();
+                //frmColl.Add("firstname", objModel.FirstName);
+                //frmColl.Add("lastname", objModel.LastName);
+                //frmColl.Add("address", objModel.Location);
+                //frmColl.Add("dob", objModel.DOB.ToString());
+                //frmColl.Add("ddlProfessionalCat", objModel.ProfessionalCatId.ToString());
+                //frmColl.Add("Keywords", objModel.ProfessionalKeyword);
+                //frmColl.Add("Pincode", objModel.Pincode);
+                //frmColl.Add("email", objModel.EmailId);
+                //frmColl.Add("description", objModel.Description);
+                //frmColl.Add("phone", objModel.Phone);
+                //frmColl.Add("country", objModel.CountryId.ToString());
+                
+            }
+            return View(objModel);
         }
 
         public ActionResult MyBusiness()

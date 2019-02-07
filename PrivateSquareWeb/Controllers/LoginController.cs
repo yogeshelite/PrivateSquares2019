@@ -55,6 +55,7 @@ namespace PrivateSquareWeb.Controllers
             //Session["Mobile"] = Mobile;
             UserRegisterModel ObjModel = new UserRegisterModel();
             ViewBag.OtpMessage = OtpCheck;
+           
             //return PartialView("_OTP", ObjModel);
             return View();
         }

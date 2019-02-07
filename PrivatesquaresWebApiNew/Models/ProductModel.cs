@@ -14,7 +14,7 @@ namespace PrivatesquaresWebApiNew.Models
         public decimal SellingPrice { get; set; }
         public decimal DiscountPrice { get; set; }
         public long BusinessId { get; set; }
-        public long UserId { get; set; }
+        public long? UserId { get; set; }
         public string Operation { get; set; }
     }
 }

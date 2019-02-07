@@ -36,6 +36,17 @@ namespace PrivateSquareWeb.Controllers
             return GetUserBusinessList;
 
         }
+        public List<UsersProfileModel> GetUsersNetwork()
+        {
+            var GetUserNetworkList = new List<UsersProfileModel>();
+            NetworkModel objmodel = new NetworkModel();
+            objmodel.LogInUserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            var _request = JsonConvert.SerializeObject(objmodel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUserNetwork, _request);
+            GetUserNetworkList = JsonConvert.DeserializeObject<List<UsersProfileModel>>(ObjResponse.Response);
+            return GetUserNetworkList;
+
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -63,7 +74,7 @@ namespace PrivateSquareWeb.Controllers
         }
         public ActionResult NetworkList()
         {
-            ViewBag.AllUsers = GetAllUsers();
+            ViewBag.UsersNetwork = GetUsersNetwork();
             return View();
         }
         [HttpPost]

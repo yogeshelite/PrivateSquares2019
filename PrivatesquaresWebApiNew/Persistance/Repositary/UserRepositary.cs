@@ -48,14 +48,29 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.InterestCategories().ToList();
         }
 
+        public IEnumerable<GetUserBusiness_Result> GetBusiness(BusinessModel objModel)
+        {
+            return Context.GetUserBusiness(objModel.UserId).ToList();
+        }
+
         public IEnumerable<GetNetwork_Result> GetNetwork(NetworkModel networkModel)
         {
             return Context.GetNetwork(networkModel.LogInUserId).ToList();
         }
 
+        public IEnumerable<GetProduct_Result> GetProduct(ProductModel objModel)
+        {
+            return Context.GetProduct(objModel.UserId).ToList();
+        }
+
         public IEnumerable<GetUserBusiness_Result> GetUserbusiness(BusinessModel objModel)
         {
             return Context.GetUserBusiness(objModel.UserId).ToList();
+        }
+
+        public IEnumerable<GetUserInterest_Result> GetUserInterest(UserInterestModel objModel)
+        {
+            return Context.GetUserInterest(objModel.UserId).ToList();
         }
 
         public IEnumerable<GetUserProfile_Result> GetUserProfile(UserProfileModel objModel)
@@ -100,7 +115,14 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public SaveUserInterest_Result SaveUserInterest(UserInterestModel objModel)
         {
-            var Result = Context.SaveUserInterest(objModel.XmlData);
+            var Result = Context.SaveUserInterest(objModel.XmlData,objModel.Operation);
+            return Result.FirstOrDefault();
+        }
+
+        public SaveUserInterest_Result UpdateUserInterest(UserInterestModel objModel)
+        {
+            var Result = Context.SaveUserInterest(objModel.XmlData, objModel.Operation);
+
             return Result.FirstOrDefault();
         }
 
@@ -125,6 +147,13 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetNetwork_Result> GetNetwork(NetworkModel networkModel);
         IEnumerable<GetUserBusiness_Result> GetUserbusiness(BusinessModel objModel);
         IEnumerable<GetUserProfile_Result> GetUserProfile(UserProfileModel objModel);
+        IEnumerable<GetUserBusiness_Result> GetBusiness(BusinessModel objModel);
+
+        IEnumerable<GetProduct_Result> GetProduct(ProductModel objModel);
+
+        IEnumerable<GetUserInterest_Result> GetUserInterest(UserInterestModel objModel);
+
+        SaveUserInterest_Result UpdateUserInterest(UserInterestModel objModel);
     }
    
 }

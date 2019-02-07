@@ -235,5 +235,91 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendJson = Json(sendResponse);
             return sendJson;
         }
+
+        [Route("api/User/GetBusiness")]
+
+        [HttpPost]
+
+        // public IHttpActionResult Registeration(RequestModel requestModel)
+
+        public IHttpActionResult GetBusiness(RequestModel requestModel)
+
+        {
+            var data = requestModel.Data;
+
+            BusinessModel objBusinessModel = JsonConvert.DeserializeObject<BusinessModel>(data);
+
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetUserbusiness(objBusinessModel)), Success = true };
+
+            var sendJson = Json(sendResponse);
+
+            return sendJson;
+
+        }
+        [Route("api/User/GetProduct")]
+
+        [HttpPost]
+
+        // public IHttpActionResult Registeration(RequestModel requestModel)
+
+        public IHttpActionResult GetProduct(RequestModel requestModel)
+
+        {
+            var data = requestModel.Data;
+
+            ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProduct(objProductModel)), Success = true };
+
+            var sendJson = Json(sendResponse);
+
+            return sendJson;
+
+        }
+        [Route("api/User/GetUserInterest")]
+
+        [HttpPost]
+
+        // public IHttpActionResult Registeration(RequestModel requestModel)
+
+        public IHttpActionResult GetUserInterest(RequestModel requestModel)
+
+        {
+            var data = requestModel.Data;
+
+            UserInterestModel objProductModel = JsonConvert.DeserializeObject<UserInterestModel>(data);
+
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetUserInterest(objProductModel)), Success = true };
+
+            var sendJson = Json(sendResponse);
+
+            return sendJson;
+
+        }
+
+        [Route("api/User/UpdateUserInterest")]
+
+        [HttpPost]
+        public IHttpActionResult UpdateUserInterest(RequestModel requestModel)
+
+        {
+            var data = JsonConvert.DeserializeObject(requestModel.Data);
+
+            var xmlNode = JsonConvert.DeserializeXmlNode(data.ToString(), "root").OuterXml;
+
+            //  XNode node = JsonConvert.DeserializeXNode(data).outerxml; 
+            UserInterestModel objUserInterest = new UserInterestModel();
+
+            objUserInterest.XmlData = xmlNode;
+
+            // UserInterestModel objUserInterest = JsonConvert.DeserializeObject<UserInterestModel>(data.ToString());
+
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.UpdateUserInterest(objUserInterest)), Success = true };
+
+            var sendJson = Json(sendResponse);
+
+            return sendJson;
+
+        }
     }
 }
