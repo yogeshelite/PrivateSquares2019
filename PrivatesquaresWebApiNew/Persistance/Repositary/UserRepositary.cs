@@ -53,6 +53,16 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetNetwork(networkModel.LogInUserId).ToList();
         }
 
+        public IEnumerable<GetUserBusiness_Result> GetUserbusiness(BusinessModel objModel)
+        {
+            return Context.GetUserBusiness(objModel.UserId).ToList();
+        }
+
+        public IEnumerable<GetUserProfile_Result> GetUserProfile(UserProfileModel objModel)
+        {
+            return Context.GetUserProfile(objModel.UserId).ToList();
+        }
+
         public LoginAuthenticate_Result LoginAuthenticte(UserRegisterModel ObjModel)
         {
             var RESULT = Context.LoginAuthenticate(ObjModel.Mobile, ObjModel.Otp);
@@ -66,7 +76,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         public SaveBusiness_Result SaveBusiness(BusinessModel ObjModel)
         {
             return Context.SaveBusiness(ObjModel.Id, ObjModel.BusinessName, ObjModel.Location, ObjModel.BusinessLogo, ObjModel.ProfessionalCatId,
-                ObjModel.ProfessionalKeyword, ObjModel.ProfessionalCatId, ObjModel.PinCode, ObjModel.UserId, ObjModel.Operation).FirstOrDefault();
+                ObjModel.ProfessionalKeyword, ObjModel.ProfessionalCatId, ObjModel.PinCode, ObjModel.UserId, ObjModel.Email,ObjModel.Description,ObjModel.Phone,ObjModel.CountryId,ObjModel.Operation).FirstOrDefault();
 
         }
 
@@ -85,7 +95,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public SaveProfile_Result SaveProfile(UserProfileModel ObjModel)
         {
-            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB,ObjModel.Location).FirstOrDefault();
+            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB,ObjModel.Location,ObjModel.Phone,ObjModel.Pincode,ObjModel.CountryId).FirstOrDefault();
         }
 
         public SaveUserInterest_Result SaveUserInterest(UserInterestModel objModel)
@@ -113,6 +123,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<InterestCategories_Result> GetAllInterestCategory();
         SaveNetwork_Result SaveNetwork(NetworkModel objModel);
         IEnumerable<GetNetwork_Result> GetNetwork(NetworkModel networkModel);
+        IEnumerable<GetUserBusiness_Result> GetUserbusiness(BusinessModel objModel);
+        IEnumerable<GetUserProfile_Result> GetUserProfile(UserProfileModel objModel);
     }
    
 }
