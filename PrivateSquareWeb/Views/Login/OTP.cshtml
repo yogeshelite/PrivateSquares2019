@@ -81,7 +81,7 @@
 
                     <div class="row row-xs mg-b-10">
                         <div class="col-lg">
-                            @Html.TextBoxFor(model => model.Otp, new { @class = "form-control", placeholder = "OTP111" })
+                            @Html.TextBoxFor(model => model.Otp, new { @class = "form-control", placeholder = "OTP" })
                             @*<input type="text" class="form-control" placeholder="OTP">*@
 
                         </div>
@@ -231,12 +231,12 @@
 
         </div><!-- signin-wrapper -->
     }
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.js"></script>*@
     @*<script src="../lib/jquery/js/jquery.js" type="text/javascript"></script>
         <script src="../lib/popper.js/js/popper.js"></script>
         <script src="../lib/bootstrap/js/bootstrap.js"></script>*@
 
-    <script src="../js/slim.js"></script>
+    @*<script src="../js/slim.js"></script>
     <script>
         $("#step-2").click(function () {
             $(".ps-step-one").hide();
@@ -254,7 +254,7 @@
             $(".ps-step-fifth").hide();
             $(".ps-step-third").show();
         });
-    </script>
+    </script>*@
 
 </body>
 </html>

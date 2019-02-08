@@ -155,6 +155,12 @@ namespace PrivatesquaresWebApiNew.Services
 
             return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
         }
+
+        public ResponseModel GetProfession()
+        {
+            var _result = _instance.GetProfession();
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -178,7 +184,9 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel GetUserInterest(UserInterestModel objModel);
 
         ResponseModel UpdateUserInterest(UserInterestModel objModel);
+        ResponseModel GetProfession();
 
+       
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

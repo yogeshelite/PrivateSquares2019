@@ -23,14 +23,28 @@ namespace PrivateSquareWeb.Controllers
             //ViewBag.UserSubscribePlain = UserSubscribePlain;
             return PartialView("~\\Views\\Shared\\_OTP.cshtml");
         }
+        public ActionResult Register()
+        {
+            return View();
+        }
+        public ActionResult GetStart()
+        {
+            return View();
+        }
         [HttpPost]
-        public ActionResult UserRegister(UserRegisterModel ObjModel)
+        public ActionResult UserRegister(UserRegisterModel ObjModel, FormCollection frmColl)
         {
 
             if (String.IsNullOrWhiteSpace(ObjModel.Mobile))
                 return View("Index");
             // if (ModelState.IsValid)
             {
+                String Type = frmColl["txttype"];
+                if (Type.Equals("R"))
+                    ObjModel.Operation = "register";
+                else
+                    ObjModel.Operation = "login";
+
                 var _request = JsonConvert.SerializeObject(ObjModel);
                 ResponseModel ObjResponse = GetApiResponse(Constant.ApiRegister, _request);
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
@@ -38,9 +52,21 @@ namespace PrivateSquareWeb.Controllers
                     return View("Index", ObjModel);
 
                 }
-                Session["OtpData"] = ObjResponse.Response;
-                Session["Mobile"] = ObjModel.Mobile;
-                ViewBag.OtpMessage = ObjResponse.Response;
+                String Response = ObjResponse.Response;
+                String[] arrResponse = Response.Split(',');
+                if (arrResponse[0].Equals("EXISTS"))
+                {
+                    ViewBag.RegisterMessage = "All Ready Exist";
+                    return View("Register");
+
+                }
+                else
+                {
+                    Session["OtpData"] = arrResponse[0];
+                    Session["LoginType"] = arrResponse[1];
+                    Session["Mobile"] = ObjModel.Mobile;
+                    ViewBag.OtpMessage = ObjResponse.Response;
+                }
                 // return View();
                 return RedirectToAction("OTP");
             }
@@ -55,7 +81,7 @@ namespace PrivateSquareWeb.Controllers
             //Session["Mobile"] = Mobile;
             UserRegisterModel ObjModel = new UserRegisterModel();
             ViewBag.OtpMessage = OtpCheck;
-           
+
             //return PartialView("_OTP", ObjModel);
             return View();
         }
@@ -82,8 +108,13 @@ namespace PrivateSquareWeb.Controllers
                 Services.SetCookie(this.ControllerContext.HttpContext, "usrId", ArrResponse[0]);
                 Services.SetCookie(this.ControllerContext.HttpContext, "usrName", ArrResponse[1]);
 
-                ViewBag.LoginMessage = "Login Success";
-               return RedirectToAction("Index", "Interest");
+                //ViewBag.LoginMessage = "Login Success";
+                String LoginType = (string)Session["LoginType"];
+                if (LoginType.Equals("R"))
+                    return RedirectToAction("GetStart", "Login");
+                else
+                    return RedirectToAction("Index", "Home");
+
             }
             else
             {

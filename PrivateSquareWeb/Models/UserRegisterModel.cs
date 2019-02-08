@@ -19,5 +19,6 @@ namespace PrivateSquareWeb.Models
         [MinLength(4, ErrorMessage = "Enter 4 Digit OTP Number.")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "OTP must be numeric")]
         public string Otp { get; set; }
+        public string Operation { get; set; }
     }
 }

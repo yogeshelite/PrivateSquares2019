@@ -21,8 +21,8 @@ namespace PrivateSquareWeb
         public const string ApiSaveNetwork = "User/SaveNetwork";
         public const string ApiGetUserNetwork = "User/GetNetwork";
         public const string ApiGetProfile = "User/GetProfile";
-        
-
+        public const string ApiGetProfession = "User/GetProfession";
+        public const string ApiGetProduct = "User/GetProduct";
 
     }
 }

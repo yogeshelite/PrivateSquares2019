@@ -63,6 +63,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetProduct(objModel.UserId).ToList();
         }
 
+        public IEnumerable<GetProfession_Result> GetProfession()
+        {
+            return Context.GetProfession().ToList();
+        }
+
         public IEnumerable<GetUserBusiness_Result> GetUserbusiness(BusinessModel objModel)
         {
             return Context.GetUserBusiness(objModel.UserId).ToList();
@@ -85,7 +90,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         }
         public RegisterUser_Result RegisterUser(UserRegisterModel ObjModel)
         {
-            return Context.RegisterUser(ObjModel.Mobile).FirstOrDefault();
+            return Context.RegisterUser(ObjModel.Mobile,ObjModel.Operation).FirstOrDefault();
         }
 
         public SaveBusiness_Result SaveBusiness(BusinessModel ObjModel)
@@ -154,6 +159,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetUserInterest_Result> GetUserInterest(UserInterestModel objModel);
 
         SaveUserInterest_Result UpdateUserInterest(UserInterestModel objModel);
+        IEnumerable<GetProfession_Result> GetProfession();
     }
    
 }

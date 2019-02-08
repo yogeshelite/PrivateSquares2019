@@ -321,5 +321,18 @@ namespace PrivatesquaresWebApiNew.Controllers
             return sendJson;
 
         }
+
+        [Route("api/User/GetProfession")]
+        [HttpPost]
+        public IHttpActionResult GetProfession(RequestModel requestModel)
+        {
+
+            //var data = requestModel.Data;
+            //ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProfession()), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
     }
 }

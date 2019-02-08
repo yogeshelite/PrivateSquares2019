@@ -28,6 +28,15 @@ namespace PrivateSquareWeb.Controllers.User
             return GetUserProfile;
 
         }
+        public List<DropDownModel> GetProfession()
+        {
+            var ProfessionList = new List<DropDownModel>();
+            DropDownModel objUserProfile = new DropDownModel();
+          //  var _request = JsonConvert.SerializeObject(objUserProfile);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProfession,"");
+            ProfessionList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
+            return ProfessionList;
+        }
         public ActionResult Product()
         {
             return View();
@@ -61,12 +70,14 @@ namespace PrivateSquareWeb.Controllers.User
         public ActionResult PersonalProfile()
         {
             List<UserProfileModel> UserProfile = GetUserProfile();
+            var listProfession=GetProfession();
+            ViewBag.ProfessionList = listProfession;
             UserProfileModel objModel = new UserProfileModel();
             if (UserProfile == null )
             {
 
             }
-            else
+            else if(UserProfile == null && UserProfile.Count()>0)
             {
                 
                 objModel.FirstName = UserProfile[0].FirstName;

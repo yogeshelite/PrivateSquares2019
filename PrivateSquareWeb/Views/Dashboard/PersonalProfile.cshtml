@@ -60,7 +60,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group mg-b-10-force">
                                         <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
-                                        <select class="form-control select2" data-placeholder="Choose country" name="country" id="country" >
+                                        <select class="form-control select2" data-placeholder="Choose country" name="country" id="country">
                                             <option label="Choose country"></option>
                                             <option value="1">United States of America</option>
                                             <option value="2">United Kingdom</option>
@@ -107,12 +107,12 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Professional Category: <span class="tx-danger">*</span></label>
                                         <select class="form-control select2-show-search" data-placeholder="Choose one ">
-                                            <option label="0"></option>
-                                            <option value="1">Arts & Crafts</option>
-                                            <option value="2">Automotive</option>
-                                            <option value="3">Baby</option>
-                                            <option value="4">Beauty & Personal Care</option>
-                                            <option value="5">Books</option>
+                                            <option label="Select Category"></option>
+                                            @foreach (var Prof in ViewBag.ProfessionList)
+                                            {
+                                                <option value="@Prof.Id">@Prof.Name</option>
+                                            }
+
                                         </select>
                                     </div>
                                 </div>
@@ -121,35 +121,35 @@
                                         <label class="form-control-label">Professional Keywords: <span class="tx-danger">*</span></label>
                                         <input class="form-control" type="text" id="Keywords" name="Keywords" value="@Model.ProfessionalKeyword" placeholder="Enter Keywords">
                                         @*<select class="form-control select2" data-placeholder="Choose Keywords" multiple>
-            <option value="1">Keyword 1</option>
-            <option value="2">Keyword 2</option>
-            <option value="3">Keyword 3</option>
-        </select>*@
+                                                <option value="1">Keyword 1</option>
+                                                <option value="2">Keyword 2</option>
+                                                <option value="3">Keyword 3</option>
+                                            </select>*@
                                     </div>
                                 </div>
                                 @*<div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Interest Category: <span class="tx-danger">*</span></label>
-                                        <select class="form-control select2-show-search" data-placeholder="Choose one ">
-                                            <option label="Choose one"></option>
-                                            <option value="0">Arts & Crafts</option>
-                                            <option value="1">Automotive</option>
-                                            <option value="2">Baby</option>
-                                            <option value="3">Beauty & Personal Care</option>
-                                            <option value="4">Books</option>
-                                        </select>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Interest Category: <span class="tx-danger">*</span></label>
+                                            <select class="form-control select2-show-search" data-placeholder="Choose one ">
+                                                <option label="Choose one"></option>
+                                                <option value="0">Arts & Crafts</option>
+                                                <option value="1">Automotive</option>
+                                                <option value="2">Baby</option>
+                                                <option value="3">Beauty & Personal Care</option>
+                                                <option value="4">Books</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Interests: <span class="tx-danger">*</span></label>
-                                        <select class="form-control select2" data-placeholder="Choose Keywords" multiple>
-                                            <option value="1">Interest 1</option>
-                                            <option value="2">Interest 2</option>
-                                            <option value="3">Interest 3</option>
-                                        </select>
-                                    </div>
-                                </div>*@
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Interests: <span class="tx-danger">*</span></label>
+                                            <select class="form-control select2" data-placeholder="Choose Keywords" multiple>
+                                                <option value="1">Interest 1</option>
+                                                <option value="2">Interest 2</option>
+                                                <option value="3">Interest 3</option>
+                                            </select>
+                                        </div>
+                                    </div>*@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Description: <span class="tx-danger">*</span></label>

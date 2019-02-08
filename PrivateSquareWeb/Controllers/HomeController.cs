@@ -36,6 +36,17 @@ namespace PrivateSquareWeb.Controllers
             return GetUserBusinessList;
 
         }
+        public List<ProductModel> GetProduct()
+        {
+            var GetUserProductList = new List<ProductModel>();
+            ProductModel objmodel = new ProductModel();
+            objmodel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            var _request = JsonConvert.SerializeObject(objmodel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
+            GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
+            return GetUserProductList;
+
+        }
         public List<UsersProfileModel> GetUsersNetwork()
         {
             var GetUserNetworkList = new List<UsersProfileModel>();
@@ -69,7 +80,7 @@ namespace PrivateSquareWeb.Controllers
         }
         public ActionResult ProductList()
         {
-            ViewBag.UsersBusiness = GetUsersBusiness();
+            ViewBag.UsersProduct = GetProduct();
             return View();
         }
         public ActionResult NetworkList()
