@@ -161,6 +161,34 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.GetProfession();
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel GetCountry()
+        {
+            var _result = _instance.GetCountry();
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel GetState(DropDownModel objModel)
+        {
+            var _result = _instance.GetState(objModel);
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel GetCity(DropDownModel objModel)
+        {
+            var _result = _instance.GetCity(objModel);
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel GetProductCategory()
+        {
+            var _result = _instance.GetProductCategory();
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -185,8 +213,11 @@ namespace PrivatesquaresWebApiNew.Services
 
         ResponseModel UpdateUserInterest(UserInterestModel objModel);
         ResponseModel GetProfession();
+        ResponseModel GetCountry();
+        ResponseModel GetState(DropDownModel objModel);
+        ResponseModel GetCity(DropDownModel objModel);
+        ResponseModel GetProductCategory();
 
-       
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

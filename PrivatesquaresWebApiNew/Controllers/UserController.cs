@@ -334,5 +334,46 @@ namespace PrivatesquaresWebApiNew.Controllers
             return sendJson;
         }
 
+        [Route("api/User/GetCountry")]
+        [HttpPost]
+        public IHttpActionResult GetCountry(RequestModel requestModel)
+        {
+
+            //var data = requestModel.Data;
+            //ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetCountry()), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
+
+        [Route("api/User/GetState")]
+        [HttpPost]
+        public IHttpActionResult GetState(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+
+            DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
+
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetState(objDropDownModel)), Success = true };
+
+            var sendJson = Json(sendResponse);
+
+            return sendJson;
+        }
+
+        [Route("api/User/GetProductCategory")]
+        [HttpPost]
+        // public IHttpActionResult Registeration(RequestModel requestModel)
+        public IHttpActionResult GetProductCategory(RequestModel requestModel)
+        {
+
+            var data = requestModel.Data;
+            DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProductCategory()), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
     }
 }

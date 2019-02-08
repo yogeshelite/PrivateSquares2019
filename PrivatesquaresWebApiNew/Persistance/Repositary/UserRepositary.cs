@@ -53,6 +53,16 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetUserBusiness(objModel.UserId).ToList();
         }
 
+        public IEnumerable<GetCity_Result> GetCity(DropDownModel objModel)
+        {
+            return Context.GetCity(objModel.StateId).ToList();
+        }
+
+        public IEnumerable<GetCountry_Result> GetCountry()
+        {
+            return Context.GetCountry().ToList();
+        }
+
         public IEnumerable<GetNetwork_Result> GetNetwork(NetworkModel networkModel)
         {
             return Context.GetNetwork(networkModel.LogInUserId).ToList();
@@ -63,9 +73,19 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetProduct(objModel.UserId).ToList();
         }
 
+        public IEnumerable<GetProductCategory_Result> GetProductCategory()
+        {
+            return Context.GetProductCategory().ToList();
+        }
+
         public IEnumerable<GetProfession_Result> GetProfession()
         {
             return Context.GetProfession().ToList();
+        }
+
+        public IEnumerable<GetState_Result> GetState(DropDownModel objModel)
+        {
+            return Context.GetState(objModel.CountryId).ToList();
         }
 
         public IEnumerable<GetUserBusiness_Result> GetUserbusiness(BusinessModel objModel)
@@ -160,6 +180,10 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         SaveUserInterest_Result UpdateUserInterest(UserInterestModel objModel);
         IEnumerable<GetProfession_Result> GetProfession();
+        IEnumerable<GetCountry_Result> GetCountry();
+        IEnumerable<GetState_Result> GetState(DropDownModel objModel);
+        IEnumerable<GetCity_Result> GetCity(DropDownModel objModel);
+        IEnumerable<GetProductCategory_Result> GetProductCategory();
     }
    
 }
