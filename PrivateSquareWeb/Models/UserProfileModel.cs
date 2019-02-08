@@ -17,7 +17,7 @@ namespace PrivateSquareWeb.Models
         public long ProfessionalCatId { get; set; }
         public string Title { get; set; }
         public string ProfessionalKeyword { get; set; }
-        public int CityId { get; set; }
+        public long CityId { get; set; }
         public string Password { get; set; }
         public long GenderId { get; set; }
         public DateTime DOB { get; set; }
@@ -25,6 +25,6 @@ namespace PrivateSquareWeb.Models
         public string Phone { get; set; }
         public string Pincode { get; set; }
         public long CountryId { get; set; }
-        
+        public long StateId { get; set; }
     }
 }

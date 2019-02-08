@@ -3,6 +3,13 @@
     ViewBag.Title = "Product";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<script>
+    function BtnCancel() {
+
+        window.location.href = "/Home/ProductList";
+    }
+</script>
 @using (Html.BeginForm("SaveProduct", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -24,7 +31,7 @@
                             <div class="col-lg-12 mg-t-21 p-0">
                                 <div class="custom-file">
                                     <input type="file" title="search image" id="FileUploadImage" name="FileUploadImage" class="custom-file-input">
-                                   
+
                                     <label class="custom-file-label custom-file-label-inverse" for="customFile">Upload Product Image</label>
                                 </div><!-- custom-file -->
                             </div><!-- col -->
@@ -36,38 +43,38 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Product Name: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="productname" value="" placeholder="Enter product name">
+                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @placeholder = "Enter product name" })
+                                        @*<input class="form-control" type="text" name="productname" value="" placeholder="Enter product name">*@
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Selling Price: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="sellingprice" value="" placeholder="Enter selling price">
+                                        @Html.TextBoxFor(m => m.SellingPrice, new { @class = "form-control", @placeholder = "Enter selling price" })
+                                        @*<input class="form-control" type="text" name="sellingprice" value="" placeholder="Enter selling price">*@
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Discount Price: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="discountPrice" value="" placeholder="Enter discount price">
+                                        @Html.TextBoxFor(m => m.DiscountPrice, new { @class = "form-control", @placeholder = "Enter discount price" })
+
+                                        @*<input class="form-control" type="text" name="discountPrice" value="" placeholder="Enter discount price">*@
                                     </div>
                                 </div><!-- col-4 -->
 
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                        <select class="form-control select2" data-placeholder="Choose Category" name="category">
-                                            <option label="Choose one"></option>
-                                            <option value="1">Arts & Crafts</option>
-                                            <option value="2">Automotive</option>
-                                            <option value="3">Baby</option>
-                                            <option value="4">Beauty & Personal Care</option>
-                                            <option value="5">Books</option>
-                                        </select>
+                                         @Html.DropDownListFor(m => m.ProductCatId, ViewBag.ProductCatList as SelectList, new { @class = "form-control select2-show-search" })
+
+                                      
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
+                                        
                                         <textarea class="form-control desc-height" type="text" name="description" value="" placeholder="Enter description"></textarea>
                                     </div>
 
@@ -86,7 +93,7 @@
 
                         <div class="form-layout-footer">
                             <button class="btn btn-primary bd-0">Save</button>
-                            <button class="btn btn-secondary bd-0">Cancel</button>
+                            <input type="button" value="Cancel" onclick="BtnCancel()" class="btn btn-secondary bd-0" />
                         </div><!-- form-layout-footer -->
                     </div><!-- form-layout -->
                 </div><!-- section-wrapper -->

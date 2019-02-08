@@ -24,5 +24,10 @@ namespace PrivateSquareWeb
         public const string ApiGetProfession = "User/GetProfession";
         public const string ApiGetProduct = "User/GetProduct";
 
+        public const string ApiGetCountry = "User/GetCountry";
+        public const string ApiGetState = "User/GetState";
+        public const string ApiGetCity = "User/GetCity";
+        public const string ApiGetProductCategory = "User/GetProductCategory";
+
     }
 }

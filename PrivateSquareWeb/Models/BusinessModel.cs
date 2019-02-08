@@ -20,6 +20,7 @@ namespace PrivateSquareWeb.Models
         public string Description { get; set; } = "";
         public long CountryId { get; set; } = 0;
         public string Phone { get; set; } = "";
+        public long StateId { get; set; } = 0;
         public string Operation { get; set; } = "";
     }
 }

@@ -3,6 +3,12 @@
     ViewBag.Title = "MyBusiness";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script>
+    function BtnCancel() {
+
+        window.location.href = "/Home/MyBusinessList";
+    }
+</script>
 @using (Html.BeginForm("SaveBussiness", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -23,7 +29,7 @@
                             <img src="~/theme/img/img0.jpg" class="img-fluid" alt="">
                             <div class="col-lg-12 mg-t-21 p-0">
                                 <div class="custom-file">
-                                  
+
                                     <input type="file" title="search image" id="FileUploadImage" name="FileUploadImage" class="custom-file-input">
                                     <label class="custom-file-label custom-file-label-inverse" for="customFile">Upload Business Logo</label>
                                 </div><!-- custom-file -->
@@ -36,58 +42,87 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Business Name: <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(m => m.BusinessName, new { @class = "form-control", @placeholder = "Enter business name" })
 
-                                        <input class="form-control" type="text" name="businessname" value="" placeholder="Enter business name">
+                                        @*<input class="form-control" type="text" name="businessname" value="" placeholder="Enter business name">*@
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Phone: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="phone" value="" placeholder="Enter phone number">
+                                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Enter phone number" })
+
+                                        @*<input class="form-control" type="text" name="phone" value="" placeholder="Enter phone number">*@
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Email address: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="email" value="" placeholder="Enter email address">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Enter email address" })
+
+                                        @*<input class="form-control" type="text" name="email" value="" placeholder="Enter email address">*@
                                     </div>
                                 </div><!-- col-4 -->
 
                                 <div class="col-lg-4">
                                     <div class="form-group mg-b-10-force">
                                         <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
-                                        <select class="form-control select2" data-placeholder="Choose country" name="country">
-                                            <option label="Choose country"></option>
-                                            <option value="1">United States of America</option>
-                                            <option value="2">United Kingdom</option>
-                                            <option value="3">China</option>
-                                            <option value="4">Japan</option>
-                                        </select>
+                                        @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList, new { @class = "form-control select2-show-search" })
+
+                                        @*<select class="form-control select2" data-placeholder="Choose country" name="country">
+                                                <option label="Choose country"></option>
+                                                @foreach (var Country in ViewBag.CountryList)
+                                                {
+                                                    <option value="@Country.Id">@Country.Name</option>
+                                                }
+                                            </select>*@
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">State: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="state" value="" placeholder="Enter state">
+                                        @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
+
+                                        @*<select class="form-control select2-show-search" data-placeholder="Choose one " name="state">
+                                                <option label="Choose one"></option>
+                                                @foreach (var State in ViewBag.StateList)
+                                                {
+                                                    <option value="@State.Id">@State.Name</option>
+                                                }
+                                            </select>*@
+                                        @*<input class="form-control" type="text" name="state" value="" placeholder="Enter state">*@
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">City: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="city" value="" placeholder="Enter city">
+                                        @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList, new { @class = "form-control select2-show-search" })
+
+                                        @*<select class="form-control select2-show-search" data-placeholder="Choose one " name="city">
+                                                <option label="Choose one"></option>
+                                                @foreach (var City in ViewBag.CityList)
+                                                {
+                                                    <option value="@City.Id">@City.Name</option>
+                                                }
+                                            </select>*@
+                                        @*<input class="form-control" type="text" name="city" value="" placeholder="Enter city">*@
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Pin Code: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="Pincode" value="" placeholder="Enter Pin Code">
+                                        @Html.TextBoxFor(m => m.PinCode, new { @class = "form-control", @placeholder = "Enter Pin Code" })
+
+                                        @*<input class="form-control" type="text" name="Pincode" value="" placeholder="Enter Pin Code">*@
                                     </div>
                                 </div><!-- col-4 -->
 
                                 <div class="col-lg-8">
                                     <div class="form-group mg-b-10-force">
                                         <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="address" value="" placeholder="Enter address">
+                                        @Html.TextBoxFor(m => m.Location, new { @class = "form-control", @placeholder = "Enter address" })
+
+                                        @*<input class="form-control" type="text" name="address" value="" placeholder="Enter address">*@
                                     </div>
                                 </div><!-- col-8 -->
 
@@ -102,20 +137,23 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="form-control-label">Professional Category: <span class="tx-danger">*</span></label>
-                                        <select class="form-control select2-show-search" data-placeholder="Choose one " name="ddlProfessionalCat">
+                                        @Html.DropDownListFor(m => m.ProfessionalCatId, ViewBag.ProfessionList as SelectList, new { @class = "form-control select2-show-search" })
+
+                                        @*<select class="form-control select2-show-search" data-placeholder="Choose one " name="ddlProfessionalCat">
                                             <option label="Choose one"></option>
-                                            <option value="1">Arts & Crafts</option>
-                                            <option value="2">Automotive</option>
-                                            <option value="3">Baby</option>
-                                            <option value="4">Beauty & Personal Care</option>
-                                            <option value="5">Books</option>
-                                        </select>
+                                            @foreach (var Prof in ViewBag.ProfessionList)
+                                            {
+                                                <option value="@Prof.Id">@Prof.Name</option>
+                                            }
+                                        </select>*@
                                     </div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <label class="form-control-label">Professional Keywords: <span class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="Keywords" value="" placeholder="Keywords">
+                                        @*<input class="form-control" type="text" name="Keywords" value="" placeholder="Keywords">*@
+
+                                        @Html.TextBoxFor(m => m.ProfessionalKeyword, new { @class = "form-control", @placeholder = "Enter Keywords" })
 
                                         @*<select class="form-control select2" data-placeholder="Choose Keywords" multiple>
                                                 <option value="Keyword 1">Keyword 1</option>
@@ -127,7 +165,9 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
-                                        <textarea class="form-control desc-height" type="text" name="description" value="" placeholder="Enter description"></textarea>
+                                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Enter description" })
+
+                                        @*<textarea class="form-control desc-height" type="text" name="description" value="" placeholder="Enter description"></textarea>*@
                                     </div>
                                 </div><!-- col-12 -->
                             </div><!-- col-12 -->
@@ -136,8 +176,8 @@
                     </div><!-- row -->
 
                     <div class="form-layout-footer">
-                        <input type="submit" class="btn btn-primary bd-0" value="Save"/>
-                        <button class="btn btn-secondary bd-0">Cancel</button>
+                        <input type="submit" class="btn btn-primary bd-0" value="Save" />
+                        <input type="button" value="Cancel" onclick="BtnCancel()" class="btn btn-secondary bd-0" />
                     </div><!-- form-layout-footer -->
                 </div><!-- form-layout -->
             </div><!-- section-wrapper -->

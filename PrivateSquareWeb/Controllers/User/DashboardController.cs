@@ -21,65 +21,82 @@ namespace PrivateSquareWeb.Controllers.User
         {
             var GetUserProfile = new List<UserProfileModel>();
             UserProfileModel objUserProfile = new UserProfileModel();
-            objUserProfile.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext,"usrId").Value);
+            objUserProfile.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
             var _request = JsonConvert.SerializeObject(objUserProfile);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProfile, _request);
             GetUserProfile = JsonConvert.DeserializeObject<List<UserProfileModel>>(ObjResponse.Response);
             return GetUserProfile;
 
         }
-        public List<DropDownModel> GetProfession()
-        {
-            var ProfessionList = new List<DropDownModel>();
-            DropDownModel objUserProfile = new DropDownModel();
-          //  var _request = JsonConvert.SerializeObject(objUserProfile);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProfession,"");
-            ProfessionList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
-            return ProfessionList;
-        }
+
         public ActionResult Product()
         {
+            //List<DropDownModel> listDrop = new List<DropDownModel>();
+            //ViewBag.ProductCatList = listDrop;
+
+            var ProductCatList = CommonFile.GetProductCategory();
+            ViewBag.ProductCatList = new    SelectList(ProductCatList,"Id","Name");
+
             return View();
         }
         [HttpPost]
-        public ActionResult SaveProduct( FormCollection frmColl)
+        public ActionResult SaveProduct(FormCollection frmColl, ProductModel ObjProductModel)
         {
-            HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
 
-            String FileName = SaveImage(FileUpload);
-            ProductModel ObjProductModel = new ProductModel();
-            ObjProductModel.Id = 0;
-            ObjProductModel.ProductName = frmColl["productname"];
-            ObjProductModel.ProductCatId= Convert.ToInt64(frmColl["category"]);
-            ObjProductModel.ProductImage = FileName;
-            ObjProductModel.SellingPrice = Convert.ToInt64(frmColl["sellingprice"]); 
-            ObjProductModel.DiscountPrice = Convert.ToInt64(frmColl["discountPrice"]);
-           // ObjProductModel.Description = frmColl["description"];
-            ObjProductModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext,"usrId").Value);
-            ObjProductModel.Operation = "insert";
-            var _request = JsonConvert.SerializeObject(ObjProductModel);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProduct, _request);
-            if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+            if (ModelState.IsValid)
             {
-                return View("Product", ObjProductModel);
+                HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
 
+                String FileName = SaveImage(FileUpload);
+
+                //ObjProductModel.Id = 0;
+                //ObjProductModel.ProductName = frmColl["productname"];
+                //ObjProductModel.SellingPrice = Convert.ToInt64(frmColl["sellingprice"]);
+                //ObjProductModel.DiscountPrice = Convert.ToInt64(frmColl["discountPrice"]);
+                // ObjProductModel.Description = frmColl["description"];
+
+               // ObjProductModel.ProductCatId = Convert.ToInt64(frmColl["category"]);
+                ObjProductModel.ProductImage = FileName;
+                ObjProductModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+                ObjProductModel.Operation = "insert";
+                var _request = JsonConvert.SerializeObject(ObjProductModel);
+                ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProduct, _request);
+                if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+                {
+                    return View("Product", ObjProductModel);
+
+                }
+                return RedirectToAction("MyBusinessList", "Home");
             }
-
-            return RedirectToAction("MyBusinessList", "Home");
+            return View("Product");
         }
         public ActionResult PersonalProfile()
         {
             List<UserProfileModel> UserProfile = GetUserProfile();
-            var listProfession=GetProfession();
-            ViewBag.ProfessionList = listProfession;
+            var listProfession = CommonFile.GetProfession();
+            ViewBag.ProfessionList = new SelectList(listProfession,"Id","Name");
+
+
+            var CountryList = CommonFile.GetCountry();
+            ViewBag.CountryList = new SelectList(CountryList,"Id","Name");
+
+            var StateList = CommonFile.GetState();
+            ViewBag.StateList = new SelectList(StateList, "Id", "Name"); 
+            
+            //var CityList =new List<DropDownModel>();
+            //ViewBag.CityList = CityList;
+            
+            var CityList = CommonFile.GetCity();
+            ViewBag.CityList = new SelectList(CityList, "Id", "Name");
+
             UserProfileModel objModel = new UserProfileModel();
-            if (UserProfile == null )
+            if (UserProfile == null)
             {
 
             }
-            else if(UserProfile == null && UserProfile.Count()>0)
+            else if (UserProfile == null && UserProfile.Count() > 0)
             {
-                
+
                 objModel.FirstName = UserProfile[0].FirstName;
                 objModel.LastName = UserProfile[0].LastName;
                 objModel.Location = UserProfile[0].Location;
@@ -103,83 +120,100 @@ namespace PrivateSquareWeb.Controllers.User
                 //frmColl.Add("description", objModel.Description);
                 //frmColl.Add("phone", objModel.Phone);
                 //frmColl.Add("country", objModel.CountryId.ToString());
-                
+
             }
             return View(objModel);
         }
 
         public ActionResult MyBusiness()
         {
+            var listProfession = CommonFile.GetProfession();
+            ViewBag.ProfessionList = new SelectList(listProfession,"Id","Name");
+            var CityList = CommonFile.GetCity();
+            ViewBag.CityList =new SelectList(CityList, "Id", "Name");
+            var StateList = CommonFile.GetState();
+            ViewBag.StateList =new SelectList(StateList,"Id","Name");
+            var CountryList = CommonFile.GetCountry();
+            ViewBag.CountryList =new SelectList(CountryList, "Id", "Name");
+
             return View();
         }
         [HttpPost]
-        public ActionResult SaveProfile(FormCollection frmColl)
+        public ActionResult SaveProfile(FormCollection frmColl, UserProfileModel objModel)
         {
-            HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
-
-            String FileName = SaveImage(FileUpload);
-
-
-            UserProfileModel objModel = new UserProfileModel();
-            objModel.Id = 0;
-            objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
-            objModel.Phone= Services.GetCookie(this.ControllerContext.HttpContext, "usrName").Value;
-            objModel.FirstName = frmColl["firstname"];
-            objModel.LastName = frmColl["lastname"];
-            objModel.Location = frmColl["address"];
-            objModel.DOB = Convert.ToDateTime(frmColl["dob"]);
-            objModel.ProfessionalCatId = Convert.ToInt64(frmColl["ddlProfessionalCat"]);
-            objModel.ProfessionalKeyword = frmColl["Keywords"];
-            objModel.Pincode = frmColl["Pincode"];
-            objModel.EmailId = frmColl["email"];
-            objModel.Description = frmColl["description"];
-            objModel.Phone = frmColl["phone"];
-            objModel.CountryId = Convert.ToInt64(frmColl["country"]);
-            objModel.ProfileImage = FileName;
-            //objModel.Operation = "insert";
-            var _request = JsonConvert.SerializeObject(objModel);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProfile, _request);
-            if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+            if (ModelState.IsValid)
             {
-                return View("Index", objModel);
+                HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
+                String FileName = SaveImage(FileUpload);
+                //UserProfileModel objModel = new UserProfileModel();
+                //objModel.FirstName = frmColl["firstname"];
+                //objModel.LastName = frmColl["lastname"];
+                //objModel.Location = frmColl["address"];
+                //objModel.DOB = Convert.ToDateTime(frmColl["dob"]);
+                //objModel.ProfessionalKeyword = frmColl["Keywords"];
+                //objModel.Pincode = frmColl["Pincode"];
+                //objModel.EmailId = frmColl["email"];
+                //objModel.Description = frmColl["description"];
+                //objModel.Phone = frmColl["phone"];
 
+                objModel.Id = 0;
+                objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+                objModel.Phone = Services.GetCookie(this.ControllerContext.HttpContext, "usrName").Value;
+                objModel.ProfessionalCatId = Convert.ToInt64(frmColl["ddlProfessionalCat"]);
+                //objModel.CountryId = Convert.ToInt64(frmColl["country"]);
+                //objModel.CityId = Convert.ToInt64(frmColl["city"]);
+                //objModel.StateId = Convert.ToInt64(frmColl["state"]);
+                objModel.ProfileImage = FileName;
+                //objModel.Operation = "insert";
+                var _request = JsonConvert.SerializeObject(objModel);
+                ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProfile, _request);
+                if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+                {
+                    return View("Index", objModel);
+
+                }
+
+                return RedirectToAction("MyBusinessList", "Home");
             }
-
-            return RedirectToAction("MyBusinessList", "Home");
-            
+            return View("PersonalProfile");
         }
         [HttpPost]
-        public ActionResult SaveBussiness(FormCollection frmColl, HttpPostedFileBase FileUpload1)
+        public ActionResult SaveBussiness(FormCollection frmColl, BusinessModel objModel)
         {
 
-            HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
-
-            String FileName = SaveImage(FileUpload);
-           
-
-            BusinessModel objModel = new BusinessModel();
-            objModel.Id = 0;
-            objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext,"usrId").Value);
-            objModel.BusinessName = frmColl["businessname"];
-            objModel.Location = frmColl["address"];
-            objModel.ProfessionalCatId = Convert.ToInt64(frmColl["ddlProfessionalCat"]);
-            objModel.ProfessionalKeyword = frmColl["Keywords"];
-            objModel.PinCode = frmColl["Pincode"];
-            objModel.Email = frmColl["email"]; 
-            objModel.Description = frmColl["description"];
-            objModel.Phone = frmColl["phone"]; 
-            objModel.CountryId = Convert.ToInt64(frmColl["country"]) ;
-            objModel.BusinessLogo = FileName;
-            objModel.Operation = "insert";
-            var _request = JsonConvert.SerializeObject(objModel);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveBusiness, _request);
-            if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+            if (ModelState.IsValid)
             {
-                return View("Index", objModel);
+                HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
+                String FileName = SaveImage(FileUpload);
+                //BusinessModel objModel = new BusinessModel();
+                objModel.Id = 0;
+                objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+                objModel.BusinessLogo = FileName;
+                objModel.Operation = "insert";
 
+                //objModel.ProfessionalCatId = Convert.ToInt64(frmColl["ddlProfessionalCat"]);
+                //objModel.CountryId = Convert.ToInt64(frmColl["country"]);
+                //objModel.CityId = Convert.ToInt64(frmColl["city"]);
+                //objModel.StateId = Convert.ToInt64(frmColl["state"]);
+
+                //objModel.BusinessName = frmColl["businessname"];
+                //objModel.Location = frmColl["address"];
+                //objModel.ProfessionalKeyword = frmColl["Keywords"];
+                //objModel.PinCode = frmColl["Pincode"];
+                //objModel.Email = frmColl["email"];
+                //objModel.Description = frmColl["description"];
+                //objModel.Phone = frmColl["phone"];
+                var _request = JsonConvert.SerializeObject(objModel);
+                ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveBusiness, _request);
+                if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+                {
+                    return View("Index", objModel);
+
+                }
+
+                return RedirectToAction("MyBusinessList", "Home");
             }
-
-            return RedirectToAction("MyBusinessList","Home");
+            return View("MyBusiness");
         }
         private String SaveImage(HttpPostedFileBase FileUpload)
         {

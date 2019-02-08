@@ -1,9 +1,6 @@
 ﻿
 @{
-                /**/
-
-                ViewBag.Title = "Interest";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Interest";
 }
 <script type="text/javascript">
 
@@ -19,7 +16,8 @@
         document.getElementById('TxtInterest').value = sorted_arr;
         var strt = "<li>";
         var end = "</li>";
-        var LiValue = strt + ddlText+end;
+        var deleteBtn = ""; //'<input type="Button" onclick="DeleteInterest(' + ddlValue + ',' + sorted_arr + ')" value="X"/>';
+        var LiValue = strt + ddlText + deleteBtn + end;
         $('#ulSelectInterest').append(LiValue);
         //var results = [];
         //var IsDuplicate = false;
@@ -30,6 +28,20 @@
         //    }
         //}
 
+    }
+    function DeleteInterest(value) {
+        alert('Delete ' + value);
+        var sorted_arr = ArrayInterestId.slice().sort();
+        alert(sorted_arr.length);
+        for (var i = 0; i < sorted_arr.length; i++) {
+            alert("Array I  " + Number(sorted_arr[i]) + 'Value =' + Number(value));
+            if (Number(sorted_arr[i]) == Number(value)) {
+                alert('EnterIf');
+                sorted_arr = sorted_arr.splice(i, 1);
+                console.log(sorted_arr);
+            }
+        }
+        document.getElementById('TxtInterest').value = sorted_arr;
     }
     function GetCatwiseInterest() {
         $('#DdlInterestCatwise').empty();

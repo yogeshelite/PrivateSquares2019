@@ -9,5 +9,7 @@ namespace PrivateSquareWeb.Models
     {
         public long Id { get; set; }
         public String Name { get; set; }
+        public long? CountryId { get; set; }
+        public long? StateId { get; set; }
     }
 }
