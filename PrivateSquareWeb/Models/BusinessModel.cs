@@ -8,7 +8,7 @@ namespace PrivateSquareWeb.Models
 {
     public class BusinessModel
     {
-        public int Id { get; set; } = 0;
+        public long Id { get; set; } = 0;
         [Required(ErrorMessage = "Name is Required")]
         public string BusinessName { get; set; } = "";
         [Required(ErrorMessage ="Business Location cannot be empty !")]
