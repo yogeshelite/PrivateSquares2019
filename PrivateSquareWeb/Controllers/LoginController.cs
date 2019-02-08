@@ -14,7 +14,8 @@ namespace PrivateSquareWeb.Controllers
         // GET: Login
         public ActionResult Index()
         {
-
+            Services.RemoveCookie(this.ControllerContext.HttpContext, "usrId");
+            Services.RemoveCookie(this.ControllerContext.HttpContext, "usrName");
             return View();
         }
         public PartialViewResult SidebarValue()

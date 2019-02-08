@@ -13,7 +13,12 @@ namespace PrivateSquareWeb.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.AllUsers = GetAllUsers();
+            List<UsersProfileModel> usersList = GetAllUsers();
+            //if (Services.GetCookie(this.ControllerContext.HttpContext,"usrId") != null)
+            //{
+                
+            //}
+            ViewBag.AllUsers = usersList;
             return View();
         }
         public List<UsersProfileModel> GetAllUsers()
@@ -91,16 +96,24 @@ namespace PrivateSquareWeb.Controllers
         [HttpPost]
         public JsonResult AddNetwork(NetworkModel objNetworkModel)
         {
-            
-            objNetworkModel.LogInUserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
-            objNetworkModel.Operation = "insert";
-            var _request = JsonConvert.SerializeObject(objNetworkModel);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveNetwork, _request);
-            if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+            if (Services.GetCookie(this.ControllerContext.HttpContext, "usrId") != null)
             {
+                objNetworkModel.LogInUserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+
+                objNetworkModel.Operation = "insert";
+                var _request = JsonConvert.SerializeObject(objNetworkModel);
+                ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveNetwork, _request);
+                if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+                {
+                }
+                String Response = "[{\"Response\":\"" + ObjResponse.Response + "\"}]";
+                return Json(Response);
             }
-            String Response = "[{\"Response\":\"" + ObjResponse.Response + "\"}]";
-            return Json(Response);
+            else
+            {
+                String Response = "[{\"Response\":\"" +" NotLogin" + "\"}]";
+                return Json(Response);
+            }
         }
     }
 }

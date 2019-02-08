@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "MyBusinessList";
-   
+
 }
 
 <div class="slim-mainpanel">
@@ -50,66 +50,72 @@
                                 <div class="hobbie-item">
                                     <span class="hobbies">@*@Users.InterestName*@</span>@*<span class="hobbies">Music</span><span class="hobbies">Books</span>*@
                                 </div><!-- contact-item -->
-                                <button class="btn btn-outline-primary btn-block ps-btn-radius ps-btn-wdth-100"><i class=""></i> Get In Touch</button>
+                                    <div ><br/></div>
+                                @*<a href="@Url.Action("EditMyBusiness", "Dashboard", new { Id = Users.Id })"
+                                       class="btn btn-outline-primary btn-block ps-btn-radius ps-btn-wdth-100">Edit</a>*@
+
+
+                                    <button class="btn btn-outline-primary btn-block ps-btn-radius ps-btn-wdth-100"
+                                            onclick='window.location ="@Url.Action("EditMyBusiness", "Dashboard", new { Id = Users.Id })"'><i class=""></i>Edit</button>
 
 
                             </div><!-- card -->
                         </div>
                     }
 
-                    <div class="col-sm-6 col-lg-4 mg-b-20">
-                        <div class="card-contact card-min-height">
-                            <div class="tx-center">
-                                <a href=""><img src="~/theme/img/logo1.jpg" class="card-img" alt=""></a>
-                                <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">Elite Web Technologies</a></h5>
-                                <p>Computer and Technology</p>
-                                <p>Chandigarh, India</p>
-                                <p class="contact-social">
-                                    <a href=""><i class="fa fa-facebook"></i></a>
-                                    <a href=""><i class="fa fa-twitter"></i></a>
-                                    <a href=""><i class="fa fa-google"></i></a>
-                                </p>
-                            </div><!-- tx-center -->
+                    @*<div class="col-sm-6 col-lg-4 mg-b-20">
+                            <div class="card-contact card-min-height">
+                                <div class="tx-center">
+                                    <a href=""><img src="~/theme/img/logo1.jpg" class="card-img" alt=""></a>
+                                    <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">Elite Web Technologies</a></h5>
+                                    <p>Computer and Technology</p>
+                                    <p>Chandigarh, India</p>
+                                    <p class="contact-social">
+                                        <a href=""><i class="fa fa-facebook"></i></a>
+                                        <a href=""><i class="fa fa-twitter"></i></a>
+                                        <a href=""><i class="fa fa-google"></i></a>
+                                    </p>
+                                </div><!-- tx-center -->
 
 
-                            <p class="contact-item">
+                                <p class="contact-item">
 
-                                <span class="text-center">.Net, php, Java, Web Developer, Angular JS, Ruby, Python, C/C++</span>
-                            </p><!-- contact-item -->
-
-
-                        </div><!-- card -->
-                    </div>
-                    <div class="col-sm-6 col-lg-4 mg-b-20">
-
-                        <div class="card-contact card-min-height">
-                            <div class="tx-center">
-
-                                <a href=""><img src="~/theme/img/user-1.jpg" class="card-img" alt=""></a>
-                                <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">Amit jindal</a></h5>
-                                <p>Software Developer (CHD)</p>
-
-                                <p class="contact-social">
-                                    <a href=""><i class="fa fa-facebook"></i></a>
-                                    <a href=""><i class="fa fa-twitter"></i></a>
-                                    <a href=""><i class="fa fa-google"></i></a>
-                                </p>
-                            </div><!-- tx-center -->
+                                    <span class="text-center">.Net, php, Java, Web Developer, Angular JS, Ruby, Python, C/C++</span>
+                                </p><!-- contact-item -->
 
 
-                            <p class="contact-item">
+                            </div><!-- card -->
+                        </div>
+                        <div class="col-sm-6 col-lg-4 mg-b-20">
 
-                                <span class="text-center">.Net, php, Java, Web Developer, Angular JS, Ruby, Python, C/C++</span>
+                            <div class="card-contact card-min-height">
+                                <div class="tx-center">
 
-                            </p><!-- contact-item -->
+                                    <a href=""><img src="~/theme/img/user-1.jpg" class="card-img" alt=""></a>
+                                    <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">Amit jindal</a></h5>
+                                    <p>Software Developer (CHD)</p>
 
-                            <div class="hobbie-item">
-                                <span class="hobbies">Cricket</span><span class="hobbies">Music</span><span class="hobbies">Books</span>
-                            </div><!-- contact-item -->
-                            <button class="btn btn-outline-primary btn-block ps-btn-radius ps-btn-wdth-100"><i class=""></i> Get In Touch</button>
+                                    <p class="contact-social">
+                                        <a href=""><i class="fa fa-facebook"></i></a>
+                                        <a href=""><i class="fa fa-twitter"></i></a>
+                                        <a href=""><i class="fa fa-google"></i></a>
+                                    </p>
+                                </div><!-- tx-center -->
 
-                        </div><!-- card -->
-                    </div>
+
+                                <p class="contact-item">
+
+                                    <span class="text-center">.Net, php, Java, Web Developer, Angular JS, Ruby, Python, C/C++</span>
+
+                                </p><!-- contact-item -->
+
+                                <div class="hobbie-item">
+                                    <span class="hobbies">Cricket</span><span class="hobbies">Music</span><span class="hobbies">Books</span>
+                                </div><!-- contact-item -->
+                                <button class="btn btn-outline-primary btn-block ps-btn-radius ps-btn-wdth-100"><i class=""></i> Get In Touch</button>
+
+                            </div><!-- card -->
+                        </div>*@
 
                 </div><!-- row -->
 

@@ -35,13 +35,16 @@ namespace PrivateSquareWeb.Controllers.User
             //ViewBag.ProductCatList = listDrop;
 
             var ProductCatList = CommonFile.GetProductCategory();
-            ViewBag.ProductCatList = new    SelectList(ProductCatList,"Id","Name");
+            ViewBag.ProductCatList = new SelectList(ProductCatList, "Id", "Name");
 
             return View();
         }
         [HttpPost]
         public ActionResult SaveProduct(FormCollection frmColl, ProductModel ObjProductModel)
         {
+            var ProductCatList = CommonFile.GetProductCategory();
+
+            ViewBag.ProductCatList = new SelectList(ProductCatList, "Id", "Name");
 
             if (ModelState.IsValid)
             {
@@ -55,7 +58,7 @@ namespace PrivateSquareWeb.Controllers.User
                 //ObjProductModel.DiscountPrice = Convert.ToInt64(frmColl["discountPrice"]);
                 // ObjProductModel.Description = frmColl["description"];
 
-               // ObjProductModel.ProductCatId = Convert.ToInt64(frmColl["category"]);
+                // ObjProductModel.ProductCatId = Convert.ToInt64(frmColl["category"]);
                 ObjProductModel.ProductImage = FileName;
                 ObjProductModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
                 ObjProductModel.Operation = "insert";
@@ -66,26 +69,26 @@ namespace PrivateSquareWeb.Controllers.User
                     return View("Product", ObjProductModel);
 
                 }
-                return RedirectToAction("MyBusinessList", "Home");
+                return RedirectToAction("ProductList", "Home");
             }
-            return View("Product");
+            return View("Product",ObjProductModel);
         }
         public ActionResult PersonalProfile()
         {
             List<UserProfileModel> UserProfile = GetUserProfile();
             var listProfession = CommonFile.GetProfession();
-            ViewBag.ProfessionList = new SelectList(listProfession,"Id","Name");
+            ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
 
 
             var CountryList = CommonFile.GetCountry();
-            ViewBag.CountryList = new SelectList(CountryList,"Id","Name");
+            ViewBag.CountryList = new SelectList(CountryList, "Id", "Name");
 
             var StateList = CommonFile.GetState();
-            ViewBag.StateList = new SelectList(StateList, "Id", "Name"); 
-            
+            ViewBag.StateList = new SelectList(StateList, "Id", "Name");
+
             //var CityList =new List<DropDownModel>();
             //ViewBag.CityList = CityList;
-            
+
             var CityList = CommonFile.GetCity();
             ViewBag.CityList = new SelectList(CityList, "Id", "Name");
 
@@ -94,7 +97,7 @@ namespace PrivateSquareWeb.Controllers.User
             {
 
             }
-            else if (UserProfile == null && UserProfile.Count() > 0)
+            else if (UserProfile != null && UserProfile.Count() > 0)
             {
 
                 objModel.FirstName = UserProfile[0].FirstName;
@@ -107,7 +110,10 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.Description = UserProfile[0].Description;
                 objModel.Phone = UserProfile[0].Phone;
                 objModel.CountryId = UserProfile[0].CountryId;
-
+                objModel.Title = UserProfile[0].Title;
+                objModel.ProfessionalKeyword = UserProfile[0].ProfessionalKeyword;
+                objModel.ProfileImage = UserProfile[0].ProfileImage;
+                objModel.Location = UserProfile[0].Location;
                 //FormCollection frmColl = new FormCollection();
                 //frmColl.Add("firstname", objModel.FirstName);
                 //frmColl.Add("lastname", objModel.LastName);
@@ -128,16 +134,32 @@ namespace PrivateSquareWeb.Controllers.User
         public ActionResult MyBusiness()
         {
             var listProfession = CommonFile.GetProfession();
-            ViewBag.ProfessionList = new SelectList(listProfession,"Id","Name");
+            ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
             var CityList = CommonFile.GetCity();
-            ViewBag.CityList =new SelectList(CityList, "Id", "Name");
+            ViewBag.CityList = new SelectList(CityList, "Id", "Name");
             var StateList = CommonFile.GetState();
-            ViewBag.StateList =new SelectList(StateList,"Id","Name");
+            ViewBag.StateList = new SelectList(StateList, "Id", "Name");
             var CountryList = CommonFile.GetCountry();
-            ViewBag.CountryList =new SelectList(CountryList, "Id", "Name");
+            ViewBag.CountryList = new SelectList(CountryList, "Id", "Name");
 
             return View();
         }
+        public List<BusinessModel> GetBusiness()
+        {
+            var GetBusiness = new List<BusinessModel>();
+            BusinessModel objUserProfile = new BusinessModel();
+            objUserProfile.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            var _request = JsonConvert.SerializeObject(objUserProfile);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetBusiness, _request);
+            GetBusiness = JsonConvert.DeserializeObject<List<BusinessModel>>(ObjResponse.Response);
+            return GetBusiness;
+
+        }
+        public ActionResult EditMyBusiness(long Id)
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult SaveProfile(FormCollection frmColl, UserProfileModel objModel)
         {
@@ -159,7 +181,7 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.Id = 0;
                 objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
                 objModel.Phone = Services.GetCookie(this.ControllerContext.HttpContext, "usrName").Value;
-                objModel.ProfessionalCatId = Convert.ToInt64(frmColl["ddlProfessionalCat"]);
+                //objModel.ProfessionalCatId = Convert.ToInt64(frmColl["ddlProfessionalCat"]);
                 //objModel.CountryId = Convert.ToInt64(frmColl["country"]);
                 //objModel.CityId = Convert.ToInt64(frmColl["city"]);
                 //objModel.StateId = Convert.ToInt64(frmColl["state"]);
@@ -180,7 +202,21 @@ namespace PrivateSquareWeb.Controllers.User
         [HttpPost]
         public ActionResult SaveBussiness(FormCollection frmColl, BusinessModel objModel)
         {
+            var listProfession = CommonFile.GetProfession();
 
+            ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
+
+            var CityList = CommonFile.GetCity();
+
+            ViewBag.CityList = new SelectList(CityList, "Id", "Name");
+
+            var StateList = CommonFile.GetState();
+
+            ViewBag.StateList = new SelectList(StateList, "Id", "Name");
+
+            var CountryList = CommonFile.GetCountry();
+
+            ViewBag.CountryList = new SelectList(CountryList, "Id", "Name");
             if (ModelState.IsValid)
             {
                 HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
@@ -207,13 +243,13 @@ namespace PrivateSquareWeb.Controllers.User
                 ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveBusiness, _request);
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
                 {
-                    return View("Index", objModel);
+                    return View("MyBusiness", objModel);
 
                 }
 
                 return RedirectToAction("MyBusinessList", "Home");
             }
-            return View("MyBusiness");
+            return View("MyBusiness",objModel);
         }
         private String SaveImage(HttpPostedFileBase FileUpload)
         {
