@@ -133,7 +133,7 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.Title = UserProfile[0].Title;
                 objModel.ProfessionalKeyword = UserProfile[0].ProfessionalKeyword;
                 objModel.ProfileImage = UserProfile[0].ProfileImage;
-                objModel.Location = UserProfile[0].Location;
+                
             }
             return View(objModel);
         }
@@ -198,26 +198,11 @@ namespace PrivateSquareWeb.Controllers.User
             {
                 HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
                 String FileName = SaveImage(FileUpload);
-                //UserProfileModel objModel = new UserProfileModel();
-                //objModel.FirstName = frmColl["firstname"];
-                //objModel.LastName = frmColl["lastname"];
-                //objModel.Location = frmColl["address"];
-                //objModel.DOB = Convert.ToDateTime(frmColl["dob"]);
-                //objModel.ProfessionalKeyword = frmColl["Keywords"];
-                //objModel.Pincode = frmColl["Pincode"];
-                //objModel.EmailId = frmColl["email"];
-                //objModel.Description = frmColl["description"];
-                //objModel.Phone = frmColl["phone"];
-
+                
                 objModel.Id = 0;
                 objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
                 objModel.Phone = Services.GetCookie(this.ControllerContext.HttpContext, "usrName").Value;
-                //objModel.ProfessionalCatId = Convert.ToInt64(frmColl["ddlProfessionalCat"]);
-                //objModel.CountryId = Convert.ToInt64(frmColl["country"]);
-                //objModel.CityId = Convert.ToInt64(frmColl["city"]);
-                //objModel.StateId = Convert.ToInt64(frmColl["state"]);
                 objModel.ProfileImage = FileName;
-                //objModel.Operation = "insert";
                 var _request = JsonConvert.SerializeObject(objModel);
                 ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProfile, _request);
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
@@ -225,7 +210,10 @@ namespace PrivateSquareWeb.Controllers.User
                     return View("Index", objModel);
 
                 }
-
+                String UserName = string.Concat(objModel.FirstName, " ", objModel.LastName);
+                Services.SetCookie(this.ControllerContext.HttpContext, "usrName", UserName);
+                HeaderPartialModel objHeaderModel = new HeaderPartialModel();
+                objHeaderModel.UserName = UserName;
                 return RedirectToAction("MyBusinessList", "Home");
             }
             return View("PersonalProfile");

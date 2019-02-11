@@ -18,12 +18,7 @@ namespace PrivateSquareWeb.Controllers
             Services.RemoveCookie(this.ControllerContext.HttpContext, "usrName");
             return View();
         }
-        public PartialViewResult SidebarValue()
-        {
-            //UserSubscribePlain = GetUserSubscriptionPlan();
-            //ViewBag.UserSubscribePlain = UserSubscribePlain;
-            return PartialView("~\\Views\\Shared\\_OTP.cshtml");
-        }
+      
         public ActionResult Register()
         {
             return View();
@@ -112,7 +107,9 @@ namespace PrivateSquareWeb.Controllers
                 //ViewBag.LoginMessage = "Login Success";
                 String LoginType = (string)Session["LoginType"];
                 if (LoginType.Equals("R"))
-                    return RedirectToAction("GetStart", "Login");
+
+                    return RedirectToAction("Index", "Interest");
+                
                 else
                     return RedirectToAction("Index", "Home");
 

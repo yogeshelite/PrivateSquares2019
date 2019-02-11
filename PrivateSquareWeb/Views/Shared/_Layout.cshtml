@@ -9,7 +9,9 @@
 </head>
 <body>
     <header>
-        @{Html.RenderPartial("_Header");
+        @{
+            //Html.RenderPartial("_Header");
+            Html.RenderAction("HeaderValue", "HeaderPartial");
         }
     </header>
 

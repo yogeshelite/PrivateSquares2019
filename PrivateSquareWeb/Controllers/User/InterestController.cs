@@ -82,7 +82,8 @@ namespace PrivateSquareWeb.Controllers.User
                 return View("Index");
 
             }
-            return RedirectToAction("Index", "Home"); ;
+            return RedirectToAction("GetStart", "Login");
+            //return RedirectToAction("Index", "Home"); ;
         }
         //private ResponseModel GetApiResponse(string Url, String Data)
         //{
