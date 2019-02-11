@@ -18,7 +18,7 @@ namespace PrivateSquareWeb.Models
         public decimal DiscountPrice { get; set; }
         public long BusinessId { get; set; }
         public long UserId { get; set; }
-       // public string Description { get; set; }
+        public string Description { get; set; }
         public string Operation { get; set; }
     }
 }

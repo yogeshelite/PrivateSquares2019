@@ -260,8 +260,6 @@ namespace PrivatesquaresWebApiNew.Controllers
 
         [HttpPost]
 
-        // public IHttpActionResult Registeration(RequestModel requestModel)
-
         public IHttpActionResult GetProduct(RequestModel requestModel)
 
         {
@@ -385,6 +383,24 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetCity(objDropDownModel)), Success = true };
 
             var sendJson = Json(sendResponse);
+            return sendJson;
+
+        }
+
+        [Route("api/User/GetProductDetail")]
+
+        [HttpPost]
+
+        public IHttpActionResult GetProductDetail(RequestModel requestModel)
+
+        {
+            var data = requestModel.Data;
+            ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProductDetail(objProductModel)), Success = true };
+
+            var sendJson = Json(sendResponse);
+
             return sendJson;
 
         }

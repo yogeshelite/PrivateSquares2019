@@ -36,8 +36,41 @@ namespace PrivateSquareWeb.Controllers.User
 
             var ProductCatList = CommonFile.GetProductCategory();
             ViewBag.ProductCatList = new SelectList(ProductCatList, "Id", "Name");
+            ProductModel objModel = new ProductModel();
+            return View(objModel);
+        }
+        public List<ProductModel> GetProduct(long Id)
+        {
+            var GetProduct = new List<ProductModel>();
+            ProductModel objProduct = new ProductModel();
+            objProduct.Id = Id;
+            objProduct.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            var _request = JsonConvert.SerializeObject(objProduct);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProductDetail, _request);
+            GetProduct = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
+            return GetProduct;
 
-            return View();
+        }
+        public ActionResult EditProduct(long Id)
+        {
+            var ProductCatList = CommonFile.GetProductCategory();
+            ViewBag.ProductCatList = new SelectList(ProductCatList, "Id", "Name");
+            List<ProductModel> Product = GetProduct(Id);
+            ProductModel objModel = new ProductModel();
+            if (Product != null && Product.Count() > 0)
+            {
+                objModel.Id = Id;
+                objModel.ProductName = Product[0].ProductName;
+                objModel.ProductCatId = Product[0].ProductCatId;
+                objModel.ProductImage = Product[0].ProductImage;
+                objModel.SellingPrice = Product[0].SellingPrice;
+                objModel.DiscountPrice = Product[0].DiscountPrice;
+                objModel.BusinessId = Product[0].BusinessId;
+                objModel.UserId = Product[0].UserId;
+                objModel.Description = Product[0].Description;
+
+            }
+            return View("Product", objModel);
         }
         [HttpPost]
         public ActionResult SaveProduct(FormCollection frmColl, ProductModel ObjProductModel)
@@ -52,16 +85,14 @@ namespace PrivateSquareWeb.Controllers.User
 
                 String FileName = SaveImage(FileUpload);
 
-                //ObjProductModel.Id = 0;
-                //ObjProductModel.ProductName = frmColl["productname"];
-                //ObjProductModel.SellingPrice = Convert.ToInt64(frmColl["sellingprice"]);
-                //ObjProductModel.DiscountPrice = Convert.ToInt64(frmColl["discountPrice"]);
-                // ObjProductModel.Description = frmColl["description"];
-
-                // ObjProductModel.ProductCatId = Convert.ToInt64(frmColl["category"]);
                 ObjProductModel.ProductImage = FileName;
                 ObjProductModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
-                ObjProductModel.Operation = "insert";
+
+                if (ObjProductModel.Id == 0)
+                    ObjProductModel.Operation = "insert";
+                else if (ObjProductModel.Id != 0)
+                    ObjProductModel.Operation = "Update";
+
                 var _request = JsonConvert.SerializeObject(ObjProductModel);
                 ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProduct, _request);
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
@@ -71,28 +102,17 @@ namespace PrivateSquareWeb.Controllers.User
                 }
                 return RedirectToAction("ProductList", "Home");
             }
-            return View("Product",ObjProductModel);
+            return View("Product", ObjProductModel);
         }
         public ActionResult PersonalProfile()
         {
-            List<UserProfileModel> UserProfile = GetUserProfile();
             var listProfession = CommonFile.GetProfession();
             ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
 
-
-            var CountryList = CommonFile.GetCountry();
-            ViewBag.CountryList = new SelectList(CountryList, "Id", "Name");
-
-            var StateList = CommonFile.GetState();
-            ViewBag.StateList = new SelectList(StateList, "Id", "Name");
-
-            //var CityList =new List<DropDownModel>();
-            //ViewBag.CityList = CityList;
-
-            var CityList = CommonFile.GetCity();
-            ViewBag.CityList = new SelectList(CityList, "Id", "Name");
-
+            bindCountryStateCity();
             UserProfileModel objModel = new UserProfileModel();
+            List<UserProfileModel> UserProfile = GetUserProfile();
+
             if (UserProfile == null)
             {
 
@@ -114,19 +134,6 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.ProfessionalKeyword = UserProfile[0].ProfessionalKeyword;
                 objModel.ProfileImage = UserProfile[0].ProfileImage;
                 objModel.Location = UserProfile[0].Location;
-                //FormCollection frmColl = new FormCollection();
-                //frmColl.Add("firstname", objModel.FirstName);
-                //frmColl.Add("lastname", objModel.LastName);
-                //frmColl.Add("address", objModel.Location);
-                //frmColl.Add("dob", objModel.DOB.ToString());
-                //frmColl.Add("ddlProfessionalCat", objModel.ProfessionalCatId.ToString());
-                //frmColl.Add("Keywords", objModel.ProfessionalKeyword);
-                //frmColl.Add("Pincode", objModel.Pincode);
-                //frmColl.Add("email", objModel.EmailId);
-                //frmColl.Add("description", objModel.Description);
-                //frmColl.Add("phone", objModel.Phone);
-                //frmColl.Add("country", objModel.CountryId.ToString());
-
             }
             return View(objModel);
         }
@@ -135,19 +142,15 @@ namespace PrivateSquareWeb.Controllers.User
         {
             var listProfession = CommonFile.GetProfession();
             ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
-            var CityList = CommonFile.GetCity();
-            ViewBag.CityList = new SelectList(CityList, "Id", "Name");
-            var StateList = CommonFile.GetState();
-            ViewBag.StateList = new SelectList(StateList, "Id", "Name");
-            var CountryList = CommonFile.GetCountry();
-            ViewBag.CountryList = new SelectList(CountryList, "Id", "Name");
+            bindCountryStateCity();
 
             return View();
         }
-        public List<BusinessModel> GetBusiness()
+        public List<BusinessModel> GetBusiness(long Id)
         {
             var GetBusiness = new List<BusinessModel>();
             BusinessModel objUserProfile = new BusinessModel();
+            objUserProfile.Id = Id;
             objUserProfile.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
             var _request = JsonConvert.SerializeObject(objUserProfile);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetBusiness, _request);
@@ -157,7 +160,35 @@ namespace PrivateSquareWeb.Controllers.User
         }
         public ActionResult EditMyBusiness(long Id)
         {
-            return View();
+
+            var listProfession = CommonFile.GetProfession();
+            ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
+            bindCountryStateCity();
+
+
+
+
+            List<BusinessModel> EditBusinessList = GetBusiness(Id);
+            BusinessModel objModel = new BusinessModel();
+            if (EditBusinessList != null && EditBusinessList.Count() > 0)
+            {
+                objModel.Id = Id;
+                objModel.BusinessName = EditBusinessList[0].BusinessName;
+                objModel.BusinessLogo = EditBusinessList[0].BusinessLogo;
+                objModel.Location = EditBusinessList[0].Location;
+                objModel.ProfessionalCatId = EditBusinessList[0].ProfessionalCatId;
+                objModel.ProfessionalKeyword = EditBusinessList[0].ProfessionalKeyword;
+                objModel.CityId = EditBusinessList[0].CityId;
+                objModel.PinCode = EditBusinessList[0].PinCode;
+                objModel.UserId = EditBusinessList[0].UserId;
+                objModel.Email = EditBusinessList[0].Email;
+                objModel.Description = EditBusinessList[0].Description;
+                objModel.CountryId = EditBusinessList[0].CountryId;
+                objModel.Phone = EditBusinessList[0].Phone;
+                objModel.StateId = EditBusinessList[0].StateId;
+
+            }
+            return View("MyBusiness", objModel);
         }
 
         [HttpPost]
@@ -206,26 +237,20 @@ namespace PrivateSquareWeb.Controllers.User
 
             ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
 
-            var CityList = CommonFile.GetCity();
+            bindCountryStateCity();
 
-            ViewBag.CityList = new SelectList(CityList, "Id", "Name");
-
-            var StateList = CommonFile.GetState();
-
-            ViewBag.StateList = new SelectList(StateList, "Id", "Name");
-
-            var CountryList = CommonFile.GetCountry();
-
-            ViewBag.CountryList = new SelectList(CountryList, "Id", "Name");
             if (ModelState.IsValid)
             {
                 HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
                 String FileName = SaveImage(FileUpload);
                 //BusinessModel objModel = new BusinessModel();
-                objModel.Id = 0;
+                //objModel.Id = 0;
                 objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
                 objModel.BusinessLogo = FileName;
-                objModel.Operation = "insert";
+                if (objModel.Id != 0)
+                    objModel.Operation = "update";
+                else if (objModel.Id == 0)
+                    objModel.Operation = "insert";
 
                 //objModel.ProfessionalCatId = Convert.ToInt64(frmColl["ddlProfessionalCat"]);
                 //objModel.CountryId = Convert.ToInt64(frmColl["country"]);
@@ -249,10 +274,24 @@ namespace PrivateSquareWeb.Controllers.User
 
                 return RedirectToAction("MyBusinessList", "Home");
             }
-            return View("MyBusiness",objModel);
+            return View("MyBusiness", objModel);
         }
+
+        private void bindCountryStateCity()
+        {
+            var CountryList = CommonFile.GetCountry();
+            ViewBag.CountryList = new SelectList(CountryList, "Id", "Name");
+            var StateList = CommonFile.GetState();
+            ViewBag.StateList = new SelectList(StateList, "Id", "Name");
+            var CityList = CommonFile.GetCity();
+            ViewBag.CityList = new SelectList(CityList, "Id", "Name");
+
+        }
+
         private String SaveImage(HttpPostedFileBase FileUpload)
         {
+            if (string.IsNullOrWhiteSpace(FileUpload.FileName ))
+                return null;
             string filename = FileUpload.FileName;
             string targetpath = Server.MapPath("~/DocImg/");
             string Extention = Path.GetExtension(filename);
