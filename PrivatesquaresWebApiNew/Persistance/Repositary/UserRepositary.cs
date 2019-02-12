@@ -25,6 +25,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetUserBusiness(objModel.UserId).ToList();
         }
 
+        public IEnumerable<GetBusinessDetail_Result> GetBusinessDetail(BusinessModel objModel)
+        {
+            return Context.GetBusinessDetail(objModel.Id).ToList();
+        }
+
         public IEnumerable<GetCity_Result> GetCity(DropDownModel objModel)
         {
             return Context.GetCity(objModel.StateId).ToList();
@@ -93,7 +98,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         public SaveBusiness_Result SaveBusiness(BusinessModel ObjModel)
         {
             return Context.SaveBusiness(ObjModel.Id, ObjModel.BusinessName, ObjModel.Location, ObjModel.BusinessLogo, ObjModel.ProfessionalCatId,
-                ObjModel.ProfessionalKeyword, ObjModel.ProfessionalCatId, ObjModel.PinCode, ObjModel.UserId, ObjModel.Email, ObjModel.Description, ObjModel.Phone, ObjModel.CountryId, ObjModel.Operation).FirstOrDefault();
+                ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.PinCode, ObjModel.UserId, ObjModel.Email, ObjModel.Description, ObjModel.Phone, ObjModel.CountryId, ObjModel.Operation).FirstOrDefault();
 
         }
 
@@ -162,6 +167,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetCity_Result> GetCity(DropDownModel objModel);
         IEnumerable<GetProductCategory_Result> GetProductCategory();
         IEnumerable<GetProductDetail_Result> GetProductDetail(ProductModel objModel);
+        IEnumerable<GetBusinessDetail_Result> GetBusinessDetail(BusinessModel objModel);
     }
 
 }

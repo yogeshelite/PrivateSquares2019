@@ -133,7 +133,7 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.Title = UserProfile[0].Title;
                 objModel.ProfessionalKeyword = UserProfile[0].ProfessionalKeyword;
                 objModel.ProfileImage = UserProfile[0].ProfileImage;
-                
+
             }
             return View(objModel);
         }
@@ -153,7 +153,7 @@ namespace PrivateSquareWeb.Controllers.User
             objUserProfile.Id = Id;
             objUserProfile.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
             var _request = JsonConvert.SerializeObject(objUserProfile);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetBusiness, _request);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetBusinessDetail, _request);
             GetBusiness = JsonConvert.DeserializeObject<List<BusinessModel>>(ObjResponse.Response);
             return GetBusiness;
 
@@ -185,7 +185,7 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.Description = EditBusinessList[0].Description;
                 objModel.CountryId = EditBusinessList[0].CountryId;
                 objModel.Phone = EditBusinessList[0].Phone;
-                objModel.StateId = EditBusinessList[0].StateId;
+                // objModel.StateId = EditBusinessList[0].StateId;
 
             }
             return View("MyBusiness", objModel);
@@ -198,7 +198,7 @@ namespace PrivateSquareWeb.Controllers.User
             {
                 HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
                 String FileName = SaveImage(FileUpload);
-                
+
                 objModel.Id = 0;
                 objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
                 objModel.Phone = Services.GetCookie(this.ControllerContext.HttpContext, "usrName").Value;
@@ -219,13 +219,13 @@ namespace PrivateSquareWeb.Controllers.User
             return View("PersonalProfile");
         }
         [HttpPost]
-        public ActionResult SaveBussiness(FormCollection frmColl, BusinessModel objModel)
+        public ActionResult SaveBussiness(BusinessModel objModel)
         {
             var listProfession = CommonFile.GetProfession();
-
             ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
-
             bindCountryStateCity();
+            if (string.IsNullOrWhiteSpace((objModel.Id).ToString()))
+                objModel.Id = 0;
 
             if (ModelState.IsValid)
             {
@@ -239,19 +239,6 @@ namespace PrivateSquareWeb.Controllers.User
                     objModel.Operation = "update";
                 else if (objModel.Id == 0)
                     objModel.Operation = "insert";
-
-                //objModel.ProfessionalCatId = Convert.ToInt64(frmColl["ddlProfessionalCat"]);
-                //objModel.CountryId = Convert.ToInt64(frmColl["country"]);
-                //objModel.CityId = Convert.ToInt64(frmColl["city"]);
-                //objModel.StateId = Convert.ToInt64(frmColl["state"]);
-
-                //objModel.BusinessName = frmColl["businessname"];
-                //objModel.Location = frmColl["address"];
-                //objModel.ProfessionalKeyword = frmColl["Keywords"];
-                //objModel.PinCode = frmColl["Pincode"];
-                //objModel.Email = frmColl["email"];
-                //objModel.Description = frmColl["description"];
-                //objModel.Phone = frmColl["phone"];
                 var _request = JsonConvert.SerializeObject(objModel);
                 ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveBusiness, _request);
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
@@ -278,7 +265,7 @@ namespace PrivateSquareWeb.Controllers.User
 
         private String SaveImage(HttpPostedFileBase FileUpload)
         {
-            if (string.IsNullOrWhiteSpace(FileUpload.FileName ))
+            if (string.IsNullOrWhiteSpace(FileUpload.FileName))
                 return null;
             string filename = FileUpload.FileName;
             string targetpath = Server.MapPath("~/DocImg/");

@@ -404,5 +404,19 @@ namespace PrivatesquaresWebApiNew.Controllers
             return sendJson;
 
         }
+
+        [Route("api/User/GetBusinessDetail")]
+        [HttpPost]
+        public IHttpActionResult GetBusinessDetail(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            BusinessModel objBusinessModel = JsonConvert.DeserializeObject<BusinessModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetBusinessDetail(objBusinessModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+
+
+
+        }
     }
 }
