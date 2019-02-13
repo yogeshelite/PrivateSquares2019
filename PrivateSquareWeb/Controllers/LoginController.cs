@@ -14,6 +14,7 @@ namespace PrivateSquareWeb.Controllers
 {
     public class LoginController : Controller
     {
+        JwtTokenManager _JwtTokenManager = new JwtTokenManager();
         // GET: Login
         public ActionResult Index()
         {
@@ -162,7 +163,51 @@ namespace PrivateSquareWeb.Controllers
         [HttpPost]
         public ActionResult LoginUser(LoginModel ObjModel)
         {
-            var _request = JsonConvert.SerializeObject(ObjModel);
+            string res;
+            long a;
+            string myStr = ObjModel.EmailId;
+            res = Int64.TryParse(myStr, out a).ToString();
+            if (res == "True")
+            {
+                ObjModel.Mobile = ObjModel.EmailId;
+                ObjModel.EmailId = null;
+            }
+            else { ObjModel.Mobile = null; }
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiLoginUser, _request);
+            ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
+            String VarResponse = ObjResponse1.Response;
+            if (VarResponse.Equals("Email/Password is Incorrect"))
+            {
+                ViewBag.Response = "Email/Password is Incorrect";
+                return View("Index", ObjModel);
+            }
+            else if (VarResponse.Equals("Phone/Password is Incorrect"))
+            {
+                ViewBag.Response = "Phone/Password is Incorrect";
+                return View("Index", ObjModel);
+            }
+            else
+            {
+                string[] ArrResponse = VarResponse.Split(',');
+
+                var jsonString = "{\"Id\":\"" + ArrResponse[0] + "\",\"Name\":\"" + ArrResponse[1] + "\",\"ProfileImg\":\"" + ArrResponse[2] + "\"}";
+                Services.SetCookie(this.ControllerContext.HttpContext, "usr", _JwtTokenManager.GenerateToken(jsonString.ToString()));
+
+
+                //Services.SetCookie(this.ControllerContext.HttpContext, "usrId", ArrResponse[0]);
+                //Services.SetCookie(this.ControllerContext.HttpContext, "usrName", ArrResponse[1]);
+                //Services.SetCookie(this.ControllerContext.HttpContext, "usrImg", ArrResponse[2]);
+                //ViewBag.LoginMessage = "Login Success";
+                return RedirectToAction("Index", "Home");
+            }
+            //  String Response = "[{\"Response\":\"" + ObjResponse1.Response + "\"}]";
+            // return Json(Response);
+
+
+            /************************************************************/
+            #region Using Json
+            /*var _request = JsonConvert.SerializeObject(ObjModel);
             ResponseModel ObjResponse = GetApiResponse(Constant.ApiLoginUser, _request);
 
             if (String.IsNullOrWhiteSpace(ObjResponse.Response))
@@ -170,7 +215,7 @@ namespace PrivateSquareWeb.Controllers
                 return View("Index", ObjModel);
 
             }
-          
+
             var objResponse = ObjResponse.Response;
             ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
             String VarResponse = ObjResponse1.Response;
@@ -179,15 +224,17 @@ namespace PrivateSquareWeb.Controllers
                 ViewBag.Response = "Email/Password is Incorrect";
                 return View("Index", ObjModel);
             }
-            else { 
-            string[] ArrResponse = VarResponse.Split(',');
-            Services.SetCookie(this.ControllerContext.HttpContext, "usrId", ArrResponse[0]);
-            Services.SetCookie(this.ControllerContext.HttpContext, "usrName", ArrResponse[1]);
-            Services.SetCookie(this.ControllerContext.HttpContext, "usrImg", ArrResponse[2]);
+            else
+            {
+                string[] ArrResponse = VarResponse.Split(',');
+                Services.SetCookie(this.ControllerContext.HttpContext, "usrId", ArrResponse[0]);
+                Services.SetCookie(this.ControllerContext.HttpContext, "usrName", ArrResponse[1]);
+                Services.SetCookie(this.ControllerContext.HttpContext, "usrImg", ArrResponse[2]);
                 //ViewBag.LoginMessage = "Login Success";
                 return RedirectToAction("Index", "Home");
             }
-            
+            */
+            #endregion
             /////////////////////////
         }
 
@@ -195,7 +242,26 @@ namespace PrivateSquareWeb.Controllers
         public JsonResult RegisterUser(LoginModel ObjModel)
         {
 
-            var _request = JsonConvert.SerializeObject(ObjModel);
+            string res;
+            long a;
+            string myStr = ObjModel.EmailId;
+            res = Int64.TryParse(myStr, out a).ToString();
+            if (res == "True")
+            {
+                ObjModel.Mobile = ObjModel.EmailId;
+                ObjModel.EmailId = null;
+            }
+            else { ObjModel.Mobile = null; }
+
+
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiRegisterUser, _request);
+            ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
+            String Response = "[{\"Response\":\"" + ObjResponse1.Response + "\"}]";
+            return Json(Response);
+            /******************************************************************/
+            #region Using Json
+            /*    var _request = JsonConvert.SerializeObject(ObjModel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiRegisterUser, _request);
             if (String.IsNullOrWhiteSpace(ObjResponse.Response))
             {
@@ -206,7 +272,9 @@ namespace PrivateSquareWeb.Controllers
             ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
             ViewBag.RegisterMessage = ObjResponse1.Response;
             String Response = "[{\"Response\":\"" + ObjResponse1.Response + "\"}]";
-            return Json(Response);
+    */
+            #endregion
+
 
         }
 
@@ -214,8 +282,19 @@ namespace PrivateSquareWeb.Controllers
         public JsonResult ForgetPassword(string emailId)
         {
             String subject = "ForgetPassword";
+
+            String Forgetpassword = "";
             LoginModel ObjModel = new LoginModel();
             ObjModel.EmailId = emailId;
+
+
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiForgetPassword, _request);
+            ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
+            String Response = string.Empty;
+            Forgetpassword = ObjResponse1.Response;
+            #region Using Json
+            /*
             var _request = JsonConvert.SerializeObject(ObjModel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiForgetPassword, _request);
             String Response = string.Empty;
@@ -228,16 +307,16 @@ namespace PrivateSquareWeb.Controllers
             ResponseModel ResponseApi = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
             String Forgetpassword = ResponseApi.Response;
 
-            if (Forgetpassword ==" 1")
+            if (Forgetpassword == " 1")
             {
                 ViewBag.Response = "Please Check Email ";
             }
-
-            
+            */
+            #endregion
             String userName = emailId;
             String Password = Forgetpassword;
             int respo = CommonFile.SendMailContact(emailId, subject, userName, Password);
-             Response = "[{\"Response\":\"" + respo + "\"}]";
+            Response = "[{\"Response\":\"" + respo + "\"}]";
             if (respo == 1)
             {
                 ViewBag.Response = "Please Check Email ";

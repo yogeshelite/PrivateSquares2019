@@ -13,6 +13,7 @@ namespace PrivateSquareWeb.Controllers.User
 {
     public class InterestController : Controller
     {
+        JwtTokenManager _JwtTokenManager = new JwtTokenManager();
         static List<InterestModel> ListInterest;
         // GET: Interest
         public ActionResult Index()
@@ -49,7 +50,10 @@ namespace PrivateSquareWeb.Controllers.User
         [HttpPost]
         public ActionResult SaveInsterest(FormCollection formCollection)
         {
-            String SelectedInterest = formCollection["TxtInterest"];
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+            
+                String SelectedInterest = formCollection["TxtInterest"];
             #region Comment Code For DataSet To Json 
             DataTable dt = new DataTable();
             dt.Clear();
@@ -61,7 +65,7 @@ namespace PrivateSquareWeb.Controllers.User
             {
                 DataRow NewDataRow;
                 NewDataRow = dt.NewRow();
-                NewDataRow["UserId"] = Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value;
+                NewDataRow["UserId"] = MdUser.Id;
                 NewDataRow["InterestId"] = Arr_Interest[i];
                 NewDataRow["InterestCatId"] = "0";
                 dt.Rows.Add(NewDataRow);

@@ -12,5 +12,6 @@ namespace PrivatesquaresWebApiNew.Models
         public string Password { get; set; }
         public string Name { get; set; }
         public string ProfileImg { get; set; }
+        public string Mobile { get; set; }
     }
 }

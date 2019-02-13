@@ -98,11 +98,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public AuthenticateLogin_Result LoginUser(LoginModel objModel)
         {
-            return Context.AuthenticateLogin(objModel.EmailId, objModel.Password).FirstOrDefault();
+            return Context.AuthenticateLogin(objModel.EmailId, objModel.Mobile, objModel.Password).FirstOrDefault();
         }
         public RegisterNewUser_Result RegisterNewUser(LoginModel objModel)
         {
-            return Context.RegisterNewUser(objModel.Name, objModel.EmailId, objModel.Password).FirstOrDefault();
+            return Context.RegisterNewUser(objModel.Name, objModel.EmailId,objModel.Mobile, objModel.Password).FirstOrDefault();
         }
 
         public RegisterUser_Result RegisterUser(UserRegisterModel ObjModel)

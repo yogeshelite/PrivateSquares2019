@@ -419,34 +419,72 @@ namespace PrivatesquaresWebApiNew.Controllers
 
         [HttpPost]
         public IHttpActionResult LoginUser(RequestModel requestModel)
-
         {
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.LoginUser(objLoginModel))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+            /*
             var data = requestModel.Data;
             LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(data);
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.LoginUser(objLoginModel)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
-
+            */
         }
         [Route("api/User/RegisterUser")]
         [HttpPost]
         public IHttpActionResult RegisterUser(RequestModel requestModel)
         {
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.RegisterNewUser(objLoginModel))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+
+            /*****************************************************************************/
+            #region using Json
+            /*
             var data = requestModel.Data;
             LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(data);
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.RegisterNewUser(objLoginModel)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
+            */
+            #endregion
         }
         [Route("api/User/ForgetPassword")]
         [HttpPost]
         public IHttpActionResult ForgetPassword(RequestModel requestModel)
         {
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.ForgetPassword(objLoginModel))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+
+            #region Using Json
+            /*
             var data = requestModel.Data;
             LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(data);
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.ForgetPassword(objLoginModel)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
+            */
+            #endregion
         }
     }
 }

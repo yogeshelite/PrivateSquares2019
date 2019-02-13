@@ -12,6 +12,7 @@ namespace PrivateSquareWeb.Controllers.User
 {
     public class DashboardController : Controller
     {
+        JwtTokenManager _JwtTokenManager = new JwtTokenManager();
         // GET: Dashboard
         public ActionResult Index()
         {
@@ -21,7 +22,10 @@ namespace PrivateSquareWeb.Controllers.User
         {
             var GetUserProfile = new List<UserProfileModel>();
             UserProfileModel objUserProfile = new UserProfileModel();
-            objUserProfile.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+            if (MdUser.Id != 0)
+                objUserProfile.UserId = Convert.ToInt64(MdUser.Id);
             var _request = JsonConvert.SerializeObject(objUserProfile);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProfile, _request);
             GetUserProfile = JsonConvert.DeserializeObject<List<UserProfileModel>>(ObjResponse.Response);
@@ -44,7 +48,9 @@ namespace PrivateSquareWeb.Controllers.User
             var GetProduct = new List<ProductModel>();
             ProductModel objProduct = new ProductModel();
             objProduct.Id = Id;
-            objProduct.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            if (MdUser.Id != 0)
+                objProduct.UserId = Convert.ToInt64(MdUser.Id);
             var _request = JsonConvert.SerializeObject(objProduct);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProductDetail, _request);
             GetProduct = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
@@ -86,7 +92,10 @@ namespace PrivateSquareWeb.Controllers.User
                 String FileName = SaveImage(FileUpload);
 
                 ObjProductModel.ProductImage = FileName;
-                ObjProductModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+                LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+                if (MdUser.Id != 0)
+                    ObjProductModel.UserId = Convert.ToInt64(MdUser.Id);
 
                 if (ObjProductModel.Id == 0)
                     ObjProductModel.Operation = "insert";
@@ -151,7 +160,10 @@ namespace PrivateSquareWeb.Controllers.User
             var GetBusiness = new List<BusinessModel>();
             BusinessModel objUserProfile = new BusinessModel();
             objUserProfile.Id = Id;
-            objUserProfile.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+            if (MdUser.Id != 0)
+                objUserProfile.UserId = Convert.ToInt64(MdUser.Id);
             var _request = JsonConvert.SerializeObject(objUserProfile);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetBusinessDetail, _request);
             GetBusiness = JsonConvert.DeserializeObject<List<BusinessModel>>(ObjResponse.Response);
@@ -200,8 +212,13 @@ namespace PrivateSquareWeb.Controllers.User
                 String FileName = SaveImage(FileUpload);
 
                 objModel.Id = 0;
-                objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
-                objModel.Phone = Services.GetCookie(this.ControllerContext.HttpContext, "usrName").Value;
+                LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+                if (MdUser.Id != 0)
+                {
+                    objModel.UserId = Convert.ToInt64(MdUser.Id);
+                    objModel.Phone = MdUser.Mobile;
+                }
                 objModel.ProfileImage = FileName;
                 var _request = JsonConvert.SerializeObject(objModel);
                 ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProfile, _request);
@@ -233,7 +250,10 @@ namespace PrivateSquareWeb.Controllers.User
                 String FileName = SaveImage(FileUpload);
                 //BusinessModel objModel = new BusinessModel();
                 //objModel.Id = 0;
-                objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+                LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+                if (MdUser.Id != 0)
+                    objModel.UserId = Convert.ToInt64(MdUser.Id);
                 objModel.BusinessLogo = FileName;
                 if (objModel.Id != 0)
                     objModel.Operation = "update";

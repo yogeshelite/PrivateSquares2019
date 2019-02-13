@@ -9,6 +9,7 @@ namespace PrivateSquareWeb.Controllers
 {
     public class HeaderPartialController : Controller
     {
+        JwtTokenManager _JwtTokenManager = new JwtTokenManager();
         // GET: HeaderPartial
         public ActionResult Index()
         {
@@ -17,11 +18,12 @@ namespace PrivateSquareWeb.Controllers
         public PartialViewResult HeaderValue()
         {
             HeaderPartialModel objModel = new HeaderPartialModel();
-            // UserModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
-            if (Services.GetCookie(this.ControllerContext.HttpContext, "usrName") != null)
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+            if (MdUser.Id != 0)
             {
-                objModel.UserName = Services.GetCookie(this.ControllerContext.HttpContext, "usrName").Value;
-                objModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+                objModel.UserName =MdUser.Name;
+                objModel.UserId = Convert.ToInt64(MdUser.Id);
             }
             else
             {

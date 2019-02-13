@@ -22,13 +22,13 @@ namespace PrivateSquareWeb
             {
                 ASCIIEncoding encoding = new ASCIIEncoding();
 
-                //byte[] data = encoding.GetBytes(string.Concat("{Data:\"", postData, "\"}"));
+                byte[] data = encoding.GetBytes(string.Concat("{Data:\"", postData, "\"}"));
 
-                var dataRequest = new RequestModel
-                {
-                    Data = postData
-                };
-                byte[] data = encoding.GetBytes(dataRequest.Data);
+               // var dataRequest = new RequestModel
+                //{
+                //    Data = postData
+                //};
+                //byte[] data = encoding.GetBytes(dataRequest.Data);
 
                 //  string encoded = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(Properties.Settings.Default.DegaAPIUser + ":" + Properties.Settings.Default.DegaAPIPassword));
 
@@ -108,7 +108,19 @@ namespace PrivateSquareWeb
 
 
         }
+        public static LoginModel GetLoginUser(HttpContextBase httpContext, JwtTokenManager jwtTokenManager)
+        {
+            LoginModel login = null;
+            string cookiesValue = Services.GetCookie(httpContext, "usr").Value;
+            dynamic _data = jwtTokenManager.DecodeToken(cookiesValue);
+            var json = JsonConvert.DeserializeObject<Dictionary<string, object>>(_data);
+            if (json.ContainsKey("unique_name"))
+            {
+                login = JsonConvert.DeserializeObject<LoginModel>(json["unique_name"].ToString());
 
+            }
+            return login;
+        }
         //public static UserModel GetLoginUser(HttpContextBase httpContext, JwtTokenManager jwtTokenManager)
         //{
         //    UserModel login = null;

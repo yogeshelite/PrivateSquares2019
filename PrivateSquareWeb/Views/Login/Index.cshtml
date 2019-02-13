@@ -22,7 +22,7 @@
             success: function (result) {
                 console.log(JSON.parse(result));
                 var data = JSON.parse(result);
-                if (data.Response == '1') {
+                if (data[0].Response == '1') {
                     // alert()
                 }
             }
@@ -33,25 +33,38 @@
         var email = document.getElementById('emailIdRegister').value;
         var password = document.getElementById('passwordRegister').value;
         var name = document.getElementById('Name').value;
-        alert("EmailId="+email+ " Password="+password +" Name="+name);
-        $.ajax({
-            url: "../../Login/RegisterUser",
-            type: "POST",
-            data: {
-                "EmailId": email,
-                "Password": password,
-                "Name": name
-            },
-            success: function (result) {
-                var data = JSON.parse(result);
-                console.log(data);
-                if (data.Response == 'USER EXISTS')
-                {
-                    var p = document.getElementById("RegisMess");
-                    p.innerHTML = data.Response;
+        if (email == '' && password == '' && name == '') {
+            var p = document.getElementById("RegisMess");
+            p.innerText = "Please Fill Email,Password,Name";
+            return;
+        }
+        else {
+
+            $.ajax({
+                url: "../../Login/RegisterUser",
+                type: "POST",
+                data: {
+                    "EmailId": email,
+                    "Password": password,
+                    "Name": name
+                },
+                success: function (result) {
+                    var data = JSON.parse(result);
+                    var response = data[0].Response;
+                    var matchString = "USER EXISTS";
+                    if (response == matchString.trim()) {
+                        var p = document.getElementById("RegisMess");
+                        p.innerText = data[0].Response;
+
+                    }
+                    else
+                    {
+                        var p = document.getElementById("RegisMess");
+                        p.innerText = data[0].Response;
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 </script>
 
@@ -97,13 +110,13 @@
 
                 <div class="ps-step-two" style="display: none">
                     <h2 class="sign-up-heading text-center">Sign Up to Write Quotes and earn points <br>from Privatesquares</h2>
-                   
+
                     <div class="form-group">
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Full Name" })
                         @*<input type="text" class="form-control" placeholder="Full Name">*@
                     </div><!-- form-group -->
                     <div class="form-group">
-                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Email Id", id = "emailIdRegister" })
+                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Email Id/Mobile", id = "emailIdRegister" })
                         @*<input type="password" class="form-control" placeholder="Email Address">*@
                     </div><!-- form-group  -->
                     <div class="form-group">
@@ -111,10 +124,10 @@
                         @*<input type="password" class="form-control" placeholder="Password">*@
                     </div><!-- form-group -->
                     <p style="color:red;" id="RegisMess"> @ViewBag.RegisterMessage</p>
-                    <input type="button" value="Sign Up" class="btn btn-block btn-sign-in" onclick="SignUp()"/>
+                    <input type="button" value="Sign Up" class="btn btn-block btn-sign-in" onclick="SignUp()" />
 
 
-                    <p class="mg-b-0 text-center">Don't have an account? <a href="indexpage.html" class="pvt-sign-text" id="next-2">Sign In</a></p>
+                    <p class="mg-b-0 text-center">Don't have an account? <a href="#" class="pvt-sign-text" id="step-1">Sign In</a></p>
 
                 </div>
             </div>
@@ -144,7 +157,12 @@
         $(".ps-step-one").hide();
         $(".ps-step-two").show();
     });
+    $("#step-1").click(function () {
+        $(".ps-step-one").show();
+        $(".ps-step-two").hide();
+    });
 </script>
+
 <!--
 
 <div class="signin-wrapper">

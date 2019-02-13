@@ -13,13 +13,11 @@ namespace PrivateSquareWeb.Controllers
 {
     public class HomeController : Controller
     {
+        JwtTokenManager _JwtTokenManager = new JwtTokenManager();
         public ActionResult Index()
         {
             List<UsersProfileModel> usersList = GetAllUsers();
-            //if (Services.GetCookie(this.ControllerContext.HttpContext,"usrId") != null)
-            //{
 
-            //}
             ViewBag.AllUsers = usersList;
             // For Facebook Login
             FaceBookUser faceBookUser = new FaceBookUser();
@@ -44,9 +42,11 @@ namespace PrivateSquareWeb.Controllers
         {
             var GetAllUserList = new List<UsersProfileModel>();
             UsersProfileModel objUserModel = new UsersProfileModel();
-            if (Services.GetCookie(this.ControllerContext.HttpContext, "usrId") != null)
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+            if (MdUser.Id != 0)
             {
-                objUserModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+                objUserModel.UserId = MdUser.Id; //Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
             }
             var _request = JsonConvert.SerializeObject(objUserModel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUsersProfile, _request);
@@ -58,7 +58,10 @@ namespace PrivateSquareWeb.Controllers
         {
             var GetUserBusinessList = new List<BusinessModel>();
             BusinessModel objmodel = new BusinessModel();
-            objmodel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            if (MdUser.Id != 0)
+                objmodel.UserId = Convert.ToInt64(MdUser.Id);
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUserBusiness, _request);
             GetUserBusinessList = JsonConvert.DeserializeObject<List<BusinessModel>>(ObjResponse.Response);
@@ -69,7 +72,9 @@ namespace PrivateSquareWeb.Controllers
         {
             var GetUserProductList = new List<ProductModel>();
             ProductModel objmodel = new ProductModel();
-            objmodel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            if (MdUser.Id != 0)
+                objmodel.UserId = Convert.ToInt64(MdUser.Id);
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
             GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
@@ -80,7 +85,10 @@ namespace PrivateSquareWeb.Controllers
         {
             var GetUserNetworkList = new List<UsersProfileModel>();
             NetworkModel objmodel = new NetworkModel();
-            objmodel.LogInUserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+            if (MdUser.Id != 0)
+                objmodel.LogInUserId = Convert.ToInt64(MdUser.Id);
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUserNetwork, _request);
             GetUserNetworkList = JsonConvert.DeserializeObject<List<UsersProfileModel>>(ObjResponse.Response);
@@ -120,9 +128,11 @@ namespace PrivateSquareWeb.Controllers
         [HttpPost]
         public JsonResult AddNetwork(NetworkModel objNetworkModel)
         {
-            if (Services.GetCookie(this.ControllerContext.HttpContext, "usrId") != null)
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+            if (MdUser.Id != 0)
             {
-                objNetworkModel.LogInUserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+                objNetworkModel.LogInUserId = Convert.ToInt64(MdUser.Id);
 
                 objNetworkModel.Operation = "insert";
                 var _request = JsonConvert.SerializeObject(objNetworkModel);

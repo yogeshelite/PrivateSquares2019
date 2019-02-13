@@ -12,6 +12,7 @@ namespace PrivateSquareWeb.CommonCls
 {
     public class CommonFile
     {
+
         public static ResponseModel GetApiResponse(string Url, String Data)
         {
             var _response = Services.GetApiResponseJson(Url, "POST", Data);
@@ -21,11 +22,29 @@ namespace PrivateSquareWeb.CommonCls
             return ObjResponse;
         }
 
+        public static ResponseModel GetApiResponseJWT(string Url, String Data)
+        {
+            JwtTokenManager _JwtTokenManager = new JwtTokenManager();
+            var _response = Services.GetApiResponseJson(Url, "POST", Data);
+
+            ResponseModel _dataApi = JsonConvert.DeserializeObject<ResponseModel>(_response);
+
+            dynamic _data = _JwtTokenManager.DecodeToken(_dataApi.Response);
+            var json = JsonConvert.DeserializeObject<Dictionary<string, object>>(_data);
+
+            if (json.ContainsKey("unique_name"))
+            {
+                ResponseModel objRespMOdel = JsonConvert.DeserializeObject<ResponseModel>(json["unique_name"]);
+                //var responeSend = objRespMOdel.Response;
+                return objRespMOdel;
+            }
+            return new ResponseModel();
+        }
         public static List<DropDownModel> GetCountry()
         {
             var CountryList = new List<DropDownModel>();
             DropDownModel objUserProfile = new DropDownModel();
-              var _request = JsonConvert.SerializeObject(objUserProfile);
+            var _request = JsonConvert.SerializeObject(objUserProfile);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetCountry, _request);
             CountryList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
             return CountryList;
@@ -34,7 +53,7 @@ namespace PrivateSquareWeb.CommonCls
         {
             var StateList = new List<DropDownModel>();
             DropDownModel objUserProfile = new DropDownModel();
-              var _request = JsonConvert.SerializeObject(objUserProfile);
+            var _request = JsonConvert.SerializeObject(objUserProfile);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetState, _request);
             StateList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
             return StateList;
@@ -43,7 +62,7 @@ namespace PrivateSquareWeb.CommonCls
         {
             var CityList = new List<DropDownModel>();
             DropDownModel objUserProfile = new DropDownModel();
-             var _request = JsonConvert.SerializeObject(objUserProfile);
+            var _request = JsonConvert.SerializeObject(objUserProfile);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetCity, _request);
             CityList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
             return CityList;
