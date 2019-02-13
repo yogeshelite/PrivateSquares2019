@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ASPSnippets.FaceBookAPI;
+using Newtonsoft.Json;
 using PrivateSquareWeb.CommonCls;
 using PrivateSquareWeb.Models;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace PrivateSquareWeb.Controllers
 {
@@ -19,12 +21,29 @@ namespace PrivateSquareWeb.Controllers
                 
             //}
             ViewBag.AllUsers = usersList;
+            // For Facebook Login
+            FaceBookUser faceBookUser = new FaceBookUser();
+            if (Request.QueryString["error"] == "access_denied")
+            {
+                ViewBag.Message = "User has denied access.";
+            }
+            else
+            {
+                string code = Request.QueryString["code"];
+                if (!string.IsNullOrEmpty(code))
+                {
+                    string data = FaceBookConnect.Fetch(code, "me?fields=id,name,email");
+                    faceBookUser = new JavaScriptSerializer().Deserialize<FaceBookUser>(data);
+                    faceBookUser.PictureUrl = string.Format("https://graph.facebook.com/{0}/picture", faceBookUser.Id);
+                }
+            }
+
             return View();
         }
         public List<UsersProfileModel> GetAllUsers()
         {
             var GetAllUserList = new List<UsersProfileModel>();
-            var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
+           // var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUsersProfile, "");
             GetAllUserList = JsonConvert.DeserializeObject<List<UsersProfileModel>>(ObjResponse.Response);
             return GetAllUserList;

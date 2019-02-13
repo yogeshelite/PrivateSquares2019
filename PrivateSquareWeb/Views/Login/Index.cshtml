@@ -1,4 +1,6 @@
-﻿@model PrivateSquareWeb.Models.UserRegisterModel
+﻿@*@model PrivateSquareWeb.Models.UserRegisterModel*@
+@model PrivateSquareWeb.Models.LoginModel
+
 @{
     /**/
 
@@ -18,13 +20,13 @@
     <meta name="twitter:creator" content="">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Slim">
-    <meta name="twitter:description" content="Premium Quality and Responsive UI for Dashboard.">
+    <meta name="twitter:description" content="">
     <meta name="twitter:image" content="http://themepixels.me/slim/img/slim-social.png">
 
     <!-- Facebook -->
     <meta property="og:url" content="http://themepixels.me/slim">
     <meta property="og:title" content="Slim">
-    <meta property="og:description" content="Premium Quality and Responsive UI for Dashboard.">
+    <meta property="og:description" content="">
 
     <meta property="og:image" content="http://themepixels.me/slim/img/slim-social.png">
     <meta property="og:image:secure_url" content="http://themepixels.me/slim/img/slim-social.png">
@@ -33,10 +35,10 @@
     <meta property="og:image:height" content="600">
 
     <!-- Meta -->
-    <meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
+    <meta name="description" content="">
     <meta name="author" content="ThemePixels">
 
-    <title>Slim Responsive Bootstrap 4 Admin Template</title>
+    <title>Private Square</title>
 
     <!-- Vendor css -->
     @Styles.Render("~/theme/css")
@@ -44,53 +46,86 @@
 
 </head>
 <body>
-    @using (Html.BeginForm("UserRegister", "Login", FormMethod.Post))
+    <!--, "UserRegister"-->
+    @using (Html.BeginForm("LoginUser", "Login", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
+        <div class="col-md-5 pull-left image-padding">
+            <div class="signin-box pull-right">
+                <button class="btn btn-block btn-sign-in">Login with facebook</button>
+                <h5 class="text-center login-or">OR</h5>
 
-        <div class="signin-wrapper">
+              
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Enter Email/Mobile" })
+                    @*<input type="text" class="form-control" placeholder="Enter your email">*@
+                </div><!-- form-group -->
+                <div class="form-group mg-b-50">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter Password" })
+                    @*<input type="password" class="form-control" placeholder="Enter your password">*@
+                    <div class=" forget-password">
 
-            <div class="signin-box signup">
-                <img src="~/Content/img/logo.png" alt="logo" class="logo-width">
-                <div class="ps-step-one">
-                    <h3 class="signin-title-primary">Get Started!</h3>
-                    <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
-                    <div class="row row-xs mg-b-10">
-                        @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "Mobile" })
-                        <input type="hidden" name="txttype" id="txttype" value="L" />
-                    </div><br />
-                    <!-- row -->
-
-                    <button class="btn btn-primary btn-block btn-signin" id="step-2"> Login</button>
-                    <p class="mg-t-40 mg-b-0 tx-center">Don't have an account? click <a href="/Login/Register">Register</a> to Sign Up </p>
-
-
-                    <div class="signup-separator"><span>or signup using</span></div>
-
-                    <div class="tx-20 tx-center">
-                        <a href="" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
-                        <a href="" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
-                        <a href="" class="tx-danger mg-r-5"><i class="fa fa-google-plus"></i></a>
-                        <a href="" class="tx-danger mg-r-5"><i class="fa fa-pinterest"></i></a>
-                        <a href="" class="tx-inverse mg-r-5"><i class="fa fa-github"></i></a>
-                        <a href="" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
+                        <a href="#" class="sign-up-col">Forget Password</a>
+                        <p style="color:red;">  @ViewBag.Response</p>
                     </div>
+                    <!-- <h6 class="forget-password">Forget Password</h6> -->
+                </div><!-- form-group -->
 
+                <a href="page-profile.html">
+                    <input type="submit" class="btn btn-block btn-sign-in" value="Login">
+                </a>
 
-                </div>
-                <div class="ps-step-two" style="display:none">
-                    @{
-                        // Html.RenderPartial("_OTP");
-                    }
-
-                    <!-- <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p> -->
-                </div>
-
-
-            </div><!-- signin-box -->
-
-        </div><!-- signin-wrapper -->
+                <p class="mg-b-0 text-center">Don't have an account? <a href="/Login/Register" class="sign-up-col">Sign Up</a></p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
     }
+
+    <!--
+
+    <div class="signin-wrapper">
+
+        <div class="signin-box signup">
+            <img src="~/Content/img/logo.png" alt="logo" class="logo-width">
+            <div class="ps-step-one">
+                <h3 class="signin-title-primary">Get Started!</h3>
+                <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
+                <div class="row row-xs mg-b-10">
+                   @* @Html.TextBoxFor(model => model.Mobile, new { class = "form-control", placeholder = "Mobile" })*@
+                    <input type="hidden" name="txttype" id="txttype" value="L" />
+                </div><br />
+                <!-- row -->
+    <!--                    <button class="btn btn-primary btn-block btn-signin" id="step-2"> Login</button>
+                <p class="mg-t-40 mg-b-0 tx-center">Don't have an account? click <a href="/Login/Register">Register</a> to Sign Up </p>
+
+
+                <div class="signup-separator"><span>or signup using</span></div>
+
+                <div class="tx-20 tx-center">
+                    @*<input type="submit" value="FacebookLoginnn"/>*@
+                    <input type="checkbox" id="ChkFacebook" name="ChkFacebook" >Facebook
+                    @*@Html.ActionLink("FacebookLogin", "FacebookLogin", "Login", new { @class = "tx-primary mg-r-5" })*@
+                    <a href="" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
+                    <a href="" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
+                    <a href="" class="tx-danger mg-r-5"><i class="fa fa-google-plus"></i></a>
+                    <a href="" class="tx-danger mg-r-5"><i class="fa fa-pinterest"></i></a>
+                    <a href="" class="tx-inverse mg-r-5"><i class="fa fa-github"></i></a>
+                    <a href="" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
+                </div>
+
+
+            </div>
+            <div class="ps-step-two" style="display:none">
+                @{
+                    // Html.RenderPartial("_OTP");
+                }
+
+                <!-- <p class="mg-t-40 mg-b-0">Already have an account? <a href="page-signin.html">Sign In</a></p> -->
+    <!--</div>
+
+    -->
+    <!-- </div><!-- signin-box -->
+    <!-- </div><!-- signin-wrapper -->
     @*<script src="~/theme/lib/jquery/js/jquery.js"></script>
         <script src="~/theme/lib/popper.js/js/popper.js"></script>
         <script src="~/theme/lib/bootstrap/js/bootstrap.js"></script>

@@ -24,7 +24,7 @@ namespace PrivateSquareWeb.Properties {
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()] //http://localhost:58192/    http://api.privatesquares.com
         [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:58192/Api/{0}")]
         public string ApiUrl {
             get {

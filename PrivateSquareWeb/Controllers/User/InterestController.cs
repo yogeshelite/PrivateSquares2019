@@ -26,7 +26,7 @@ namespace PrivateSquareWeb.Controllers.User
         public List<InterestCategoryModel> GetInterestCategory()
         {
             var ProductCategoryList = new List<InterestCategoryModel>();
-            var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
+           // var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetAllInterestCategory, "");
             ProductCategoryList = JsonConvert.DeserializeObject<List<InterestCategoryModel>>(ObjResponse.Response);
             return ProductCategoryList;
@@ -41,7 +41,7 @@ namespace PrivateSquareWeb.Controllers.User
         public List<InterestModel> GetAllInterest()
         {
             var InterestList = new List<InterestModel>();
-            var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
+           // var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetAllInterest, "");
             InterestList = JsonConvert.DeserializeObject<List<InterestModel>>(ObjResponse.Response);
             return InterestList;

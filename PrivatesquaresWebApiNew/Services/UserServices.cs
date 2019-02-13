@@ -202,6 +202,17 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.GetBusinessDetail(objModel);
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel LoginUser(LoginModel objModel)
+        {
+            var _result = _instance.LoginUser(objModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+        public ResponseModel RegisterNewUser(LoginModel objModel)
+        {
+            var _result = _instance.RegisterNewUser(objModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -232,7 +243,8 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel GetProductCategory();
         ResponseModel GetProductDetail(ProductModel objModel);
         ResponseModel GetBusinessDetail(BusinessModel objModel);
-
+        ResponseModel LoginUser(LoginModel objModel);
+        ResponseModel RegisterNewUser(LoginModel objModel);
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

@@ -9,6 +9,8 @@ namespace PrivateSquareWeb
     {
         public const string ApiRegister = "User/Registeration";
         public const string ApiLogin = "User/AuthenticateUser";
+        public const string ApiLoginUser = "User/LoginUser";
+        public const string ApiRegisterUser = "User/RegisterUser";
         public const string ApiGetAllInterestCategory = "User/GetAllInterestCategory";
         public const string ApiGetAllInterest = "User/GetAllInterest";
         public const string ApiGetUsersProfile = "User/GetUsersProfile";
@@ -18,8 +20,8 @@ namespace PrivateSquareWeb
         public const string ApiSaveBusiness = "User/SaveBusiness";
         public const string ApiGetUserBusiness = "User/GetUserBusiness";
         public const string ApiGetBusiness = "User/GetBusiness";
+        public const string ApiGetBusinessDetail = "User/GetBusinessDetail";
 
-        
         public const string ApiSaveProduct = "User/SaveProduct";
         public const string ApiSaveNetwork = "User/SaveNetwork";
         public const string ApiGetUserNetwork = "User/GetNetwork";

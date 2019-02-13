@@ -414,8 +414,32 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetBusinessDetail(objBusinessModel)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
+        }
+        [Route("api/User/LoginUser")]
 
+        [HttpPost]
+        public IHttpActionResult LoginUser(RequestModel requestModel)
 
+        {
+            var data = requestModel.Data;
+            LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.LoginUser(objLoginModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+
+        }
+        [Route("api/User/RegisterUser")]
+
+        [HttpPost]
+
+        public IHttpActionResult RegisterUser(RequestModel requestModel)
+
+        {
+            var data = requestModel.Data;
+            LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.RegisterNewUser(objLoginModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
 
         }
     }

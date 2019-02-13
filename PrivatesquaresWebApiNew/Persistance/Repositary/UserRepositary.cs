@@ -90,6 +90,16 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             var RESULT = Context.LoginAuthenticate(ObjModel.Mobile, ObjModel.Otp);
             return RESULT.FirstOrDefault();
         }
+
+        public AuthenticateLogin_Result LoginUser(LoginModel objModel)
+        {
+            return Context.AuthenticateLogin(objModel.EmailId, objModel.Password).FirstOrDefault();
+        }
+        public RegisterNewUser_Result RegisterNewUser(LoginModel objModel)
+        {
+            return Context.RegisterNewUser(objModel.Name, objModel.EmailId, objModel.Password).FirstOrDefault();
+        }
+
         public RegisterUser_Result RegisterUser(UserRegisterModel ObjModel)
         {
             return Context.RegisterUser(ObjModel.Mobile, ObjModel.Operation).FirstOrDefault();
@@ -168,6 +178,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetProductCategory_Result> GetProductCategory();
         IEnumerable<GetProductDetail_Result> GetProductDetail(ProductModel objModel);
         IEnumerable<GetBusinessDetail_Result> GetBusinessDetail(BusinessModel objModel);
+        AuthenticateLogin_Result LoginUser(LoginModel objModel);
+        RegisterNewUser_Result RegisterNewUser(LoginModel objModel);
     }
 
 }

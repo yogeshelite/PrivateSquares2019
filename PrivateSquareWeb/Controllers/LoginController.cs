@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using ASPSnippets.FaceBookAPI;
+using Newtonsoft.Json;
+using PrivateSquareWeb.CommonCls;
 using PrivateSquareWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace PrivateSquareWeb.Controllers
 {
@@ -16,9 +19,10 @@ namespace PrivateSquareWeb.Controllers
         {
             Services.RemoveCookie(this.ControllerContext.HttpContext, "usrId");
             Services.RemoveCookie(this.ControllerContext.HttpContext, "usrName");
+            FaceBookDevelopApiDetail();
             return View();
         }
-      
+
         public ActionResult Register()
         {
             return View();
@@ -30,6 +34,11 @@ namespace PrivateSquareWeb.Controllers
         [HttpPost]
         public ActionResult UserRegister(UserRegisterModel ObjModel, FormCollection frmColl)
         {
+            String ChkFacebook = frmColl["ChkFacebook"];
+            if (ChkFacebook == "on")
+            {
+                return FacebookLogin();
+            }
 
             if (String.IsNullOrWhiteSpace(ObjModel.Mobile))
                 return View("Index");
@@ -109,7 +118,7 @@ namespace PrivateSquareWeb.Controllers
                 if (LoginType.Equals("R"))
 
                     return RedirectToAction("Index", "Interest");
-                
+
                 else
                     return RedirectToAction("Index", "Home");
 
@@ -148,6 +157,83 @@ namespace PrivateSquareWeb.Controllers
                 Session["OtpData"] = ObjResponse.Response;
                 return Json(Response);
             }
+        }
+
+        [HttpPost]
+        public ActionResult LoginUser(LoginModel ObjModel)
+        {
+            var _request = JsonConvert.SerializeObject(ObjModel);
+            ResponseModel ObjResponse = GetApiResponse(Constant.ApiLoginUser, _request);
+
+            if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+            {
+                return View("Index", ObjModel);
+
+            }
+          
+            var objResponse = ObjResponse.Response;
+            ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
+            String VarResponse = ObjResponse1.Response;
+            if (VarResponse.Equals("Email/Password is Incorrect"))
+            {
+                ViewBag.Response = "Email/Password is Incorrect";
+                return View("Index", ObjModel);
+            }
+            else { 
+            string[] ArrResponse = VarResponse.Split(',');
+            Services.SetCookie(this.ControllerContext.HttpContext, "usrId", ArrResponse[0]);
+            Services.SetCookie(this.ControllerContext.HttpContext, "usrName", ArrResponse[1]);
+            Services.SetCookie(this.ControllerContext.HttpContext, "usrImg", ArrResponse[2]);
+                //ViewBag.LoginMessage = "Login Success";
+                return RedirectToAction("Index", "Home");
+            }
+            
+            /////////////////////////
+        }
+
+        [HttpPost]
+        public ActionResult RegisterUser(LoginModel ObjModel)
+        {
+
+            var _request = JsonConvert.SerializeObject(ObjModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiRegisterUser, _request);
+            if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+            {
+                return View("Index", ObjModel);
+
+            }
+            var objResponse = ObjResponse.Response;
+            ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
+            ViewBag.RegisterMessage = ObjResponse1.Response;
+            return View("Register");
+
+        }
+        private void FaceBookDevelopApiDetail()
+        {
+            FaceBookConnect.API_Key = "291291764879597";
+            FaceBookConnect.API_Secret = "a4148ad27427c346d65bcb456f9d00d9";
+
+            FaceBookUser faceBookUser = new FaceBookUser();
+            if (Request.QueryString["error"] == "access_denied")
+            {
+                ViewBag.Message = "User has denied access.";
+            }
+            else
+            {
+                string code = Request.QueryString["code"];
+                if (!string.IsNullOrEmpty(code))
+                {
+                    string data = FaceBookConnect.Fetch(code, "me?fields=id,name,email");
+                    faceBookUser = new JavaScriptSerializer().Deserialize<FaceBookUser>(data);
+                    faceBookUser.PictureUrl = string.Format("https://graph.facebook.com/{0}/picture", faceBookUser.Id);
+                }
+            }
+        }
+        [HttpPost]
+        public EmptyResult FacebookLogin()
+        {
+            FaceBookConnect.Authorize("user_photos,email", string.Format("{0}://{1}/{2}", Request.Url.Scheme, Request.Url.Authority, "Home/Index/"));
+            return new EmptyResult();
         }
     }
 }
