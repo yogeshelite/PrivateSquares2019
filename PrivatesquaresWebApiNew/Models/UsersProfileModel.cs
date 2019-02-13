@@ -8,7 +8,7 @@ namespace PrivatesquaresWebApiNew.Models
     public class UsersProfileModel
     {
         public long Id { get; set; }
-        public long UserId { get; set; }
+        public long? UserId { get; set; }
         public String Name { get; set; }
         public string ProfileImage { get; set; }
         public string Description { get; set; }

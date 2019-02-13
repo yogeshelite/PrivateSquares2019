@@ -192,21 +192,57 @@ namespace PrivateSquareWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterUser(LoginModel ObjModel)
+        public JsonResult RegisterUser(LoginModel ObjModel)
         {
 
             var _request = JsonConvert.SerializeObject(ObjModel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiRegisterUser, _request);
             if (String.IsNullOrWhiteSpace(ObjResponse.Response))
             {
-                return View("Index", ObjModel);
+              //  return View("Index", ObjModel);
 
             }
             var objResponse = ObjResponse.Response;
             ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
             ViewBag.RegisterMessage = ObjResponse1.Response;
-            return View("Register");
+            String Response = "[{\"Response\":\"" + ObjResponse1.Response + "\"}]";
+            return Json(Response);
 
+        }
+
+        [HttpPost]
+        public JsonResult ForgetPassword(string emailId)
+        {
+            String subject = "ForgetPassword";
+            LoginModel ObjModel = new LoginModel();
+            ObjModel.EmailId = emailId;
+            var _request = JsonConvert.SerializeObject(ObjModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiForgetPassword, _request);
+            String Response = string.Empty;
+
+            if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+            {
+                Response = "[{\"Response\":\"" + 0 + "\"}]";
+                return Json(Response);
+            }
+            ResponseModel ResponseApi = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
+            String Forgetpassword = ResponseApi.Response;
+
+            if (Forgetpassword ==" 1")
+            {
+                ViewBag.Response = "Please Check Email ";
+            }
+
+            
+            String userName = emailId;
+            String Password = Forgetpassword;
+            int respo = CommonFile.SendMailContact(emailId, subject, userName, Password);
+             Response = "[{\"Response\":\"" + respo + "\"}]";
+            if (respo == 1)
+            {
+                ViewBag.Response = "Please Check Email ";
+            }
+            return Json(Response);
         }
         private void FaceBookDevelopApiDetail()
         {

@@ -158,9 +158,9 @@ namespace PrivatesquaresWebApiNew.Controllers
         public IHttpActionResult GetUserProfile(RequestModel requestModel)
         {
 
-            //var data = requestModel.Data;
-            //ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
-            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetUsersProfile()), Success = true };
+            var data = requestModel.Data;
+            UsersProfileModel objUserProfileModel = JsonConvert.DeserializeObject<UsersProfileModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetUsersProfile(objUserProfileModel)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
         }
@@ -429,18 +429,24 @@ namespace PrivatesquaresWebApiNew.Controllers
 
         }
         [Route("api/User/RegisterUser")]
-
         [HttpPost]
-
         public IHttpActionResult RegisterUser(RequestModel requestModel)
-
         {
             var data = requestModel.Data;
             LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(data);
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.RegisterNewUser(objLoginModel)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
-
+        }
+        [Route("api/User/ForgetPassword")]
+        [HttpPost]
+        public IHttpActionResult ForgetPassword(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.ForgetPassword(objLoginModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
         }
     }
 }

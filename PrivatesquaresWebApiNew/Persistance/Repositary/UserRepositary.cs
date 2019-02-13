@@ -10,6 +10,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 {
     public class UserRepositary : GenericRepository<EWT_PSQNEWEntities>, IUserRepositary
     {
+        public ForgetPassword_Result ForgetPassword(LoginModel objModel)
+        {
+            return Context.ForgetPassword(objModel.EmailId).FirstOrDefault();
+        }
+
         public IEnumerable<GetAllInterest_Result> GetAllInterest()
         {
             return Context.GetAllInterest().ToList();
@@ -143,9 +148,9 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Result.FirstOrDefault();
         }
 
-        IEnumerable<GetUsersProfileList_Result> IUserRepositary.GetUserProfileList()
+        IEnumerable<GetUsersProfileList_Result> IUserRepositary.GetUserProfileList(UsersProfileModel objModel)
         {
-            return Context.GetUsersProfileList().ToList();
+            return Context.GetUsersProfileList(objModel.UserId).ToList();
         }
     }
 
@@ -157,7 +162,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         SaveBusiness_Result SaveBusiness(BusinessModel ObjModel);
         SaveUserInterest_Result SaveUserInterest(UserInterestModel objModel);
         SaveProduct_Result SaveProduct(ProductModel objModel);
-        IEnumerable<GetUsersProfileList_Result> GetUserProfileList();
+        IEnumerable<GetUsersProfileList_Result> GetUserProfileList(UsersProfileModel objModel);
         IEnumerable<GetAllInterest_Result> GetAllInterest();
         IEnumerable<InterestCategories_Result> GetAllInterestCategory();
         SaveNetwork_Result SaveNetwork(NetworkModel objModel);
@@ -180,6 +185,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetBusinessDetail_Result> GetBusinessDetail(BusinessModel objModel);
         AuthenticateLogin_Result LoginUser(LoginModel objModel);
         RegisterNewUser_Result RegisterNewUser(LoginModel objModel);
+        ForgetPassword_Result ForgetPassword(LoginModel objModel);
     }
 
 }

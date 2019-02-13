@@ -7,8 +7,8 @@ namespace PrivateSquareWeb
 {
     public class Constant
     {
-        public const string ApiRegister = "User/Registeration";
-        public const string ApiLogin = "User/AuthenticateUser";
+        public const string ApiRegister = "User/Registeration";// For Mobile Login
+        public const string ApiLogin = "User/AuthenticateUser";// For Mobile With Otp
         public const string ApiLoginUser = "User/LoginUser";
         public const string ApiRegisterUser = "User/RegisterUser";
         public const string ApiGetAllInterestCategory = "User/GetAllInterestCategory";
@@ -33,6 +33,6 @@ namespace PrivateSquareWeb
         public const string ApiGetState = "User/GetState";
         public const string ApiGetCity = "User/GetCity";
         public const string ApiGetProductCategory = "User/GetProductCategory";
-
+        public const string ApiForgetPassword = "User/ForgetPassword";
     }
 }

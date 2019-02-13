@@ -69,9 +69,9 @@ namespace PrivatesquaresWebApiNew.Services
             return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
         }
 
-        public ResponseModel GetUsersProfile()
+        public ResponseModel GetUsersProfile(UsersProfileModel objModel)
         {
-            var _result = _instance.GetUserProfileList();
+            var _result = _instance.GetUserProfileList(objModel);
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
 
@@ -213,6 +213,13 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.RegisterNewUser(objModel);
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel ForgetPassword(LoginModel objModel)
+        {
+            var _result = _instance.ForgetPassword(objModel);
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -223,7 +230,7 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel SaveUserInterest(UserInterestModel objModel);
         ResponseModel SaveProduct(ProductModel objModel);
         ResponseModel GetUserbusiness(BusinessModel objModel);
-        ResponseModel GetUsersProfile();
+        ResponseModel GetUsersProfile(UsersProfileModel objModel);
         ResponseModel GetAllInterest();
         ResponseModel GetAllInterestCategory();
         ResponseModel SaveNetwork(NetworkModel objModel);
@@ -245,6 +252,7 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel GetBusinessDetail(BusinessModel objModel);
         ResponseModel LoginUser(LoginModel objModel);
         ResponseModel RegisterNewUser(LoginModel objModel);
+        ResponseModel ForgetPassword(LoginModel objModel);
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

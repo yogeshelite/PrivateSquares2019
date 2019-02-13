@@ -18,7 +18,7 @@ namespace PrivateSquareWeb.Controllers
             List<UsersProfileModel> usersList = GetAllUsers();
             //if (Services.GetCookie(this.ControllerContext.HttpContext,"usrId") != null)
             //{
-                
+
             //}
             ViewBag.AllUsers = usersList;
             // For Facebook Login
@@ -43,8 +43,13 @@ namespace PrivateSquareWeb.Controllers
         public List<UsersProfileModel> GetAllUsers()
         {
             var GetAllUserList = new List<UsersProfileModel>();
-           // var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUsersProfile, "");
+            UsersProfileModel objUserModel = new UsersProfileModel();
+            if (Services.GetCookie(this.ControllerContext.HttpContext, "usrId") != null)
+            {
+                objUserModel.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+            }
+            var _request = JsonConvert.SerializeObject(objUserModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUsersProfile, _request);
             GetAllUserList = JsonConvert.DeserializeObject<List<UsersProfileModel>>(ObjResponse.Response);
             return GetAllUserList;
 
@@ -130,7 +135,7 @@ namespace PrivateSquareWeb.Controllers
             }
             else
             {
-                String Response = "[{\"Response\":\"" +" NotLogin" + "\"}]";
+                String Response = "[{\"Response\":\"" + " NotLogin" + "\"}]";
                 return Json(Response);
             }
         }
