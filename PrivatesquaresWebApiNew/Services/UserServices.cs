@@ -220,6 +220,18 @@ namespace PrivatesquaresWebApiNew.Services
 
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel ChangePassword(LoginModel objModel)
+        {
+            var _result = _instance.ChangePassword(objModel);
+ return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel SaveContactUs(ContactUsModel objModel)
+        {
+            var _result = _instance.SaveContactUs(objModel);
+                        return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
+        }
     }
     public interface IUserServices
     {
@@ -253,6 +265,8 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel LoginUser(LoginModel objModel);
         ResponseModel RegisterNewUser(LoginModel objModel);
         ResponseModel ForgetPassword(LoginModel objModel);
+        ResponseModel ChangePassword(LoginModel objModel);
+        ResponseModel SaveContactUs(ContactUsModel objModel);
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

@@ -195,6 +195,11 @@ namespace PrivateSquareWeb.Controllers
 
                 ObjModel.Mobile = null;
             }
+
+            //Password Encode
+            string PasswordEncripy = CommonFile.EncodePasswordMd5(ObjModel.Password);
+            ObjModel.Password = PasswordEncripy;
+            /////////
             var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
             ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiLoginUser, _request);
             ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
@@ -290,6 +295,10 @@ namespace PrivateSquareWeb.Controllers
             }
 
 
+            string PasswordEncripy = CommonFile.EncodePasswordMd5(ObjModel.Password);
+
+            ObjModel.Password = PasswordEncripy;
+
             var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
             ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiRegisterUser, _request);
             ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
@@ -341,7 +350,7 @@ namespace PrivateSquareWeb.Controllers
 
             String subject = "ForgetPassword";
             String Forgetpassword = "";
-            
+
 
             #region Using Json
             /*
@@ -468,6 +477,9 @@ namespace PrivateSquareWeb.Controllers
             ObjModel.EmailId = Email;
             if (ObjModel.Password.Equals(ObjModel.ConfirmPassword))
             {
+                string PasswordEncripy = CommonFile.EncodePasswordMd5(ObjModel.Password);
+                ObjModel.Password = PasswordEncripy;
+
                 var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
                 ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiForgetPassword, _request);
                 ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);

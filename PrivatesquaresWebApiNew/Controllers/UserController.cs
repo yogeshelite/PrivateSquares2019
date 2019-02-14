@@ -486,5 +486,35 @@ namespace PrivatesquaresWebApiNew.Controllers
             */
             #endregion
         }
+        [Route("api/User/ChangePassword")]
+
+        [HttpPost]
+        public IHttpActionResult ChangePassword(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.ChangePassword(objLoginModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+
+        }
+        [Route("api/User/SaveContactUs")]
+
+        [HttpPost]
+
+        public IHttpActionResult SaveContactUs(RequestModel requestModel)
+
+        {
+            var data = requestModel.Data;
+
+            ContactUsModel objContactUsModel = JsonConvert.DeserializeObject<ContactUsModel>(data);
+
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.SaveContactUs(objContactUsModel)), Success = true };
+
+            var sendJson = Json(sendResponse);
+
+            return sendJson;
+
+        }
     }
 }

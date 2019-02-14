@@ -10,9 +10,17 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 {
     public class UserRepositary : GenericRepository<EWT_PSQNEWEntities>, IUserRepositary
     {
+        public ChangePassword_Result ChangePassword(LoginModel objModel)
+        {
+
+
+            return Context.ChangePassword(objModel.Id, objModel.OldPassword, objModel.NewPassword).FirstOrDefault();
+
+        }
+
         public ForgetPassword_Result ForgetPassword(LoginModel objModel)
         {
-            return Context.ForgetPassword(objModel.EmailId,objModel.Password).FirstOrDefault();
+            return Context.ForgetPassword(objModel.EmailId, objModel.Password).FirstOrDefault();
         }
 
         public IEnumerable<GetAllInterest_Result> GetAllInterest()
@@ -102,7 +110,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         }
         public RegisterNewUser_Result RegisterNewUser(LoginModel objModel)
         {
-            return Context.RegisterNewUser(objModel.Name, objModel.EmailId,objModel.Mobile, objModel.Password).FirstOrDefault();
+            return Context.RegisterNewUser(objModel.Name, objModel.EmailId, objModel.Mobile, objModel.Password).FirstOrDefault();
         }
 
         public RegisterUser_Result RegisterUser(UserRegisterModel ObjModel)
@@ -115,6 +123,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.SaveBusiness(ObjModel.Id, ObjModel.BusinessName, ObjModel.Location, ObjModel.BusinessLogo, ObjModel.ProfessionalCatId,
                 ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.PinCode, ObjModel.UserId, ObjModel.Email, ObjModel.Description, ObjModel.Phone, ObjModel.CountryId, ObjModel.Operation).FirstOrDefault();
 
+        }
+
+        public SaveContactUs_Result SaveContactUs(ContactUsModel objModel)
+        {
+            return Context.SaveContactUs(objModel.FullName, objModel.Mobile, objModel.Email, objModel.Message).FirstOrDefault();
         }
 
         public SaveNetwork_Result SaveNetwork(NetworkModel objModel)
@@ -186,6 +199,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         AuthenticateLogin_Result LoginUser(LoginModel objModel);
         RegisterNewUser_Result RegisterNewUser(LoginModel objModel);
         ForgetPassword_Result ForgetPassword(LoginModel objModel);
+        ChangePassword_Result ChangePassword(LoginModel objModel);
+        SaveContactUs_Result SaveContactUs(ContactUsModel objModel);
     }
 
 }
