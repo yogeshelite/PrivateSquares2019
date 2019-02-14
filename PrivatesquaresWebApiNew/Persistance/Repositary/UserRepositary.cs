@@ -12,7 +12,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
     {
         public ForgetPassword_Result ForgetPassword(LoginModel objModel)
         {
-            return Context.ForgetPassword(objModel.EmailId).FirstOrDefault();
+            return Context.ForgetPassword(objModel.EmailId,objModel.Password).FirstOrDefault();
         }
 
         public IEnumerable<GetAllInterest_Result> GetAllInterest()

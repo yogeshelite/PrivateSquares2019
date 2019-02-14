@@ -19,7 +19,9 @@ namespace PrivateSquareWeb.Controllers
             List<UsersProfileModel> usersList = GetAllUsers();
 
             ViewBag.AllUsers = usersList;
+            #region For Facebook Login
             // For Facebook Login
+            /*
             FaceBookUser faceBookUser = new FaceBookUser();
             if (Request.QueryString["error"] == "access_denied")
             {
@@ -35,7 +37,8 @@ namespace PrivateSquareWeb.Controllers
                     faceBookUser.PictureUrl = string.Format("https://graph.facebook.com/{0}/picture", faceBookUser.Id);
                 }
             }
-
+            */
+            #endregion
             return View();
         }
         public List<UsersProfileModel> GetAllUsers()

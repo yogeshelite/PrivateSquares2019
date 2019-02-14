@@ -24,7 +24,7 @@ namespace PrivateSquareWeb
 
                 byte[] data = encoding.GetBytes(string.Concat("{Data:\"", postData, "\"}"));
 
-               // var dataRequest = new RequestModel
+                // var dataRequest = new RequestModel
                 //{
                 //    Data = postData
                 //};
@@ -69,7 +69,7 @@ namespace PrivateSquareWeb
                 var content = new StringContent(JsonConvert.SerializeObject(data));
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var request = http.PostAsync(string.Format(ApiUrl, url), content);
-                
+
                 var response = request.Result.Content.ReadAsStringAsync().Result;
                 if (request.Result.IsSuccessStatusCode)
                     return response;
@@ -99,8 +99,8 @@ namespace PrivateSquareWeb
         {
             if (httpContext.Request.Cookies.AllKeys.Contains(name))
             {
-               // return httpContext.Request.Cookies.Get(name);
-                   return httpContext.Request.Cookies[name];
+                // return httpContext.Request.Cookies.Get(name);
+                return httpContext.Request.Cookies[name];
 
             }
             else
@@ -110,7 +110,9 @@ namespace PrivateSquareWeb
         }
         public static LoginModel GetLoginUser(HttpContextBase httpContext, JwtTokenManager jwtTokenManager)
         {
-            LoginModel login = null;
+            LoginModel login =new LoginModel();
+            if (Services.GetCookie(httpContext, "usr") == null)
+                return login;
             string cookiesValue = Services.GetCookie(httpContext, "usr").Value;
             dynamic _data = jwtTokenManager.DecodeToken(cookiesValue);
             var json = JsonConvert.DeserializeObject<Dictionary<string, object>>(_data);

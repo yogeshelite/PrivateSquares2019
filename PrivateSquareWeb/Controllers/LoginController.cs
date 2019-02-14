@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -18,9 +19,9 @@ namespace PrivateSquareWeb.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            Services.RemoveCookie(this.ControllerContext.HttpContext, "usrId");
-            Services.RemoveCookie(this.ControllerContext.HttpContext, "usrName");
-            FaceBookDevelopApiDetail();
+            Services.RemoveCookie(this.ControllerContext.HttpContext, "usr");
+            // Services.RemoveCookie(this.ControllerContext.HttpContext, "usrName");
+            //  FaceBookDevelopApiDetail();
             return View();
         }
 
@@ -163,6 +164,17 @@ namespace PrivateSquareWeb.Controllers
         [HttpPost]
         public ActionResult LoginUser(LoginModel ObjModel)
         {
+            if (string.IsNullOrWhiteSpace(ObjModel.EmailId))
+            {
+                ModelState.AddModelError("EmailId", "Email Or Mobile Required");
+                return View("Index", ObjModel);
+            }
+            if (string.IsNullOrWhiteSpace(ObjModel.Password))
+            {
+                ModelState.AddModelError("Password", "Password Required");
+                return View("Index", ObjModel);
+            }
+
             string res;
             long a;
             string myStr = ObjModel.EmailId;
@@ -172,7 +184,17 @@ namespace PrivateSquareWeb.Controllers
                 ObjModel.Mobile = ObjModel.EmailId;
                 ObjModel.EmailId = null;
             }
-            else { ObjModel.Mobile = null; }
+            else
+            {
+                bool IsValidEmail = CommonFile.ValidateEmailIsValid(ObjModel.EmailId);
+                if (!IsValidEmail)
+                {
+                    ModelState.AddModelError("EmailId", "Email Incorrect");
+                    return View("Index", ObjModel);
+                }
+
+                ObjModel.Mobile = null;
+            }
             var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
             ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiLoginUser, _request);
             ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
@@ -241,6 +263,7 @@ namespace PrivateSquareWeb.Controllers
         [HttpPost]
         public JsonResult RegisterUser(LoginModel ObjModel)
         {
+            String Response = "";
 
             string res;
             long a;
@@ -251,13 +274,38 @@ namespace PrivateSquareWeb.Controllers
                 ObjModel.Mobile = ObjModel.EmailId;
                 ObjModel.EmailId = null;
             }
-            else { ObjModel.Mobile = null; }
+            else
+            {
+
+                bool IsValidEmail = CommonFile.ValidateEmailIsValid(ObjModel.EmailId);
+                if (!IsValidEmail)
+                {
+                    ModelState.AddModelError("EmailId", "Email Incorrect");
+                    Response = "[{\"Response\":\"" + "Email Incorrect" + "\"}]";
+                    return Json(Response);
+                }
+
+                ObjModel.Mobile = null;
+
+            }
 
 
             var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
             ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiRegisterUser, _request);
             ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
-            String Response = "[{\"Response\":\"" + ObjResponse1.Response + "\"}]";
+            String varResponse = ObjResponse1.Response;
+            if (varResponse.Equals("USER EXISTS"))
+            {
+                Response = "[{\"Response\":\"" + ObjResponse1.Response + "\"}]";
+            }
+            else
+            {
+                string[] ArrResponse = varResponse.Split(',');
+
+                var jsonString = "{\"Id\":\"" + ArrResponse[0] + "\",\"Name\":\"" + ArrResponse[1] + "\",\"ProfileImg\":\"" + ArrResponse[2] + "\"}";
+                Services.SetCookie(this.ControllerContext.HttpContext, "usr", _JwtTokenManager.GenerateToken(jsonString.ToString()));
+                Response = "[{\"Response\":\"" + "Home" + "\"}]"; ;
+            }
             return Json(Response);
             /******************************************************************/
             #region Using Json
@@ -281,18 +329,20 @@ namespace PrivateSquareWeb.Controllers
         [HttpPost]
         public JsonResult ForgetPassword(string emailId)
         {
-            String subject = "ForgetPassword";
 
-            String Forgetpassword = "";
-            LoginModel ObjModel = new LoginModel();
-            ObjModel.EmailId = emailId;
-
-
-            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
-            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiForgetPassword, _request);
-            ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
             String Response = string.Empty;
-            Forgetpassword = ObjResponse1.Response;
+            bool IsValidEmail = CommonFile.ValidateEmailIsValid(emailId);
+            if (!IsValidEmail)
+            {
+                ModelState.AddModelError("EmailId", "Email Incorrect");
+                Response = "[{\"Response\":\"" + "Email Incorrect" + "\"}]";
+                return Json(Response);
+            }
+
+            String subject = "ForgetPassword";
+            String Forgetpassword = "";
+            
+
             #region Using Json
             /*
             var _request = JsonConvert.SerializeObject(ObjModel);
@@ -315,7 +365,24 @@ namespace PrivateSquareWeb.Controllers
             #endregion
             String userName = emailId;
             String Password = Forgetpassword;
-            int respo = CommonFile.SendMailContact(emailId, subject, userName, Password);
+            String domainName = "http://localhost:53693/";
+            String Path = "Login/ResetPasword/";
+
+            var jsonString = "{\"EmailId\":\"" + emailId + "\",\"Date\":\"" + DateTime.Now.ToString("yyyy-mm-dd HH:mm:ss") + "\"}";
+            //  String jwtToken=  _JwtTokenManager.GenerateToken(jsonString.ToString());
+            byte[] byt = System.Text.Encoding.UTF8.GetBytes(jsonString);
+
+
+            // convert the byte array to a Base64 string
+
+
+
+            String Base64 = Convert.ToBase64String(byt);
+            String ForgetLink = domainName + Path + Base64;
+
+
+            string body = "Click Here <br/> Reset Password <br/>" + ForgetLink;
+            int respo = CommonFile.SendMailContact(emailId, subject, userName, Password, body);
             Response = "[{\"Response\":\"" + respo + "\"}]";
             if (respo == 1)
             {
@@ -349,6 +416,72 @@ namespace PrivateSquareWeb.Controllers
         {
             FaceBookConnect.Authorize("user_photos,email", string.Format("{0}://{1}/{2}", Request.Url.Scheme, Request.Url.Authority, "Home/Index/"));
             return new EmptyResult();
+        }
+        public ActionResult ResetPasword(string id)
+        {
+            String CheckId = id;
+            byte[] b = Convert.FromBase64String(id);
+            string strOriginal = System.Text.Encoding.UTF8.GetString(b);
+            Dictionary<string, string> DictResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(strOriginal);
+            String Email = DictResponse["EmailId"];
+            String DateTimeLink = DictResponse["Date"];
+
+            string CurrentDate = DateTime.Now.ToString("yyyy-mm-dd HH:mm:ss");// DateTime(); //new DateTime(DateTime.NO)
+
+            DateTime date1 = DateTime.ParseExact(DateTimeLink, "yyyy-mm-dd HH:mm:ss", null);
+            DateTime date2 = DateTime.ParseExact(CurrentDate, "yyyy-mm-dd HH:mm:ss", null);
+            int result = DateTime.Compare(date1, date2);
+            TimeSpan diff = date2 - date1;
+            double hours = diff.TotalHours;
+
+            if (hours > 6)
+            {
+                ViewBag.ResponseMassege = "Link Hasben Expired. Please Try Again..";
+            }
+            return View("ResetPasword");
+        }
+        [HttpPost]
+        public ActionResult ResetPasword(LoginModel ObjModel, string id)
+        {
+            String CheckId = id;
+            byte[] b = Convert.FromBase64String(id);
+            string strOriginal = System.Text.Encoding.UTF8.GetString(b);
+            Dictionary<string, string> DictResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(strOriginal);
+            String Email = DictResponse["EmailId"];
+            String DateTimeLink = DictResponse["Date"];
+
+            string CurrentDate = DateTime.Now.ToString("yyyy-mm-dd HH:mm:ss");// DateTime(); //new DateTime(DateTime.NO)
+
+            DateTime date1 = DateTime.ParseExact(DateTimeLink, "yyyy-mm-dd HH:mm:ss", null);
+            DateTime date2 = DateTime.ParseExact(CurrentDate, "yyyy-mm-dd HH:mm:ss", null);
+            int result = DateTime.Compare(date1, date2);
+            TimeSpan diff = date2 - date1;
+            double hours = diff.TotalHours;
+
+            if (hours > 6)
+            {
+                ViewBag.ResponseMassege = "Link Hasben Expired. Please Try Again..";
+                return View("ResetPasword", ObjModel);
+            }
+
+
+            ObjModel.EmailId = Email;
+            if (ObjModel.Password.Equals(ObjModel.ConfirmPassword))
+            {
+                var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(ObjModel));
+                ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiForgetPassword, _request);
+                ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
+
+                string respo = ObjResponse1.Response;
+                ViewBag.ResponseMassege = respo;
+                string Response = "[{\"Response\":\"" + respo + "\"}]";
+            }
+            else
+            {
+                ViewBag.ResponseMassege = "Password Not Match";
+                // ModelState.AddModelError("Not Match", "New Password Or ConfirmPassword Not Match");
+            }
+            return View("ResetPasword", ObjModel);
         }
     }
 }

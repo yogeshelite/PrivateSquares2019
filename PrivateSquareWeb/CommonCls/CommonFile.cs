@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace PrivateSquareWeb.CommonCls
@@ -86,7 +87,7 @@ namespace PrivateSquareWeb.CommonCls
             return ProductCategoryList;
         }
 
-        public static int SendMailContact(string receiverEmailId, string subject, string userName, string userPassword)
+        public static int SendMailContact(string receiverEmailId, string subject, string userName, string userPassword, string body)
         {
             try
             {
@@ -121,7 +122,7 @@ namespace PrivateSquareWeb.CommonCls
                 var senderEmail = new MailAddress(FromMailAddress, userName);
                 var receiverEmail = new MailAddress(receiverEmailId, "Receiver");
                 var password = FromMailerPWD;
-                var body = "<b>Thanks For Visit Your </b><p> User Name Is=" + userName + "</p><p> Password Is= " + userPassword + "</p>";
+                //var body = "<b>Thanks For Visit Your </b><p> User Name Is=" + userName + "</p><p> Password Is= " + userPassword + "</p>";
                 var smtp = new SmtpClient
                 {
                     Host = Host,
@@ -150,6 +151,20 @@ namespace PrivateSquareWeb.CommonCls
                 //ViewBag.Error = "Some Error";
             }
         }
+        public static bool ValidateEmailIsValid(String EmailId)
+        {
+            string email = EmailId;
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            if (match.Success)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
+        }
     }
 }

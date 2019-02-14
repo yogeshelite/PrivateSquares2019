@@ -9,10 +9,29 @@
 }
 <!-- Vendor css -->
 @Styles.Render("~/theme/css")
-
+<style>
+    .btntoLink {
+        font-family: "Verdana" sans-serif;
+        font-size: 1em;
+        text-align: left;
+        color: blue;
+        background: none;
+        margin: 0;
+        padding: 0;
+        border: none;
+        cursor: pointer;
+    }
+</style>
 <script type="text/javascript">
+    function validateEmail(email) {
+
+    }
     function ForgetPassword() {
         var email = document.getElementById('EmailId').value;
+        if (email == '') {
+            document.getElementById("valEmail").innerText = "Email Required";
+            return;
+        }
         $.ajax({
             url: "../../Login/ForgetPassword",
             type: "POST",
@@ -23,7 +42,11 @@
                 console.log(JSON.parse(result));
                 var data = JSON.parse(result);
                 if (data[0].Response == '1') {
-                    // alert()
+                    alert('Please Check Inbox');
+                }
+                else if (data[0].Response == "Email Incorrect") {
+                    document.getElementById("valEmail").innerText = "Email Incorrect";
+                    return;
                 }
             }
         });
@@ -32,12 +55,28 @@
         //emailIdRegister,passwordRegister
         var email = document.getElementById('emailIdRegister').value;
         var password = document.getElementById('passwordRegister').value;
+
         var name = document.getElementById('Name').value;
-        if (email == '' && password == '' && name == '') {
-            var p = document.getElementById("RegisMess");
-            p.innerText = "Please Fill Email,Password,Name";
+        if (name == '') {
+            document.getElementById("valNameRegister").innerText = "Name Required";
+
+            //var p = document.getElementById("RegisMess");
+            //p.innerText = "Please Fill Email,Password,Name";
             return;
         }
+        else if (email == '') {
+            document.getElementById("valemailIdRegister").innerText = "Email Required";
+            return;
+
+        }
+        else if (password == '') {
+            document.getElementById("valpasswordRegister").innerText = "Password Required";
+            return;
+        }
+        //else if (!validateEmail(email)) {
+        //    document.getElementById("valemailIdRegister").innerText = "Email Incorrect";
+        //    return;
+        //}
         else {
 
             $.ajax({
@@ -57,10 +96,13 @@
                         p.innerText = data[0].Response;
 
                     }
-                    else
-                    {
-                        var p = document.getElementById("RegisMess");
-                        p.innerText = data[0].Response;
+                    else if (response == "Email Incorrect") {
+                        document.getElementById("valemailIdRegister").innerText = "Email Incorrect";
+                        return;
+                    }
+                    else {
+                        window.location.href = "/Home/Index";
+
                     }
                 }
             });
@@ -83,17 +125,17 @@
                     <button class="btn btn-block btn-sign-in">Login with facebook</button>
                     <h5 class="text-center login-or">OR</h5>
 
-
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
                         @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Enter Email/Mobile" })
-                        @*<input type="text" class="form-control" placeholder="Enter your email">*@
+                        @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger", id = "valEmail" })
                     </div><!-- form-group -->
                     <div class="form-group mg-b-50">
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter Password" })
-                        @*<input type="password" class="form-control" placeholder="Enter your password">*@
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                         <div class=" forget-password">
 
-                            <input type="button" onclick="ForgetPassword()" class="sign-up-col" value="Forget Password" />
+                            <input type="button" onclick="ForgetPassword()" class="sign-up-col btntoLink" value="Forget Password" />
                             <p style="color:red;">  @ViewBag.Response</p>
                         </div>
                         <!-- <h6 class="forget-password">Forget Password</h6> -->
@@ -110,18 +152,21 @@
 
                 <div class="ps-step-two" style="display: none">
                     <h2 class="sign-up-heading text-center">Sign Up to Write Quotes and earn points <br>from Privatesquares</h2>
-
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Full Name" })
-                        @*<input type="text" class="form-control" placeholder="Full Name">*@
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", id = "valNameRegister" })
+
                     </div><!-- form-group -->
                     <div class="form-group">
                         @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Email Id/Mobile", id = "emailIdRegister" })
-                        @*<input type="password" class="form-control" placeholder="Email Address">*@
+                        @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger", id = "valemailIdRegister" })
+
                     </div><!-- form-group  -->
                     <div class="form-group">
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", id = "passwordRegister" })
-                        @*<input type="password" class="form-control" placeholder="Password">*@
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", id = "valpasswordRegister" })
+
                     </div><!-- form-group -->
                     <p style="color:red;" id="RegisMess"> @ViewBag.RegisterMessage</p>
                     <input type="button" value="Sign Up" class="btn btn-block btn-sign-in" onclick="SignUp()" />
@@ -162,6 +207,8 @@
         $(".ps-step-two").hide();
     });
 </script>
+
+
 
 <!--
 
