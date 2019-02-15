@@ -145,7 +145,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public SaveProfile_Result SaveProfile(UserProfileModel ObjModel)
         {
-            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB, ObjModel.Location, ObjModel.Phone, ObjModel.Pincode, ObjModel.CountryId).FirstOrDefault();
+            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB, ObjModel.Location, ObjModel.Phone, ObjModel.Pincode, ObjModel.CountryId,ObjModel.OfficeAddress,ObjModel.OtherAddress,ObjModel.InterestCatId,ObjModel.XmlData).FirstOrDefault();
         }
 
         public SaveUserInterest_Result SaveUserInterest(UserInterestModel objModel)

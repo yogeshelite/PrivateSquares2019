@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using PrivatesquaresWebApiNew.Models;
 using PrivateSquareWeb.CommonCls;
 using PrivateSquareWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -13,13 +15,55 @@ namespace PrivateSquareWeb.Controllers.User
     public class DashboardController : Controller
     {
         JwtTokenManager _JwtTokenManager = new JwtTokenManager();
+        static List<InterestModel> ListInterest;
         // GET: Dashboard
         public ActionResult Index()
         {
+
             return View();
         }
+        public List<InterestCategoryModel> GetInterestCategory()
+        {
+            var ProductCategoryList = new List<InterestCategoryModel>();
+            // var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetAllInterestCategory, "");
+            ProductCategoryList = JsonConvert.DeserializeObject<List<InterestCategoryModel>>(ObjResponse.Response);
+            return ProductCategoryList;
+
+        }
+
+        public List<InterestModel> GetAllInterest()
+        {
+            var InterestList = new List<InterestModel>();
+            // var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetAllInterest, "");
+            InterestList = JsonConvert.DeserializeObject<List<InterestModel>>(ObjResponse.Response);
+            return InterestList;
+        }
+        public JsonResult GetCateWiseInterest(long CatId)
+        {
+            List<InterestModel> FilterInterestModelsList = ListInterest.Where(i => i.InterestCatId == CatId).ToList();
+            var JsonResponse = Json(FilterInterestModelsList);
+            return JsonResponse;
+        }
+        public List<InterestModel> GetCateWiseInterestEdit()
+        {
+            UserInterestModel objModel = new UserInterestModel();
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+            if (MdUser.Id != 0)
+                objModel.UserId = Convert.ToInt64(MdUser.Id);
+            var InterestList = new List<InterestModel>();
+            var _request = JsonConvert.SerializeObject(objModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUserInterest, _request);
+            InterestList = JsonConvert.DeserializeObject<List<InterestModel>>(ObjResponse.Response);
+            return InterestList;
+
+        }
+       
         public List<UserProfileModel> GetUserProfile()
         {
+
             var GetUserProfile = new List<UserProfileModel>();
             UserProfileModel objUserProfile = new UserProfileModel();
             LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
@@ -28,7 +72,32 @@ namespace PrivateSquareWeb.Controllers.User
                 objUserProfile.UserId = Convert.ToInt64(MdUser.Id);
             var _request = JsonConvert.SerializeObject(objUserProfile);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProfile, _request);
-            GetUserProfile = JsonConvert.DeserializeObject<List<UserProfileModel>>(ObjResponse.Response);
+            string jsonResult = ObjResponse.Response;
+            GetUserProfile = JsonConvert.DeserializeObject<List<UserProfileModel>>(jsonResult);
+            //List<UserProfileModel> CreateList = new List<UserProfileModel>();
+            //objUserProfile.FirstName = dictProfile["FirstName"] as string;
+            //objUserProfile.LastName = dictProfile["LastName"] as string;
+            //objUserProfile.ProfileImage = dictProfile["ProfileImage"] as string;
+            //objUserProfile.Description = dictProfile["Description"] as string;
+            //objUserProfile.EmailId = dictProfile["EmailId"] as string;
+            //objUserProfile.ProfessionalCatId = Convert.ToInt32(dictProfile["ProfessionalCatId"] as string);
+            //objUserProfile.Title = dictProfile["Title"] as string;
+            //objUserProfile.ProfessionalKeyword = dictProfile["ProfessionalKeyword"] as string;
+            //objUserProfile.CityId = Convert.ToInt32(dictProfile["CityId"] as string);
+            //objUserProfile.DOB = Convert.ToDateTime(dictProfile["DOB"] as string);
+            //objUserProfile.Location = dictProfile["Location"] as string;
+            //objUserProfile.Phone = dictProfile["Phone"] as string;
+            //objUserProfile.Pincode = dictProfile["Pincode"] as string;
+            //objUserProfile.CountryId = Convert.ToInt32(dictProfile["CountryId"] as string);
+            //objUserProfile.InterestCatIds = Convert.ToInt32(dictProfile["InterestCatIds"] as string);
+            //objUserProfile.OfficeAddress = dictProfile["OfficeAddress"] as string;
+            //objUserProfile.OtherAddress = dictProfile["OtherAddress"] as string;
+            //String[] UserInterestval = (dictProfile["UserInterestIds"] as string).Split(',');
+            //int[] userInterest = Array.ConvertAll((dictProfile["UserInterestIds"] as string).Split(','), int.Parse);
+            //objUserProfile.UserInterestIds = userInterest;
+            //objUserProfile.OfficeAddress = dictProfile["OfficeAddress"] as string;
+            //CreateList.Add(objUserProfile);
+            //GetUserProfile = CreateList;
             return GetUserProfile;
 
         }
@@ -115,8 +184,20 @@ namespace PrivateSquareWeb.Controllers.User
         }
         public ActionResult PersonalProfile()
         {
+            ListInterest = GetAllInterest();
+            var InterestCategoryList = GetInterestCategory();
+            ViewBag.InterestCategoryList = new SelectList(InterestCategoryList, "Id", "Name");
+
+            List<InterestCategoryModel> CatwiseInterest = new List<InterestCategoryModel>();
+            ViewBag.CatwiseInterestList = new SelectList(CatwiseInterest, "Id", "Name");
+
+
             var listProfession = CommonFile.GetProfession();
             ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
+
+            List<InterestModel> ListInterestUser = GetCateWiseInterestEdit();
+            ViewBag.ListInterestUser = new SelectList(ListInterestUser, "InterestId", "InterestName");
+
 
             bindCountryStateCity();
             UserProfileModel objModel = new UserProfileModel();
@@ -124,7 +205,13 @@ namespace PrivateSquareWeb.Controllers.User
 
             if (UserProfile == null)
             {
+                LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
 
+                if (MdUser.Id != 0)
+                {
+                    objModel.FirstName = MdUser.Name;
+                    objModel.UserId = Convert.ToInt64(MdUser.Id);
+                }
             }
             else if (UserProfile != null && UserProfile.Count() > 0)
             {
@@ -142,7 +229,13 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.Title = UserProfile[0].Title;
                 objModel.ProfessionalKeyword = UserProfile[0].ProfessionalKeyword;
                 objModel.ProfileImage = UserProfile[0].ProfileImage;
-
+                objModel.OfficeAddress = UserProfile[0].OfficeAddress;
+                objModel.OtherAddress = UserProfile[0].OtherAddress;
+                objModel.InterestCatId = UserProfile[0].InterestCatId;
+                int[] userInterest = Array.ConvertAll(UserProfile[0].StrUserInterestIds.Split(','), int.Parse);
+                UserProfile[0].UserInterestIds = userInterest;
+                objModel.UserInterestIds = UserProfile[0].UserInterestIds;
+              
             }
             return View(objModel);
         }
@@ -220,20 +313,53 @@ namespace PrivateSquareWeb.Controllers.User
                     objModel.Phone = MdUser.Mobile;
                 }
                 objModel.ProfileImage = FileName;
-                var _request = JsonConvert.SerializeObject(objModel);
-                ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProfile, _request);
+
+                #region Comment Code For DataSet To Json 
+                DataTable dt = new DataTable();
+                dt.Clear();
+                dt.Columns.Add("UserId");
+                dt.Columns.Add("InterestId");
+                dt.Columns.Add("InterestCatId");
+                int[] Arr_Interest = objModel.UserInterestIds;
+                for (int i = 0; i < Arr_Interest.Length; i++)
+                {
+                    DataRow NewDataRow;
+                    NewDataRow = dt.NewRow();
+                    NewDataRow["UserId"] = MdUser.Id;
+                    NewDataRow["InterestId"] = Arr_Interest[i];
+                    NewDataRow["InterestCatId"] = "0";
+                    dt.Rows.Add(NewDataRow);
+                }
+                // Add a Root Object Name
+                var collectionWrapper = new
+                {
+                    Interest = dt
+                };
+                string JSONresult;
+                JSONresult = JsonConvert.SerializeObject(collectionWrapper);
+                #endregion
+                var data = JsonConvert.DeserializeObject(JSONresult);
+                var xmlNode = JsonConvert.DeserializeXmlNode(data.ToString(), "root").OuterXml;
+
+                objModel.XmlData = xmlNode;
+                //var _request = JsonConvert.SerializeObject(objModel);
+
+                var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objModel));
+                ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiSaveProfile, _request);
+                String VarResponse = ObjResponse.Response;
+                // ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProfile, _request);
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
                 {
                     return View("Index", objModel);
 
                 }
-                String UserName = string.Concat(objModel.FirstName, " ", objModel.LastName);
-                Services.SetCookie(this.ControllerContext.HttpContext, "usrName", UserName);
-                HeaderPartialModel objHeaderModel = new HeaderPartialModel();
-                objHeaderModel.UserName = UserName;
+                //String UserName = string.Concat(objModel.FirstName, " ", objModel.LastName);
+                // Services.SetCookie(this.ControllerContext.HttpContext, "usrName", UserName);
+                //HeaderPartialModel objHeaderModel = new HeaderPartialModel();
+                //objHeaderModel.UserName = UserName;
                 return RedirectToAction("MyBusinessList", "Home");
             }
-            return View("PersonalProfile");
+            return View("PersonalProfile", objModel);
         }
         [HttpPost]
         public ActionResult SaveBussiness(BusinessModel objModel)

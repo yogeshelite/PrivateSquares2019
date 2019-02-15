@@ -103,11 +103,25 @@ namespace PrivatesquaresWebApiNew.Controllers
             // List<UserInterestModel> usersList = JsonConvert.DeserializeObject<List<UserInterestModel>>(JSONresult);
             //DataTable dt1= CovnertJsonToDataTable.ToDataTable<UserInterestModel>(usersList);
             #endregion
+
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                UserProfileModel objUserProfile = JsonConvert.DeserializeObject<UserProfileModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.SaveProfile(objUserProfile))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+            #region Using Json Reponse
+            /*
             var data = requestModel.Data;
             UserProfileModel objUserProfile = JsonConvert.DeserializeObject<UserProfileModel>(data);
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.SaveProfile(objUserProfile)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
+            */
+            #endregion
         }
         [Route("api/User/SaveBusiness")]
         [HttpPost]
