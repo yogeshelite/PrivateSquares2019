@@ -26,7 +26,7 @@
                     <div class="row">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="col-sm-6 col-md-3">
-                            <img src="~/theme/img/img0.jpg" class="img-fluid" alt="">
+                            <img src="~/DocImg/@Model.BusinessLogo" class="img-fluid" alt="">
                             <div class="col-lg-12 mg-t-21 p-0">
                                 <div class="custom-file">
 
@@ -122,7 +122,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="form-control-label">Professional Category: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.ProfessionalCatId, ViewBag.ProfessionList as SelectList,"Select Category", new { @class = "form-control select2-show-search" })
+                                        @Html.DropDownListFor(m => m.ProfessionalCatId, ViewBag.ProfessionList as SelectList, "Select Category", new { @class = "form-control select2-show-search" })
 
                                         @Html.ValidationMessageFor(model => model.ProfessionalCatId, "", new { @class = "text-danger" })
                                     </div>
@@ -134,16 +134,24 @@
 
                                         @Html.TextBoxFor(m => m.ProfessionalKeyword, new { @class = "form-control", @placeholder = "Enter Keywords" })
 
-                                        
+
 
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group mg-b-10-force">
+                                        <label class="form-control-label">Website: </label>
+                                        @Html.TextBoxFor(m => m.Website, new { @class = "form-control", @placeholder = "Enter WebSite Url" })
+
+
+                                    </div>
+                                </div><!-- col-8 -->
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Description: </label>
                                         @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Enter description" })
 
-                                        
+
 
                                     </div>
                                 </div><!-- col-12 -->

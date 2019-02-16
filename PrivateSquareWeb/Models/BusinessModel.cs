@@ -39,5 +39,6 @@ namespace PrivateSquareWeb.Models
         //[Required(ErrorMessage ="Please enter a state")]
         //public long StateId { get; set; } = 0;
         public string Operation { get; set; } = "";
+        public string Website { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace PrivateSquareWeb.Controllers.User
             return InterestList;
 
         }
-       
+
         public List<UserProfileModel> GetUserProfile()
         {
 
@@ -74,30 +74,7 @@ namespace PrivateSquareWeb.Controllers.User
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProfile, _request);
             string jsonResult = ObjResponse.Response;
             GetUserProfile = JsonConvert.DeserializeObject<List<UserProfileModel>>(jsonResult);
-            //List<UserProfileModel> CreateList = new List<UserProfileModel>();
-            //objUserProfile.FirstName = dictProfile["FirstName"] as string;
-            //objUserProfile.LastName = dictProfile["LastName"] as string;
-            //objUserProfile.ProfileImage = dictProfile["ProfileImage"] as string;
-            //objUserProfile.Description = dictProfile["Description"] as string;
-            //objUserProfile.EmailId = dictProfile["EmailId"] as string;
-            //objUserProfile.ProfessionalCatId = Convert.ToInt32(dictProfile["ProfessionalCatId"] as string);
-            //objUserProfile.Title = dictProfile["Title"] as string;
-            //objUserProfile.ProfessionalKeyword = dictProfile["ProfessionalKeyword"] as string;
-            //objUserProfile.CityId = Convert.ToInt32(dictProfile["CityId"] as string);
-            //objUserProfile.DOB = Convert.ToDateTime(dictProfile["DOB"] as string);
-            //objUserProfile.Location = dictProfile["Location"] as string;
-            //objUserProfile.Phone = dictProfile["Phone"] as string;
-            //objUserProfile.Pincode = dictProfile["Pincode"] as string;
-            //objUserProfile.CountryId = Convert.ToInt32(dictProfile["CountryId"] as string);
-            //objUserProfile.InterestCatIds = Convert.ToInt32(dictProfile["InterestCatIds"] as string);
-            //objUserProfile.OfficeAddress = dictProfile["OfficeAddress"] as string;
-            //objUserProfile.OtherAddress = dictProfile["OtherAddress"] as string;
-            //String[] UserInterestval = (dictProfile["UserInterestIds"] as string).Split(',');
-            //int[] userInterest = Array.ConvertAll((dictProfile["UserInterestIds"] as string).Split(','), int.Parse);
-            //objUserProfile.UserInterestIds = userInterest;
-            //objUserProfile.OfficeAddress = dictProfile["OfficeAddress"] as string;
-            //CreateList.Add(objUserProfile);
-            //GetUserProfile = CreateList;
+
             return GetUserProfile;
 
         }
@@ -235,7 +212,7 @@ namespace PrivateSquareWeb.Controllers.User
                 int[] userInterest = Array.ConvertAll(UserProfile[0].StrUserInterestIds.Split(','), int.Parse);
                 UserProfile[0].UserInterestIds = userInterest;
                 objModel.UserInterestIds = UserProfile[0].UserInterestIds;
-              
+
             }
             return View(objModel);
         }
@@ -257,9 +234,11 @@ namespace PrivateSquareWeb.Controllers.User
 
             if (MdUser.Id != 0)
                 objUserProfile.UserId = Convert.ToInt64(MdUser.Id);
-            var _request = JsonConvert.SerializeObject(objUserProfile);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetBusinessDetail, _request);
+
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objUserProfile));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetBusinessDetail, _request);
             GetBusiness = JsonConvert.DeserializeObject<List<BusinessModel>>(ObjResponse.Response);
+
             return GetBusiness;
 
         }
@@ -290,6 +269,7 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.Description = EditBusinessList[0].Description;
                 objModel.CountryId = EditBusinessList[0].CountryId;
                 objModel.Phone = EditBusinessList[0].Phone;
+                objModel.Website = EditBusinessList[0].Website;
                 // objModel.StateId = EditBusinessList[0].StateId;
 
             }
@@ -342,12 +322,9 @@ namespace PrivateSquareWeb.Controllers.User
                 var xmlNode = JsonConvert.DeserializeXmlNode(data.ToString(), "root").OuterXml;
 
                 objModel.XmlData = xmlNode;
-                //var _request = JsonConvert.SerializeObject(objModel);
-
                 var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objModel));
                 ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiSaveProfile, _request);
                 String VarResponse = ObjResponse.Response;
-                // ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveProfile, _request);
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
                 {
                     return View("Index", objModel);
@@ -385,8 +362,11 @@ namespace PrivateSquareWeb.Controllers.User
                     objModel.Operation = "update";
                 else if (objModel.Id == 0)
                     objModel.Operation = "insert";
-                var _request = JsonConvert.SerializeObject(objModel);
-                ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveBusiness, _request);
+
+                //var _request = JsonConvert.SerializeObject(objModel);
+                var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objModel));
+                ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiSaveBusiness, _request);
+                String VarResponse = ObjResponse.Response;
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
                 {
                     return View("MyBusiness", objModel);

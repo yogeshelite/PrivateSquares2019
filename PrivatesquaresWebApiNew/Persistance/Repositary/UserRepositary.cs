@@ -119,7 +119,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         public SaveBusiness_Result SaveBusiness(BusinessModel ObjModel)
         {
             return Context.SaveBusiness(ObjModel.Id, ObjModel.BusinessName, ObjModel.Location, ObjModel.BusinessLogo, ObjModel.ProfessionalCatId,
-                ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.PinCode, ObjModel.UserId, ObjModel.Email, ObjModel.Description, ObjModel.Phone, ObjModel.CountryId, ObjModel.Operation).FirstOrDefault();
+                ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.PinCode, ObjModel.UserId, ObjModel.Email, ObjModel.Description, ObjModel.Phone, ObjModel.CountryId,ObjModel.Website, ObjModel.Operation).FirstOrDefault();
 
         }
 

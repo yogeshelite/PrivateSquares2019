@@ -129,11 +129,25 @@ namespace PrivatesquaresWebApiNew.Controllers
         public IHttpActionResult SaveBusiness(RequestModel requestModel)
         {
 
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                BusinessModel objBusinessProfile = JsonConvert.DeserializeObject<BusinessModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.SaveBusiness(objBusinessProfile))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+
+
+
+            /*
             var data = requestModel.Data;
             BusinessModel objUserProfile = JsonConvert.DeserializeObject<BusinessModel>(data);
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.SaveBusiness(objUserProfile)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
+            */
         }
 
         [Route("api/User/SaveUserInterest")]
@@ -423,11 +437,17 @@ namespace PrivatesquaresWebApiNew.Controllers
         [HttpPost]
         public IHttpActionResult GetBusinessDetail(RequestModel requestModel)
         {
-            var data = requestModel.Data;
-            BusinessModel objBusinessModel = JsonConvert.DeserializeObject<BusinessModel>(data);
-            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetBusinessDetail(objBusinessModel)), Success = true };
-            var sendJson = Json(sendResponse);
-            return sendJson;
+
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                BusinessModel objBusinessProfile = JsonConvert.DeserializeObject<BusinessModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.GetBusinessDetail(objBusinessProfile))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+
         }
         [Route("api/User/LoginUser")]
 

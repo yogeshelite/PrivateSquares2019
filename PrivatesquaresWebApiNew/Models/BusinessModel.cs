@@ -21,5 +21,6 @@ namespace PrivatesquaresWebApiNew.Models
         public long CountryId { get; set; }
         public string Phone { get; set; }
         public string Operation { get; set; }
+        public string Website { get; set; }
     }
 }
