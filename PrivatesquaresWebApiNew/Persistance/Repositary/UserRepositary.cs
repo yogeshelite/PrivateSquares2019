@@ -12,9 +12,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
     {
         public ChangePassword_Result ChangePassword(LoginModel objModel)
         {
-
-
-            return Context.ChangePassword(objModel.Id, objModel.OldPassword, objModel.NewPassword).FirstOrDefault();
+            return Context.ChangePassword(objModel.Id, objModel.Password, objModel.NewPassword).FirstOrDefault();
 
         }
 
@@ -145,7 +143,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public SaveProfile_Result SaveProfile(UserProfileModel ObjModel)
         {
-            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB, ObjModel.Location, ObjModel.Phone, ObjModel.Pincode, ObjModel.CountryId,ObjModel.OfficeAddress,ObjModel.OtherAddress,ObjModel.InterestCatId,ObjModel.XmlData).FirstOrDefault();
+            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB, ObjModel.Location, ObjModel.Phone, ObjModel.Pincode, ObjModel.CountryId, ObjModel.OfficeAddress, ObjModel.OtherAddress, ObjModel.InterestCatId, ObjModel.XmlData).FirstOrDefault();
         }
 
         public SaveUserInterest_Result SaveUserInterest(UserInterestModel objModel)

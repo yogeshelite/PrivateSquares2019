@@ -24,6 +24,7 @@ namespace PrivateSquareWeb.Controllers
             {
                 objModel.UserName =MdUser.Name;
                 objModel.UserId = Convert.ToInt64(MdUser.Id);
+                objModel.ProfileImg = MdUser.ProfileImg;
             }
             else
             {

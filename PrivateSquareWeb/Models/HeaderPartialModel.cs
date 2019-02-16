@@ -9,5 +9,6 @@ namespace PrivateSquareWeb.Models
     {
         public long UserId { get; set; } = 0;
         public string UserName { get; set; } = "Not Login";
+        public string ProfileImg { get; set; } = "";
     }
 }

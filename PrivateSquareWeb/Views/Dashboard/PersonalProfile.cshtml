@@ -17,8 +17,8 @@
 <script>
     function GetCatwiseInterest() {
 
-        // $('#UserInterestIds').empty();
-        var InterestCatId = document.getElementById("InterestCatIds").value;;
+         $('#UserInterestIds').empty();
+        var InterestCatId = document.getElementById("InterestCatId").value;
         $.ajax({
             url: "../../Dashboard/GetCateWiseInterest",
             type: "POST",
@@ -124,20 +124,13 @@
                                             </select>*@
                                     </div>
                                 </div><!-- col-4 -->
-                                <div class="col-lg-4">
+                                @*<div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">State: <span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
-                                        @*<select class="form-control select2-show-search" data-placeholder="Choose one " name="state">
-                                                <option label="Choose one"></option>
-                                                @foreach (var State in ViewBag.StateList)
-                                                {
-                                                    <option value="@State.Value">@State.Text</option>
-                                                }
-                                            </select>*@
-                                        @*<input class="form-control" type="text" name="state" value="" placeholder="Enter state">*@
+                                       
                                     </div>
-                                </div><!-- col-4 -->
+                                </div>*@<!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">City: <span class="tx-danger">*</span></label>
@@ -145,17 +138,18 @@
                                     </div>
                                 </div><!-- col-4 -->
 
-                              
+
 
                                 <div class="col-lg-4">
                                     <label class="form-control-label"> Interest Category: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.InterestCatId, ViewBag.InterestCategoryList as SelectList,"Select Interest Category" ,new { @class = "form-control select2-show-search",
-                                   onchange = "GetCatwiseInterest()" })
+                                   onchange = "GetCatwiseInterest()" ,id= "InterestCatId"
+                               })
 
 
                                 </div><!-- col-8 -->
 
-                                <div class="col-lg-4">
+                                <div class="col-lg-8">
                                     <label class="form-control-label"> Interest: <span class="tx-danger">*</span></label>
                                     @Html.ListBoxFor(m => m.UserInterestIds, ViewBag.ListInterestUser as SelectList, new { @class = "form-control select2-show-search" })
 
@@ -208,16 +202,8 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="form-control-label">Professional Category: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.ProfessionalCatId, ViewBag.ProfessionList as SelectList, new { @class = "form-control select2-show-search" })
+                                        @Html.DropDownListFor(m => m.ProfessionalCatId, ViewBag.ProfessionList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
 
-                                        @*<select class="form-control select2-show-search" data-placeholder="Choose one ">
-                                                <option label="Select Category"></option>
-                                                @foreach (var Prof in ViewBag.ProfessionList)
-                                                {
-                                                    <option value="@Prof.Id">@Prof.Name</option>
-                                                }
-
-                                            </select>*@
                                     </div>
                                 </div>
                                 <div class="col-md-9">
@@ -225,13 +211,6 @@
                                         <label class="form-control-label">Professional Keywords: <span class="tx-danger">*</span></label>
                                         @Html.TextBoxFor(m => m.ProfessionalKeyword, new { @class = "form-control", @placeholder = "Enter  Keywords" })
 
-
-                                        @*<input class="form-control" type="text" id="Keywords" name="Keywords" value="@Model.ProfessionalKeyword" placeholder="Enter Keywords">*@
-                                        @*<select class="form-control select2" data-placeholder="Choose Keywords" multiple>
-                                                <option value="1">Keyword 1</option>
-                                                <option value="2">Keyword 2</option>
-                                                <option value="3">Keyword 3</option>
-                                            </select>*@
                                     </div>
                                 </div>
                                 @*<div class="col-md-3">

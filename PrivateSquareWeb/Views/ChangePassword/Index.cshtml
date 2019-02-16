@@ -1,0 +1,101 @@
+﻿@model PrivateSquareWeb.Models.LoginModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("ChangePassword", "ChangePassword", FormMethod.Post))
+
+{
+
+    @Html.AntiForgeryToken()
+
+    <div class="signin-wrapper spc-padding-100">
+
+        <div class="container container-width">
+
+            <div class="section-wrapper">
+
+                <div class="form-layout form-layout-4">
+
+                    <div class="row">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <label class="col-sm-3 form-control-label">Enter your Password: <span class="tx-danger">*</span></label>
+
+                        <div class="col-sm-9">
+
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Your Current Password" })
+
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", id = "valPassword" })
+
+                        </div>
+
+                    </div><!-- row -->
+
+                    <div class="row mg-t-20">
+
+                        <label class="col-sm-3 form-control-label">Enter your New Password: <span class="tx-danger">*</span></label>
+
+                        <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+
+                            @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", placeholder = "New Password" })
+
+                            @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger", id = "valNewPassword" })
+
+                        </div>
+
+                    </div>
+
+                    <div class="row mg-t-20">
+
+                        <label class="col-sm-3 form-control-label">Confirm Password: <span class="tx-danger">*</span></label>
+
+                        <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+
+                            @Html.PasswordFor(m => m.ConfirmNewPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+
+                            @Html.ValidationMessageFor(model => model.ConfirmNewPassword, "", new { @class = "text-danger", id = "valConfirmNewPassword" })
+
+                        </div>
+
+                    </div>
+
+                    @*<div class="row mg-t-20">
+
+                            <label class="col-sm-3 form-control-label">Message: <span class="tx-danger">*</span></label>
+
+                            <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+
+                                @Html.TextBoxFor(m => m.Message, new { @class = "form-control", placeholder = "Enter Message" })
+
+                            </div>
+
+                        </div>*@
+
+                    <div class="row mg-t-30">
+
+                        <div class="col-sm-9 mg-l-auto">
+
+                            <div class="form-layout-footer">
+                            <p style="color:green;">@ViewBag.ResponseMessage</p>
+                                <input type="submit" class="btn btn-primary bd-0" value="Change Password" />
+
+                                <a href="/Home/Index" class="btn btn-secondary bd-0">Cancel</a>
+
+                            </div><!-- form-layout-footer -->
+
+                        </div><!-- col-8 -->
+
+                    </div>
+
+                </div>
+
+            </div><!--section wrapper-->
+
+        </div><!--container -->
+
+    </div>
+
+}
