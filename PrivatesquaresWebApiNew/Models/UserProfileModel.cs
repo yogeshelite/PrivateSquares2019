@@ -33,6 +33,8 @@ namespace PrivatesquaresWebApiNew.Models
         public int[] UserInterestIds { get; set; }
         public string StrUserInterestIds { get; set; }
         public string XmlData { get; set; }
+        public string XmlDataAddress { get; set; }
+        public string StrUserAddress { get; set; }
 
     }
 }

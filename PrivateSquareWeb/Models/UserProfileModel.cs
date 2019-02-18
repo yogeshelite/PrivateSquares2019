@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -20,6 +21,8 @@ namespace PrivateSquareWeb.Models
         public long CityId { get; set; }
         public string Password { get; set; }
         public long GenderId { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
         public string Location { get; set; }
         public string Phone { get; set; }
@@ -33,5 +36,7 @@ namespace PrivateSquareWeb.Models
         public int[] UserInterestIds { get; set; }
         public string StrUserInterestIds { get; set; }
         public string XmlData { get; set; }
+        public string XmlDataAddress { get; set; }
+        public string StrUserAddress { get; set; }
     }
 }

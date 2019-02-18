@@ -17,7 +17,7 @@
 <script>
     function GetCatwiseInterest() {
 
-         $('#UserInterestIds').empty();
+        $('#UserInterestIds').empty();
         var InterestCatId = document.getElementById("InterestCatId").value;
         $.ajax({
             url: "../../Dashboard/GetCateWiseInterest",
@@ -44,6 +44,54 @@
 
             }
         });
+    }
+</script>
+<script type="text/javascript">
+    var arrHead = new Array();
+    arrHead = ['', 'Emp.Address'];      // SIMPLY ADD OR REMOVE VALUES IN THE ARRAY FOR TABLE HEADERS.
+
+    // ADD A NEW ROW TO THE TABLE.s
+    function addTableRow() {
+        var empTab = document.getElementById('TblAddress');
+        var rowCnt = empTab.rows.length;        // GET TABLE ROW COUNT.
+        var tr = empTab.insertRow(rowCnt);      // TABLE ROW.
+        tr = empTab.insertRow(rowCnt);
+
+        for (var c = 0; c < arrHead.length; c++) {
+            var td = document.createElement('td');          // TABLE DEFINITION.
+            td = tr.insertCell(c);
+
+            if (c == 0) {           // FIRST COLUMN.
+                // ADD A BUTTON.
+                var button = document.createElement('input');
+
+                // SET INPUT ATTRIBUTE.
+                button.setAttribute('type', 'button');
+                button.setAttribute('value', 'X');
+
+                // ADD THE BUTTON's 'onclick' EVENT.
+                button.setAttribute('onclick', 'removeRow(this)');
+
+                td.appendChild(button);
+            }
+            else {
+                // CREATE AND ADD TEXTBOX IN EACH CELL.
+                var ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('id', 'txtAddress[]');
+                ele.setAttribute('Name', 'txtAddress');
+                ele.setAttribute('class', 'form-control');
+                ele.setAttribute('value', '');
+
+                td.appendChild(ele);
+            }
+        }
+    }
+
+    // DELETE TABLE ROW.
+    function removeRow(oButton) {
+        var empTab = document.getElementById('TblAddress');
+        empTab.deleteRow(oButton.parentNode.parentNode.rowIndex);       // BUTTON -> TD -> TR.
     }
 </script>
 @using (Html.BeginForm("SaveProfile", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -101,11 +149,11 @@
 
                                         @*<input class="form-control" type="text" name="email" value="@Model.EmailId" placeholder="Enter email address">*@
                                     </div>
-                                </div><!-- col-4 -->
+                                </div><!-- col-4 -->ss
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">DOB: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(m => m.DOB, new { @class = "form-control", @placeholder = "MM/DD/YYYY" })
+                                        @Html.TextBoxFor(m => m.DOB, "{0:dd/MM/yyyy}", new { @class = "form-control", @placeholder = "DD/MM/YYYY" })
 
                                         @*<input type="text" class="form-control fc-datepicker" placeholder="MM/DD/YYYY" value="@Model.DOB" name="dob" id="dob">*@
                                     </div>
@@ -125,12 +173,12 @@
                                     </div>
                                 </div><!-- col-4 -->
                                 @*<div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">State: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
-                                       
-                                    </div>
-                                </div>*@<!-- col-4 -->
+                                        <div class="form-group">
+                                            <label class="form-control-label">State: <span class="tx-danger">*</span></label>
+                                            @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
+
+                                        </div>
+                                    </div>*@<!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">City: <span class="tx-danger">*</span></label>
@@ -163,6 +211,38 @@
                         <div class="col-12 mg-t-21">
                             <label class="section-title">Address Info</label>
                             <hr />
+                            <input type="button" id="addRow" value="Add  Address" onclick="addTableRow()" />
+                            <div class="row">
+                                <div class="col-lg-8">
+
+                                    <div class="form-group">
+                                        <table id="TblAddress">
+                                            @foreach(var address in ViewBag.UserAddress)
+                                            {
+                                            <tr>
+
+                                                <td>
+                                                    <input type="button" onclick="removeRow(this)" value="X" />
+                                                </td>
+                                                <td> <input type="text" class="form-control" value="@address" id="txtAddress[]" name="txtAddress" /> </td>
+
+                                            </tr>
+                                            }
+                                            <tr>
+                                                <td>
+                                                    <input type="button" onclick="removeRow(this)" value="X" />
+                                                </td>
+                                                <td> <input type="text" class="form-control" value="" id="txtAddress[]" name="txtAddress" /> </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
                             <div class="row">
                                 <div class="col-lg-8">
                                     <div class="form-group mg-b-10-force">

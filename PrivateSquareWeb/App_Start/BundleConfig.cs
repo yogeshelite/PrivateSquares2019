@@ -44,6 +44,8 @@ namespace PrivateSquareWeb
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                        "~/Scripts/bootstrap.js",
                        "~/Scripts/respond.js"));
+
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

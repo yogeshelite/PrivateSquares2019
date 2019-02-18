@@ -212,7 +212,16 @@ namespace PrivateSquareWeb.Controllers.User
                 int[] userInterest = Array.ConvertAll(UserProfile[0].StrUserInterestIds.Split(','), int.Parse);
                 UserProfile[0].UserInterestIds = userInterest;
                 objModel.UserInterestIds = UserProfile[0].UserInterestIds;
-
+                if (!string.IsNullOrWhiteSpace(UserProfile[0].StrUserAddress))
+                {
+                    string[] ArrUserAddress = UserProfile[0].StrUserAddress.Split('^');
+                    ViewBag.UserAddress = ArrUserAddress;
+                }
+                else
+                {
+                    
+                    ViewBag.UserAddress = "";
+                }
             }
             return View(objModel);
         }
@@ -279,8 +288,15 @@ namespace PrivateSquareWeb.Controllers.User
         [HttpPost]
         public ActionResult SaveProfile(FormCollection frmColl, UserProfileModel objModel)
         {
-            if (ModelState.IsValid)
+            String Address = frmColl["txtAddress"];
+            objModel.Location = Address;
+            String StrDob = frmColl["DOB"];
+            DateTime Dob = DateTime.ParseExact(StrDob, "dd/MM/yyyy", null);
+            objModel.DOB = Dob;
+             //if (ModelState.IsValid)
             {
+                
+              
                 HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
                 String FileName = SaveImage(FileUpload);
 
@@ -294,7 +310,7 @@ namespace PrivateSquareWeb.Controllers.User
                 }
                 objModel.ProfileImage = FileName;
 
-                #region Comment Code For DataSet To Json 
+                #region  Code For DataSet To Json 
                 DataTable dt = new DataTable();
                 dt.Clear();
                 dt.Columns.Add("UserId");
@@ -320,8 +336,40 @@ namespace PrivateSquareWeb.Controllers.User
                 #endregion
                 var data = JsonConvert.DeserializeObject(JSONresult);
                 var xmlNode = JsonConvert.DeserializeXmlNode(data.ToString(), "root").OuterXml;
-
                 objModel.XmlData = xmlNode;
+                String[] ArrayAddress = objModel.Location.Split(',');
+                #region  Code For DataSet To Json For Address 
+                DataTable dtAddress = new DataTable();
+                dtAddress.Clear();
+                dtAddress.Columns.Add("UserId");
+                dtAddress.Columns.Add("Address");
+                //int[] ArrayAddress = objModel.UserInterestIds;
+                for (int i = 0; i < ArrayAddress.Length; i++)
+                {
+                    if(!String.IsNullOrWhiteSpace(ArrayAddress[i]))
+                    { 
+                    DataRow NewDataRow;
+                    NewDataRow = dtAddress.NewRow();
+                    NewDataRow["UserId"] = MdUser.Id;
+                    NewDataRow["Address"] = ArrayAddress[i];
+                    dtAddress.Rows.Add(NewDataRow);
+                    }
+                }
+                // Add a Root Object Name
+                var collectionWrapperAddress = new
+                {
+                    Location = dtAddress
+                };
+                string JSONAddressResult;
+                JSONAddressResult = JsonConvert.SerializeObject(collectionWrapperAddress);
+                #endregion
+                #region  Code For DataSet To Xml For Address 
+                var dataAddress = JsonConvert.DeserializeObject(JSONAddressResult);
+                var xmlNodeAddress = JsonConvert.DeserializeXmlNode(dataAddress.ToString(), "root").OuterXml;
+                objModel.XmlDataAddress = xmlNodeAddress;
+                #endregion
+
+
                 var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objModel));
                 ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiSaveProfile, _request);
                 String VarResponse = ObjResponse.Response;

@@ -40,6 +40,7 @@ namespace PrivateSquareWeb.Models
             }
             catch (Exception ex)
             {
+                string Exception = ex.ToString();
                 var decoded = token.Split('.').Take(2).Select(x => Encoding.UTF8.GetString(Convert.FromBase64String(x.PadRight(x.Length + (x.Length % 4), '='))));
                 //Encoding.UTF8.GetString(Convert.FromBase64String(token.PadRight(token.Length + (token.Length - token.Length % 4) % 4, '=')));
                 return decoded.ToArray()[1];// token.Split('.').Take(2).Select(x => Encoding.UTF8.GetString(Convert.FromBase64String(x.PadRight(x.Length + (x.Length % 4), '='))));
