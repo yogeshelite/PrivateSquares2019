@@ -7,6 +7,7 @@ namespace PrivateSquareWeb
 {
     public class Constant
     {
+        public const string DomainUrl = "http://192.168.1.150:2552/";
         public const string ApiRegister = "User/Registeration";// For Mobile Login
         public const string ApiLogin = "User/AuthenticateUser";// For Mobile With Otp
         public const string ApiLoginUser = "User/LoginUser";
@@ -37,5 +38,6 @@ namespace PrivateSquareWeb
         public const string ApiGetUserInterest = "User/GetUserInterest";
         public const string ApiSaveContactUs = "User/SaveContactUs";
         public const string ApiChangePassword = "User/ChangePassword";
+        public const string ApiGetProfessionalKeyword = "User/GetProfessionalKeyword";
     }
 }

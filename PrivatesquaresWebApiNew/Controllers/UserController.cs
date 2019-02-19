@@ -535,7 +535,6 @@ namespace PrivatesquaresWebApiNew.Controllers
         [Route("api/User/SaveContactUs")]
 
         [HttpPost]
-
         public IHttpActionResult SaveContactUs(RequestModel requestModel)
 
         {
@@ -547,6 +546,21 @@ namespace PrivatesquaresWebApiNew.Controllers
 
             var sendJson = Json(sendResponse);
 
+            return sendJson;
+
+        }
+
+        [Route("api/User/GetProfessionalKeyword")]
+
+        [HttpPost]
+
+        public IHttpActionResult GetProfessionalKeyword(RequestModel requestModel)
+
+        {
+            var data = requestModel.Data;
+            DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProfessionalKeyword(objDropDownModel)), Success = true };
+            var sendJson = Json(sendResponse);
             return sendJson;
 
         }

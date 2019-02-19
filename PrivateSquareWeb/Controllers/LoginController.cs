@@ -218,7 +218,7 @@ namespace PrivateSquareWeb.Controllers
             {
                 string[] ArrResponse = VarResponse.Split(',');
 
-                var jsonString = "{\"Id\":\"" + ArrResponse[0] + "\",\"Name\":\"" + ArrResponse[1] + "\",\"ProfileImg\":\"" + ArrResponse[2] + "\"}";
+                var jsonString = "{\"Id\":\"" + ArrResponse[0] + "\",\"Name\":\"" + ArrResponse[1] + "\",\"ProfileImg\":\"" + ArrResponse[2] + "\",\"EmailId\":\"" + ArrResponse[3]+ "\",\"Mobile\":\"" + ArrResponse[4]+"\"}";
                 Services.SetCookie(this.ControllerContext.HttpContext, "usr", _JwtTokenManager.GenerateToken(jsonString.ToString()));
 
 
@@ -311,7 +311,10 @@ namespace PrivateSquareWeb.Controllers
             {
                 string[] ArrResponse = varResponse.Split(',');
 
-                var jsonString = "{\"Id\":\"" + ArrResponse[0] + "\",\"Name\":\"" + ArrResponse[1] + "\",\"ProfileImg\":\"" + ArrResponse[2] + "\"}";
+                // var jsonString = "{\"Id\":\"" + ArrResponse[0] + "\",\"Name\":\"" + ArrResponse[1] + "\",\"ProfileImg\":\"" + ArrResponse[2] + "\"}";
+
+                var jsonString = "{\"Id\":\"" + ArrResponse[0] + "\",\"Name\":\"" + ArrResponse[1] + "\",\"ProfileImg\":\"" + ArrResponse[2] + "\",\"EmailId\":\"" + ArrResponse[3] + "\",\"Mobile\":\"" + ArrResponse[4] + "\"}";
+
                 Services.SetCookie(this.ControllerContext.HttpContext, "usr", _JwtTokenManager.GenerateToken(jsonString.ToString()));
                 Response = "[{\"Response\":\"" + "Home" + "\"}]"; ;
             }
@@ -374,7 +377,7 @@ namespace PrivateSquareWeb.Controllers
             #endregion
             String userName = emailId;
             String Password = Forgetpassword;
-            String domainName = "http://localhost:53693/";
+            String domainName = Constant.DomainUrl;
             String Path = "Login/ResetPasword/";
 
             var jsonString = "{\"EmailId\":\"" + emailId + "\",\"Date\":\"" + DateTime.Now.ToString("yyyy-mm-dd HH:mm:ss") + "\"}";

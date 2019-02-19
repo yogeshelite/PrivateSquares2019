@@ -8,6 +8,65 @@
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 <script src="~/Scripts/select2.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function () {
+        $("#ProfessionalKeyword").autocomplete({
+            source: function (req, resp) {
+                $.ajax({
+                    url: "../../Dashboard/bindProfessionalKeyword",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: GetCurrentSearchTerm(req.term) },
+                    success: function (data) {
+                        if (data.length == 0) {
+                            var facData = [{ Id: 0, Name: "Coding" }];
+                            facData.pop();
+                            facData.push(facData.id);
+                            facData.push("");
+                            this.id = facData.join(",");
+                            resp($.map(facData,
+                                function (item) {
+                                    return { label: GetCurrentSearchTerm(req.term), value: GetCurrentSearchTerm(req.term), id: 0 };
+
+                                }))
+                        }
+                        else {
+                            resp($.map(data, function (item) {
+                                return { label: item.Name, value: item.Name, id: item.id };
+                            }))
+                        }
+                    }
+                })
+            },
+            select: function (event, ui) {
+                var LastId = splitCurrentText(this.id);
+                LastId.pop();
+                LastId.push(ui.item.id);
+                LastId.push("");
+                this.id = LastId.join(",");
+                var LastValue = splitCurrentText(this.value);
+                LastValue.pop();
+                LastValue.push(ui.item.value);
+                LastValue.push("");
+                this.value = LastValue.join(",");
+                return false;
+            },
+            focus: function () {
+                return false;
+            }
+
+        });
+
+        function splitCurrentText(LastTerm) {
+            return LastTerm.split(/,\s*/);
+        }
+        function GetCurrentSearchTerm(LastTerm) {
+            return splitCurrentText(LastTerm).pop();
+        }
+    });
+
+</script>
+
 <script>
     function BtnCancel() {
 
@@ -48,7 +107,7 @@
 </script>
 <script type="text/javascript">
     var arrHead = new Array();
-    arrHead = ['', 'Emp.Address'];      // SIMPLY ADD OR REMOVE VALUES IN THE ARRAY FOR TABLE HEADERS.
+    arrHead = ['', 'Prof.Address'];      // SIMPLY ADD OR REMOVE VALUES IN THE ARRAY FOR TABLE HEADERS.
 
     // ADD A NEW ROW TO THE TABLE.s
     function addTableRow() {
@@ -109,7 +168,7 @@
             <div class="section-wrapper">
                 <div class="form-layout">
                     <div class="row">
-
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="col-sm-6 col-md-3">
                             <img src="~/DocImg/@Model.ProfileImage" class="img-fluid" alt="">
                             <div class="col-lg-12 mg-t-21 p-0">
@@ -128,7 +187,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Firstname: <span class="tx-danger">*</span></label>
                                         @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Enter firstname" })
-
+                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                                         @*<input class="form-control" type="text" name="firstname" value="@Model.FirstName" placeholder="Enter firstname">*@
                                     </div>
                                 </div><!-- col-4 -->
@@ -136,7 +195,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Lastname: <span class="tx-danger">*</span></label>
                                         @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Enter LastName" })
-
+                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
 
                                         @*<input class="form-control" type="text" name="lastname" value="@Model.LastName" placeholder="Enter lastname">*@
                                     </div>
@@ -145,16 +204,25 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Email address: <span class="tx-danger">*</span></label>
                                         @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", @placeholder = "Enter email address" })
-
+                                        @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger" })
 
                                         @*<input class="form-control" type="text" name="email" value="@Model.EmailId" placeholder="Enter email address">*@
                                     </div>
-                                </div><!-- col-4 -->ss
+                                </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Phone: <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Enter Phone No" })
+                                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+
+                                        @*<input class="form-control" type="text" name="email" value="@Model.EmailId" placeholder="Enter email address">*@
+                                    </div>
+                                </div><!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">DOB: <span class="tx-danger">*</span></label>
                                         @Html.TextBoxFor(m => m.DOB, "{0:dd/MM/yyyy}", new { @class = "form-control", @placeholder = "DD/MM/YYYY" })
-
+                                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger", id = "valEmail" })
                                         @*<input type="text" class="form-control fc-datepicker" placeholder="MM/DD/YYYY" value="@Model.DOB" name="dob" id="dob">*@
                                     </div>
                                 </div><!-- col-4 -->
@@ -162,27 +230,28 @@
                                     <div class="form-group mg-b-10-force">
                                         <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList, new { @class = "form-control select2" })
-
+                                        @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                                         @*<select class="form-control select2" data-placeholder="Choose country" name="country" id="country">
-                                                <option label="Choose country"></option>
-                                                @foreach (var Country in ViewBag.CountryList)
-                                                {
-                                                    <option value="@Country.value">@Country.Text</option>
-                                                }
-                                            </select>*@
+                    <option label="Choose country"></option>
+                    @foreach (var Country in ViewBag.CountryList)
+                    {
+                        <option value="@Country.value">@Country.Text</option>
+                    }
+                </select>*@
                                     </div>
                                 </div><!-- col-4 -->
                                 @*<div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-control-label">State: <span class="tx-danger">*</span></label>
-                                            @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
+            <div class="form-group">
+                <label class="form-control-label">State: <span class="tx-danger">*</span></label>
+                @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
 
-                                        </div>
-                                    </div>*@<!-- col-4 -->
+            </div>
+        </div>*@<!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">City: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList, new { @class = "form-control select2-show-search" })
+                                        @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList,new { @class = "form-control select2-show-search" })
+                                        @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                                     </div>
                                 </div><!-- col-4 -->
 
@@ -192,8 +261,9 @@
                                     <label class="form-control-label"> Interest Category: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.InterestCatId, ViewBag.InterestCategoryList as SelectList,"Select Interest Category" ,new { @class = "form-control select2-show-search",
                                    onchange = "GetCatwiseInterest()" ,id= "InterestCatId"
-                               })
 
+                               })
+                                    @Html.ValidationMessageFor(model => model.InterestCatId, "", new { @class = "text-danger" })
 
                                 </div><!-- col-8 -->
 
@@ -201,7 +271,7 @@
                                     <label class="form-control-label"> Interest: <span class="tx-danger">*</span></label>
                                     @Html.ListBoxFor(m => m.UserInterestIds, ViewBag.ListInterestUser as SelectList, new { @class = "form-control select2-show-search" })
 
-
+                                    @Html.ValidationMessageFor(model => model.UserInterestIds, "", new { @class = "text-danger" })
                                 </div><!-- col-8 -->
 
                             </div>
@@ -216,17 +286,19 @@
                                 <div class="col-lg-8">
 
                                     <div class="form-group">
+
+                                        @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
                                         <table id="TblAddress">
-                                            @foreach(var address in ViewBag.UserAddress)
+                                            @foreach (var address in ViewBag.UserAddress)
                                             {
-                                            <tr>
+                                                <tr>
 
-                                                <td>
-                                                    <input type="button" onclick="removeRow(this)" value="X" />
-                                                </td>
-                                                <td> <input type="text" class="form-control" value="@address" id="txtAddress[]" name="txtAddress" /> </td>
+                                                    <td>
+                                                        <input type="button" onclick="removeRow(this)" value="X" />
+                                                    </td>
+                                                    <td> <input type="text" class="form-control" value="@address" id="txtAddress[]" name="txtAddress" /> </td>
 
-                                            </tr>
+                                                </tr>
                                             }
                                             <tr>
                                                 <td>
@@ -243,7 +315,7 @@
 
 
 
-                            <div class="row">
+                            @*<div class="row">
                                 <div class="col-lg-8">
                                     <div class="form-group mg-b-10-force">
                                         <label class="form-control-label">Home Address: <span class="tx-danger">*</span></label>
@@ -265,7 +337,7 @@
                                     </div>
 
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="col-12 mg-t-21">
                             <label class="section-title">Profile Info</label>
@@ -275,7 +347,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
                                         @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @placeholder = "Enter  Title" })
-
+                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger", id = "valEmail" })
                                         @*<input class="form-control" type="text" name="title" value="@Model.Title" placeholder="Enter Title">*@
                                     </div>
                                 </div><!-- col-12 -->
@@ -283,14 +355,14 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Professional Category: <span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.ProfessionalCatId, ViewBag.ProfessionList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
-
+                                        @Html.ValidationMessageFor(model => model.ProfessionalCatId, "", new { @class = "text-danger", id = "valEmail" })
                                     </div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <label class="form-control-label">Professional Keywords: <span class="tx-danger">*</span></label>
                                         @Html.TextBoxFor(m => m.ProfessionalKeyword, new { @class = "form-control", @placeholder = "Enter  Keywords" })
-
+                                         @Html.ValidationMessageFor(model => model.ProfessionalKeyword, "", new { @class = "text-danger", id = "valEmail" })
                                     </div>
                                 </div>
                                 @*<div class="col-md-3">
@@ -320,7 +392,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
                                         @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Enter  description" })
-
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger", id = "valEmail" })
                                         @*<textarea class="form-control desc-height" type="text" name="description" value="@Model.Description" placeholder="Enter description"></textarea>*@
                                     </div>
                                 </div><!-- col-12 -->

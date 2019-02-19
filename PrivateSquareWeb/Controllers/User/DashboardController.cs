@@ -180,7 +180,7 @@ namespace PrivateSquareWeb.Controllers.User
             UserProfileModel objModel = new UserProfileModel();
             List<UserProfileModel> UserProfile = GetUserProfile();
 
-            if (UserProfile == null)
+            if (UserProfile == null || UserProfile.Count() == 0)
             {
                 LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
 
@@ -188,7 +188,18 @@ namespace PrivateSquareWeb.Controllers.User
                 {
                     objModel.FirstName = MdUser.Name;
                     objModel.UserId = Convert.ToInt64(MdUser.Id);
+                    if (!String.IsNullOrEmpty(MdUser.EmailId))
+                    {
+                        objModel.EmailId = MdUser.EmailId;
+                    }
+                    if (!String.IsNullOrWhiteSpace(MdUser.Mobile))
+                    {
+                        objModel.Phone = MdUser.Mobile;
+                    }
                 }
+                objModel.DOB = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", null);
+                string[] ArrUserAddress = new string[0];
+                ViewBag.UserAddress = ArrUserAddress;
             }
             else if (UserProfile != null && UserProfile.Count() > 0)
             {
@@ -208,6 +219,7 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.ProfileImage = UserProfile[0].ProfileImage;
                 objModel.OfficeAddress = UserProfile[0].OfficeAddress;
                 objModel.OtherAddress = UserProfile[0].OtherAddress;
+                objModel.Phone = UserProfile[0].Phone;
                 objModel.InterestCatId = UserProfile[0].InterestCatId;
                 int[] userInterest = Array.ConvertAll(UserProfile[0].StrUserInterestIds.Split(','), int.Parse);
                 UserProfile[0].UserInterestIds = userInterest;
@@ -219,9 +231,14 @@ namespace PrivateSquareWeb.Controllers.User
                 }
                 else
                 {
-                    
-                    ViewBag.UserAddress = "";
+                    string[] ArrUserAddress = new string[0];
+                    ViewBag.UserAddress = ArrUserAddress;
                 }
+            }
+            else
+            {
+                string[] ArrUserAddress = new string[0];
+                ViewBag.UserAddress = ArrUserAddress;
             }
             return View(objModel);
         }
@@ -293,10 +310,17 @@ namespace PrivateSquareWeb.Controllers.User
             String StrDob = frmColl["DOB"];
             DateTime Dob = DateTime.ParseExact(StrDob, "dd/MM/yyyy", null);
             objModel.DOB = Dob;
-             //if (ModelState.IsValid)
+            //objModel.ProfessionalKeyword = objModel.ProfessionalKeyword.Substring(0, objModel.ProfessionalKeyword.Length - 1);
+
+            //Add the following lines
+            ModelState["DOB"].Errors.Clear();
+            if (!string.IsNullOrWhiteSpace(objModel.Location))
+                ModelState["Location"].Errors.Clear();
+            //UpdateModel(objModel);
+            if (ModelState.IsValid)
             {
-                
-              
+
+
                 HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
                 String FileName = SaveImage(FileUpload);
 
@@ -306,7 +330,7 @@ namespace PrivateSquareWeb.Controllers.User
                 if (MdUser.Id != 0)
                 {
                     objModel.UserId = Convert.ToInt64(MdUser.Id);
-                    objModel.Phone = MdUser.Mobile;
+                    // objModel.Phone = MdUser.Mobile;
                 }
                 objModel.ProfileImage = FileName;
 
@@ -337,38 +361,40 @@ namespace PrivateSquareWeb.Controllers.User
                 var data = JsonConvert.DeserializeObject(JSONresult);
                 var xmlNode = JsonConvert.DeserializeXmlNode(data.ToString(), "root").OuterXml;
                 objModel.XmlData = xmlNode;
-                String[] ArrayAddress = objModel.Location.Split(',');
-                #region  Code For DataSet To Json For Address 
-                DataTable dtAddress = new DataTable();
-                dtAddress.Clear();
-                dtAddress.Columns.Add("UserId");
-                dtAddress.Columns.Add("Address");
-                //int[] ArrayAddress = objModel.UserInterestIds;
-                for (int i = 0; i < ArrayAddress.Length; i++)
+                if (!String.IsNullOrEmpty(objModel.Location))
                 {
-                    if(!String.IsNullOrWhiteSpace(ArrayAddress[i]))
-                    { 
-                    DataRow NewDataRow;
-                    NewDataRow = dtAddress.NewRow();
-                    NewDataRow["UserId"] = MdUser.Id;
-                    NewDataRow["Address"] = ArrayAddress[i];
-                    dtAddress.Rows.Add(NewDataRow);
+                    String[] ArrayAddress = objModel.Location.Split(',');
+                    #region  Code For DataSet To Json For Address 
+                    DataTable dtAddress = new DataTable();
+                    dtAddress.Clear();
+                    dtAddress.Columns.Add("UserId");
+                    dtAddress.Columns.Add("Address");
+                    //int[] ArrayAddress = objModel.UserInterestIds;
+                    for (int i = 0; i < ArrayAddress.Length; i++)
+                    {
+                        if (!String.IsNullOrWhiteSpace(ArrayAddress[i]))
+                        {
+                            DataRow NewDataRow;
+                            NewDataRow = dtAddress.NewRow();
+                            NewDataRow["UserId"] = MdUser.Id;
+                            NewDataRow["Address"] = ArrayAddress[i];
+                            dtAddress.Rows.Add(NewDataRow);
+                        }
                     }
+                    // Add a Root Object Name
+                    var collectionWrapperAddress = new
+                    {
+                        Location = dtAddress
+                    };
+                    string JSONAddressResult;
+                    JSONAddressResult = JsonConvert.SerializeObject(collectionWrapperAddress);
+                    #endregion
+                    #region  Code For DataSet To Xml For Address 
+                    var dataAddress = JsonConvert.DeserializeObject(JSONAddressResult);
+                    var xmlNodeAddress = JsonConvert.DeserializeXmlNode(dataAddress.ToString(), "root").OuterXml;
+                    objModel.XmlDataAddress = xmlNodeAddress;
+                    #endregion
                 }
-                // Add a Root Object Name
-                var collectionWrapperAddress = new
-                {
-                    Location = dtAddress
-                };
-                string JSONAddressResult;
-                JSONAddressResult = JsonConvert.SerializeObject(collectionWrapperAddress);
-                #endregion
-                #region  Code For DataSet To Xml For Address 
-                var dataAddress = JsonConvert.DeserializeObject(JSONAddressResult);
-                var xmlNodeAddress = JsonConvert.DeserializeXmlNode(dataAddress.ToString(), "root").OuterXml;
-                objModel.XmlDataAddress = xmlNodeAddress;
-                #endregion
-
 
                 var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objModel));
                 ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiSaveProfile, _request);
@@ -384,7 +410,36 @@ namespace PrivateSquareWeb.Controllers.User
                 //objHeaderModel.UserName = UserName;
                 return RedirectToAction("MyBusinessList", "Home");
             }
-            return View("PersonalProfile", objModel);
+            else
+            {
+                ListInterest = GetAllInterest();
+                var InterestCategoryList = GetInterestCategory();
+                ViewBag.InterestCategoryList = new SelectList(InterestCategoryList, "Id", "Name");
+
+                List<InterestCategoryModel> CatwiseInterest = new List<InterestCategoryModel>();
+                ViewBag.CatwiseInterestList = new SelectList(CatwiseInterest, "Id", "Name");
+
+
+                var listProfession = CommonFile.GetProfession();
+                ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
+
+                List<InterestModel> ListInterestUser = GetCateWiseInterestEdit();
+                ViewBag.ListInterestUser = new SelectList(ListInterestUser, "InterestId", "InterestName");
+
+
+                bindCountryStateCity();
+                if (!string.IsNullOrWhiteSpace(objModel.Location))
+                {
+                    string[] ArrUserAddress = objModel.Location.Split(',');
+                    ViewBag.UserAddress = ArrUserAddress;
+                }
+                else
+                {
+                    ViewBag.UserAddress = "";
+                }
+                return View("PersonalProfile", objModel);
+            }
+
         }
         [HttpPost]
         public ActionResult SaveBussiness(BusinessModel objModel)
@@ -448,6 +503,22 @@ namespace PrivateSquareWeb.Controllers.User
             FileUpload.SaveAs(targetpath + DynamicFileName);
             return DynamicFileName;
         }
+        public JsonResult bindProfessionalKeyword(string Prefix)
 
+        {
+
+            var ProfessionalKeywordList = CommonFile.GetProfessionalKeyword();
+
+            ViewBag.ProfessionalKeywordList = new SelectList(ProfessionalKeywordList, "Id", "Name");
+
+            var EmpName = (from e in ProfessionalKeywordList
+
+                           where e.Name.ToLower().StartsWith(Prefix.ToLower())
+
+                           select new { e.Name, e.Id });
+
+            return Json(EmpName, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }

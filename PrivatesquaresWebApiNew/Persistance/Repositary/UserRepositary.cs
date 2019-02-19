@@ -76,6 +76,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetProfession().ToList();
         }
 
+        public IEnumerable<GetProfessionalKeyword_Result> GetProfessionalKeyword(DropDownModel objModel)
+        {
+            return Context.GetProfessionalKeyword().ToList();
+        }
+
         public IEnumerable<GetState_Result> GetState(DropDownModel objModel)
         {
             return Context.GetState(objModel.CountryId).ToList();
@@ -199,6 +204,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         ForgetPassword_Result ForgetPassword(LoginModel objModel);
         ChangePassword_Result ChangePassword(LoginModel objModel);
         SaveContactUs_Result SaveContactUs(ContactUsModel objModel);
+        IEnumerable<GetProfessionalKeyword_Result> GetProfessionalKeyword(DropDownModel objModel);
     }
 
 }

@@ -206,6 +206,18 @@ namespace PrivateSquareWeb.CommonCls
             //Convert encoded bytes back to a 'readable' string    
             return BitConverter.ToString(encodedBytes);
         }
-#endregion
+        #endregion
+
+        public static List<DropDownModel> GetProfessionalKeyword()
+
+        {
+            var ProfessionalKeywordList = new List<DropDownModel>();
+            DropDownModel objUserProfile = new DropDownModel();
+            var _request = JsonConvert.SerializeObject(objUserProfile);
+            ResponseModel objResponse = CommonFile.GetApiResponse(Constant.ApiGetProfessionalKeyword, _request);
+            ProfessionalKeywordList = JsonConvert.DeserializeObject<List<DropDownModel>>(objResponse.Response);
+            return ProfessionalKeywordList;
+
+        }
     }
 }
