@@ -4,6 +4,7 @@ using PrivateSquareWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,10 +13,15 @@ namespace PrivateSquareWeb.Controllers
     public class ChangePasswordController : Controller
     {
         JwtTokenManager _JwtTokenManager = new JwtTokenManager();
-
+        static bool IsChangePassword = false;
         // GET: ChangePassword
         public ActionResult Index()
         {
+            if (IsChangePassword)
+            {
+                Thread.Sleep(5000);
+                return RedirectToAction("Index", "Home");
+            }
             return View();
 
         }
@@ -37,16 +43,42 @@ namespace PrivateSquareWeb.Controllers
                 var _request = JsonConvert.SerializeObject(ObjModel);
                 ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiChangePassword, _request);
                 ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
-                @ViewBag.ResponseMessage = ObjResponse1.Response;
+                
+               
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
                 {
                     return View("Index", ObjModel);
                 }
-                Services.RemoveCookie(this.ControllerContext.HttpContext, "usr");
-                return RedirectToAction("Index", "Login");
+                if (ObjResponse1.Response.Equals("Wrong Password"))
+                {
+                    @ViewBag.ResponseMessage = "Your Current Password is Wrong";
+                    return View("Index", ObjModel);
+                }
+                else
+                {
+                    @ViewBag.ResponseMessage = "Your Password has been changed Please Login ";
+                    Services.RemoveCookie(this.ControllerContext.HttpContext, "usr");
+                    HeaderPartialModel objModel = new HeaderPartialModel();
+                    objModel.UserName = "";
+                    objModel.UserId = 0;
+                    objModel.ProfileImg = "";
+                    IsChangePassword = true;
+                    return View("Index", ObjModel);
+                    // return RedirectToAction("Index","Login");
+                }
+               
             }
 
             return View("Index", ObjModel);
         }
+        public ActionResult Next()
+        {
+            HeaderPartialModel objModel = new HeaderPartialModel();
+            objModel.UserName ="";
+            objModel.UserId = 0;
+            objModel.ProfileImg ="";
+            return PartialView("~/Views/Shared/_Header.cshtml", objModel);
+        }
+
     }
 }

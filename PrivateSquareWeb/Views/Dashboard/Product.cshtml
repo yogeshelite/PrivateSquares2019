@@ -5,9 +5,117 @@
 }
 
 <script>
+
+
     function BtnCancel() {
 
         window.location.href = "/Home/ProductList";
+    }
+
+    //$('#fileUploadFiles').on('change', function (e) {
+    //    var files = e.target.files;
+    //    console.log('onChange');
+    //    console.log(files);
+    //    //var myID = 3; //uncomment this to make sure the ajax URL works
+    //    if (files.length > 0) {
+    //        if (window.FormData !== undefined) {
+    //            var data = new FormData();
+    //            for (var x = 0; x < files.length; x++) {
+    //                data.append("file" + x, files[x]);
+    //            }
+
+    //            $.ajax({
+    //                type: "POST",
+    //                url: '/MyController/UploadFile?id=' + myID,
+    //                contentType: false,
+    //                processData: false,
+    //                data: data,
+    //                success: function (result) {
+    //                    console.log(result);
+    //                },
+    //                error: function (xhr, status, p3, p4) {
+    //                    var err = "Error " + " " + status + " " + p3 + " " + p4;
+    //                    if (xhr.responseText && xhr.responseText[0] == "{")
+    //                        err = JSON.parse(xhr.responseText).Message;
+    //                    console.log(err);
+    //                }
+    //            });
+    //        } else {
+    //            alert("This browser doesn't support HTML5 file uploads!");
+    //        }
+    //    }
+    //});
+
+
+
+
+
+
+
+    function ShowImages(e) {
+        console.log('ShowImage Call');
+        var fileInput = $("#fileUploadFiles").prop("files");
+        console.log(fileInput);
+        console.log(fileInput.length + 'Name=' + fileInput[0]);
+        //console.log(URL.createObjectURL(fileInput[0]));
+        var DivProductImages = $("#DivProductImages");
+        DivProductImages.html("");
+        var formdata = new FormData(); //FormData object
+        var productImage = "";
+        for (i = 0; i < fileInput.length; i++) {
+            // Appending each file to FormData object
+            formdata.append(fileInput[i].name, fileInput[i]);
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // alert('onload');
+                console.log(e);
+                var img = $("<img />");
+                img.attr("style", "height:100px;width: 100px");
+                img.attr("src", e.target.result);
+                img.attr("name", "img1");
+                img.attr("id", "img1");
+                DivProductImages.append(img);
+
+                var rdo = $("<input />");
+                rdo.attr("style", "height:10px;width: 10px");
+                rdo.attr("type", "radio");
+                rdo.attr("name", "SetDefaultImage");
+                rdo.attr("id", "SetDefaultImage");
+
+                DivProductImages.append(rdo);
+                var index = 1;
+                $('input[type="radio"]').each(function () {
+                    $(this).attr('id', 'SetDefaultImage' + index);
+                    $(this).attr('name', 'SetDefaultImage' + index);
+                    index++;
+                })
+                //productImage += "<img src='" + e.target.result + "'/></br>";
+                //$('#myImg').attr('src', e.target.result);
+                //  console.log(productImage);
+            }
+            reader.readAsDataURL(fileInput[i]);
+
+
+            //productImage += "<img src='" + fileInput[i].name + "'/></br>";
+        }
+        var divImages = document.getElementById("DivProductImages");
+        // divImages.innerHTML = productImage;
+        // console.log(formdata);
+
+
+
+        $.ajax({
+            url: "../../Dashboard/ShowImages",
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: formdata,
+            success: function (result) {
+
+            }
+        });
     }
 </script>
 @using (Html.BeginForm("SaveProduct", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -44,8 +152,8 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Product Name: <span class="tx-danger">*</span></label>
-                                        
-                                        @Html.HiddenFor(m=>m.Id)
+
+                                        @Html.HiddenFor(m => m.Id)
                                         @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @placeholder = "Enter product name" })
                                         @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
                                     </div>
@@ -69,7 +177,15 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.ProductCatId, ViewBag.ProductCatList as SelectList, new { @class = "form-control select2-show-search" })
+                                        @Html.DropDownListFor(m => m.ProductCatId, ViewBag.ProductCatList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
+
+
+                                    </div>
+                                </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Bussiness: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.BusinessId, ViewBag.BusinessList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
 
 
                                     </div>
@@ -80,11 +196,34 @@
 
                                         @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "description" })
 
-                                           </div>
+                                    </div>
 
                                 </div><!-- col-12 -->
 
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="col-lg-12 mg-t-21 p-0">
+                                        <div class="custom-file">
+                                            <input type='file' multiple id='fileUploadFiles' name="fileUploadFiles" onchange="ShowImages(this)" class="custom-file-input" />
+                                            @*<input type="file" title="search image" multiple id="FileUploadMultiImage" name="FileUploadMultiImage" class="custom-file-input">*@
 
+                                            <label class="custom-file-label custom-file-label-inverse" for="customFile">Upload Product Multi Image</label>
+                                        </div><!-- custom-file -->
+                                    </div><!-- col -->
+
+                                </div>
+
+                                <div class="col-sm-12 col-md-3" id="DivProductImages">
+                                    @{ int index = 1;
+                                        foreach (var item in ViewBag.ProductImages)
+                                        {
+                                            @*@Html.RadioButton("SetDefaultImage", 1, false)*@
+                                            <input type="radio" id="@("SetDefaultImage"+@index)" name="@("SetDefaultImage"+@index)" checked="@item.IsSelected"/>
+                                            <img src="~/DocImg/@item.Name" id="@index" sstyle="height:100px;width: 100px"/>
+                                            <label class="control-label"></label>
+                                            index++;
+                                        }
+                                    }
+                                </div>
                             </div>
 
                         </div>

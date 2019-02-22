@@ -23,21 +23,22 @@ namespace PrivateSquareWeb.Controllers
             if (ModelState.IsValid)
 
             {
-                string body = "Contact Us body";
-                string emailId = "nehacityinfomart@gmail.com";
+                string body = "Thanks For Submit Request";
+                string emailId = ObjModel.Email;
                 string subject = "Contact Us";
-                string userName = "nehacityinfomart@gmail.com";
+                string userName = ObjModel.FullName;
                 string Password = "";
                 var _request = JsonConvert.SerializeObject(ObjModel);
                 ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveContactUs, _request);
                 int respo = CommonFile.SendMailContact(emailId, subject, userName, Password, body);
-                Response = "[{\"Response\":\"" + respo + "\"}]"; if (String.IsNullOrWhiteSpace(ObjResponse.Response))
+                Response = "[{\"Response\":\"" + respo + "\"}]";
+                if (String.IsNullOrWhiteSpace(ObjResponse.Response))
                 {
-
+                    
                     return View("Index", ObjModel);
                 }
-
-                return RedirectToAction("Index", "Login");
+                ViewBag.ResponseMessage = "Your Request has been submit";
+                return View("Index");
 
             }
 

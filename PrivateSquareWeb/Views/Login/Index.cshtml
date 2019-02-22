@@ -48,6 +48,11 @@
                     document.getElementById("valEmail").innerText = "Email Incorrect";
                     return;
                 }
+                else if (data[0].Response == "Not Exist Email")
+                {
+                    document.getElementById("valEmail").innerText = "Not Exist Email";
+                    return;
+                }
             }
         });
     }
@@ -64,20 +69,31 @@
             //p.innerText = "Please Fill Email,Password,Name";
             return;
         }
-        else if (email == '') {
-            document.getElementById("valemailIdRegister").innerText = "Email Required";
+        else
+        {
+           
+            document.getElementById("valNameRegister").innerText = "";
+        }
+        if (email == '') {
+            document.getElementById("valemailIdRegister").innerText = "Email/Mobile Required";
             return;
 
+        } else {
+            document.getElementById("valemailIdRegister").innerText = "";
         }
-        else if (password == '') {
+        if (password == '') {
             document.getElementById("valpasswordRegister").innerText = "Password Required";
             return;
+        } else {
+            document.getElementById("valpasswordRegister").innerText = "";
         }
+
         //else if (!validateEmail(email)) {
         //    document.getElementById("valemailIdRegister").innerText = "Email Incorrect";
         //    return;
         //}
-        else {
+    //    else
+        {
 
             $.ajax({
                 url: "../../Login/RegisterUser",
@@ -98,6 +114,11 @@
                     }
                     else if (response == "Email Incorrect") {
                         document.getElementById("valemailIdRegister").innerText = "Email Incorrect";
+                        return;
+                    }
+                    else if (response == "Mobile Number Incorrect")
+                    {
+                        document.getElementById("valemailIdRegister").innerText = "Mobile Number Incorrect";
                         return;
                     }
                     else {
@@ -134,8 +155,8 @@
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter Password" })
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                         <div class=" forget-password">
-
-                            <input type="button" onclick="ForgetPassword()" class="sign-up-col btntoLink" value="Forget Password" />
+                            <a href="/ForgetPassword/Index">Forget Password</a>
+                            @*<input type="button" onclick="ForgetPassword()" class="sign-up-col btntoLink" value="Forget Password" />*@
                             <p style="color:red;">  @ViewBag.Response</p>
                         </div>
                         <!-- <h6 class="forget-password">Forget Password</h6> -->

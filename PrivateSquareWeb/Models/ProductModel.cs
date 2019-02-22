@@ -19,6 +19,8 @@ namespace PrivateSquareWeb.Models
         public long BusinessId { get; set; }
         public long? UserId { get; set; }
         public string Description { get; set; }
+        public string XmlProductImage { get; set; }
+        public string ProductImages { get; set; }
         public string Operation { get; set; }
     }
 }

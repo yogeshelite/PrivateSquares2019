@@ -25,6 +25,7 @@ namespace PrivateSquareWeb.Models
         public long UserId { get; set; } = 0;
 
         [Required(ErrorMessage = "Email cannot be empty")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; } = "";
 
         public string Description { get; set; } = "";

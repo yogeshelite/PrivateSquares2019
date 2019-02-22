@@ -244,11 +244,21 @@ namespace PrivatesquaresWebApiNew.Controllers
         public IHttpActionResult GetUserBusiness(RequestModel requestModel)
         {
 
-            var data = requestModel.Data;
-            BusinessModel objProductModel = JsonConvert.DeserializeObject<BusinessModel>(data);
-            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetUserbusiness(objProductModel)), Success = true };
-            var sendJson = Json(sendResponse);
-            return sendJson;
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                BusinessModel objProductModel = JsonConvert.DeserializeObject<BusinessModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.GetUserbusiness(objProductModel))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+
+            //var data = requestModel.Data;
+            //BusinessModel objProductModel = JsonConvert.DeserializeObject<BusinessModel>(data);
+            //var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetUserbusiness(objProductModel)), Success = true };
+            //var sendJson = Json(sendResponse);
+            //return sendJson;
         }
 
         [Route("api/User/GetProfile")]
@@ -352,12 +362,13 @@ namespace PrivatesquaresWebApiNew.Controllers
         [HttpPost]
         public IHttpActionResult GetProfession(RequestModel requestModel)
         {
+            return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.GetProfession())), Success = true });
 
-            //var data = requestModel.Data;
-            //ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
-            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProfession()), Success = true };
-            var sendJson = Json(sendResponse);
-            return sendJson;
+            ////var data = requestModel.Data;
+            ////ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+            //var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProfession()), Success = true };
+            //var sendJson = Json(sendResponse);
+            //return sendJson;
         }
 
         [Route("api/User/GetCountry")]
@@ -365,11 +376,24 @@ namespace PrivatesquaresWebApiNew.Controllers
         public IHttpActionResult GetCountry(RequestModel requestModel)
         {
 
+            return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.GetCountry())), Success = true });
+            #region Comment
+            //Json----------------------
             //var data = requestModel.Data;
             //ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
-            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetCountry()), Success = true };
-            var sendJson = Json(sendResponse);
-            return sendJson;
+            //var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetCountry()), Success = true };
+            //var sendJson = Json(sendResponse);
+            // return sendJson;
+
+            // JWT-------------
+            //   var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            //  Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            // if (request.ContainsKey("unique_name"))
+            //{
+            // LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(request["unique_name"].ToString());
+            // }
+            // return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+            #endregion
         }
 
 
@@ -377,15 +401,21 @@ namespace PrivatesquaresWebApiNew.Controllers
         [HttpPost]
         public IHttpActionResult GetState(RequestModel requestModel)
         {
-            var data = requestModel.Data;
+            //var data = requestModel.Data;
+            //DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
+            //var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetState(objDropDownModel)), Success = true };
+            //var sendJson = Json(sendResponse);
+            // return sendJson;
 
-            DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
 
-            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetState(objDropDownModel)), Success = true };
-
-            var sendJson = Json(sendResponse);
-
-            return sendJson;
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.GetState(objDropDownModel))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
         }
 
         [Route("api/User/GetProductCategory")]
@@ -393,25 +423,33 @@ namespace PrivatesquaresWebApiNew.Controllers
         // public IHttpActionResult Registeration(RequestModel requestModel)
         public IHttpActionResult GetProductCategory(RequestModel requestModel)
         {
+            return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.GetProductCategory())), Success = true });
 
-            var data = requestModel.Data;
-            DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
-            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProductCategory()), Success = true };
-            var sendJson = Json(sendResponse);
-            return sendJson;
+            //var data = requestModel.Data;
+            //DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
+            //var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProductCategory()), Success = true };
+            //var sendJson = Json(sendResponse);
+            //return sendJson;
         }
         [Route("api/User/GetCity")]
         [HttpPost]
         public IHttpActionResult GetCity(RequestModel requestModel)
 
         {
-            var data = requestModel.Data;
+            //var data = requestModel.Data;
+            //DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
+            //var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetCity(objDropDownModel)), Success = true };
+            //var sendJson = Json(sendResponse);
+            //return sendJson;
 
-            DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
-            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetCity(objDropDownModel)), Success = true };
-
-            var sendJson = Json(sendResponse);
-            return sendJson;
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.GetCity(objDropDownModel))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
 
         }
 
@@ -551,9 +589,7 @@ namespace PrivatesquaresWebApiNew.Controllers
         }
 
         [Route("api/User/GetProfessionalKeyword")]
-
         [HttpPost]
-
         public IHttpActionResult GetProfessionalKeyword(RequestModel requestModel)
 
         {
@@ -562,6 +598,58 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProfessionalKeyword(objDropDownModel)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
+
+        }
+
+        [Route("api/User/IsEmailExist")]
+        [HttpPost]
+        public IHttpActionResult IsEmailExist(RequestModel requestModel)
+        {
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.IsEmailExist(objLoginModel))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+
+            
+        }
+
+        [Route("api/User/IsBusinessExist")]
+        [HttpPost]
+        public IHttpActionResult IsBusinessExist(RequestModel requestModel)
+        {
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                BusinessModel objBusinessModel = JsonConvert.DeserializeObject<BusinessModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.IsBusinessExist(objBusinessModel))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+
+
+        }
+
+
+        [Route("api/User/SaveUserForgetPasswordLink")]
+        [HttpPost]
+        public IHttpActionResult SaveUserForgetPasswordLink(RequestModel requestModel)
+        {
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+            Dictionary<string, object> request = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            if (request.ContainsKey("unique_name"))
+            {
+                LoginModel objLoginModel = JsonConvert.DeserializeObject<LoginModel>(request["unique_name"].ToString());
+                return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.SaveUserForgetPasswordLink(objLoginModel))), Success = true });
+            }
+            return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
+
+
 
         }
     }

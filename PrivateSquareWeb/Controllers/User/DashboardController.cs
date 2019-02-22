@@ -81,13 +81,27 @@ namespace PrivateSquareWeb.Controllers.User
 
         public ActionResult Product()
         {
-            //List<DropDownModel> listDrop = new List<DropDownModel>();
-            //ViewBag.ProductCatList = listDrop;
-
+            if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            
+            preRequistProduct();
+            ProductModel objModel = new ProductModel();
+            ViewBag.ProImagesList = "";
+            return View(objModel);
+        }
+        private void preRequistProduct()
+        {
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            long UserId = 0;
+            if (MdUser.Id != 0)
+                UserId = MdUser.Id;
             var ProductCatList = CommonFile.GetProductCategory();
             ViewBag.ProductCatList = new SelectList(ProductCatList, "Id", "Name");
-            ProductModel objModel = new ProductModel();
-            return View(objModel);
+            var BusinessList = CommonFile.GetUsersBusiness(UserId);
+            ViewBag.BusinessList = new SelectList(BusinessList, "Id", "BusinessName");
+
         }
         public List<ProductModel> GetProduct(long Id)
         {
@@ -105,8 +119,13 @@ namespace PrivateSquareWeb.Controllers.User
         }
         public ActionResult EditProduct(long Id)
         {
-            var ProductCatList = CommonFile.GetProductCategory();
-            ViewBag.ProductCatList = new SelectList(ProductCatList, "Id", "Name");
+            if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            //var ProductCatList = CommonFile.GetProductCategory();
+            //ViewBag.ProductCatList = new SelectList(ProductCatList, "Id", "Name");
+            preRequistProduct();
             List<ProductModel> Product = GetProduct(Id);
             ProductModel objModel = new ProductModel();
             if (Product != null && Product.Count() > 0)
@@ -120,16 +139,54 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.BusinessId = Product[0].BusinessId;
                 objModel.UserId = Product[0].UserId;
                 objModel.Description = Product[0].Description;
-
+                objModel.ProductImages = Product[0].ProductImages;
+                List<ProductImages> ListProductImages =new List<ProductImages>();
+                if (!String.IsNullOrEmpty(objModel.ProductImages))
+                {
+                     String[] ProductImages = objModel.ProductImages.Split(',');
+                    ListProductImages = GetSelectedProductImages(ProductImages,objModel.ProductImage);
+                    ViewBag.ProductImages = ListProductImages;
+                }
+                else
+                {
+                   // String[] ProductImages = new String [0];
+                    ViewBag.ProductImages = ListProductImages;
+                }
             }
             return View("Product", objModel);
+        }
+        private List<ProductImages> GetSelectedProductImages(String[] ProductImages,String DefaultImage)
+        {
+            List<ProductImages> ListProductImages = new List<ProductImages>();
+           
+          
+            for (int i = 0; i < ProductImages.Length; i++)
+            {
+                ProductImages objProductImage = new ProductImages();
+                objProductImage.Name = ProductImages[i];
+                if (objProductImage.Name.Equals(DefaultImage))
+                {
+                    objProductImage.IsSelected = true;
+                }
+                else
+                {
+                    objProductImage.IsSelected = false;
+                }
+                ListProductImages.Add(objProductImage);
+               
+            }
+            return ListProductImages;
         }
         [HttpPost]
         public ActionResult SaveProduct(FormCollection frmColl, ProductModel ObjProductModel)
         {
-            var ProductCatList = CommonFile.GetProductCategory();
 
-            ViewBag.ProductCatList = new SelectList(ProductCatList, "Id", "Name");
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+
+            // objModel.XmlData = xmlNode;
+            //var YourRadioButton1 = Request.Form["SetDefaultImage1"];
+            // String Imag= Request.Form["img[]"].ToString();
+
 
             if (ModelState.IsValid)
             {
@@ -138,7 +195,7 @@ namespace PrivateSquareWeb.Controllers.User
                 String FileName = SaveImage(FileUpload);
 
                 ObjProductModel.ProductImage = FileName;
-                LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+                ObjProductModel.XmlProductImage = GetProductImageXml(MdUser.Id);
 
                 if (MdUser.Id != 0)
                     ObjProductModel.UserId = Convert.ToInt64(MdUser.Id);
@@ -157,10 +214,20 @@ namespace PrivateSquareWeb.Controllers.User
                 }
                 return RedirectToAction("ProductList", "Home");
             }
+            else
+            {
+                preRequistProduct();
+                ProductModel objModel = new ProductModel();
+                ViewBag.ProImagesList = "";
+            }
             return View("Product", ObjProductModel);
         }
         public ActionResult PersonalProfile()
         {
+            if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             ListInterest = GetAllInterest();
             var InterestCategoryList = GetInterestCategory();
             ViewBag.InterestCategoryList = new SelectList(InterestCategoryList, "Id", "Name");
@@ -221,9 +288,19 @@ namespace PrivateSquareWeb.Controllers.User
                 objModel.OtherAddress = UserProfile[0].OtherAddress;
                 objModel.Phone = UserProfile[0].Phone;
                 objModel.InterestCatId = UserProfile[0].InterestCatId;
-                int[] userInterest = Array.ConvertAll(UserProfile[0].StrUserInterestIds.Split(','), int.Parse);
-                UserProfile[0].UserInterestIds = userInterest;
-                objModel.UserInterestIds = UserProfile[0].UserInterestIds;
+                objModel.CityId = UserProfile[0].CityId;
+                if (!string.IsNullOrWhiteSpace(UserProfile[0].StrUserInterestIds))
+                {
+                    int[] userInterest = Array.ConvertAll(UserProfile[0].StrUserInterestIds.Split(','), int.Parse);
+                    UserProfile[0].UserInterestIds = userInterest;
+                    objModel.UserInterestIds = UserProfile[0].UserInterestIds;
+                }
+                else
+                {
+                    int[] userInterest = new int[0];
+                    UserProfile[0].UserInterestIds = userInterest;
+                    objModel.UserInterestIds = UserProfile[0].UserInterestIds;
+                }
                 if (!string.IsNullOrWhiteSpace(UserProfile[0].StrUserAddress))
                 {
                     string[] ArrUserAddress = UserProfile[0].StrUserAddress.Split('^');
@@ -245,11 +322,15 @@ namespace PrivateSquareWeb.Controllers.User
 
         public ActionResult MyBusiness()
         {
+            if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var listProfession = CommonFile.GetProfession();
             ViewBag.ProfessionList = new SelectList(listProfession, "Id", "Name");
             bindCountryStateCity();
-
-            return View();
+            BusinessModel objModel = new BusinessModel();
+            return View(objModel);
         }
         public List<BusinessModel> GetBusiness(long Id)
         {
@@ -305,6 +386,9 @@ namespace PrivateSquareWeb.Controllers.User
         [HttpPost]
         public ActionResult SaveProfile(FormCollection frmColl, UserProfileModel objModel)
         {
+
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            String FileName = null;
             String Address = frmColl["txtAddress"];
             objModel.Location = Address;
             String StrDob = frmColl["DOB"];
@@ -314,18 +398,20 @@ namespace PrivateSquareWeb.Controllers.User
 
             //Add the following lines
             ModelState["DOB"].Errors.Clear();
+
+
             if (!string.IsNullOrWhiteSpace(objModel.Location))
                 ModelState["Location"].Errors.Clear();
+
             //UpdateModel(objModel);
             if (ModelState.IsValid)
             {
 
 
                 HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
-                String FileName = SaveImage(FileUpload);
+                FileName = SaveImage(FileUpload);
 
                 objModel.Id = 0;
-                LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
 
                 if (MdUser.Id != 0)
                 {
@@ -340,13 +426,26 @@ namespace PrivateSquareWeb.Controllers.User
                 dt.Columns.Add("UserId");
                 dt.Columns.Add("InterestId");
                 dt.Columns.Add("InterestCatId");
-                int[] Arr_Interest = objModel.UserInterestIds;
-                for (int i = 0; i < Arr_Interest.Length; i++)
+                if (objModel.UserInterestIds != null && objModel.UserInterestIds.Length > 0)
+                {
+                    int[] Arr_Interest = objModel.UserInterestIds;
+                    for (int i = 0; i < Arr_Interest.Length; i++)
+                    {
+                        DataRow NewDataRow;
+                        NewDataRow = dt.NewRow();
+                        NewDataRow["UserId"] = MdUser.Id;
+                        NewDataRow["InterestId"] = Arr_Interest[i];
+                        NewDataRow["InterestCatId"] = "0";
+                        dt.Rows.Add(NewDataRow);
+                    }
+                }
+                else
+
                 {
                     DataRow NewDataRow;
                     NewDataRow = dt.NewRow();
                     NewDataRow["UserId"] = MdUser.Id;
-                    NewDataRow["InterestId"] = Arr_Interest[i];
+                    NewDataRow["InterestId"] = 0;
                     NewDataRow["InterestCatId"] = "0";
                     dt.Rows.Add(NewDataRow);
                 }
@@ -361,6 +460,8 @@ namespace PrivateSquareWeb.Controllers.User
                 var data = JsonConvert.DeserializeObject(JSONresult);
                 var xmlNode = JsonConvert.DeserializeXmlNode(data.ToString(), "root").OuterXml;
                 objModel.XmlData = xmlNode;
+
+
                 if (!String.IsNullOrEmpty(objModel.Location))
                 {
                     String[] ArrayAddress = objModel.Location.Split(',');
@@ -404,6 +505,16 @@ namespace PrivateSquareWeb.Controllers.User
                     return View("Index", objModel);
 
                 }
+                string ProfileImgName = "";
+                if (!String.IsNullOrEmpty(FileName))
+                    ProfileImgName = FileName;
+                else
+                    ProfileImgName = MdUser.ProfileImg;
+                var jsonString = "{\"Id\":\"" + MdUser.Id + "\",\"Name\":\"" + MdUser.Name + "\",\"ProfileImg\":\"" + ProfileImgName + "\",\"EmailId\":\"" + MdUser.EmailId + "\",\"Mobile\":\"" + MdUser.Mobile + "\"}";
+                Services.SetCookie(this.ControllerContext.HttpContext, "usr", _JwtTokenManager.GenerateToken(jsonString.ToString()));
+
+
+
                 //String UserName = string.Concat(objModel.FirstName, " ", objModel.LastName);
                 // Services.SetCookie(this.ControllerContext.HttpContext, "usrName", UserName);
                 //HeaderPartialModel objHeaderModel = new HeaderPartialModel();
@@ -452,6 +563,21 @@ namespace PrivateSquareWeb.Controllers.User
 
             if (ModelState.IsValid)
             {
+                var _requestBusinessCheck = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objModel));
+                ResponseModel ObjResponseBusiness = CommonFile.GetApiResponseJWT(Constant.ApiIsBusinessExist, _requestBusinessCheck);
+                ResponseModel ObjResponseBusiness1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponseBusiness.Response);
+
+                string respo = ObjResponseBusiness1.Response;
+                ViewBag.ResponseMassege = respo;
+                if (respo.Equals("Exist"))
+                {
+                    ViewBag.ResponseMessage = "Business Name All Ready Exist";
+                    // Response = "[{\"Response\":\"" + respo + "\"}]";
+                    return View("MyBusiness", objModel);
+                }
+
+
+
                 HttpPostedFileBase FileUpload = Request.Files["FileUploadImage"];
                 String FileName = SaveImage(FileUpload);
                 //BusinessModel objModel = new BusinessModel();
@@ -491,7 +617,58 @@ namespace PrivateSquareWeb.Controllers.User
             ViewBag.CityList = new SelectList(CityList, "Id", "Name");
 
         }
+        [HttpPost]
+        public JsonResult ShowImages()
+        {
+            List<ProductImages> ListImagesProduct = new List<ProductImages>();
+            int index = 1;
+            foreach (string file in Request.Files)
+            {
+                var fileContent = Request.Files[file];
 
+                if (fileContent != null && fileContent.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file);
+                    ProductImages ProImg = new ProductImages();
+                    ProImg.Id = index;
+                    ProImg.Name = fileName;
+                    ProImg.ImageUpload = fileContent;
+                    ListImagesProduct.Add(ProImg);
+                    index++;
+
+                    // get a stream
+                    //var stream = fileContent.InputStream;
+                    // and optionally write the file to disk
+
+                    //var path = Path.Combine(Server.MapPath("~/App_Data/Images"), fileName);
+                    //using (var fileStream = File.Create(path))
+                    //{
+                    //    stream.CopyTo(fileStream);
+                    //}
+                }
+            }
+            ViewBag.ProImagesList = ListImagesProduct;
+            //HttpPostedFileBase FileUpload = Request.Files["FileUploadMultiImage"];
+
+            //foreach (var file in files)
+            //{
+            //    //Checking file is available to save.  
+            //    if (file != null)
+            //    {
+            //        var InputFileName = Path.GetFileName(file.FileName);
+            //        //var ServerSavePath = Path.Combine(Server.MapPath("~/UploadedFiles/") + InputFileName);
+            //        ////Save file to server folder  
+            //        //file.SaveAs(ServerSavePath);
+            //        //assigning file uploaded status to ViewBag for showing message to user.  
+            //        ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
+            //    }
+
+            //}
+
+
+
+            return Json("");
+        }
         private String SaveImage(HttpPostedFileBase FileUpload)
         {
             if (string.IsNullOrWhiteSpace(FileUpload.FileName))
@@ -520,5 +697,63 @@ namespace PrivateSquareWeb.Controllers.User
             return Json(EmpName, JsonRequestBehavior.AllowGet);
 
         }
+
+        private String GetProductImageXml(long UserId)
+        {
+            #region
+            string radioId = "SetDefaultImage";
+            //foreach (string file in Request.Files)
+            DataTable dt = new DataTable();
+            dt.Clear();
+            dt.Columns.Add("UserId");
+            dt.Columns.Add("ImageName");
+            dt.Columns.Add("IsDefault");
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                if (i != 0)
+                {
+
+                    String ConradioId = radioId + i.ToString();
+                    var RadioButton = Request.Form[ConradioId];
+
+                    DataRow NewDataRow;
+                    NewDataRow = dt.NewRow();
+                    NewDataRow["UserId"] = UserId;
+                    if (RadioButton != null)
+                    {
+                        NewDataRow["IsDefault"] = "1";
+                        String SelectedImage = i.ToString();
+                    }
+                    else
+                    {
+                        NewDataRow["IsDefault"] = "0";
+                    }
+                    var fileContent = Request.Files[i];
+                    if (fileContent != null && fileContent.ContentLength > 0)
+                    {
+                        var fileName = SaveImage(fileContent);
+                        NewDataRow["ImageName"] = fileName;
+                    }
+                    dt.Rows.Add(NewDataRow);
+                }
+            }
+            var collectionWrapper = new
+            {
+                ProductImages = dt
+            };
+            string JSONresult;
+            JSONresult = JsonConvert.SerializeObject(collectionWrapper);
+            #endregion
+            var data = JsonConvert.DeserializeObject(JSONresult);
+            var xmlNode = JsonConvert.DeserializeXmlNode(data.ToString(), "root").OuterXml;
+            return xmlNode;
+        }
+    }
+    public class ProductImages
+    {
+        public String Name { get; set; }
+        public int Id { get; set; }
+        public bool IsSelected { get; set; }
+        public HttpPostedFileBase ImageUpload { get; set; }
     }
 }

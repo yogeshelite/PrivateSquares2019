@@ -114,17 +114,35 @@ namespace PrivateSquareWeb.Controllers
 
         public ActionResult MyBusinessList()
         {
+            //if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
 
-            ViewBag.UsersBusiness = GetUsersBusiness();
+            // ViewBag.UsersBusiness = GetUsersBusiness();
+            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            long UserId = 0;
+            if (MdUser.Id != 0)
+                UserId = MdUser.Id;
+             ViewBag.UsersBusiness =CommonFile.GetUsersBusiness(UserId);
+
             return View();
         }
         public ActionResult ProductList()
         {
+            //if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
             ViewBag.UsersProduct = GetProduct();
             return View();
         }
         public ActionResult NetworkList()
         {
+            //if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
             ViewBag.UsersNetwork = GetUsersNetwork();
             return View();
         }

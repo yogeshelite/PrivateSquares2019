@@ -123,6 +123,12 @@
                 </div><!-- dropdown-menu-right -->
             </div><!-- dropdown -->
             <div class="dropdown dropdown-c">
+                @if (@Model.UserId == 0)
+                {
+                    <a href="/Login/Index" class="nav-link"><i class="icon ion-forward"></i> Login/Signup</a>
+                }
+           @if(@Model.UserId!=0)
+            {
                 <a href="#" class="logged-user" data-toggle="dropdown">
                     <img src="~/DocImg/@Model.ProfileImg" alt="">
                     <span> @Model.UserName </span>
@@ -139,6 +145,7 @@
                         <a href="/Login/Index" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
                     </nav>
                 </div><!-- dropdown-menu -->
+                }
             </div><!-- dropdown -->
         </div><!-- header-right -->
     </div><!-- container -->

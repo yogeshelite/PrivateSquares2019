@@ -238,6 +238,24 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.GetProfessionalKeyword(objModel);
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel IsEmailExist(LoginModel objModel)
+        {
+            var _result = _instance.IsEmailExist(objModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel IsBusinessExist(BusinessModel objModel)
+        {
+            var _result = _instance.IsBusinessExist(objModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel SaveUserForgetPasswordLink(LoginModel objModel)
+        {
+            var _result = _instance.SaveUserForgetPasswordLink(objModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -274,6 +292,10 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel ChangePassword(LoginModel objModel);
         ResponseModel SaveContactUs(ContactUsModel objModel);
         ResponseModel GetProfessionalKeyword(DropDownModel objModel);
+        ResponseModel IsEmailExist(LoginModel objModel);
+        ResponseModel IsBusinessExist(BusinessModel objModel);
+        ResponseModel SaveUserForgetPasswordLink(LoginModel objModel);
+
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

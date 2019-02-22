@@ -6,6 +6,9 @@
     <title>Private Square</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
 </head>
 <body>
     <header>
@@ -23,9 +26,7 @@
         @{Html.RenderPartial("_Footer");
         }
     </footer>
-    @Scripts.Render("~/bundles/jquery")
-    @*@Scripts.Render("~/bundles/bootstrap")*@
-    @RenderSection("scripts", required: false)
+  
     <script>
 
         var weburl = window.location.pathname;

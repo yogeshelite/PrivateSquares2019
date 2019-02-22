@@ -15,7 +15,8 @@ namespace PrivateSquareWeb.CommonCls
 {
     public class CommonFile
     {
-
+        static JwtTokenManager _JwtTokenManager = new JwtTokenManager();
+        #region Code Block For PostApi Jwt Or Without
         public static ResponseModel GetApiResponse(string Url, String Data)
         {
             var _response = Services.GetApiResponseJson(Url, "POST", Data);
@@ -43,52 +44,100 @@ namespace PrivateSquareWeb.CommonCls
             }
             return new ResponseModel();
         }
+        #endregion
+        #region Factory Date For All User
         public static List<DropDownModel> GetCountry()
         {
             var CountryList = new List<DropDownModel>();
-            DropDownModel objUserProfile = new DropDownModel();
-            var _request = JsonConvert.SerializeObject(objUserProfile);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetCountry, _request);
+            DropDownModel objDropdown = new DropDownModel();
+
+
+
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objDropdown));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetCountry, _request);
             CountryList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
+
+
+            //var _request = JsonConvert.SerializeObject(objUserProfile);
+            //ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetCountry, _request);
+            //CountryList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
             return CountryList;
         }
         public static List<DropDownModel> GetState()
         {
             var StateList = new List<DropDownModel>();
-            DropDownModel objUserProfile = new DropDownModel();
-            var _request = JsonConvert.SerializeObject(objUserProfile);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetState, _request);
+            DropDownModel objDropdown = new DropDownModel();
+
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objDropdown));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetState, _request);
             StateList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
+
+            //var _request = JsonConvert.SerializeObject(objUserProfile);
+            //ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetState, _request);
+            //StateList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
+
             return StateList;
         }
         public static List<DropDownModel> GetCity()
         {
             var CityList = new List<DropDownModel>();
-            DropDownModel objUserProfile = new DropDownModel();
-            var _request = JsonConvert.SerializeObject(objUserProfile);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetCity, _request);
+            DropDownModel objDropdown = new DropDownModel();
+
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objDropdown));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetCity, _request);
             CityList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
+
             return CityList;
         }
         public static List<DropDownModel> GetProfession()
         {
             var ProfessionList = new List<DropDownModel>();
-            DropDownModel objUserProfile = new DropDownModel();
-            //  var _request = JsonConvert.SerializeObject(objUserProfile);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProfession, "");
+            DropDownModel objDropdown = new DropDownModel();
+
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objDropdown));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetProfession, _request);
             ProfessionList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
+
+
+            ////  var _request = JsonConvert.SerializeObject(objUserProfile);
+            //ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProfession, "");
+            //ProfessionList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
             return ProfessionList;
         }
         public static List<DropDownModel> GetProductCategory()
         {
             var ProductCategoryList = new List<DropDownModel>();
-            DropDownModel objUserProfile = new DropDownModel();
-            //  var _request = JsonConvert.SerializeObject(objUserProfile);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProductCategory, "");
+            DropDownModel objDropdown = new DropDownModel();
+
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objDropdown));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetProductCategory, _request);
             ProductCategoryList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
+
+
+            ////  var _request = JsonConvert.SerializeObject(objUserProfile);
+            //ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProductCategory, "");
+            //ProductCategoryList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
             return ProductCategoryList;
         }
+        #endregion
+        public static List<BusinessModel> GetUsersBusiness(long UserId)
+        {
+            var GetUserBusinessList = new List<BusinessModel>();
+            BusinessModel objmodel = new BusinessModel();
+            objmodel.UserId = UserId;
 
+            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objmodel));
+            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetUserBusiness, _request);
+            GetUserBusinessList = JsonConvert.DeserializeObject<List<BusinessModel>>(ObjResponse.Response);
+
+
+            //var _request = JsonConvert.SerializeObject(objmodel);
+            //ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetUserBusiness, _request);
+            //GetUserBusinessList = JsonConvert.DeserializeObject<List<BusinessModel>>(ObjResponse.Response);
+
+            return GetUserBusinessList;
+
+        }
         public static int SendMailContact(string receiverEmailId, string subject, string userName, string userPassword, string body)
         {
             try
@@ -208,6 +257,14 @@ namespace PrivateSquareWeb.CommonCls
         }
         #endregion
 
+        public static bool IsUserAuthenticate(HttpContextBase httpContext)
+        {
+            LoginModel MDUser = Services.GetLoginUser(httpContext, _JwtTokenManager);
+            if (MDUser.Id != 0)
+                return true;
+            else
+                return false;
+        }
         public static List<DropDownModel> GetProfessionalKeyword()
 
         {

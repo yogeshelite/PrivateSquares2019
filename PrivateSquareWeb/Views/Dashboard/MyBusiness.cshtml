@@ -25,6 +25,7 @@
                 <div class="form-layout">
                     <div class="row">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                       
                         <div class="col-sm-6 col-md-3">
                             <img src="~/DocImg/@Model.BusinessLogo" class="img-fluid" alt="">
                             <div class="col-lg-12 mg-t-21 p-0">
@@ -43,10 +44,10 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Business Name: <span class="tx-danger">*</span></label>
                                         <div class="col-md-10">
-                                           @Html.HiddenFor(m=>m.Id)
+                                            @Html.HiddenFor(m => m.Id)
                                             @Html.TextBoxFor(m => m.BusinessName, new { @class = "form-control", @placeholder = "Enter business name" })
 
-                                            @Html.ValidationMessageFor(model => model.BusinessName,"", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.BusinessName, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div><!-- col-4 -->
@@ -72,23 +73,23 @@
                                 <div class="col-lg-4">
                                     <div class="form-group mg-b-10-force">
                                         <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList,"select Country" ,new { @class = "form-control select2-show-search" })
+                                        @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList, "select Country", new { @class = "form-control select2-show-search" })
 
                                         @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-4" style="display:none;">
                                     @*<div class="form-group">
-                                        <label class="form-control-label">State: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
+                        <label class="form-control-label">State: <span class="tx-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
 
-                                        @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-                                    </div>*@
+                        @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                    </div>*@
                                 </div><!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">City: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList,"Select City", new { @class = "form-control select2-show-search" })
+                                        @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList, "Select City", new { @class = "form-control select2-show-search" })
 
                                         @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                                     </div>
@@ -107,7 +108,7 @@
                                         <label class="form-control-label">Location: </label>
                                         @Html.TextBoxFor(m => m.Location, new { @class = "form-control", @placeholder = "Enter address" })
 
-                                        
+
                                     </div>
                                 </div><!-- col-8 -->
 
@@ -159,7 +160,7 @@
                         </div>
 
                     </div><!-- row -->
-
+                    <p style="color:red;"> @ViewBag.ResponseMessage</p>
                     <div class="form-layout-footer">
                         <input type="submit" class="btn btn-primary bd-0" value="Save" />
                         <input type="button" value="Cancel" onclick="BtnCancel()" class="btn btn-secondary bd-0" />

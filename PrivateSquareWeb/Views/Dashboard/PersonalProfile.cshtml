@@ -3,10 +3,10 @@
     ViewBag.Title = "PersonalProfile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
-<script src="~/Scripts/select2.js"></script>
+<script src="~/Scripts/select2.js"></script>*@
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -229,7 +229,7 @@ $(document).ready(function () {
                                 <div class="col-lg-4">
                                     <div class="form-group mg-b-10-force">
                                         <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList, new { @class = "form-control select2" })
+                                        @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList,"--Select--", new { @class = "form-control select2" })
                                         @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                                         @*<select class="form-control select2" data-placeholder="Choose country" name="country" id="country">
                     <option label="Choose country"></option>
@@ -250,7 +250,7 @@ $(document).ready(function () {
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">City: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList,new { @class = "form-control select2-show-search" })
+                                        @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
                                         @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                                     </div>
                                 </div><!-- col-4 -->
