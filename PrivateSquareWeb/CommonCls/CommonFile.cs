@@ -3,6 +3,7 @@ using PrivateSquareWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -10,12 +11,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PrivateSquareWeb.CommonCls
 {
-    public class CommonFile
+    public class CommonFile: Controller
     {
         static JwtTokenManager _JwtTokenManager = new JwtTokenManager();
+        
         #region Code Block For PostApi Jwt Or Without
         public static ResponseModel GetApiResponse(string Url, String Data)
         {
@@ -275,6 +278,18 @@ namespace PrivateSquareWeb.CommonCls
             ProfessionalKeywordList = JsonConvert.DeserializeObject<List<DropDownModel>>(objResponse.Response);
             return ProfessionalKeywordList;
 
+        }
+        public static String SaveImage(HttpPostedFileBase FileUpload, string ServerPath)
+        {
+          
+            if (string.IsNullOrWhiteSpace(FileUpload.FileName))
+                return null;
+            string filename = FileUpload.FileName;
+            string targetpath = ServerPath;
+            string Extention = Path.GetExtension(filename);
+            string DynamicFileName = Guid.NewGuid().ToString() + Extention;
+            FileUpload.SaveAs(targetpath + DynamicFileName);
+            return DynamicFileName;
         }
     }
 }

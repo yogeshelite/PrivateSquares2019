@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
+}
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="manager-header">
+            <div class="slim-pageheader">
+                <ol class="breadcrumb slim-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contact Manager</li>
+                </ol>
+                <!-- <h6 class="slim-pagetitle">Contact Manager</h6> -->
+            </div><!-- slim-pageheader -->
+            <a id="contactNavicon" href="" class="contact-navicon"><i class="icon ion-navicon-round"></i></a>
+        </div><!-- manager-header -->
+
+        <div class="manager-wrapper">
+            <div class="manager-right">
+                <div class="search-box">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 border" >
+                        <b>Login:</b>@ViewBag.LoginEmail
+                    </div>
+                    <div class="col-sm-4 border">
+                        <h6>Price Detail</h6>
+                        Price(@ViewBag.ItemCount)=@ViewBag.TotalAmount <br/>
+                        Delivery Charges free <br/>
+                        Amount Payable @ViewBag.TotalAmount
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

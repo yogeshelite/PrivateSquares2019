@@ -1,0 +1,192 @@
+﻿@model PrivateSquareWeb.Models.AddToCartModel
+
+@{
+    ViewBag.Title = "ViewCart";
+    Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
+}
+<style>
+    .imageStyle {
+        width: 50px;
+        height: 50px;
+    }
+</style>
+<script type="text/javascript">
+    var DeleteItem = function (index) {
+
+        var divCart = document.getElementById('CartList');
+        var CartString = "";
+        $.ajax({
+            url: "../../ViewCart/RemoveToCart",
+            type: "POST",
+            //contentType: false,
+            //processData: false,
+            data: {
+                index: index
+            },
+            success: function (result) {
+                var JsonResponse = JSON.parse(result);
+                console.log(JsonResponse);
+                console.log(JsonResponse.length);
+                var ProductName = "";
+                var Qty = "";
+                var Price = "";
+                var TotalAmount = 0;
+                for (var i = 0; i < JsonResponse.length; i++) {
+                    console.log(JsonResponse[i].ProductId);
+                    // console.log(JsonResponse.ProductId);
+                    ProductName = JsonResponse[i].ProductName;
+                    Qty = JsonResponse[i].Qty;
+                    TotalAmount = Number(TotalAmount) + Number(JsonResponse[i].Amount);
+                    CartString = CartString + '<div class=\"row\">' +
+                        '<div class=\"col-sm-2\">' +
+                        '<img src=\"../../DocImg/' + JsonResponse[i].ImageName + '\" class=\"imageStyle\" />' +
+                        '</div>' +
+                        '<div class=\"col-sm-2\">' + ProductName + '</div>' +
+                        '<div class=\"col-sm-2\">' + Qty + '</div>' +
+                        '<div class=\"col-sm-2\">' + JsonResponse[i].Price + '</div>' +
+
+                        '<div class=\"col-sm-2\">' + JsonResponse[i].Amount + '</div>' +
+                        '<div class=\"col-sm-2\">' + '<input type="button" value="x" onclick="DeleteItem(' + i + ')" />' +
+                        '</div>' +
+                        '</div>';
+                }
+                if (JsonResponse.length == null || JsonResponse.length == 0) {
+                    CartString = '<div class=\"row\">' +
+                        '<div class=\"col-sm-2\">' +
+                        '<b>Cart Is Empty</b>' +
+                        '</div></div>';
+                }
+                if (JsonResponse.length > 0) {
+                    CartString = CartString + '<div class="row" style="border:1px solid black; height:40px;text-align:center;margin-top:25px;">' +
+                        '<div class="col-sm-2  text-center ">Total</div>' +
+                        '<div class="col-sm-2 "></div>' +
+                        '<div class="col-sm-2"></div>' +
+                        '<div class="col-sm-2"></div>' +
+                        '<div class="col-sm-2">' + TotalAmount + '</div>' +
+                        '<div class="col-sm-2"></div>' +
+                        '</div>';
+                }
+                //console.log(CartString);
+                // $("#CartList").append(CartString);
+                divCart.innerHTML = CartString;
+                //window.location.href = "/WebHome/ProductDetail/" + ProductId;
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm("SaveProduct", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="slim-mainpanel">
+        <div class="container">
+            <div class="slim-pageheader">
+                <ol class="breadcrumb slim-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Product</li>
+                </ol>
+                <h6 class="slim-pagetitle">View Cart</h6>
+            </div>
+            <div class="section-wrapper">
+                <div class="form-layout">
+                    <div class="row">
+
+
+                        <div class="col-sm-2 ">
+                            Image
+                        </div>
+                        <div class="col-sm-2 ">
+                            Name
+                        </div>
+                        <div class="col-sm-2">
+                            Qty
+                        </div>
+                        <div class="col-sm-2">
+                            Price
+                        </div>
+                        <div class="col-sm-2">
+                            Amount
+                        </div>
+                        <div class="col-sm-2">
+                            REMOVE
+                        </div>
+
+                    </div>
+                    <div id="CartList">
+                        @{ int index = 0;
+                            foreach (var item in ViewBag.AddToCart)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <img src="~/DocImg/@item.ImageName" class="imageStyle" />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @item.ProductName
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @item.Qty
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @item.Price
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        @item.Amount
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input type="button" value="x" onclick="DeleteItem(@index)" />
+                                    </div>
+                                </div>
+                                index++;
+                            }
+                        }
+                        @if (ViewBag.AddToCart == null || ViewBag.AddToCart.Count == 0)
+                        {
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <b>Cart Is Empty</b>
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.AddToCart.Count > 0)
+                        {
+                            <div class="row" style="border:1px solid black; height:40px;text-align:center;margin-top:25px;">
+                                <div class="col-sm-2  text-center ">
+                                    Total
+                                </div>
+                                <div class="col-sm-2 ">
+                                    @*Name*@
+                                </div>
+                                <div class="col-sm-2">
+                                    @*Qty*@
+                                </div>
+                                <div class="col-sm-2">
+                                    @*Price*@
+                                </div>
+                                <div class="col-sm-2">
+                                    @ViewBag.TotalAmount
+                                </div>
+                                <div class="col-sm-2">
+                                    @*REMOVE*@
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a class="fc fc-button" href="/WebHome/Index">Continue To Shoping</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a class="fc tc-button" href="/Checkout/Index">Proceed To Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}

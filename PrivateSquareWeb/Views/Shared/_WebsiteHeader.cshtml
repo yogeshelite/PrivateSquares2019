@@ -1,6 +1,7 @@
 ﻿@model PrivateSquareWeb.Models.HeaderPartialModel
 
 
+
 <div class="slim-header">
     <div class="container">
         <div class="slim-header-left">
@@ -13,6 +14,9 @@
                     <i class="icon ion-ios-bolt-outline"></i>
                 </a>
                 <div class="dropdown-menu">
+                    <div>
+                        <a href="page-notifications.html"><i class="fa fa-angle-down"></i> @Model.CartItemCount</a>
+                    </div>
                     <div class="dropdown-menu-header">
                         <h6 class="dropdown-menu-title">Activity Logs</h6>
                         <div>
@@ -119,9 +123,11 @@
                         <div class="dropdown-list-footer">
                             <a href="page-notifications.html"><i class="fa fa-angle-down"></i> Show All Notifications</a>
                         </div>
+
                     </div><!-- dropdown-list -->
                 </div><!-- dropdown-menu-right -->
             </div><!-- dropdown -->
+
             <div class="dropdown dropdown-c">
                 @if (@Model.UserId == 0)
                 {
@@ -147,6 +153,7 @@
                     </div><!-- dropdown-menu -->
                 }
             </div><!-- dropdown -->
+            <a href="/ViewCart/ViewCart"><i class="fa fa-cart-arrow-down"></i> @Model.CartItemCount </a>
         </div><!-- header-right -->
     </div><!-- container -->
 </div><!-- slim-header -->

@@ -21,6 +21,7 @@ namespace PrivateSquareWeb.Models
         public string Description { get; set; }
         public string XmlProductImage { get; set; }
         public string ProductImages { get; set; }
+        public string VendorName { get; set; }
         public string Operation { get; set; }
     }
 }

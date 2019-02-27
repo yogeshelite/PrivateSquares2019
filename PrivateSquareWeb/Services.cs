@@ -123,6 +123,36 @@ namespace PrivateSquareWeb
             }
             return login;
         }
+        public static LoginModel GetLoginWebUser(HttpContextBase httpContext, JwtTokenManager jwtTokenManager)
+        {
+            LoginModel login = new LoginModel();
+            if (Services.GetCookie(httpContext, "webusr") == null)
+                return login;
+            string cookiesValue = Services.GetCookie(httpContext, "webusr").Value;
+            dynamic _data = jwtTokenManager.DecodeToken(cookiesValue);
+            var json = JsonConvert.DeserializeObject<Dictionary<string, object>>(_data);
+            if (json.ContainsKey("unique_name"))
+            {
+                login = JsonConvert.DeserializeObject<LoginModel>(json["unique_name"].ToString());
+
+            }
+            return login;
+        }
+        public static List<AddToCartModel> GetMyCart(HttpContextBase httpContext, JwtTokenManager jwtTokenManager)
+        {
+            List<AddToCartModel> myCart = new List<AddToCartModel>();
+            if (Services.GetCookie(httpContext, "addtocart") == null)
+                return myCart;
+            string cookiesValue = Services.GetCookie(httpContext, "addtocart").Value;
+            dynamic _data = jwtTokenManager.DecodeToken(cookiesValue);
+            var json = JsonConvert.DeserializeObject<Dictionary<string, object>>(_data);
+            if (json.ContainsKey("unique_name"))
+            {
+                myCart = JsonConvert.DeserializeObject<List<AddToCartModel>>(json["unique_name"].ToString());
+
+            }
+            return myCart;
+        }
         //public static UserModel GetLoginUser(HttpContextBase httpContext, JwtTokenManager jwtTokenManager)
         //{
         //    UserModel login = null;
