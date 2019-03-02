@@ -42,6 +42,7 @@ namespace PrivateSquareWeb
         public const string ApiIsEmailExist = "User/IsEmailExist";
         public const string ApiIsBusinessExist = "User/IsBusinessExist";
         public const string ApiSaveUserForgetPasswordLink = "User/SaveUserForgetPasswordLink";
-
+        public const string ApiGetUserAddress = "User/GetUserAddress";
+        public const string ApiSaveAddress = "User/SaveAddress";
     }
 }

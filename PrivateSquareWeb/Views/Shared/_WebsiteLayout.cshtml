@@ -1,77 +1,69 @@
 ﻿<!DOCTYPE html>
 
+
+
 <html>
+
 <head>
+
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Private Square</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CLibre+Baskerville:400,700" rel="stylesheet">
+
+    @Styles.Render("~/websitetheme/plugins/revolution/css")
+
     @*@Scripts.Render("~/bundles/bootstrap")*@
+
     @RenderSection("scripts", required: false)
+
+
+
 </head>
-<body>
+
+
+
+<body class="ps-loading">
+
     <header>
+
         @{
+
             //Html.RenderPartial("_Header");
+
             Html.RenderAction("HeaderValue", "WebsiteHeader");
+
         }
+
     </header>
+
     <div>
+
         @RenderBody()
 
+
+
     </div>
+
     <footer>
-        @{Html.RenderPartial("_Footer");
+
+        @{Html.RenderPartial("_WebSiteFooter");
+
         }
+
     </footer>
-    <script>
 
-        var weburl = window.location.pathname;
+    @Scripts.Render("~/websitetheme/bundles/jquery")
 
-        $(".nav li a").each(function () {
-
-            var menuhref = $(this).attr('href');
-
-            if (weburl == menuhref) {
-
-                $(".nav li").removeClass("active");
-
-                $(this).parent('li').addClass("active");
-
-            }
-
-            else {
-
-            }
-
-        })
-
-        $(function () {
-            'use strict';
-            $('.select2').select2({
-                minimumResultsForSearch: Infinity
-            });
-
-            // Select2 by showing the search
-            $('.select2-show-search').select2({
-                minimumResultsForSearch: ''
-            });
-            //
-            // Datepicker
-            $('.fc-datepicker').datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: true
-            });
-
-            $('#datepickerNoOfMonths').datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                numberOfMonths: 2
-            });
-        });
-
-    </script>
 </body>
+
 </html>
+
+
+
+
+
+

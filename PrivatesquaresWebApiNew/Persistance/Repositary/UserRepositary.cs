@@ -86,6 +86,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetState(objModel.CountryId).ToList();
         }
 
+        public IEnumerable<GetAddress_Result> GetUserAddress(AddressModel objModel)
+        {
+            return Context.GetAddress(objModel.UserId,objModel.Id).ToList();
+        }
+
         public IEnumerable<GetUserBusiness_Result> GetUserbusiness(BusinessModel objModel)
         {
             return Context.GetUserBusiness(objModel.UserId).ToList();
@@ -130,6 +135,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         public RegisterUser_Result RegisterUser(UserRegisterModel ObjModel)
         {
             return Context.RegisterUser(ObjModel.Mobile, ObjModel.Operation).FirstOrDefault();
+        }
+
+        public SaveAddress_Result SaveAddress(AddressModel objModel)
+        {
+            return Context.SaveAddress(objModel.Id, objModel.UserId, objModel.Name, objModel.Mobile, objModel.Pincode, objModel.Locality, objModel.Address, objModel.CityId, objModel.StateId, objModel.Landmark, objModel.AlternatePhone, objModel.Operation).FirstOrDefault();
         }
 
         public SaveBusiness_Result SaveBusiness(BusinessModel ObjModel)
@@ -227,6 +237,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IsEmailExist_Result IsEmailExist(LoginModel objModel);
         IsBusinessExist_Result IsBusinessExist(BusinessModel objModel);
         SaveUserForgetPasswordLink_Result SaveUserForgetPasswordLink(LoginModel objModel);
+        IEnumerable<GetAddress_Result> GetUserAddress(AddressModel objModel);
+        SaveAddress_Result SaveAddress(AddressModel objModel);
     }
 
 }

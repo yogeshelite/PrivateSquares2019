@@ -256,6 +256,19 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.SaveUserForgetPasswordLink(objModel);
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel GetUserAddress(AddressModel objModel)
+        {
+            var _result = _instance.GetUserAddress(objModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+
+        }
+
+        public ResponseModel SaveAddress(AddressModel objModel)
+        {
+            var _result = _instance.SaveAddress(objModel);
+            return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
+        }
     }
     public interface IUserServices
     {
@@ -295,7 +308,8 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel IsEmailExist(LoginModel objModel);
         ResponseModel IsBusinessExist(BusinessModel objModel);
         ResponseModel SaveUserForgetPasswordLink(LoginModel objModel);
-
+        ResponseModel GetUserAddress(AddressModel objModel);
+        ResponseModel SaveAddress(AddressModel objModel);
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

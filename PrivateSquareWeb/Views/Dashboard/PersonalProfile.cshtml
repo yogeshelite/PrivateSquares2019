@@ -3,13 +3,16 @@
     ViewBag.Title = "PersonalProfile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
-<script src="~/Scripts/select2.js"></script>*@
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+    <script src="~/Scripts/select2.js"></script>*@
+<link href="~/theme/css/slim.css" rel="stylesheet" />
 
 <script type="text/javascript">
-$(document).ready(function () {
+    $(document).ready(function () {
         $("#ProfessionalKeyword").autocomplete({
             source: function (req, resp) {
                 $.ajax({
@@ -156,126 +159,160 @@ $(document).ready(function () {
 @using (Html.BeginForm("SaveProfile", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <div class="slim-mainpanel">
+    <div class="slim-mainpanel mg-t-40">
         <div class="container">
-            <div class="slim-pageheader">
-                <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Profile</li>
-                </ol>
-                <h6 class="slim-pagetitle">Profile</h6>
-            </div>
-            <div class="section-wrapper">
+            <div>
                 <div class="form-layout">
                     <div class="row">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="col-sm-6 col-md-3">
-                            <img src="~/DocImg/@Model.ProfileImage" class="img-fluid" alt="">
-                            <div class="col-lg-12 mg-t-21 p-0">
-                                <div class="custom-file">
-                                    <input type="file" title="search image" id="FileUploadImage" name="FileUploadImage" class="custom-file-input">
-
-                                    <label class="custom-file-label custom-file-label-inverse" for="customFile">Upload Profile Photo</label>
-                                </div><!-- custom-file -->
-                            </div><!-- col -->
+                            @*<div class="box-shadow-bc">
+                                <div class="text-center mg-t-30">
+                                <img src="~/DocImg/@Model.ProfileImage" class="wd-100 rounded-circle" alt="">
+                                    <div class="col-lg-12 mg-t-21 p-0">
+                                        <h1 class="profile-title tx-17"> @Model.FirstName</h1>
+                                        <div class="custom-file">
+                                            <input type="file" title="search image" id="FileUploadImage" name="FileUploadImage" class="custom-file-input-1">
+                                            <a href="javascript:void(0);" class="link-button" for="customFile">Upload Profile Photo</a>
+                                        </div><!-- custom-file -->
+                                    </div>
+                                    </div>
+                                    <hr/>
+                                    <h1 class="profile-title tx-18 pd-l-30"> My account</h1>
+                                    <ul class="account-list">
+                                        <li class="active"><a href="#">Profile Information</a></li>
+                                        <li><a href="#">Manage Address</a></li>
+                                        <li><a href="#">Change Password</a></li>
+                                    </ul>
+                                </div><!-- col -->*@
+                            @{
+                                //Html.RenderPartial("_Header");
+                                Html.RenderAction("HeaderValue", "SidebarProfile");
+                            }
                         </div>
                         <div class="col-sm-6 col-md-9">
-                            <label class="section-title">Personal Info</label>
-                            <hr />
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Firstname: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Enter firstname" })
-                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                                        @*<input class="form-control" type="text" name="firstname" value="@Model.FirstName" placeholder="Enter firstname">*@
-                                    </div>
-                                </div><!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Lastname: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Enter LastName" })
-                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            <div class="box-shadow-bc pd-40">
+                                <label class="section-title mg-t-0 mg-b-20">Personal Information</label>
 
-                                        @*<input class="form-control" type="text" name="lastname" value="@Model.LastName" placeholder="Enter lastname">*@
-                                    </div>
-                                </div><!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Email address: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", @placeholder = "Enter email address" })
-                                        @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger" })
+                                <div class="row">
+                                    <div class="col-lg-4 pd-0">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Firstname: <span class="tx-danger">*</span></label>
+                                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Enter firstname", @autocomplete = "off" })
+                                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                                @*<input class="form-control" type="text" name="firstname" value="@Model.FirstName" placeholder="Enter firstname">*@
+                                            </div>
+                                        </div><!-- col-4 -->
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Lastname: <span class="tx-danger">*</span></label>
+                                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Enter LastName" })
+                                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
 
-                                        @*<input class="form-control" type="text" name="email" value="@Model.EmailId" placeholder="Enter email address">*@
-                                    </div>
-                                </div><!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Phone: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Enter Phone No" })
-                                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                                @*<input class="form-control" type="text" name="lastname" value="@Model.LastName" placeholder="Enter lastname">*@
+                                            </div>
+                                        </div><!-- col-4 -->
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Email address: <span class="tx-danger">*</span></label>
+                                                @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", @placeholder = "Enter email address" })
+                                                @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger" })
 
-                                        @*<input class="form-control" type="text" name="email" value="@Model.EmailId" placeholder="Enter email address">*@
-                                    </div>
-                                </div><!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">DOB: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(m => m.DOB, "{0:dd/MM/yyyy}", new { @class = "form-control", @placeholder = "DD/MM/YYYY" })
-                                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger", id = "valEmail" })
-                                        @*<input type="text" class="form-control fc-datepicker" placeholder="MM/DD/YYYY" value="@Model.DOB" name="dob" id="dob">*@
-                                    </div>
-                                </div><!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group mg-b-10-force">
-                                        <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList,"--Select--", new { @class = "form-control select2" })
-                                        @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
-                                        @*<select class="form-control select2" data-placeholder="Choose country" name="country" id="country">
-                    <option label="Choose country"></option>
-                    @foreach (var Country in ViewBag.CountryList)
-                    {
-                        <option value="@Country.value">@Country.Text</option>
-                    }
-                </select>*@
-                                    </div>
-                                </div><!-- col-4 -->
-                                @*<div class="col-lg-4">
-            <div class="form-group">
-                <label class="form-control-label">State: <span class="tx-danger">*</span></label>
-                @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
+                                                @*<input class="form-control" type="text" name="email" value="@Model.EmailId" placeholder="Enter email address">*@
+                                            </div>
+                                        </div><!-- col-4 -->
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Phone: <span class="tx-danger">*</span></label>
+                                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Enter Phone No" })
+                                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
 
-            </div>
-        </div>*@<!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">City: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
-                                        @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
-                                    </div>
-                                </div><!-- col-4 -->
+                                                @*<input class="form-control" type="text" name="email" value="@Model.EmailId" placeholder="Enter email address">*@
+                                            </div>
+                                        </div><!-- col-4 -->
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">DOB: <span class="tx-danger">*</span></label>
+                                                @Html.TextBoxFor(m => m.DOB, "{0:dd/MM/yyyy}", new { @class = "form-control", @placeholder = "DD/MM/YYYY" })
+                                                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger", id = "valEmail" })
+                                                @*<input type="text" class="form-control fc-datepicker" placeholder="MM/DD/YYYY" value="@Model.DOB" name="dob" id="dob">*@
+                                            </div>
+                                        </div><!-- col-4 -->
+
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                Gender<br />
+                                                Male:   @Html.RadioButton("Gender", "Male")
+                                                Female: @Html.RadioButton("Gender", "Female")
+
+                                            </div>
+                                        </div><!-- col-4 -->
+
+                                        <div class="col-lg-12">
+                                            <div class="form-group mg-b-10-force">
+                                                <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
+                                                @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList, "--Select--", new { @class = "form-control select2" })
+                                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                                                @*<select class="form-control select2" data-placeholder="Choose country" name="country" id="country">
+                                                        <option label="Choose country"></option>
+                                                        @foreach (var Country in ViewBag.CountryList)
+                                                        {
+                                                            <option value="@Country.value">@Country.Text</option>
+                                                        }
+                                                    </select>*@
+                                            </div>
+                                        </div><!-- col-4 -->
+                                        @*<div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">State: <span class="tx-danger">*</span></label>
+                                                    @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, new { @class = "form-control select2-show-search" })
+
+                                                </div>
+                                            </div>*@<!-- col-4 -->
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label">City: <span class="tx-danger">*</span></label>
+                                                @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
+                                                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group">
+                                                @*<label class="form-control-label">Professional Category: <span class="tx-danger">*</span></label>*@
+                                                Professional Category:
+                                                @Html.DropDownListFor(m => m.ProfessionalCatId, ViewBag.ProfessionList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
+                                                @Html.ValidationMessageFor(model => model.ProfessionalCatId, "", new { @class = "text-danger", id = "valEmail" })
+                                            </div>
+                                        </div><!-- col-4 -->
 
 
 
-                                <div class="col-lg-4">
-                                    <label class="form-control-label"> Interest Category: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.InterestCatId, ViewBag.InterestCategoryList as SelectList,"Select Interest Category" ,new { @class = "form-control select2-show-search",
+                                        <div class="col-lg-12">
+                                            @*<label class="form-control-label"> Interest Category: <span class="tx-danger">*</span></label>*@
+                                            Interest Category:
+                                            @Html.DropDownListFor(m => m.InterestCatId, ViewBag.InterestCategoryList as SelectList,"Select Interest Category" ,new { @class = "form-control select2-show-search",
                                    onchange = "GetCatwiseInterest()" ,id= "InterestCatId"
 
                                })
-                                    @Html.ValidationMessageFor(model => model.InterestCatId, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.InterestCatId, "", new { @class = "text-danger" })
 
-                                </div><!-- col-8 -->
+                                        </div><!-- col-8 -->
 
-                                <div class="col-lg-8">
-                                    <label class="form-control-label"> Interest: <span class="tx-danger">*</span></label>
-                                    @Html.ListBoxFor(m => m.UserInterestIds, ViewBag.ListInterestUser as SelectList, new { @class = "form-control select2-show-search" })
+                                        <div class="col-lg-8">
+                                            <label class="form-control-label"> Interest: <span class="tx-danger">*</span></label>
+                                            @Html.ListBoxFor(m => m.UserInterestIds, ViewBag.ListInterestUser as SelectList, new { @class = "form-control select2-show-search" })
 
-                                    @Html.ValidationMessageFor(model => model.UserInterestIds, "", new { @class = "text-danger" })
-                                </div><!-- col-8 -->
+                                            @Html.ValidationMessageFor(model => model.UserInterestIds, "", new { @class = "text-danger" })
+                                        </div><!-- col-8 -->
 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <a href="" class="btn cancel-button mg-r-10">CANCEL</a>
+                                        <a href="/Address/AddressesList" class="btn save-button">SAVE</a>
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
 
                         <div class="col-12 mg-t-21">
@@ -316,28 +353,28 @@ $(document).ready(function () {
 
 
                             @*<div class="row">
-                                <div class="col-lg-8">
-                                    <div class="form-group mg-b-10-force">
-                                        <label class="form-control-label">Home Address: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(m => m.Location, new { @class = "form-control", @placeholder = "Enter  address" })
-                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="form-group mg-b-10-force">
+                                            <label class="form-control-label">Home Address: <span class="tx-danger">*</span></label>
+                                            @Html.TextBoxFor(m => m.Location, new { @class = "form-control", @placeholder = "Enter  address" })
+                                        </div>
 
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="form-group mg-b-10-force">
-                                        <label class="form-control-label">Office Address: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(m => m.OfficeAddress, new { @class = "form-control", @placeholder = "Enter  Office Address" })
                                     </div>
+                                    <div class="col-lg-8">
+                                        <div class="form-group mg-b-10-force">
+                                            <label class="form-control-label">Office Address: <span class="tx-danger">*</span></label>
+                                            @Html.TextBoxFor(m => m.OfficeAddress, new { @class = "form-control", @placeholder = "Enter  Office Address" })
+                                        </div>
 
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="form-group mg-b-10-force">
-                                        <label class="form-control-label">Other Address: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(m => m.OtherAddress, new { @class = "form-control", @placeholder = "Enter  Other Address" })
                                     </div>
+                                    <div class="col-lg-8">
+                                        <div class="form-group mg-b-10-force">
+                                            <label class="form-control-label">Other Address: <span class="tx-danger">*</span></label>
+                                            @Html.TextBoxFor(m => m.OtherAddress, new { @class = "form-control", @placeholder = "Enter  Other Address" })
+                                        </div>
 
-                                </div>
-                            </div>*@
+                                    </div>
+                                </div>*@
                         </div>
                         <div class="col-12 mg-t-21">
                             <label class="section-title">Profile Info</label>
@@ -362,7 +399,7 @@ $(document).ready(function () {
                                     <div class="form-group">
                                         <label class="form-control-label">Professional Keywords: <span class="tx-danger">*</span></label>
                                         @Html.TextBoxFor(m => m.ProfessionalKeyword, new { @class = "form-control", @placeholder = "Enter  Keywords" })
-                                         @Html.ValidationMessageFor(model => model.ProfessionalKeyword, "", new { @class = "text-danger", id = "valEmail" })
+                                        @Html.ValidationMessageFor(model => model.ProfessionalKeyword, "", new { @class = "text-danger", id = "valEmail" })
                                     </div>
                                 </div>
                                 @*<div class="col-md-3">
@@ -410,9 +447,5 @@ $(document).ready(function () {
                 </div><!-- form-layout -->
             </div><!-- section-wrapper -->
         </div>
-
     </div>
-
 }
-
-

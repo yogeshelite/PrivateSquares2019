@@ -1,147 +1,552 @@
 ﻿@model PrivateSquareWeb.Models.ProductModel
 
-@{
-                /**/
-
-                ViewBag.Title = "Index";
-                Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
+@{ ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
 }
+<script type="text/javascript">
 
-<div class="slim-mainpanel">
-    <div class="container">
-        <div class="manager-header">
-            <div class="slim-pageheader">
-                <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Contact Manager</li>
-                </ol>
-                <!-- <h6 class="slim-pagetitle">Contact Manager</h6> -->
-            </div><!-- slim-pageheader -->
-            <a id="contactNavicon" href="" class="contact-navicon"><i class="icon ion-navicon-round"></i></a>
-        </div><!-- manager-header -->
+      var AddToCart = function (Id,ProductName,SellingPrice,DiscountPrice,ProductImage)
+      {
+          console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage);
+        //var Qty = document.getElementById('TxtQty').value;
+        //if (Qty.trim() == '' || Qty.trim() == null) {
+        //    alert('Minum 1 Qty Required');
+        //    return;
+        //}
+        var salePrice =SellingPrice;
+        var discountPrice=DiscountPrice;
+        var ProductId =Id;
+        var ProductName =""+ProductName+"";
+          var Qty = 1;
+        var ImageName = ProductImage;
+        var Price = Number((Number(salePrice) - Number(discountPrice)));
+        var Amount = Number(Price)*Number(Qty);
 
-        <div class="manager-wrapper">
-            <div class="manager-right">
-                <div class="search-box">
-                    <input type="text" class="form-control" placeholder="Search">
-                    <button class="btn btn-primary"><i class="fa fa-search"></i></button>
-                </div>
-                <div class="row row-sm mrg-btm-20">
-                    @foreach (var Users in ViewBag.UsersProduct)
-                    {
-                        <div class="col-sm-6 col-lg-4 mg-b-20">
-                            <div class="card-contact card-min-height">
-                                <div class="tx-center">
-                                    <a href="/WebHome/ProductDetail/@Users.Id"><img src="~/DocImg/@Users.ProductImage" class="card-img" alt=""></a>
-                                    <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">@Users.ProductName</a></h5>
-                                    @*<p>@Users.Profession</p>*@
-                                    <p>$@Users.SellingPrice</p>
-                                    @*<p class="contact-social">
-                                        <a href=""><i class="fa fa-facebook"></i></a>
-                                        <a href=""><i class="fa fa-twitter"></i></a>
-                                        <a href=""><i class="fa fa-google"></i></a>
-                                    </p>*@
-                                </div><!-- tx-center -->
-
-
-                                <p class="contact-item">
-
-                                    <span class="text-center">$@Users.DiscountPrice</span>
-                                </p><!-- contact-item -->
-                                <div class="hobbie-item">
-                                    <span class="hobbies">@*@Users.InterestName*@</span>@*<span class="hobbies">Music</span><span class="hobbies">Books</span>*@
-                                </div><!-- contact-item -->
-
-                               
-
-                            </div><!-- card -->
-                        </div>
-                    }
-
-                    
-
-                </div><!-- row -->
-
-                <a href="" class="btn btn-light btn-block mg-t-20">Load more contacts</a>
-
-            </div><!-- manager-right -->
-            <div class="manager-left">
-               
-                <nav class="nav">
-                    <a href="" class="nav-link active">
-                        <span>All Contacts</span>
-                        <span>120</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Family</span>
-                        <span>16</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Friends</span>
-                        <span>68</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Co-workers</span>
-                        <span>38</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Favorites</span>
-                        <span>9</span>
-                    </a>
-                </nav>
-
-                <label class="section-label-sm mg-t-25">Location</label>
-                <nav class="nav">
-                    <a href="" class="nav-link">
-                        <span>San Francisco</span>
-                        <span>10</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Los Angeles</span>
-                        <span>16</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>New York</span>
-                        <span>15</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Las Vegas</span>
-                        <span>4</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Sacramento</span>
-                        <span>4</span>
-                    </a>
-                </nav>
-
-                <label class="section-label-sm mg-t-25">Job Position</label>
-                <nav class="nav">
-                    <a href="" class="nav-link">
-                        <span>Software Engineer</span>
-                        <span>4</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>UI Designer</span>
-                        <span>6</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Sales Representative</span>
-                        <span>5</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Mechanical Engineer</span>
-                        <span>4</span>
-                    </a>
-                    <a href="" class="nav-link">
-                        <span>Nurse</span>
-                        <span>4</span>
-                    </a>
-                </nav>
+        var TotalAmount = 0;
+        console.log('ProductId' + ProductId);
+        $.ajax({
+            url: "../../WebHome/AddToCart",
+            type: "POST",
+            //contentType: false,
+            //processData: false,
+            data: {
+                ProductId: ProductId,
+                ProductName: ProductName,
+                Qty: Qty,
+                ImageName: ImageName,
+                Price: Price,
+                Amount: Amount,
+                Discount: discountPrice,
+                TotalAmount: TotalAmount
+            },
+            success: function (result) {
+                //console.log(result);
+                window.location.href = "/WebHome/Index";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm("ProcessForm", "WebHome", FormMethod.Post))
+{
+    <div class="ps-home-slider">
+        <div id="rev_slider_2_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="home-1" data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+            <!-- START REVOLUTION SLIDER 5.4.6.3.1 fullwidth mode -->
+            <div id="rev_slider_2_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.6.3.1">
+                <ul>
+                    <!-- SLIDE  -->
+                    <li data-index="rs-6" data-transition="zoomout,slotzoom-vertical,curtain-2" data-slotamount="default,default,default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power0.easeInOut,default,default" data-easeout="default,default,default" data-masterspeed="default,default,default" data-rotate="0,0,0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
+                        <!-- MAIN IMAGE -->
+                        <img src="~/WebSiteTheme/images/slider/slider-1.jpg" alt="" title="slider-1" width="1920" height="750" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                        <!-- LAYERS -->
+                        <!-- LAYER NR. 1 -->
+                        <div class="tp-caption rev-btn " id="slide-6-layer-1" data-x="['left','left','left','left']" data-hoffset="['1','20','10','10']" data-y="['middle','top','top','middle']" data-voffset="['110','374','548','90']" data-fontweight="['600','600','400','500']" data-color="['rgb(51,51,51)','rgb(51,51,51)','rgb(51,51,51)','rgb(0,0,0)']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="button" data-responsive_offset="on" data-responsive="off" data-frames='[{"delay":1000,"speed":1500,"frame":"0","from":"x:[-175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:1;","mask":"x:[100%];y:0;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"500","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(255,255,255);bg:rgb(51,51,51);bc:rgb(0,0,0);"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[14,14,14,10]" data-paddingright="[45,45,45,30]" data-paddingbottom="[12,12,12,10]" data-paddingleft="[45,45,45,30]" style="z-index: 5; white-space: nowrap; font-size: 14px; line-height: 20px; font-weight: 600; color: #333333;font-family:Poppins;text-transform:uppercase;background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,1);border-style:solid;border-width:3px 3px 3px 3px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;">View Collection </div>
+                        <!-- LAYER NR. 2 -->
+                        <div class="tp-caption   tp-resizeme" id="slide-6-layer-2" data-x="['left','left','left','left']" data-hoffset="['0','20','10','11']" data-y="['middle','middle','middle','middle']" data-voffset="['0','1','-1','0']" data-fontsize="['60','40','35','25']" data-lineheight="['60','60','40','30']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="text" data-responsive_offset="on" data-frames='[{"delay":500,"speed":1500,"frame":"0","from":"x:[175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:1;","mask":"x:[-100%];y:0;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]" style="z-index: 6; white-space: nowrap; font-size: 60px; line-height: 60px; font-weight: 400; color: #000000; letter-spacing: 0px;font-family:Libre Baskerville;text-transform:uppercase;">BRIDAL Flower </div>
+                        <!-- LAYER NR. 3 -->
+                        <div class="tp-caption   tp-resizeme" id="slide-6-layer-3" data-x="['left','left','left','left']" data-hoffset="['0','20','10','10']" data-y="['middle','top','middle','middle']" data-voffset="['50','334','40','36']" data-fontsize="['20','15','15','15']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="text" data-responsive_offset="on" data-frames='[{"delay":10,"speed":1500,"frame":"0","from":"x:[-175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:1;","mask":"x:[100%];y:0;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]" style="z-index: 7; white-space: nowrap; font-size: 20px; line-height: 20px; font-weight: 600; color: #9f9f9f; letter-spacing: 0px;font-family:Nunito Sans;">Simple, Special & Sexy </div>
+                        <!-- LAYER NR. 4 -->
+                        <div class="tp-caption   tp-resizeme" id="slide-6-layer-5" data-x="['left','left','left','left']" data-hoffset="['0','20','10','10']" data-y="['middle','middle','middle','middle']" data-voffset="['-60','-44','-44','-36']" data-fontsize="['20','18','18','18']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="text" data-responsive_offset="on" data-frames='[{"delay":320,"speed":1500,"frame":"0","from":"x:[175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:1;","mask":"x:[-100%];y:0;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]" style="z-index: 8; white-space: nowrap; font-size: 20px; line-height: 20px; font-weight: 600; color: #333333; letter-spacing: 0px;font-family:Poppins;text-transform:uppercase;">Features Product </div>
+                    </li>
+                    <!-- SLIDE  -->
+                    <li data-index="rs-10" data-transition="zoomout,slotzoom-vertical,curtain-2" data-slotamount="default,default,default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power0.easeInOut,default,default" data-easeout="default,default,default" data-masterspeed="default,default,default" data-rotate="0,0,0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
+                        <!-- MAIN IMAGE -->
+                        <img src="~/WebSiteTheme/images/slider/slider-2.jpg" alt="" title="slider-2" width="1920" height="750" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                        <!-- LAYERS -->
+                        <!-- LAYER NR. 5 -->
+                        <div class="tp-caption rev-btn " id="slide-10-layer-1" data-x="['right','right','right','right']" data-hoffset="['0','10','10','10']" data-y="['middle','top','top','middle']" data-voffset="['110','374','548','90']" data-fontweight="['600','600','500','500']" data-color="['rgb(51,51,51)','rgb(51,51,51)','rgb(51,51,51)','rgb(0,0,0)']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="button" data-responsive_offset="on" data-responsive="off" data-frames='[{"delay":1000,"speed":1500,"frame":"0","from":"x:[-175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:1;","mask":"x:[100%];y:0;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"500","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(255,255,255);bg:rgb(51,51,51);bc:rgb(0,0,0);"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[14,14,14,10]" data-paddingright="[45,45,45,30]" data-paddingbottom="[12,12,12,10]" data-paddingleft="[45,45,45,30]" style="z-index: 5; white-space: nowrap; font-size: 14px; line-height: 20px; font-weight: 600; color: #333333;font-family:Poppins;text-transform:uppercase;background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,1);border-style:solid;border-width:3px 3px 3px 3px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;">View Collection </div>
+                        <!-- LAYER NR. 6 -->
+                        <div class="tp-caption   tp-resizeme" id="slide-10-layer-2" data-x="['right','right','right','right']" data-hoffset="['0','10','10','10']" data-y="['middle','middle','middle','middle']" data-voffset="['0','1','-1','0']" data-fontsize="['60','40','35','25']" data-lineheight="['60','60','40','30']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="text" data-responsive_offset="on" data-frames='[{"delay":500,"speed":1500,"frame":"0","from":"x:[175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:1;","mask":"x:[-100%];y:0;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]" style="z-index: 6; white-space: nowrap; font-size: 60px; line-height: 60px; font-weight: 400; color: #000000; letter-spacing: 0px;font-family:Libre Baskerville;text-transform:uppercase;">BRIDAL Flower </div>
+                        <!-- LAYER NR. 7 -->
+                        <div class="tp-caption   tp-resizeme" id="slide-10-layer-3" data-x="['right','right','right','right']" data-hoffset="['0','10','10','10']" data-y="['middle','top','middle','middle']" data-voffset="['50','335','40','36']" data-fontsize="['20','15','15','15']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="text" data-responsive_offset="on" data-frames='[{"delay":10,"speed":1500,"frame":"0","from":"x:[-175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:1;","mask":"x:[100%];y:0;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]" style="z-index: 7; white-space: nowrap; font-size: 20px; line-height: 20px; font-weight: 600; color: #9f9f9f; letter-spacing: 0px;font-family:Poppins;">Simple, Special & Sexy </div>
+                        <!-- LAYER NR. 8 -->
+                        <div class="tp-caption   tp-resizeme" id="slide-10-layer-5" data-x="['right','right','right','right']" data-hoffset="['0','10','10','10']" data-y="['middle','middle','middle','middle']" data-voffset="['-60','-45','-44','-36']" data-fontsize="['20','18','18','18']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="text" data-responsive_offset="on" data-frames='[{"delay":320,"speed":1500,"frame":"0","from":"x:[175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:1;","mask":"x:[-100%];y:0;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]" style="z-index: 8; white-space: nowrap; font-size: 20px; line-height: 20px; font-weight: 600; color: #333333; letter-spacing: 0px;font-family:Poppins;text-transform:uppercase;">Features Product </div>
+                    </li>
+                </ul>
+                <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>
             </div>
+        </div>
+    </div>
+    <div class="ps-section--collection">
+        <div class="masonry-wrapper" data-col-md="4" data-col-sm="2" data-col-xs="1" data-gap="0" data-radio="4:3">
+            <div class="ps-masonry">
+                <div class="grid-sizer"></div>
+                <div class="grid-item large">
+                    <div class="grid-item__content-wrapper"><a class="ps-collection" href="product-listing.html"><img src="~/WebSiteTheme/images/collection/home-1.jpg" alt=""></a></div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item__content-wrapper"><a class="ps-collection" href="product-listing.html"><img src="~/WebSiteTheme/images/collection/home-2.jpg" alt=""></a></div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item__content-wrapper"><a class="ps-collection" href="product-listing.html"><img src="~/WebSiteTheme/images/collection/home-3.jpg" alt=""></a></div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item__content-wrapper"><a class="ps-collection" href="product-listing.html"><img src="~/WebSiteTheme/images/collection/home-4.jpg" alt=""></a></div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item__content-wrapper"><a class="ps-collection" href="product-listing.html"><img src="~/WebSiteTheme/images/collection/home-5.jpg" alt=""></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ps-section pt-80 pb-30">
+        <div class="ps-container">
+            <div class="ps-subscribe">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-md-push-6">
+                        <div class="ps-subscribe__content">
+                            <i class="ps-icon-notify"></i>
+                            <h3>SIGN UP TO NEWSLETTERS</h3>
+                            <p>And receive <strong>$25 coupon</strong> for first shopping ...!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-md-pull-6">
+                        <form class="ps-form--subscribe" action="do_action" method="post">
+                            <div class="form-group">
+                                <div class="form-group__icon"><i class="fa fa-envelope"></i></div>
+                                <input class="form-control" type="text" placeholder="Type Your Email">
+                            </div>
+                            <button><i class="ps-icon-arrow-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="ps-section__header text-center">
+                <h2 class="ps-section__title">SPECIAL PRODUCT</h2>
+                <p>Featured collections created and curated by our editors</p>
+            </div>
+            <div class="ps-section__content">
+                @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
+                @foreach (var Users in ViewBag.UsersProduct)
+                {
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="ps-product--fashion">
+                            <div class="ps-product__thumbnail">
+                                <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                @{ if (@Users.ProductImage == null)
 
-            <!-- manager-left -->
-        </div><!-- manager-wrapper -->
+                                    {
+                                        <img class="lazy" src="~/DocImg/user.png" alt="">
 
-    </div><!-- container -->
-</div><!-- slim-mainpanel -->
+                                    }
+                                    else
+                                    {
+                                        <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
+
+                                    }
+                                }
+                                <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
+                                <ul class="ps-product__actions">
+                                    <li><a class="ps-modal-open" href="#quickview" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="ps-product__content">
+                                <a class="ps-product__title" href="product-detail.html">@Users.ProductName</a>
+                                <p class="ps-product__price">
+                                    <del>@Users.SellingPrice</del>@Users.DiscountPrice
+                                </p><a class="ps-product__cart" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @*</div>*@
+                @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="ps-product--fashion">
+                            <div class="ps-product__thumbnail">
+                                <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-2.jpg" alt="">
+                                <ul class="ps-product__actions">
+                                    <li><a class="ps-modal-open" href="#quickview" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="ps-product__content">
+                                <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                                <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="ps-product--fashion">
+                            <div class="ps-product__thumbnail">
+                                <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-3.jpg" alt="">
+                                <ul class="ps-product__actions">
+                                    <li><a class="ps-modal-open" href="#quickview" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="ps-product__content">
+                                <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                                <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="ps-product--fashion">
+                            <div class="ps-product__thumbnail">
+                                <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-4.jpg" alt="">
+                                <div class="ps-badge"><span>New</span></div>
+                                <ul class="ps-product__actions">
+                                    <li><a class="ps-modal-open" href="#quickview" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="ps-product__content">
+                                <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                                <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="ps-product--fashion">
+                            <div class="ps-product__thumbnail">
+                                <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-5.jpg" alt="">
+                                <ul class="ps-product__actions">
+                                    <li><a class="ps-modal-open" href="#quickview" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="ps-product__content">
+                                <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                                <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="ps-product--fashion">
+                            <div class="ps-product__thumbnail">
+                                <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-6.jpg" alt="">
+                                <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
+                                <ul class="ps-product__actions">
+                                    <li><a class="ps-modal-open" href="#quickview" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="ps-product__content">
+                                <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                                <p class="ps-product__price">
+                                    <del>$450.89</del>$200
+                                </p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="ps-product--fashion">
+                            <div class="ps-product__thumbnail">
+                                <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-7.jpg" alt="">
+                                <ul class="ps-product__actions">
+                                    <li><a class="ps-modal-open" href="#quickview" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="ps-product__content">
+                                <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                                <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="ps-product--fashion">
+                            <div class="ps-product__thumbnail">
+                                <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-8.jpg" alt="">
+                                <ul class="ps-product__actions">
+                                    <li><a class="ps-modal-open" href="#quickview" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="ps-product__content">
+                                <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                                <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                            </div>
+                        </div>
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+    @*<div class="ps-section--offer-1">
+            <div class="container">
+                <div class="ps-block--offer-fashion">
+                    <div class="ps-block__left bg--cover" data-background="~/WebSiteTheme/images/offers/home-offer-1.jpg"></div>
+                    <div class="ps-block__right">
+                        <h3>Converse Legacy Duffle</h3>
+                        <h2>$155 <del> $255</del></h2>
+                        <p>Over the past 50 years, Fjallraven has expanded from an office in a basement to a globally respected brand...</p>
+                        <ul class="ps-countdown ps-countdown--fashion" data-time="May 30, 2018 12:00:00">
+                            <li>
+                                <span class="days"></span>
+                                <p>Days</p>
+                            </li>
+                            <li>
+                                <span class="hours"></span>
+                                <p>Hours</p>
+                            </li>
+                            <li>
+                                <span class="minutes"></span>
+                                <p>minutes</p>
+                            </li>
+                            <li>
+                                <span class="seconds"></span>
+                                <p>Seconds</p>
+                            </li>
+                        </ul><a class="ps-btn--outline" href="#">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <div class="ps-section pt-60 pb-30">
+        <div class="ps-container">
+            <div class="ps-section__header text-center">
+                <h2 class="ps-section__title">POPULAR PRODUCT</h2>
+                <p>Here are key products that bring fashionistas to Xuper Store.</p>
+            </div>
+            <div class="ps-section__content">
+                <div class="ps-slider--center owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='ps-icon-arrow-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='ps-icon-arrow-right'&gt;&lt;/i&gt;">
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-1.jpg" alt="">
+                            <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">
+                                <del>$450.89</del>$200
+                            </p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-2.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-3.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-4.jpg" alt="">
+                            <div class="ps-badge"><span>New</span></div>
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-5.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-6.jpg" alt="">
+                            <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">
+                                <del>$450.89</del>$200
+                            </p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-7.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-8.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ps-section">
+        <div class="ps-container">
+            <div class="ps-section__header text-center">
+                <h2 class="ps-section__title">Our Story</h2>
+                <p>Here are key products that bring fashionistas to Xuper Store.</p>
+            </div>
+            <div class="ps-section__content">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                        <div class="ps-post ps-post--home">
+                            <div class="ps-post__thumbnail">
+                                <div class="ps-post__posted"><span class="date">11</span><span class="month">Jan</span></div><a class="ps-post__overlay" href="blog-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/blog/home-1.jpg" alt="">
+                            </div>
+                            <div class="ps-post__content">
+                                <a class="ps-post__title" href="blog-detail.html">An Inside Look at the Breaking2 Kit</a>
+                                <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html"> Alena Studio</a></span></p>
+                                <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-post__morelink" href="blog-detail.html">Read more<i class="ps-icon-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                        <div class="ps-post ps-post--home">
+                            <div class="ps-post__thumbnail">
+                                <div class="ps-post__posted"><span class="date">11</span><span class="month">Jan</span></div><a class="ps-post__overlay" href="blog-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/blog/home-2.jpg" alt="">
+                            </div>
+                            <div class="ps-post__content">
+                                <a class="ps-post__title" href="blog-detail.html">Unpacking the Breaking2 Race Strategy</a>
+                                <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html"> Alena Studio</a></span></p>
+                                <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-post__morelink" href="blog-detail.html">Read more<i class="ps-icon-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                        <div class="ps-post ps-post--home">
+                            <div class="ps-post__thumbnail">
+                                <div class="ps-post__posted"><span class="date">11</span><span class="month">Jan</span></div><a class="ps-post__overlay" href="blog-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/blog/home-3.jpg" alt="">
+                            </div>
+                            <div class="ps-post__content">
+                                <a class="ps-post__title" href="blog-detail.html">Nike's Latest Football Cleat</a>
+                                <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html"> Alena Studio</a></span></p>
+                                <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-post__morelink" href="blog-detail.html">Read more<i class="ps-icon-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ps-section--partner">
+        <div class="ps-container">
+            <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a></div>
+        </div>
+    </div>
+    <div class="ps-section--features">
+        <div class="ps-container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                    <div class="ps-iconbox">
+                        <header>
+                            <i class="ps-icon-delivery"></i>
+                            <h3>FREE SHIPPING</h3>
+                            <p>ON ORDER OVER $199</p>
+                        </header>
+                        <p>Want to track a package? Find tracking information and order details from Your Orders.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                    <div class="ps-iconbox">
+                        <header>
+                            <i class="ps-icon-wallet"></i>
+                            <h3>100% MONEY BACK.</h3>
+                            <p>WITHIN 30 DAYS AFTER DELIVERY.</p>
+                        </header>
+                        <p>You may return most new, unopened items sold within 30 days of delivery for a full refund.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                    <div class="ps-iconbox">
+                        <header>
+                            <i class="ps-icon-customer-service"></i>
+                            <h3>SUPPORT 24/7.</h3>
+                            <p>WE CAN HELP YOU ONLINE.</p>
+                        </header>
+                        <p>We offer a 24/7 customer hotline so you're never alone if you have a question.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+}

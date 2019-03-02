@@ -14,10 +14,19 @@ namespace PrivateSquareWeb.Controllers.Website
     {
         JwtTokenManager _JwtTokenManager = new JwtTokenManager();
         static List<ProductImages> EditProductImageList;
+        static List<ProductModel> ListAllProduct;
         // GET: WebHome
         public ActionResult Index()
+
+
         {
-            ViewBag.UsersProduct = GetProduct();
+            ListAllProduct = GetProduct();
+            // var SearchProductList = ProductList.Where(x => x.ProductName.Contains("Pro")).ToList();
+
+            ViewBag.UsersProduct = ListAllProduct;
+            var ProductCatList = CommonFile.GetProductCategory();
+            // ViewBag.ProductCatList = ProductCatList;
+            ViewBag.ProductCatList = ProductCatList;
             return View();
 
         }
@@ -26,8 +35,8 @@ namespace PrivateSquareWeb.Controllers.Website
             var GetUserProductList = new List<ProductModel>();
             ProductModel objmodel = new ProductModel();
             LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
-            if (MdUser.Id != 0)
-                objmodel.UserId = Convert.ToInt64(MdUser.Id);
+            //if (MdUser.Id != 0)
+            //    objmodel.UserId = Convert.ToInt64(MdUser.Id);
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
             GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
@@ -106,13 +115,48 @@ namespace PrivateSquareWeb.Controllers.Website
             return GetProduct;
 
         }
+
         public JsonResult AddToCart(AddToCartModel objmodel)
         {
             AddToCart objAddToCart = new AddToCart();
-            return objAddToCart.AddToCartFun(objmodel,this.ControllerContext.HttpContext);
+            return objAddToCart.AddToCartFun(objmodel, this.ControllerContext.HttpContext);
 
         }
+        public JsonResult RemoveQtyToCart(AddToCartModel objmodel)
+        {
+            AddToCart objAddToCart = new AddToCart();
+            return objAddToCart.RemoveQtyToCartFun(objmodel, this.ControllerContext.HttpContext);
 
+        }
+        
+        [HttpPost]
+        public ActionResult ProcessForm(FormCollection frm, string submit)
+        {
+            String SearchText = frm["TxtSearch"];
+            switch (submit)
+            {
+                case "Search":
+                    ViewBag.UsersProduct = SearchProduct(SearchText);
+                    var ProductCatList = CommonFile.GetProductCategory();
 
+                    ViewBag.ProductCatList = ProductCatList;
+                    break;
+                case "Cancel":
+                    ViewBag.Message = "The operation was cancelled!";
+                    break;
+            }
+            return View("Index");
+        }
+        private List<ProductModel> SearchProduct(string ProductName)
+        {
+            //ListAllProduct = GetProduct();
+            //Item Name
+            var SearchProductList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(ProductName.ToUpper())).ToList();
+            //Item Price
+
+            //var SearchProductList = ListAllProduct.Where(x => x.DiscountPrice > Convert.ToDecimal(ProductName) && (x.DiscountPrice < Convert.ToDecimal(ProductName))).ToList();
+            //var SearchProductList = ListAllProduct.Where(x => x.DiscountPrice > Convert.ToDecimal(ProductName)).ToList();
+            return SearchProductList;
+        }
     }
 }

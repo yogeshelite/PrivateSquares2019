@@ -20,7 +20,7 @@ namespace PrivateSquareWeb.Controllers.Website
             {
                 CookiesListAddtoCart = Services.GetMyCart(httpContext, _JwtTokenManager);
                 //  ListAddtoCart.Add(objmodel);
-                List<AddToCartModel> ListuniqueValues = uniqueValues(CookiesListAddtoCart, objmodel);
+                List<AddToCartModel> ListuniqueValues = uniqueValues(CookiesListAddtoCart, objmodel,false);
                 // CookiesListAddtoCart.AddRange(ListAddtoCart);
 
                 // var jsonList = JsonConvert.SerializeObject(CookiesListAddtoCart);
@@ -36,7 +36,32 @@ namespace PrivateSquareWeb.Controllers.Website
                 return Json(jsonList);
             }
         }
-        private List<AddToCartModel> uniqueValues(List<AddToCartModel> ListCart, AddToCartModel objmodel)
+        public JsonResult RemoveQtyToCartFun(AddToCartModel objmodel, HttpContextBase httpContext)
+        {
+            List<AddToCartModel> ListAddtoCart = new List<AddToCartModel>();
+            List<AddToCartModel> CookiesListAddtoCart = null;
+
+            if (Services.GetCookie(httpContext, "addtocart") != null)
+            {
+                CookiesListAddtoCart = Services.GetMyCart(httpContext, _JwtTokenManager);
+                //  ListAddtoCart.Add(objmodel);
+                List<AddToCartModel> ListuniqueValues = uniqueValues(CookiesListAddtoCart, objmodel,true);
+                // CookiesListAddtoCart.AddRange(ListAddtoCart);
+
+                // var jsonList = JsonConvert.SerializeObject(CookiesListAddtoCart);
+                var jsonList = JsonConvert.SerializeObject(ListuniqueValues);
+                Services.SetCookie(httpContext, "addtocart", _JwtTokenManager.GenerateToken(jsonList));
+                return Json(jsonList);
+            }
+            else
+            {
+                ListAddtoCart.Add(objmodel);
+                var jsonList = JsonConvert.SerializeObject(ListAddtoCart);
+                Services.SetCookie(httpContext, "addtocart", _JwtTokenManager.GenerateToken(jsonList));
+                return Json(jsonList);
+            }
+        }
+        private List<AddToCartModel> uniqueValues(List<AddToCartModel> ListCart, AddToCartModel objmodel,bool IsRemoveQty)
         {
             List<AddToCartModel> oldList = ListCart;
             List<AddToCartModel> Uniquelist = new List<AddToCartModel>();
@@ -51,7 +76,14 @@ namespace PrivateSquareWeb.Controllers.Website
                     clsAddTocart.ImageName = ListCart[i].ImageName;
                     if (ListCart[i].ProductId == objmodel.ProductId)
                     {
+                        if (IsRemoveQty == true)
+                        {
+                            clsAddTocart.Qty = ListCart[i].Qty - objmodel.Qty;
+                        }
+                        else
+                        { 
                         clsAddTocart.Qty = ListCart[i].Qty + objmodel.Qty;
+                        }
                         clsAddTocart.Price = ListCart[i].Price;
                         clsAddTocart.Amount = clsAddTocart.Qty * clsAddTocart.Price;
                         oldList[i] = clsAddTocart;

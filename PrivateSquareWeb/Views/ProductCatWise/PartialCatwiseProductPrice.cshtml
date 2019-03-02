@@ -1,0 +1,39 @@
+﻿@model PrivateSquareWeb.Models.ProductModel
+
+<div class="row row-sm mrg-btm-20">
+    @foreach (var Users in ViewBag.UsersProduct)
+    {
+        <div class="col-sm-6 col-lg-4 mg-b-20">
+            <div class="card-contact card-min-height">
+                <div class="tx-center">
+                    <a href="/WebHome/ProductDetail/@Users.Id"><img src="~/DocImg/@Users.ProductImage" class="card-img" alt=""></a>
+                    <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">@Users.ProductName</a></h5>
+                    @*<p>@Users.Profession</p>*@
+                    <p>$@Users.SellingPrice</p>
+                    @*<p class="contact-social">
+                            <a href=""><i class="fa fa-facebook"></i></a>
+                            <a href=""><i class="fa fa-twitter"></i></a>
+                            <a href=""><i class="fa fa-google"></i></a>
+                        </p>*@
+                </div><!-- tx-center -->
+
+
+                <p class="contact-item">
+
+                    <span class="text-center">$@Users.DiscountPrice</span>
+                </p><!-- contact-item -->
+                <div class="hobbie-item">
+                    <span class="hobbies">@*@Users.InterestName*@</span>@*<span class="hobbies">Music</span><span class="hobbies">Books</span>*@
+                </div><!-- contact-item -->
+
+
+
+            </div><!-- card -->
+        </div>
+    }
+
+
+
+</div><!-- row -->
+
+<a href="" class="btn btn-light btn-block mg-t-20">Load more contacts</a>

@@ -13,11 +13,17 @@ namespace PrivatesquaresWebApiNew
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "ProductCatWise",
+            //    url: "{controller}/{action}/{productname}/{id}",
+            //    defaults: new { controller = "ProductCatWise", action = "Index", productname = UrlParameter.Optional, id = UrlParameter.Optional }
+            //);
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }

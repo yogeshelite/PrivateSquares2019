@@ -1,0 +1,80 @@
+﻿@model PrivateSquareWeb.Models.ProductModel
+
+<script type="text/javascript">
+
+    var AddToCartCatWise = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
+        console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage);
+        //var Qty = document.getElementById('TxtQty').value;
+        //if (Qty.trim() == '' || Qty.trim() == null) {
+        //    alert('Minum 1 Qty Required');
+        //    return;
+        //}
+        var salePrice = SellingPrice;
+        var discountPrice = DiscountPrice;
+        var ProductId = Id;
+        var ProductName = "" + ProductName + "";
+        var Qty = 1;
+        var ImageName = ProductImage;
+        var Price = Number((Number(salePrice) - Number(discountPrice)));
+        var Amount = Number(Price) * Number(Qty);
+
+        var TotalAmount = 0;
+        console.log('ProductId' + ProductId);
+        $.ajax({
+            url: "../../WebHome/AddToCart",
+            type: "POST",
+            //contentType: false,
+            //processData: false,
+            data: {
+                ProductId: ProductId,
+                ProductName: ProductName,
+                Qty: Qty,
+                ImageName: ImageName,
+                Price: Price,
+                Amount: Amount,
+                Discount: discountPrice,
+                TotalAmount: TotalAmount
+            },
+            success: function (result) {
+                //console.log(result);
+                window.location.href = "/ProductCatWise/Index/" + ProductId;
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+@foreach (var Users in ViewBag.UsersProduct)
+{
+    <div class="ps-product-wrap">
+        <div class="ps-product--fashion">
+            <div class="ps-product__thumbnail">
+                <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                @{ if (@Users.ProductImage != null)
+                    {
+                        <img src="~/WebSiteTheme/images/product/fashion-1.jpg" alt="">
+                    }
+                    else
+                    {
+                        <img src="~/DocImg/@Users.ProductImage" alt="">
+                    }
+                }
+                <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
+                <ul class="ps-product__actions">
+                    <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                </ul>
+            </div>
+            <div class="ps-product__content">
+                <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                <p class="ps-product__price">
+                    <del>$@Users.SellingPrice</del>$@Users.DiscountPrice
+                </p><a class="ps-product__cart" onclick="AddToCartCatWise('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+            </div>
+        </div>
+    </div>
+}
+
+

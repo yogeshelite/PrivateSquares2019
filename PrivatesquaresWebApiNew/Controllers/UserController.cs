@@ -295,9 +295,7 @@ namespace PrivatesquaresWebApiNew.Controllers
 
         }
         [Route("api/User/GetProduct")]
-
         [HttpPost]
-
         public IHttpActionResult GetProduct(RequestModel requestModel)
 
         {
@@ -313,9 +311,7 @@ namespace PrivatesquaresWebApiNew.Controllers
 
         }
         [Route("api/User/GetUserInterest")]
-
         [HttpPost]
-
         // public IHttpActionResult Registeration(RequestModel requestModel)
 
         public IHttpActionResult GetUserInterest(RequestModel requestModel)
@@ -332,9 +328,7 @@ namespace PrivatesquaresWebApiNew.Controllers
             return sendJson;
 
         }
-
         [Route("api/User/UpdateUserInterest")]
-
         [HttpPost]
         public IHttpActionResult UpdateUserInterest(RequestModel requestModel)
 
@@ -615,7 +609,7 @@ namespace PrivatesquaresWebApiNew.Controllers
             return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
 
 
-            
+
         }
 
         [Route("api/User/IsBusinessExist")]
@@ -650,6 +644,39 @@ namespace PrivatesquaresWebApiNew.Controllers
             return Json(new ResponseModel() { Response = BadRequest().ToString(), Success = false });
 
 
+
+        }
+
+        [Route("api/User/GetUserAddress")]
+
+        [HttpPost]
+
+        public IHttpActionResult GetUserAddress(RequestModel requestModel)
+
+        {
+            var data = requestModel.Data;
+            AddressModel objProductModel = JsonConvert.DeserializeObject<AddressModel>(data);
+
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetUserAddress(objProductModel)), Success = true };
+
+            var sendJson = Json(sendResponse);
+
+            return sendJson;
+
+        }
+        [Route("api/User/SaveAddress")]
+
+        [HttpPost]
+
+        public IHttpActionResult SaveAddress(RequestModel requestModel)
+
+        {
+            var data = requestModel.Data;
+            AddressModel objAddress = JsonConvert.DeserializeObject<AddressModel>(data);
+            //var xmlNode = JsonConvert.DeserializeXmlNode(data.ToString(), "root").OuterXml;
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.SaveAddress(objAddress)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
 
         }
     }

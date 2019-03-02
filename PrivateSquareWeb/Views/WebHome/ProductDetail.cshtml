@@ -8,6 +8,7 @@
 <script type="text/javascript">
     var GetTotal = function ()
     {
+        console.log("GetTotal");
         var salePrice =@Model.SellingPrice;
         var discountPrice=@Model.DiscountPrice;
         //console.log(salePrice);
@@ -25,6 +26,7 @@
     var AddToCart = function ()
     {
         var Qty = document.getElementById('TxtQty').value;
+        console.log('Qty===' + Qty);
         if (Qty.trim() == '' || Qty.trim() == null) {
             alert('Minum 1 Qty Required');
             return;
@@ -33,11 +35,11 @@
         var discountPrice=@Model.DiscountPrice;
         var ProductId =@Model.Id;
         var ProductName ="@Model.ProductName";
-       
+
         var ImageName = "@Model.ProductImage";
         var Price = Number((Number(salePrice) - Number(discountPrice)));
         var Amount = Number(Price)*Number(Qty);
-       
+
         var TotalAmount = 0;
         console.log('ProductId' + ProductId);
         $.ajax({
@@ -57,7 +59,7 @@
             },
             success: function (result) {
                 console.log(result);
-                window.location.href = "/WebHome/ProductDetail/" + ProductId;
+                window.location.href = "/ViewCart/ViewCart";
             },
             error: function (error) {
                 console.log(error);
@@ -65,7 +67,355 @@
         });
     }
 </script>
-<div class="slim-mainpanel">
+
+
+
+<div class="ps-hero">
+    <div class="container">
+        <h3>@Model.ProductName</h3>
+        <p>Single Product Page</p>
+    </div>
+</div>
+<main class="ps-main">
+    <div class="ps-container">
+        <div class="ps-product--detail">
+            <div class="row">
+                <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 ">
+                    <div class="ps-product__thumbnail">
+                        <div class="ps-product__preview">
+                            <div class="ps-product__variants">
+
+                                @{ int index1 = 0;
+                                    foreach (var item in ViewBag.ProductImages)
+                                    {
+                                        <div class="item"><img src="~/DocImg/@item.Name" alt=""></div>
+                                       
+                                    }
+                                }
+                                @*<div class="item"><img src="~/WebSiteTheme/images/shoe-detail/1.jpg" alt=""></div>
+                                <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/2.jpg" alt=""></div>
+                                <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>
+                                <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>
+                                <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>*@
+                            </div><a class="popup-youtube ps-product__video" href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img src="~/WebSiteTheme/images/shoe-detail/1.jpg" alt=""><i class="fa fa-play"></i></a>
+                        </div>
+                        <div class="ps-product__image">
+                            @{ int index2 = 0;
+                                foreach (var item in ViewBag.ProductImages)
+                                {
+
+                                   
+                                    <div class="item"><img class="zoom" src="~/DocImg/@item.Name" alt="" data-zoom-image="~/DocImg/@item.Name"></div>
+                                }
+                            }
+                            @*<div class="item"><img class="zoom" src="~/DocImg/@Model.ProductImage" alt="" data-zoom-image="~/DocImg/@Model.ProductImage"></div>
+                            <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/2.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/2.jpg"></div>
+                            <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/3.jpg"></div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 ">
+                    <div class="ps-product__info">
+                        <div class="ps-product__rating">
+                            <select class="ps-rating">
+                                <option value="1">1</option>
+                                <option value="1">2</option>
+                                <option value="1">3</option>
+                                <option value="1">4</option>
+                                <option value="2">5</option>
+                            </select><a href="#">(Read all 8 reviews)</a>
+                        </div>
+                        <h1>@Model.ProductName</h1>
+                        <p class="ps-product__category"><a href="#">  Men shoes</a>,<a href="#">  Nike</a>,<a href="#">  Jordan</a></p>
+                        <h3 class="ps-product__price"><span>£</span> @Model.DiscountPrice <del><span>£</span> @Model.SellingPrice</del></h3>
+                        <div class="ps-product__short-desc">
+                            <p>The Nike Free RN 2017 Men's Running Shoe weighs less than previous versions and features an updated knit material…</p>
+                        </div>
+                        <div class="ps-product__block ps-product__style">
+                            <h4>CHOOSE YOUR COLOR</h4>
+                            <div class="ps-radio ps-radio--inline">
+                                <input class="form-control" type="radio" id="radio-0" name="type-1">
+                                <label for="radio-0"></label>
+                            </div>
+                            <div class="ps-radio ps-radio--inline ps-radio--color1">
+                                <input class="form-control" type="radio" id="radio1" name="type-1">
+                                <label for="radio1"></label>
+                            </div>
+                            <div class="ps-radio ps-radio--inline ps-radio--color2">
+                                <input class="form-control" type="radio" id="radio2" name="type-1">
+                                <label for="radio2"></label>
+                            </div>
+                            <div class="ps-radio ps-radio--inline ps-radio--color3">
+                                <input class="form-control" type="radio" id="radio3" name="type-1">
+                                <label for="radio3"></label>
+                            </div>
+                        </div>
+                        <div class="ps-product__block ps-product__size">
+                            <h4>CHOOSE SIZE & QUANTITY<a href="#">Size chart</a></h4>
+                            <select class="ps-select selectpicker" title="Select Size">
+                                <option value="0">1</option>
+                                <option value="1">2</option>
+                                <option value="2">3</option>
+                                <option value="3">4</option>
+                                <option value="4">5</option>
+                                <option value="5">6</option>
+                            </select>
+                            <div class="form-group ps-number">
+                                <input id="TxtQty" class="form-control" type="text" value="1" onblur="GetTotal()"><span class="up"></span><span class="down"></span>
+                                @*<input class="form-control" type="text" value="1"><span class="up"></span><span class="down"></span>*@
+                            </div>
+                        </div>
+                        <div class="ps-product__shopping">
+                            <a class="ps-btn" onclick="AddToCart()" >Order Now</a>
+                            <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i class="ps-icon-heart"></i></a><a href="compare.html" title="Compare"><i class="ps-icon-compare"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ps-product__content">
+                <ul class="tab-list" role="tablist">
+                    <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Overview</a></li>
+                    <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">Review</a></li>
+                    <li><a href="#tab_03" aria-controls="tab_03" role="tab" data-toggle="tab">PRODUCT TAGs</a></li>
+                    <li><a href="#tab_04" aria-controls="tab_04" role="tab" data-toggle="tab">ADDITIONAL</a></li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" role="tabpanel" id="tab_01">
+                    <p>Caramels tootsie roll carrot cake sugar plum. Sweet roll jelly bear claw liquorice. Gingerbread lollipop dragée cake. Pie topping jelly-o. Fruitcake dragée candy canes tootsie roll. Pastry jelly-o cupcake. Bonbon brownie soufflé muffin.</p>
+                    <p>Sweet roll soufflé oat cake apple pie croissant. Pie gummi bears jujubes cake lemon drops gummi bears croissant macaroon pie. Fruitcake tootsie roll chocolate cake Carrot cake cake bear claw jujubes topping cake apple pie. Jujubes gummi bears soufflé candy canes topping gummi bears cake soufflé cake. Cotton candy soufflé sugar plum pastry sweet roll..</p>
+                </div>
+                <div class="tab-pane" role="tabpanel" id="tab_02">
+                    <p class="mb-20">1 review for <strong>Shoes Air Jordan</strong></p>
+                    <div class="ps-review">
+                        <div class="ps-review__thumbnail"><img src="images/user/1.jpg" alt=""></div>
+                        <div class="ps-review__content">
+                            <header>
+                                <select class="ps-rating">
+                                    <option value="1">1</option>
+                                    <option value="1">2</option>
+                                    <option value="1">3</option>
+                                    <option value="1">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <p>By<a href=""> Alena Studio</a> - November 25, 2017</p>
+                            </header>
+                            <p>Soufflé danish gummi bears tart. Pie wafer icing. Gummies jelly beans powder. Chocolate bar pudding macaroon candy canes chocolate apple pie chocolate cake. Sweet caramels sesame snaps halvah bear claw wafer. Sweet roll soufflé muffin topping muffin brownie. Tart bear claw cake tiramisu chocolate bar gummies dragée lemon drops brownie.</p>
+                        </div>
+                    </div>
+                    <form class="ps-form--product-review" action="do_action" method="post">
+                        <h4>ADD YOUR REVIEW</h4>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                <div class="form-group">
+                                    <label>Name:<span>*</span></label>
+                                    <input class="form-control" type="text" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email:<span>*</span></label>
+                                    <input class="form-control" type="email" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Your rating<span></span></label>
+                                    <select class="ps-rating">
+                                        <option value="1">1</option>
+                                        <option value="1">2</option>
+                                        <option value="1">3</option>
+                                        <option value="1">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
+                                <div class="form-group">
+                                    <label>Your Review:</label>
+                                    <textarea class="form-control" rows="6"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button class="ps-btn--outline">Submit Reviews</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" role="tabpanel" id="tab_03">
+                    <p>Add your tag <span> *</span></p>
+                    <form class="ps-form--create-tags" action="_action" method="post">
+                        <div class="form-group">
+                            <input class="form-control" type="text" placeholder="">
+                            <button class="ps-btn">Add Tags</button>
+                        </div>
+                    </form>
+                    <p>Use spaces to separate tags. Use single quotes ( * ) for phrases.</p>
+                </div>
+                <div class="tab-pane" role="tabpanel" id="tab_04">
+                    <form class="ps-form--addition" action="do_action" method="post">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="6" placeholder="Enter your addition here..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="ps-btn--outline">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="ps-section pb-50">
+    <div class="ps-container">
+        <div class="ps-section__header text-center">
+            <h2 class="ps-section__title">YOU MIGHT ALSO LIKE</h2>
+            <p>Here are key products that bring fashionistas to Xuper Store.</p>
+        </div>
+        <div class="ps-section__content">
+            <div class="ps-slider--center owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='ps-icon-arrow-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='ps-icon-arrow-right'&gt;&lt;/i&gt;">
+                <div class="ps-product--fashion">
+                    <div class="ps-product__thumbnail">
+                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-1.jpg" alt="">
+                        <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
+                        <ul class="ps-product__actions">
+                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="ps-product__content">
+                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                        <p class="ps-product__price">
+                            <del>$450.89</del>$200
+                        </p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    </div>
+                </div>
+                <div class="ps-product--fashion">
+                    <div class="ps-product__thumbnail">
+                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-2.jpg" alt="">
+                        <ul class="ps-product__actions">
+                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="ps-product__content">
+                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    </div>
+                </div>
+                <div class="ps-product--fashion">
+                    <div class="ps-product__thumbnail">
+                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-3.jpg" alt="">
+                        <ul class="ps-product__actions">
+                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="ps-product__content">
+                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    </div>
+                </div>
+                <div class="ps-product--fashion">
+                    <div class="ps-product__thumbnail">
+                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-4.jpg" alt="">
+                        <div class="ps-badge"><span>New</span></div>
+                        <ul class="ps-product__actions">
+                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="ps-product__content">
+                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    </div>
+                </div>
+                <div class="ps-product--fashion">
+                    <div class="ps-product__thumbnail">
+                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-5.jpg" alt="">
+                        <ul class="ps-product__actions">
+                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="ps-product__content">
+                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    </div>
+                </div>
+                <div class="ps-product--fashion">
+                    <div class="ps-product__thumbnail">
+                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-6.jpg" alt="">
+                        <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
+                        <ul class="ps-product__actions">
+                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="ps-product__content">
+                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                        <p class="ps-product__price">
+                            <del>$450.89</del>$200
+                        </p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    </div>
+                </div>
+                <div class="ps-product--fashion">
+                    <div class="ps-product__thumbnail">
+                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-7.jpg" alt="">
+                        <ul class="ps-product__actions">
+                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="ps-product__content">
+                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    </div>
+                </div>
+                <div class="ps-product--fashion">
+                    <div class="ps-product__thumbnail">
+                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-8.jpg" alt="">
+                        <ul class="ps-product__actions">
+                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="ps-product__content">
+                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ps-section--partner">
+    <div class="ps-container">
+        <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="slim-mainpanel">
     <div class="container">
         <div class="manager-header">
             <div class="slim-pageheader">
@@ -73,9 +423,9 @@
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Pages</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Contact Manager</li>
-                </ol>
+                </ol>*@
                 <!-- <h6 class="slim-pagetitle">Contact Manager</h6> -->
-            </div><!-- slim-pageheader -->
+            @*</div><!-- slim-pageheader -->
             <a id="contactNavicon" href="" class="contact-navicon"><i class="icon ion-navicon-round"></i></a>
         </div><!-- manager-header -->
 
@@ -112,9 +462,9 @@
                         </div>
                     </div>
                     <div class="col-sm-2">
-                        <b>Qty:-</b> <input id="TxtQty" type="number" value="1" onblur="GetTotal()" />
+                        <b>Qty:-</b> <input id="TxtQty111" type="number" value="1" onblur="GetTotal()" />
                         <b>Total:- $</b><label id="TotalAmount">@((Model.SellingPrice - Model.DiscountPrice) * 1) </label>
-                        <input type="button" id="BtnAddToCart" value="Add to cart" onclick="AddToCart()"/>
+                        <input type="button" id="BtnAddToCart" value="Add to cart" onclick="AddToCart()" />
                         <button id="BtnBuy">Buy Now</button>
                         <button id="BtnAddToCart">Add to wish list</button>
                     </div>
@@ -122,4 +472,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
