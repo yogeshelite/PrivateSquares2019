@@ -18,7 +18,7 @@ namespace PrivateSquareWeb.Controllers.Website
         public PartialViewResult HeaderValue()
         {
             HeaderPartialModel objModel = new HeaderPartialModel();
-            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
             List<AddToCartModel> ListAddToCart = Services.GetMyCart(this.ControllerContext.HttpContext, _JwtTokenManager);
 
             objModel.UserName = MdUser.Name;

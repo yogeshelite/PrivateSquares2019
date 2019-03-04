@@ -2,8 +2,8 @@
 
 <script type="text/javascript">
 
-    var AddToCartCatWise = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
-        console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage);
+    var AddToCartCatWise = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage, ProductCatId) {
+        console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage + "  CategoryId" + ProductCatId);
         //var Qty = document.getElementById('TxtQty').value;
         //if (Qty.trim() == '' || Qty.trim() == null) {
         //    alert('Minum 1 Qty Required');
@@ -37,7 +37,7 @@
             },
             success: function (result) {
                 //console.log(result);
-                window.location.href = "/ProductCatWise/Index/" + ProductId;
+                window.location.href = "/ProductCatWise/Index/" + ProductCatId;
             },
             error: function (error) {
                 console.log(error);
@@ -53,11 +53,12 @@
                 <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
                 @{ if (@Users.ProductImage != null)
                     {
-                        <img src="~/WebSiteTheme/images/product/fashion-1.jpg" alt="">
+                        <img src="~/DocImg/@Users.ProductImage" alt="">
                     }
                     else
                     {
-                        <img src="~/DocImg/@Users.ProductImage" alt="">
+                        <img src="~/WebSiteTheme/images/product/fashion-1.jpg" alt="">
+
                     }
                 }
                 <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
@@ -71,7 +72,7 @@
                 <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
                 <p class="ps-product__price">
                     <del>$@Users.SellingPrice</del>$@Users.DiscountPrice
-                </p><a class="ps-product__cart" onclick="AddToCartCatWise('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                </p><a class="ps-product__cart" onclick="AddToCartCatWise('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage','@Users.ProductCatId')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
             </div>
         </div>
     </div>

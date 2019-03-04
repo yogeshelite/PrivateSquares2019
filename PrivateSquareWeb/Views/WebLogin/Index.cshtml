@@ -1,8 +1,10 @@
 ﻿@model PrivateSquareWeb.Models.LoginModel
 
 @{
-    ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
+                /**/
+
+                ViewBag.Title = "Login";
+                Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
 }
 
 @Styles.Render("~/theme/css")
@@ -128,94 +130,160 @@
 @using (Html.BeginForm("LoginUser", "WebLogin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <div class="col-lg-12 text-center header-login">
-        <a href="indexpage.html"><img src="~/theme/img/logo.png" alt="logo" class="logo-width"></a>
+    <div class="ps-hero">
+
+        <div class="container">
+
+            <h3>Login & Registration</h3>
+
+            <p>PrivateSquares online shopping</p>
+
+        </div>
+
     </div>
-    <div class="container">
-        <p class="text-center private-squares-heading">private<span class="pvt-sq-col">squares</span> helps to connect and share with the people in your life.</p>
-        <div class="col-md-7 pull-left"><img src="~/theme/img/login-img.jpg" class="img-full" /></div>
-        <div class="col-md-5 pull-left image-padding">
-            <div class="signin-box pull-right">
-                <div class="ps-step-one">
-                    <button class="btn btn-block btn-sign-in">Login with facebook</button>
-                    <h5 class="text-center login-or">OR</h5>
 
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Enter Email/Mobile" })
-                        @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger", id = "valEmail" })
-                    </div><!-- form-group -->
-                    <div class="form-group mg-b-50">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter Password" })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        <div class=" forget-password">
-                            <a href="/ForgetPassword/Index">Forget Password</a>
-                            @*<input type="button" onclick="ForgetPassword()" class="sign-up-col btntoLink" value="Forget Password" />*@
-                            <p style="color:red;">  @ViewBag.Response</p>
-                        </div>
-                        <!-- <h6 class="forget-password">Forget Password</h6> -->
-                    </div><!-- form-group -->
+    <div class="container mt-50 mb-45">
 
-                    <a href="page-profile.html">
-                        <input type="submit" class="btn btn-block btn-sign-in" value="Login">
-                    </a>
-                    @*/Login/Register*@
+        <div class="col-lg-6 col-lg-offset-3">
 
-                    <p class="mg-b-0 text-center">Don't have an account? <a href="#" class="sign-up-col" id="step-2">Sign Up</a></p>
+            <div>
 
-                </div>
+                <button class="btn btn-block btn-sign-in">Login with facebook</button>
 
-                <div class="ps-step-two" style="display: none">
-                    <h2 class="sign-up-heading text-center">Sign Up to Write Quotes and earn points <br>from Privatesquares</h2>
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Full Name" })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", id = "valNameRegister" })
-
-                    </div><!-- form-group -->
-                    <div class="form-group">
-                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Email Id/Mobile", id = "emailIdRegister" })
-                        @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger", id = "valemailIdRegister" })
-
-                    </div><!-- form-group  -->
-                    <div class="form-group">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", id = "passwordRegister" })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", id = "valpasswordRegister" })
-
-                    </div><!-- form-group -->
-                    <p style="color:red;" id="RegisMess"> @ViewBag.RegisterMessage</p>
-                    <input type="button" value="Sign Up" class="btn btn-block btn-sign-in" onclick="SignUp()" />
+                <h5 class="text-center login-or">OR</h5>
 
 
-                    <p class="mg-b-0 text-center">Don't have an account? <a href="#" class="pvt-sign-text" id="step-1">Sign In</a></p>
 
-                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+
+                    @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Enter Email/Mobile" })
+
+                    @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger", id = "valEmail" })
+
+                </div><!-- form-group -->
+
+                <div class="form-group mg-b-50">
+
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter Password" })
+
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                    <div class=" forget-password">
+
+                        <a href="/ForgetPassword/Index">Forget Password</a>
+
+                        @*<input type="button" onclick="ForgetPassword()" class="sign-up-col btntoLink" value="Forget Password" />*@
+
+                        <p style="color:red;">  @ViewBag.Response</p>
+
+                    </div>
+
+                    <!-- <h6 class="forget-password">Forget Password</h6> -->
+
+                </div><!-- form-group -->
+
+
+
+
+
+                <input type="submit" class="ps-btn pl-60 pr-60" value="Login">
+
+
+
+                @*/Login/Register*@
+
+
+
+                <p class="mg-b-0 text-center">Don't have an account? <a href="#" class="sign-up-col" id="step-2">Sign Up</a></p>
+
+
+
             </div>
+
+
+
+            <div class="ps-step-two" style="display: none">
+
+                <h2 class="sign-up-heading text-center">Sign Up to Write Quotes and earn points <br>from Privatesquares</h2>
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Full Name" })
+
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", id = "valNameRegister" })
+
+
+
+                </div><!-- form-group -->
+
+                <div class="form-group">
+
+                    @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Email Id/Mobile", id = "emailIdRegister" })
+
+                    @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger", id = "valemailIdRegister" })
+
+
+
+                </div><!-- form-group  -->
+
+                <div class="form-group">
+
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", id = "passwordRegister" })
+
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", id = "valpasswordRegister" })
+
+
+
+                </div><!-- form-group -->
+
+                <p style="color:red;" id="RegisMess"> @ViewBag.RegisterMessage</p>
+
+                <input type="button" value="Sign Up" class="ps-btn pl-60 pr-60" onclick="SignUp()" />
+
+
+
+
+
+                <p class="mg-b-0 text-center">Don't have an account? <a href="#" class="pvt-sign-text" id="step-1">Sign In</a></p>
+
+
+
+            </div>
+
         </div>
-        <div class="clearfix"></div>
-        <div class="col-lg-12 pvt-sq-list-footer pvt-sq-border text-center">
-            <ul>
-                <li><a href="#">ABOUT US</a></li>
-                <li><a href="/ContactUs/Index">Contact Us</a></li>
-                <li><a href="#">STORE</a></li>
-                <li><a href="#">CONNECTIONS</a></li>
-                <li><a href="#">PRIVACY</a></li>
-                <li><a href="#">SUPPORT</a></li>
-            </ul>
-        </div>
+
     </div>
+
+
+
 
 
 }
+
 <script src="~/Scripts/jquery-3.3.1.js"></script>
+
 <script>
+
     $("#step-2").click(function () {
+
         $(".ps-step-one").hide();
+
         $(".ps-step-two").show();
+
     });
+
     $("#step-1").click(function () {
+
         $(".ps-step-one").show();
+
         $(".ps-step-two").hide();
+
     });
+
 </script>
+
 

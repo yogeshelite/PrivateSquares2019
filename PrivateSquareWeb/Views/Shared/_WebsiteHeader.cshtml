@@ -7,7 +7,7 @@
         var divCartTotal = document.getElementById('CartTotal');
         var CartString = "";
         var CartTotal = "";
-        
+
         $.ajax({
             url: "../../WebsiteHeader/RemoveToCart",
             type: "POST",
@@ -25,17 +25,17 @@
                 var ImageName = "";
                 var TotalAmount = 0;
                 for (var i = 0; i < JsonResponse.length; i++) {
-                    
+
                     // console.log(JsonResponse.ProductId);
                     ProductName = JsonResponse[i].ProductName;
                     Qty = JsonResponse[i].Qty;
                     TotalAmount = Number(TotalAmount) + Number(JsonResponse[i].Amount);
                     ImageName = JsonResponse[i].ImageName;
                     console.log('~/DocImg/' + ImageName);
-                    CartString = CartString + '<div class="ps-cart-item"><a class="ps-cart-item__close" onclick="DeleteItem('+ i + ')"></a>' +
+                    CartString = CartString + '<div class="ps-cart-item"><a class="ps-cart-item__close" onclick="DeleteItem(' + i + ')"></a>' +
                         '<div class="ps-cart-item__thumbnail">' +
                         '<a href="/WebHome/ProductDetail/' + JsonResponse[i].ProductId + '"></a>' +
-                        '<img src="../../DocImg/' + ImageName +'" alt="">' +
+                        '<img src="../../DocImg/' + ImageName + '" alt="">' +
                         '</div>' +
                         '<div class="ps-cart-item__content">' +
                         '<a class="ps-cart-item__title" href="/WebHome/ProductDetail/' + JsonResponse[i].ProductId + '">' + JsonResponse[i].ProductName + '</a>' +
@@ -43,12 +43,12 @@
                         '</div>';
                 }
                 if (JsonResponse.length == null || JsonResponse.length == 0) {
-                   
+
                 }
                 if (JsonResponse.length > 0) {
 
-                  
-                    CartTotal = CartTotal +"<p>Number of items:<span>" + JsonResponse.length + "</span></p>" +
+
+                    CartTotal = CartTotal + "<p>Number of items:<span>" + JsonResponse.length + "</span></p>" +
                         "<p>Item Total:<span>£" + TotalAmount + "</span></p>";
 
                 }
@@ -68,64 +68,122 @@
 
 
 <div class="header--sidebar"></div>
+
 <header class="header" data-sticky="true">
+
     <div class="header__top">
+
         <div class="container-fluid">
+
             <div class="row">
+
                 <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
+
                     <p>460 West 34th Street, 15th floor, New York - Hotline: 804-377-3580 - 804-399-3580</p>
+
                 </div>
+
                 <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
+
                     <div class="header__actions">
-                        <a href="/WebLogin/Index">Login & Regiser</a>
-                        <div class="btn-group ps-dropdown">
-                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">USD<i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><img src="~/WebSiteTheme/images/flag/usa.svg" alt=""> USD</a></li>
-                                <li><a href="#"><img src="~/WebSiteTheme/images/flag/singapore.svg" alt=""> SGD</a></li>
-                                <li><a href="#"><img src="~/WebSiteTheme/images/flag/japan.svg" alt=""> JPN</a></li>
-                            </ul>
-                        </div>
 
-                        <div class="btn-group ps-dropdown">
+                        @{ if (@Model.UserId != 0)
 
-                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language<i class="fa fa-angle-down"></i></a>
+                            {
+                                <a href="/Checkout/Index">Checkout</a>
+                                <div class="btn-group ps-dropdown">
 
-                            <ul class="dropdown-menu">
 
-                                <li><a href="#">English</a></li>
 
-                                <li><a href="#">Japanese</a></li>
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Model.UserName<i class="fa fa-angle-down"></i></a>
 
-                                <li><a href="#">Chinese</a></li>
 
-                            </ul>
 
-                        </div>
+                                    <ul class="dropdown-menu">
+
+                                        <li><a href="/WebLogin/Logout">Log Out</a></li>
+
+
+
+                                    </ul>
+
+
+
+                                </div>
+
+
+
+
+
+                            }
+
+                            else if (@Model.UserId == 0)
+
+                            {
+
+                                <a href="/WebLogin/Index">Login & Regiser</a>
+
+                            }
+
+                        }
+
+
+
+
+
+
+
+
+
+
 
                     </div>
 
+
+
                 </div>
 
+
+
             </div>
+
+
 
         </div>
 
+
+
     </div>
+
+
 
     <nav class="navigation">
 
+
+
         <div class="container-fluid">
+
+
 
             <div class="left">
 
-                <div class="header__logo"><a class="ps-logo" href="index.html"><img src="~/WebSiteTheme/images/logo.png" alt=""></a></div>
+
+
+                <div class="header__logo"><a class="ps-logo" href="/WebHome/Index"><img src="~/WebSiteTheme/images/logo.png" alt=""></a></div>
+
+
 
             </div>
 
+
+
             <div class="center">
 
+
+
                 <ul class="main-menu menu">
+
+
 
                     <li class="current-menu-item menu-item-has-children dropdown">
 
@@ -137,81 +195,100 @@
 
                     <li><a href="/ProductCatWise/Index/2">Kitchen</a></li>
 
-                    <li><a href="/ProductCatWise/Index/3">Fitness</a></li>
-
-                    <li class="menu-item-has-children dropdown">
-
-                        <a href="#">News</a>
-
-                        <ul class="sub-menu">
-
-                            <li class="menu-item-has-children dropdown">
-
-                                <a href="blog-grid.html">Blog-grid</a>
-
-                                <ul class="sub-menu">
-
-                                    <li><a href="blog-grid.html">Blog Grid 1</a></li>
-
-                                    <li><a href="blog-grid-2.html">Blog Grid 2</a></li>
-
-                                </ul>
-
-                            </li>
-                            <li><a href="blog-list.html">Blog List</a></li>
-                        </ul>
-                    </li>
                     <li><a href="contact-us.html">Contact</a></li>
+
                 </ul>
+
             </div>
+
             <div class="right">
+
                 <div class="menu-toggle"><span></span></div>
+
                 <div class="ps-cart">
+
                     <a class="ps-cart__toggle" href="#"><span><i>@Model.CartItemCount</i></span><i class="ps-icon-cart"></i></a>
+
                     <div class="ps-cart__listing">
+
                         <div class="ps-cart__content">
+
                             <div id="CartList">
+
                                 @{ int index = 0;
+
                                     foreach (var item in ViewBag.AddToCart)
+
                                     {
+
                                         <div class="ps-cart-item">
+
                                             <a class="ps-cart-item__close" onclick="DeleteItem(@index)"></a>
+
                                             <div class="ps-cart-item__thumbnail">
+
                                                 <a href="/WebHome/ProductDetail/@item.ProductId"></a>
+
                                                 <img src="~/DocImg/@item.ImageName" alt="">
+
                                             </div>
+
                                             <div class="ps-cart-item__content">
+
                                                 <a class="ps-cart-item__title" href="/WebHome/ProductDetail/@item.ProductId"> @item.ProductName</a>
+
                                                 <p><span>Quantity:<i> @item.Qty</i></span><span>Total:<i>£ @item.Amount</i></span></p>
+
                                             </div>
+
                                         </div>
+
                                     }
+
                                 }
+
                             </div>
+
                         </div>
+
                         <div class="ps-cart__total" id="CartTotal">
+
                             <p>Number of items:<span>@Model.CartItemCount</span></p>
+
                             <p>Item Total:<span>£ @ViewBag.TotalAmount</span></p>
+
                         </div>
-                        <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">Check out<i class="ps-icon-arrow-left"></i></a></div>
+
+                        <div class="ps-cart__footer"><a class="ps-btn" href="/Checkout/Index">Check out<i class="ps-icon-arrow-left"></i></a></div>
+
                     </div>
+
                 </div>
+
                 <form class="ps-form--search" action="do_action" method="post">
+
                     <input class="form-control" type="text" placeholder="Search Product…">
+
                     <button><i class="ps-icon-search"></i></button>
+
                 </form>
 
+
+
             </div>
+
+
 
         </div>
 
+
+
     </nav>
+
+
 
 </header>
 
-</body>
-
-</html>
 
 
 

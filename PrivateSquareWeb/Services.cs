@@ -129,6 +129,8 @@ namespace PrivateSquareWeb
             if (Services.GetCookie(httpContext, "webusr") == null)
                 return login;
             string cookiesValue = Services.GetCookie(httpContext, "webusr").Value;
+            if(string.IsNullOrWhiteSpace(cookiesValue))
+                return login;
             dynamic _data = jwtTokenManager.DecodeToken(cookiesValue);
             var json = JsonConvert.DeserializeObject<Dictionary<string, object>>(_data);
             if (json.ContainsKey("unique_name"))

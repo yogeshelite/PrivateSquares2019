@@ -21,6 +21,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.ForgetPassword(objModel.EmailId, objModel.Password).FirstOrDefault();
         }
 
+      
+
         public IEnumerable<GetAllInterest_Result> GetAllInterest()
         {
             return Context.GetAllInterest().ToList();
@@ -55,6 +57,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         {
             return Context.GetNetwork(networkModel.LogInUserId).ToList();
         }
+
+     
 
         public IEnumerable<GetProduct_Result> GetProduct(ProductModel objModel)
         {
@@ -142,6 +146,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.SaveAddress(objModel.Id, objModel.UserId, objModel.Name, objModel.Mobile, objModel.Pincode, objModel.Locality, objModel.Address, objModel.CityId, objModel.StateId, objModel.Landmark, objModel.AlternatePhone, objModel.Operation).FirstOrDefault();
         }
 
+      
+
         public SaveBusiness_Result SaveBusiness(BusinessModel ObjModel)
         {
             return Context.SaveBusiness(ObjModel.Id, ObjModel.BusinessName, ObjModel.Location, ObjModel.BusinessLogo, ObjModel.ProfessionalCatId,
@@ -160,6 +166,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
 
         }
+
+        
 
         public SaveProduct_Result SaveProduct(ProductModel objModel)
         {
@@ -196,6 +204,36 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         {
             return Context.GetUsersProfileList(objModel.UserId).ToList();
         }
+        public IEnumerable<GetOrders_Result> GetOrders(SaleOrderModel objModel)
+
+        {
+
+            return Context.GetOrders(objModel.UserId, objModel.SaleOrderId, objModel.ProductId).ToList();
+
+        }
+
+        public IEnumerable<GetAddToCart_Result> GetAddToCart(AddToCartModel objModel)
+
+        {
+            throw new NotImplementedException();
+            // return Context.GetAddToCart(objModel.UserId).ToList();
+
+        }
+
+        
+
+        public SaveOrders_Result SaveOrders(SaleOrderModel objModel)
+
+        {
+
+            return Context.SaveOrders(objModel.UserId, objModel.TotalDiscount, objModel.Amount, objModel.PaymentMode, objModel.XmlSaleOrderDetail, objModel.Operation, objModel.SaleOrderId).FirstOrDefault();
+
+        }
+
+        //public SaveAddToCart_Result SaveAddToCart(AddToCartModel objModel)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 
     public interface IUserRepositary : IGenericRepository<EWT_PSQNEWEntities>
@@ -239,6 +277,13 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         SaveUserForgetPasswordLink_Result SaveUserForgetPasswordLink(LoginModel objModel);
         IEnumerable<GetAddress_Result> GetUserAddress(AddressModel objModel);
         SaveAddress_Result SaveAddress(AddressModel objModel);
+        SaveOrders_Result SaveOrders(SaleOrderModel objModel);
+
+      //  SaveAddToCart_Result SaveAddToCart(AddToCartModel objModel);
+
+        IEnumerable<GetAddToCart_Result> GetAddToCart(AddToCartModel objModel);
+
+        IEnumerable<GetOrders_Result> GetOrders(SaleOrderModel objModel);
     }
 
 }

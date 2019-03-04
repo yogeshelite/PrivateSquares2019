@@ -20,7 +20,7 @@ namespace PrivateSquareWeb.Controllers.Website
         {
             ListAllProduct = GetProduct();
             var SearchProductList = ListAllProduct.Where(x => x.ProductCatId == id).ToList();
-
+            ViewBag.SearchCatId = id;
             ViewBag.UsersProduct = SearchProductList;
             var ProductCatList = CommonFile.GetProductCategory();
             // ViewBag.ProductCatList = ProductCatList;
@@ -54,7 +54,7 @@ namespace PrivateSquareWeb.Controllers.Website
                     ViewBag.ProductCatList = ProductCatList;
                     break;
                 case "PriceRange":
-                    ViewBag.UsersProduct = SearchPriceRange(SearchPrice);
+                    ViewBag.UsersProduct = SearchPriceRange(SearchPrice, 0);
                     var ProductCatListPrice = CommonFile.GetProductCategory();
                     ViewBag.ProductCatList = ProductCatListPrice;
                     // return PartialCatwiseProductValue(2);
@@ -66,8 +66,18 @@ namespace PrivateSquareWeb.Controllers.Website
         public PartialViewResult PartialCatwiseProductValue(long? id)
         {
             ProductModel objModel = new ProductModel();
+            List<ProductModel> SearchProductList = new List<ProductModel>();
             //objModel.ProductCatId = id;
-            var SearchProductList = ListAllProduct.Where(x => x.ProductCatId == id).ToList();
+            if (id == null)
+            {
+                SearchProductList = ListAllProduct;
+            }
+            else
+            {
+                objModel.ProductCatId = Convert.ToInt64(id);
+                SearchProductList = ListAllProduct.Where(x => x.ProductCatId == id).ToList();
+            }
+
 
             ViewBag.UsersProduct = SearchProductList;
             var ProductCatList = CommonFile.GetProductCategory();
@@ -75,11 +85,15 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.ProductCatList = ProductCatList;
             return PartialView("~/Views/ProductCatWise/PartialCatwiseProductValue.cshtml", objModel);
         }
-        public PartialViewResult PartialCatwiseProductPrice(decimal Price,long id)
+        public PartialViewResult PartialCatwiseProductPrice(decimal Price, long CategoryId)
         {
             ProductModel objModel = new ProductModel();
-            objModel.ProductCatId = id;
-            var SearchProductList = SearchPriceRange(Price.ToString());
+            //if (!string.IsNullOrEmpty(ProductId))
+            //{
+            //    objModel.ProductCatId = Convert.ToInt64(ProductId);
+            //}
+            objModel.ProductCatId = CategoryId;
+            var SearchProductList = SearchPriceRange(Price.ToString(), CategoryId);
 
             ViewBag.UsersProduct = SearchProductList;
             var ProductCatList = CommonFile.GetProductCategory();
@@ -98,10 +112,10 @@ namespace PrivateSquareWeb.Controllers.Website
             //var SearchProductList = ListAllProduct.Where(x => x.DiscountPrice > Convert.ToDecimal(ProductName)).ToList();
             return SearchProductList;
         }
-        private List<ProductModel> SearchPriceRange(string ProductPrice)
+        private List<ProductModel> SearchPriceRange(string ProductPrice, long CategoryId)
         {
 
-            var SearchProductList = ListAllProduct.Where(x => x.DiscountPrice > Convert.ToDecimal(500) && (x.DiscountPrice < Convert.ToDecimal(ProductPrice))).ToList();
+            var SearchProductList = ListAllProduct.Where(x => x.DiscountPrice > Convert.ToDecimal(0) && (x.DiscountPrice < Convert.ToDecimal(ProductPrice)) && x.ProductCatId == CategoryId).ToList();
             //var SearchProductList = ListAllProduct.Where(x => x.DiscountPrice > Convert.ToDecimal(ProductName)).ToList();
             return SearchProductList;
         }

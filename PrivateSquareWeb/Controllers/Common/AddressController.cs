@@ -12,9 +12,7 @@ namespace PrivateSquareWeb.Controllers.Common
     public class AddressController : Controller
     {
 
-
         JwtTokenManager _JwtTokenManager = new JwtTokenManager();
-
         // GET: Address
 
         public ActionResult Index()
@@ -22,37 +20,25 @@ namespace PrivateSquareWeb.Controllers.Common
         {
 
             AddressModel objModel = new AddressModel();
-
             LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
-
-
-
             if (MdUser.Id != 0)
-
             {
-
                 objModel.Name = MdUser.Name;
-
                 objModel.UserId = Convert.ToInt64(MdUser.Id);
-
                 objModel.ProfileImg = MdUser.ProfileImg;
-
             }
-
             else
-
             {
-
-
-
             }
-
             return View();
 
         }
-
-
-
+        public PartialViewResult HeaderValue()
+        {
+            bindCountryStateCity();
+            AddressModel objAddress = new AddressModel();
+            return PartialView("~/Views/Shared/_AddAddress.cshtml", objAddress);
+        }
         public List<AddressModel> GetUserAddress(long? AddressId)
 
         {
@@ -86,10 +72,6 @@ namespace PrivateSquareWeb.Controllers.Common
             return GetUserAddressList;
 
         }
-
-
-
-
 
         public ActionResult RemoveAddress(AddressModel ObjModel, long Id)
 
@@ -167,8 +149,6 @@ namespace PrivateSquareWeb.Controllers.Common
 
         }
 
-
-
         public ActionResult EditAddress(long Id)
 
         {
@@ -225,8 +205,6 @@ namespace PrivateSquareWeb.Controllers.Common
 
         }
 
-
-
         public ActionResult AddAddress()
 
         {
@@ -238,10 +216,6 @@ namespace PrivateSquareWeb.Controllers.Common
             return View(ObjModel);
 
         }
-
-
-
-
 
         public ActionResult AddressesList()
 
@@ -270,13 +244,7 @@ namespace PrivateSquareWeb.Controllers.Common
             return View(ObjModel);
 
         }
-
-
-
-
-
         private void bindCountryStateCity()
-
         {
 
             //var CountryList = CommonFile.GetCountry();
@@ -295,141 +263,108 @@ namespace PrivateSquareWeb.Controllers.Common
 
         }
 
-
-
-
-
-
-
-
-
         [HttpPost]
-
         public ActionResult AddressesList(AddressModel ObjModel)
 
         {
-
             List<AddressModel> ListUserAddress;
-
             ListUserAddress = GetUserAddress(null);
-
             bindCountryStateCity();
-
             if (ModelState.IsValid)
-
             {
-
-
-
                 if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))
-
                 {
-
                     return RedirectToAction("Index", "Login");
-
                 }
-
-
-
-
-
-
-
                 LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
-
                 if (MdUser.Id != 0)
-
                 {
-
                     ObjModel.UserId = Convert.ToInt64(MdUser.Id);
-
                 }
-
                 if (ObjModel.Id != 0)
-
                 {
-
                     ObjModel.Operation = "update";
-
                 }
-
                 else
-
                 {
-
                     ObjModel.Operation = "insert";
-
                 }
-
-                //string PasswordEncripy = CommonFile.EncodePasswordMd5(ObjModel.NewPassword);
-
-                //string PasswordEncripy2 = CommonFile.EncodePasswordMd5(ObjModel.Password);
-
-                //ObjModel.ConfirmNewPassword = PasswordEncripy;
-
-                //ObjModel.NewPassword = PasswordEncripy;
-
-                //ObjModel.Password = PasswordEncripy2;
-
-                // String Address = frmColl["txtAddress"];
-
-                // ObjModel.Address = Address;
-
-
-
-
 
                 var _request = JsonConvert.SerializeObject(ObjModel);
-
                 ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveAddress, _request);
+                if (String.IsNullOrWhiteSpace(ObjResponse.Response))
 
-                //ResponseModel ObjResponse1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
+                {
+                    @ViewBag.ResponseMessage = "Error ! Unable to Submit Address";
+                    return View("AddAddress", ObjModel);
+                }
+
+                if (ObjResponse.Response.Equals("Save Address"))
+                {
+                    //@ViewBag.ResponseMessage = "Your Current Password is Wrong";
+                    ViewBag.UserAddress = ListUserAddress;
+                    return RedirectToAction("AddressesList", ObjModel);
+                }
+
+                ViewBag.UserAddress = ListUserAddress;
+                return RedirectToAction("AddressesList", ObjModel);
+            }
+            ViewBag.UserAddress = ListUserAddress;
+            return View("AddAddress", ObjModel);
+
+        }
 
 
+        [HttpPost]
+        public JsonResult AddressesListJson(AddressModel ObjModel)
 
+        {
+            List<AddressModel> ListUserAddress;
+            ListUserAddress = GetUserAddress(null);
+            bindCountryStateCity();
+            string Response = "";
+            if (ModelState.IsValid)
+            {
+                if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))
+                {
+                    Response = "{\"Response\":\"" + "Not Authorize" + "\"}";
 
+                }
+                LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+                if (MdUser.Id != 0)
+                {
+                    ObjModel.UserId = Convert.ToInt64(MdUser.Id);
+                }
+                if (ObjModel.Id != 0)
+                {
+                    ObjModel.Operation = "update";
+                }
+                else
+                {
+                    ObjModel.Operation = "insert";
+                }
 
+                var _request = JsonConvert.SerializeObject(ObjModel);
+                ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveAddress, _request);
                 if (String.IsNullOrWhiteSpace(ObjResponse.Response))
 
                 {
 
-                    @ViewBag.ResponseMessage = "Error ! Unable to Submit Address";
-
-                    return View("AddAddress", ObjModel);
-
+                    Response = "{\"Response\":\"" + "Error ! Unable to Submit Address" + "\"}";
                 }
 
                 if (ObjResponse.Response.Equals("Save Address"))
-
                 {
-
-                    //@ViewBag.ResponseMessage = "Your Current Password is Wrong";
-
-                    ViewBag.UserAddress = ListUserAddress;
-
-                    return RedirectToAction("AddressesList", ObjModel);
-
+                    Response = "{\"Response\":\"" + "Address Save" + "\"}";
                 }
-
-                ViewBag.UserAddress = ListUserAddress;
-
-                return RedirectToAction("AddressesList", ObjModel);
-
-
-
-
-
-
-
 
 
             }
-
-
-
-            ViewBag.UserAddress = ListUserAddress;
-
-            return View("AddAddress", ObjModel);
+            else
+            {
+                Response = "{\"Response\":\"" + "Please Fill Some Required Filed" + "\"}";
+            }
+            return Json(Response);
 
         }
     }

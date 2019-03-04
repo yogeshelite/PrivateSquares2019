@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,7 @@ namespace PrivateSquareWeb.Models
         public long? Id { get; set; }
         public string Address { get; set; }
         public long UserId { get; set; }
+        [Required(ErrorMessage = "Please Enter Name")]
         public string Name { get; set; }
         public string Mobile { get; set; }
         public string Pincode { get; set; }

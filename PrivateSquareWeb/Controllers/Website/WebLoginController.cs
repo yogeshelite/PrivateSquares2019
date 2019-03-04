@@ -15,7 +15,14 @@ namespace PrivateSquareWeb.Controllers.Website
         // GET: WebLogin
         public ActionResult Index()
         {
+            Services.RemoveCookie(this.ControllerContext.HttpContext, "webusr");
             return View();
+        }
+        public ActionResult Logout()
+        {
+            Services.RemoveCookie(this.ControllerContext.HttpContext, "webusr");
+            return RedirectToAction("Index", "WebLogin");
+            //return View();
         }
         [HttpPost]
         public ActionResult LoginUser(LoginModel ObjModel)

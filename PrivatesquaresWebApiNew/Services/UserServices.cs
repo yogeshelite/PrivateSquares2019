@@ -269,6 +269,43 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.SaveAddress(objModel);
             return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
         }
+
+        public ResponseModel SaveOrders(SaleOrderModel objModel)
+
+        {
+
+            var _result = _instance.SaveOrders(objModel);
+
+            return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
+
+        }
+
+
+
+       
+
+        public ResponseModel GetAddToCart(AddToCartModel objModel)
+
+        {
+            var _result = _instance.GetAddToCart(objModel);
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+
+        }
+
+        public ResponseModel GetOrders(SaleOrderModel objModel)
+        {
+
+            var _result = _instance.GetOrders(objModel);
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+
+        }
+
+        public ResponseModel SaveAddToCart(AddToCartModel objModel)
+        {
+            throw new NotImplementedException();
+        }
     }
     public interface IUserServices
     {
@@ -310,6 +347,13 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel SaveUserForgetPasswordLink(LoginModel objModel);
         ResponseModel GetUserAddress(AddressModel objModel);
         ResponseModel SaveAddress(AddressModel objModel);
+        ResponseModel SaveOrders(SaleOrderModel objModel);
+
+        ResponseModel SaveAddToCart(AddToCartModel objModel);
+
+        ResponseModel GetAddToCart(AddToCartModel objModel);
+
+        ResponseModel GetOrders(SaleOrderModel objModel);
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 
