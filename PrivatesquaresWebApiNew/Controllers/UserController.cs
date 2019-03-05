@@ -710,67 +710,31 @@ namespace PrivatesquaresWebApiNew.Controllers
         [HttpPost]
 
         public IHttpActionResult SaveAddToCart(RequestModel requestModel)
-
         {
-
-
-
             var data = requestModel.Data;
-
             AddToCartModel objAddToCart = JsonConvert.DeserializeObject<AddToCartModel>(data);
-
-            //var xmlNode = JsonConvert.DeserializeXmlNode(data.ToString(), "root").OuterXml;
-
-
-
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.SaveAddToCart(objAddToCart)), Success = true };
-
             var sendJson = Json(sendResponse);
-
             return sendJson;
-
         }
-
-
-
         [Route("api/User/GetAddToCart")]
-
         [HttpPost]
-
         public IHttpActionResult GetAddToCart(RequestModel requestModel)
-
         {
-
             var data = requestModel.Data;
-
             AddToCartModel objAddToCartModel = JsonConvert.DeserializeObject<AddToCartModel>(data);
-
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetAddToCart(objAddToCartModel)), Success = true };
-
             var sendJson = Json(sendResponse);
-
             return sendJson;
-
         }
-
-
-
         [Route("api/User/GetOrders")]
-
         [HttpPost]
-
         public IHttpActionResult GetOrders(RequestModel requestModel)
-
         {
-
             var data = requestModel.Data;
-
             SaleOrderModel objSaleOrderModel = JsonConvert.DeserializeObject<SaleOrderModel>(data);
-
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetOrders(objSaleOrderModel)), Success = true };
-
             var sendJson = Json(sendResponse);
-
             return sendJson;
 
         }

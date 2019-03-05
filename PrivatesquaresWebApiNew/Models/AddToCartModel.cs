@@ -15,5 +15,7 @@ namespace PrivatesquaresWebApiNew.Models
         public decimal Amount { get; set; }
         public decimal Discount { get; set; }
         public decimal TotalAmount { get; set; }
+        public string XmlCartDetails { get; set; }
+        public string  Operation { get; set; }
     }
 }

@@ -282,7 +282,7 @@ namespace PrivatesquaresWebApiNew.Services
 
 
 
-       
+
 
         public ResponseModel GetAddToCart(AddToCartModel objModel)
 
@@ -295,16 +295,15 @@ namespace PrivatesquaresWebApiNew.Services
 
         public ResponseModel GetOrders(SaleOrderModel objModel)
         {
-
             var _result = _instance.GetOrders(objModel);
-
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
 
         }
 
         public ResponseModel SaveAddToCart(AddToCartModel objModel)
         {
-            throw new NotImplementedException();
+            var _result = _instance.SaveAddToCart(objModel);
+            return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
         }
     }
     public interface IUserServices

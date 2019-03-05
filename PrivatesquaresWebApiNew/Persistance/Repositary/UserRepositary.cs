@@ -230,10 +230,12 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         }
 
-        //public SaveAddToCart_Result SaveAddToCart(AddToCartModel objModel)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public SaveAddToCart_Result SaveAddToCart(AddToCartModel objModel)
+        {
+            return Context.SaveAddToCart(objModel.XmlCartDetails, objModel.Operation).FirstOrDefault();
+        }
+
+        
     }
 
     public interface IUserRepositary : IGenericRepository<EWT_PSQNEWEntities>
@@ -279,7 +281,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         SaveAddress_Result SaveAddress(AddressModel objModel);
         SaveOrders_Result SaveOrders(SaleOrderModel objModel);
 
-      //  SaveAddToCart_Result SaveAddToCart(AddToCartModel objModel);
+       SaveAddToCart_Result SaveAddToCart(AddToCartModel objModel);
 
         IEnumerable<GetAddToCart_Result> GetAddToCart(AddToCartModel objModel);
 
