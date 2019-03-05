@@ -44,5 +44,9 @@ namespace PrivateSquareWeb
         public const string ApiSaveUserForgetPasswordLink = "User/SaveUserForgetPasswordLink";
         public const string ApiGetUserAddress = "User/GetUserAddress";
         public const string ApiSaveAddress = "User/SaveAddress";
+        public const string ApiSaveOrders = "User/SaveOrders";
+        public const string ApiSaveAddToCart = "User/SaveAddToCart";
+        public const string ApiGetAddToCart = "User/GetAddToCart";
+        public const string ApiGetOrders = "User/GetOrders";
     }
 }

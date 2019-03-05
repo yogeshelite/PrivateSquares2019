@@ -126,15 +126,43 @@ namespace PrivateSquareWeb.Controllers.Website
         }
 
         [HttpPost]
-        public ActionResult PlaceOrder()
+        public JsonResult PlaceOrder(long AddressId,string PaymentMode)
         {
+            LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
             SaleOrderModel objModel = new SaleOrderModel();
             List<AddToCartModel> ListAddToCart = Services.GetMyCart(this.ControllerContext.HttpContext, _JwtTokenManager);
 
-            objModel.XmlSaleOrderDetail = ListToXml(ListAddToCart);
-            return View();
+            objModel = GetSaleOrderValues(ListAddToCart);
+            objModel.Operation = "insert";
+            objModel.PaymentMode = PaymentMode;
+            objModel.UserId = MdUser.Id;
+            var _request = JsonConvert.SerializeObject(objModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveOrders, _request);
+
+            if (ObjResponse.Response.Equals("Order Saved"))
+            {
+                Services.RemoveCookie(this.ControllerContext.HttpContext, "addtocart");
+            }
+            String Response = "[{\"Response\":\"" + ObjResponse.Response + "\"}]";
+            return Json(Response);
         }
 
+        private SaleOrderModel GetSaleOrderValues(List<AddToCartModel> ListCart)
+        {
+            decimal TotalAmount = 0;
+            decimal TotalDiscount = 0;
+            for (int i = 0; i < ListCart.Count; i++)
+            {
+                TotalAmount += ListCart[i].Amount;
+                TotalDiscount += ListCart[i].Discount;
+            }
+            SaleOrderModel objModel = new SaleOrderModel();
+            objModel.TotalAmount = TotalAmount;
+            objModel.TotalDiscount = TotalDiscount;
+            objModel.XmlSaleOrderDetail = ListToXml(ListCart);
+
+            return objModel;
+        }
         private String ListToXml(List<AddToCartModel> ListCart)
         {
             LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
@@ -142,20 +170,22 @@ namespace PrivateSquareWeb.Controllers.Website
             DataTable dt = new DataTable();
             dt.Clear();
             dt.Columns.Add("UserId");
-            dt.Columns.Add("InterestId");
-            dt.Columns.Add("InterestCatId");
-           
-                for (int i = 0; i < ListCart.Count; i++)
-                {
-                    DataRow NewDataRow;
-                    NewDataRow = dt.NewRow();
-                    NewDataRow["UserId"] = MdUser.Id;
-                    NewDataRow["ProductId"] =ListCart[i].ProductId;
-                    NewDataRow["Quantity"] = ListCart[i].Qty;
-                    NewDataRow["Discount"] = ListCart[i].Discount;
-                    NewDataRow["Amount"] = ListCart[i].Amount;
-                    dt.Rows.Add(NewDataRow);
-                }
+            dt.Columns.Add("ProductId");
+            dt.Columns.Add("Quantity");
+            dt.Columns.Add("Discount");
+            dt.Columns.Add("Amount");
+
+            for (int i = 0; i < ListCart.Count; i++)
+            {
+                DataRow NewDataRow;
+                NewDataRow = dt.NewRow();
+                NewDataRow["UserId"] = MdUser.Id;
+                NewDataRow["ProductId"] = ListCart[i].ProductId;
+                NewDataRow["Quantity"] = ListCart[i].Qty;
+                NewDataRow["Discount"] = ListCart[i].Discount;
+                NewDataRow["Amount"] = ListCart[i].Amount;
+                dt.Rows.Add(NewDataRow);
+            }
             var collectionWrapperAddress = new
             {
                 SaleOrderDetail = dt
@@ -165,7 +195,7 @@ namespace PrivateSquareWeb.Controllers.Website
             #region  Code For DataSet To Xml For Address 
             var dataAddress = JsonConvert.DeserializeObject(JSONAddressResult);
             var xmlNodeSaleOrder = JsonConvert.DeserializeXmlNode(dataAddress.ToString(), "root").OuterXml;
-           
+
             #endregion
             return xmlNodeSaleOrder;
         }

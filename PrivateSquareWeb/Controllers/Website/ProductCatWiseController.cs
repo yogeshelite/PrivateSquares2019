@@ -18,7 +18,7 @@ namespace PrivateSquareWeb.Controllers.Website
 
         public ActionResult Index(long? id)
         {
-            ListAllProduct = GetProduct();
+            ListAllProduct = CommonFile.GetProduct();
             var SearchProductList = ListAllProduct.Where(x => x.ProductCatId == id).ToList();
             ViewBag.SearchCatId = id;
             ViewBag.UsersProduct = SearchProductList;
@@ -27,19 +27,19 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.ProductCatList = ProductCatList;
             return View();
         }
-        public List<ProductModel> GetProduct()
-        {
-            var GetUserProductList = new List<ProductModel>();
-            ProductModel objmodel = new ProductModel();
-            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
-            //if (MdUser.Id != 0)
-            //    objmodel.UserId = Convert.ToInt64(MdUser.Id);
-            var _request = JsonConvert.SerializeObject(objmodel);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
-            GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
-            return GetUserProductList;
+        //public List<ProductModel> GetProduct()
+        //{
+        //    var GetUserProductList = new List<ProductModel>();
+        //    ProductModel objmodel = new ProductModel();
+        //    LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+        //    //if (MdUser.Id != 0)
+        //    //    objmodel.UserId = Convert.ToInt64(MdUser.Id);
+        //    var _request = JsonConvert.SerializeObject(objmodel);
+        //    ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
+        //    GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
+        //    return GetUserProductList;
 
-        }
+        //}
         public ActionResult ProcessForm(FormCollection frm, string submit)
         {
             ProductModel objModel = new ProductModel();

@@ -17,6 +17,7 @@ namespace PrivateSquareWeb.Models
 
         public decimal TotalDiscount { get; set; }
         public decimal Amount { get; set; }
+        public decimal TotalAmount { get; set; }
         public string Operation { get; set; }
     }
 }

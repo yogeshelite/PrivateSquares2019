@@ -1,4 +1,52 @@
-﻿
+﻿<script type="text/javascript">
+    var PlaceOrder = function ()
+    {
+        var radioAddressBtns = document.getElementsByName("rdoAddress");
+        var AddressId = 0;  
+        for (var x = 0; x < radioAddressBtns.length; x++) {
+            if (radioAddressBtns[x].checked) {
+                AddressId = radioAddressBtns[x].value;
+                break;
+            }
+        }
+        if (AddressId == 0) {
+            alert("Please Select Shipping Address");
+            return;
+        }
+       
+
+
+        var rdoPaymentModeBtns = document.getElementsByName("rdoPaymentMode");
+        var PaymentMode = "COD";
+        for (var x = 0; x < rdoPaymentModeBtns.length; x++) {
+            if (rdoPaymentModeBtns[x].checked) {
+                PaymentMode = rdoPaymentModeBtns[x].value;
+                break;
+            }
+        }
+       
+
+        $.ajax({
+            url: "../../Checkout/PlaceOrder",
+            type: "POST",
+            data: {
+                "AddressId": AddressId,
+                "PaymentMode": PaymentMode
+            },
+            success: function (result) {
+                console.log(result);
+                var response = JSON.parse(result);
+                alert(response[0].Response)
+                if (response[0].Response == "Order Saved")
+                {
+                    window.location.href = "/WebHome/Index";
+                }
+                
+              
+            }
+        });
+    }
+</script>
 
 @model PrivateSquareWeb.Models.AddressModel
 @{
@@ -39,7 +87,8 @@
 
                                             <tr>
                                                 <td>
-                                                    <input type="radio" name="rdoAddress" id="@("rdoAddress" + index)" />
+                                                    <input type="radio" name="rdoAddress" id="rdoAddress[]" value="@item.Id" />
+                                                    @*<input type="radio" name="rdoAddress" id="@("rdoAddress" + index)" value="@index" />*@
                                                     <p>@item.Type</p>
                                                     <h4 class="card-title">@item.Name</h4>
                                                     <p class="card-text">
@@ -264,23 +313,53 @@
                                 <h3>Payment Method</h3>
                                 <div class="form-group cheque">
                                     <div class="ps-radio ps-radio--small">
-                                        <input class="form-control" type="radio" id="rdo01" name="payment" checked>
-                                        <label for="rdo01">Cheque Payment</label>
+
+
+                                        <input class="form-control" type="radio" id="rdoPaymentMode1" name="rdoPaymentMode" value="NETBANKING">
+                                        <label for="rdoPaymentMode1">Net Banking</label>
                                     </div>
-                                    <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+
+                                </div>
+                                <div class="form-group cheque">
+                                    <div class="ps-radio ps-radio--small">
+
+
+                                        <input class="form-control" type="radio" id="rdoPaymentMode2" name="rdoPaymentMode" value="DEBITCARD">
+                                        <label for="rdoPaymentMode2">Debit Card</label>
+                                    </div>
+
+                                </div>
+                                <div class="form-group cheque">
+                                    <div class="ps-radio ps-radio--small">
+
+
+                                        <input class="form-control" type="radio" id="rdoPaymentMode3" name="rdoPaymentMode" value="Credit Card">
+                                        <label for="rdoPaymentMode3">Credit Card</label>
+                                    </div>
+
+                                </div>
+                                <div class="form-group cheque">
+                                    <div class="ps-radio ps-radio--small">
+
+
+                                        <input class="form-control" type="radio" id="rdoPaymentMode5" name="rdoPaymentMode" checked value="COD">
+                                        <label for="rdoPaymentMode5">Cash on delivery</label>
+                                    </div>
+
                                 </div>
                                 <div class="form-group paypal">
                                     <div class="ps-radio ps-radio--small">
-                                        <input class="form-control" type="radio" name="payment" id="rdo02">
-                                        <label for="rdo02">Paypal</label>
+                                        <input class="form-control" type="radio" name="rdoPaymentMode" id="rdoPaymentMode4" value="PAYPAL">
+                                        <label for="rdoPaymentMode4">Paypal</label>
                                     </div>
                                     <ul class="ps-payment-method">
-                                        <li><a href="#"><img src="images/payment/1.png" alt=""></a></li>
-                                        <li><a href="#"><img src="images/payment/2.png" alt=""></a></li>
-                                        <li><a href="#"><img src="images/payment/3.png" alt=""></a></li>
+                                        <li><a href="#"><img src="~/WebSiteTheme/images/payment/1.png" alt=""></a></li>
+                                        <li><a href="#"><img src="~/WebSiteTheme/images/payment/2.png" alt=""></a></li>
+                                        <li><a href="#"><img src="~/WebSiteTheme/images/payment/3.png" alt=""></a></li>
                                     </ul>
-                                    <button class="ps-btn ps-btn--fullwidth">Place Order</button>
+                                    <input type="button" class="ps-btn ps-btn--fullwidth" onclick="PlaceOrder()" value="Place Order">
                                 </div>
+
                             </footer>
                         </div>
                         <div class="ps-shipping">

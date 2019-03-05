@@ -32,14 +32,14 @@ namespace PrivateSquareWeb.Controllers.User
             return ProductCategoryList;
 
         }
-        public List<InterestModel> GetAllInterest()
-        {
-            var InterestList = new List<InterestModel>();
-            // var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetAllInterest, "");
-            InterestList = JsonConvert.DeserializeObject<List<InterestModel>>(ObjResponse.Response);
-            return InterestList;
-        }
+            public List<InterestModel> GetAllInterest()
+            {
+                var InterestList = new List<InterestModel>();
+                // var _request = "";//_JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(loginModel));
+                ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetAllInterest, "");
+                InterestList = JsonConvert.DeserializeObject<List<InterestModel>>(ObjResponse.Response);
+                return InterestList;
+            }
         public JsonResult GetCateWiseInterest(long CatId)
         {
             List<InterestModel> FilterInterestModelsList = ListInterest.Where(i => i.InterestCatId == CatId).ToList();

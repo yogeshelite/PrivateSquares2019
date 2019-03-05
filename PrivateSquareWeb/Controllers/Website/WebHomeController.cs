@@ -20,7 +20,7 @@ namespace PrivateSquareWeb.Controllers.Website
 
 
         {
-            ListAllProduct = GetProduct();
+            ListAllProduct = CommonFile.GetProduct();
             // var SearchProductList = ProductList.Where(x => x.ProductName.Contains("Pro")).ToList();
 
             ViewBag.UsersProduct = ListAllProduct;
@@ -30,19 +30,28 @@ namespace PrivateSquareWeb.Controllers.Website
             return View();
 
         }
-        public List<ProductModel> GetProduct()
-        {
-            var GetUserProductList = new List<ProductModel>();
-            ProductModel objmodel = new ProductModel();
-            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
-            //if (MdUser.Id != 0)
-            //    objmodel.UserId = Convert.ToInt64(MdUser.Id);
-            var _request = JsonConvert.SerializeObject(objmodel);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
-            GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
-            return GetUserProductList;
+        //public List<ProductModel> GetProduct()
+        //{
+        //    var GetUserProductList = new List<ProductModel>();
+        //    ProductModel objmodel = new ProductModel();
+        //    LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+        //    //if (MdUser.Id != 0)
+        //    //    objmodel.UserId = Convert.ToInt64(MdUser.Id);
 
-        }
+        //   // var _request = JsonConvert.SerializeObject(objmodel);
+        //    //ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
+        //    //GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
+
+
+        //    var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objmodel));
+        //    ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetProduct, _request);
+        //    GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
+
+
+
+        //    return GetUserProductList;
+
+        //}
         public ActionResult ProductDetail(long id)
         {
             List<ProductModel> Product = GetProduct(id);
@@ -157,6 +166,7 @@ namespace PrivateSquareWeb.Controllers.Website
             //var SearchProductList = ListAllProduct.Where(x => x.DiscountPrice > Convert.ToDecimal(ProductName) && (x.DiscountPrice < Convert.ToDecimal(ProductName))).ToList();
             //var SearchProductList = ListAllProduct.Where(x => x.DiscountPrice > Convert.ToDecimal(ProductName)).ToList();
             return SearchProductList;
+            //return SearchProductList.OrderBy(s=>s.ProductName).ToList();
         }
     }
 }

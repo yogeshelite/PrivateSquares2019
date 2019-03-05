@@ -299,15 +299,20 @@ namespace PrivatesquaresWebApiNew.Controllers
         public IHttpActionResult GetProduct(RequestModel requestModel)
 
         {
-            var data = requestModel.Data;
+            var data = new JwtTokenManager().DecodeToken(requestModel.Data);
+
+            //var data = requestModel.Data;
 
             ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
 
-            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProduct(objProductModel)), Success = true };
+            // var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProduct(objProductModel)), Success = true };
+            return Json(new ResponseModel() { Response = new JwtTokenManager()
+                                                            .GenerateToken(
+                                                            JsonConvert.SerializeObject(
+                                                                userServices.GetProduct(objProductModel))), Success = true });
+            // var sendJson = Json(sendResponse);
 
-            var sendJson = Json(sendResponse);
-
-            return sendJson;
+            //return sendJson;
 
         }
         [Route("api/User/GetUserInterest")]
