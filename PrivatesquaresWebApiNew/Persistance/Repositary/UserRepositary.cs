@@ -133,7 +133,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         }
         public RegisterNewUser_Result RegisterNewUser(LoginModel objModel)
         {
-            return Context.RegisterNewUser(objModel.Name, objModel.EmailId, objModel.Mobile, objModel.Password).FirstOrDefault();
+            return Context.RegisterNewUser(objModel.Name, objModel.EmailId, objModel.Mobile, objModel.Password,objModel.RegisterType).FirstOrDefault();
         }
 
         public RegisterUser_Result RegisterUser(UserRegisterModel ObjModel)
@@ -226,7 +226,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         {
 
-            return Context.SaveOrders(objModel.UserId, objModel.TotalDiscount, objModel.Amount, objModel.PaymentMode, objModel.XmlSaleOrderDetail, objModel.Operation, objModel.SaleOrderId).FirstOrDefault();
+            return Context.SaveOrders(objModel.UserId, objModel.TotalDiscount, objModel.TotalAmount, objModel.PaymentMode, objModel.XmlSaleOrderDetail, objModel.Operation, objModel.SaleOrderId).FirstOrDefault();
 
         }
 
@@ -235,7 +235,10 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.SaveAddToCart(objModel.XmlCartDetails, objModel.Operation).FirstOrDefault();
         }
 
-        
+        public IEnumerable<GetPopularProductId_Result> GetPopularProductId(ProductModel objModel)
+        {
+            return Context.GetPopularProductId().ToList();
+        }
     }
 
     public interface IUserRepositary : IGenericRepository<EWT_PSQNEWEntities>
@@ -286,6 +289,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetAddToCart_Result> GetAddToCart(AddToCartModel objModel);
 
         IEnumerable<GetOrders_Result> GetOrders(SaleOrderModel objModel);
+
+        IEnumerable<GetPopularProductId_Result> GetPopularProductId(ProductModel objModel);
     }
 
 }

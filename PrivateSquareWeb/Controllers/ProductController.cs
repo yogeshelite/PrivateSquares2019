@@ -14,19 +14,19 @@ namespace PrivateSquareWeb.Controllers
         // GET: Product
         public ActionResult Index()
         {
-            ViewBag.AllProduct = GetProduct();
+            ViewBag.AllProduct = CommonFile.GetProduct();
             return View();
         }
-        public List<ProductModel> GetProduct()
-        {
-            var GetProduct = new List<ProductModel>();
-            ProductModel objProduct = new ProductModel();
-            //objProduct.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
-            var _request = JsonConvert.SerializeObject(objProduct);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
-            GetProduct = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
-            return GetProduct;
+        //public List<ProductModel> GetProduct()
+        //{
+        //    var GetProduct = new List<ProductModel>();
+        //    ProductModel objProduct = new ProductModel();
+        //    //objProduct.UserId = Convert.ToInt64(Services.GetCookie(this.ControllerContext.HttpContext, "usrId").Value);
+        //    var _request = JsonConvert.SerializeObject(objProduct);
+        //    ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
+        //    GetProduct = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
+        //    return GetProduct;
 
-        }
+        //}
     }
 }

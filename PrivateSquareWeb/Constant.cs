@@ -48,5 +48,7 @@ namespace PrivateSquareWeb
         public const string ApiSaveAddToCart = "User/SaveAddToCart";
         public const string ApiGetAddToCart = "User/GetAddToCart";
         public const string ApiGetOrders = "User/GetOrders";
+        public const string ApiGetPopularProductId = "User/GetPopularProductId";
+
     }
 }

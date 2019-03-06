@@ -169,7 +169,7 @@ namespace PrivateSquareWeb.Controllers.Website
 
             }
 
-
+            ObjModel.RegisterType = "web";
             string PasswordEncripy = CommonFile.EncodePasswordMd5(ObjModel.Password);
 
             ObjModel.Password = PasswordEncripy;

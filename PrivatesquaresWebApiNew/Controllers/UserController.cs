@@ -743,5 +743,17 @@ namespace PrivatesquaresWebApiNew.Controllers
             return sendJson;
 
         }
+
+        [Route("api/User/GetPopularProductId")]
+        [HttpPost]
+        public IHttpActionResult GetPopularProductId(RequestModel requestModel)
+        {
+
+            var data = requestModel.Data;
+            ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetPopularProductId(objProductModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
     }
 }
