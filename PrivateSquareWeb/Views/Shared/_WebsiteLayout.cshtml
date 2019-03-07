@@ -57,7 +57,27 @@
     </footer>
 
     @Scripts.Render("~/websitetheme/bundles/jquery")
+    <script>
+        var weburl = window.location.pathname;
 
+        $(".main-menu li a").each(function () {
+
+            var menuhref = $(this).attr('href');
+
+            if (weburl == menuhref) {
+
+                $(".main-menu li").removeClass("current-menu-item");
+
+                $(this).parent('li').addClass("current-menu-item");
+
+            }
+
+            else {
+
+            }
+
+        })
+    </script>
 </body>
 
 </html>

@@ -7,6 +7,7 @@
         var divCartTotal = document.getElementById('CartTotal');
         var CartString = "";
         var CartTotal = "";
+        
 
         $.ajax({
             url: "../../WebsiteHeader/RemoveToCart",
@@ -57,6 +58,7 @@
                 // $("#CartList").append(CartString);
                 divCart.innerHTML = CartString;
                 divCartTotal.innerHTML = CartTotal;
+                $("#CartCount").load(location.href + ' #CartCount');
                 //window.location.href = "/WebHome/ProductDetail/" + ProductId;
             },
             error: function (error) {
@@ -100,6 +102,8 @@
 
 
                                     <ul class="dropdown-menu">
+
+                                        <li><a href="#">My Orders</a></li>
 
                                         <li><a href="/WebLogin/Logout">Log Out</a></li>
 
@@ -185,7 +189,7 @@
 
 
 
-                    <li class="current-menu-item menu-item-has-children dropdown">
+                    <li class="current-menu-item">
 
                         <a href="/WebHome/Index">Home</a>
 
@@ -195,7 +199,7 @@
 
                     <li><a href="/ProductCatWise/Index/2">Kitchen</a></li>
 
-                    <li><a href="contact-us.html">Contact</a></li>
+                    <li><a href="/WebContactUs/Index">Contact</a></li>
 
                 </ul>
 
@@ -206,9 +210,9 @@
                 <div class="menu-toggle"><span></span></div>
 
                 <div class="ps-cart">
-
-                    <a class="ps-cart__toggle" href="#"><span><i>@Model.CartItemCount</i></span><i class="ps-icon-cart"></i></a>
-
+                    <div id="CartCount">
+                        <a class="ps-cart__toggle" href="#"><span><i>@Model.CartItemCount</i></span><i class="ps-icon-cart"></i></a>
+                    </div>
                     <div class="ps-cart__listing">
 
                         <div class="ps-cart__content">
@@ -264,15 +268,17 @@
                     </div>
 
                 </div>
+                @using (Html.BeginForm("SearchProducts", "WebHome", FormMethod.Post, new { @class = "ps-form--search" }))
+                {
+                    @*<form class="ps-form--search" action="do_action" method="post">*@
 
-                <form class="ps-form--search" action="do_action" method="post">
+                    @Html.TextBoxFor(m => m.SearchBarText, new { @class = "form-control", placeholder = "Search Product…", value= "TxtSearch",id= "TxtSearch" })
+                    @*<input class="form-control" type="text" placeholder="Search Product…">*@
+                    < input type="submit" class="ps-icon-search"/>
+                    @*<button><i class="ps-icon-search"></i></button>*@
 
-                    <input class="form-control" type="text" placeholder="Search Product…">
-
-                    <button><i class="ps-icon-search"></i></button>
-
-                </form>
-
+                    @*</form>*@
+                }
 
 
             </div>

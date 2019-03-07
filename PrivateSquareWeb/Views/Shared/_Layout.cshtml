@@ -48,6 +48,23 @@
             }
 
         })
+        $(".account-list li a").each(function () {
+
+            var menuhref = $(this).attr('href');
+
+            if (weburl == menuhref) {
+
+                $(".account-list li").removeClass("active");
+
+                $(this).parent('li').addClass("active");
+
+            }
+
+            else {
+
+            }
+
+        })
 
         $(function () {
             'use strict';

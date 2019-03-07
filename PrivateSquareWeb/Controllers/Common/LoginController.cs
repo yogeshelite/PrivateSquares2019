@@ -223,6 +223,12 @@ namespace PrivateSquareWeb.Controllers
             else
             {
                 string[] ArrResponse = VarResponse.Split(',');
+                if (ArrResponse[5] == "web")
+                {
+                    ViewBag.Response = "You don't have privillages to access Admin Panel";
+                    return View("Index", ObjModel);
+                }
+
 
                 var jsonString = "{\"Id\":\"" + ArrResponse[0] + "\",\"Name\":\"" + ArrResponse[1] + "\",\"ProfileImg\":\"" + ArrResponse[2] + "\",\"EmailId\":\"" + ArrResponse[3] + "\",\"Mobile\":\"" + ArrResponse[4] + "\"}";
                 Services.SetCookie(this.ControllerContext.HttpContext, "usr", _JwtTokenManager.GenerateToken(jsonString.ToString()));
@@ -233,6 +239,7 @@ namespace PrivateSquareWeb.Controllers
                 //Services.SetCookie(this.ControllerContext.HttpContext, "usrImg", ArrResponse[2]);
                 //ViewBag.LoginMessage = "Login Success";
                 return RedirectToAction("Index", "Home");
+
             }
             //  String Response = "[{\"Response\":\"" + ObjResponse1.Response + "\"}]";
             // return Json(Response);
@@ -307,7 +314,7 @@ namespace PrivateSquareWeb.Controllers
 
             }
 
-
+            ObjModel.RegisterType = "mer";
             string PasswordEncripy = CommonFile.EncodePasswordMd5(ObjModel.Password);
 
             ObjModel.Password = PasswordEncripy;

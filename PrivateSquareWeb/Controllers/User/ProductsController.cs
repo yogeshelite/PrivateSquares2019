@@ -26,22 +26,22 @@ namespace PrivateSquareWeb.Controllers.User
             //{
             //    return RedirectToAction("Index", "Login");
             //}
-            ViewBag.UsersProduct = GetProduct();
+            ViewBag.UsersProduct = CommonFile.GetProduct();
             return View();
         }
-        public List<ProductModel> GetProduct()
-        {
-            var GetUserProductList = new List<ProductModel>();
-            ProductModel objmodel = new ProductModel();
-            LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
-            if (MdUser.Id != 0)
-                objmodel.UserId = Convert.ToInt64(MdUser.Id);
-            var _request = JsonConvert.SerializeObject(objmodel);
-            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
-            GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
-            return GetUserProductList;
+        //public List<ProductModel> GetProduct()
+        //{
+        //    var GetUserProductList = new List<ProductModel>();
+        //    ProductModel objmodel = new ProductModel();
+        //    LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+        //    if (MdUser.Id != 0)
+        //        objmodel.UserId = Convert.ToInt64(MdUser.Id);
+        //    var _request = JsonConvert.SerializeObject(objmodel);
+        //    ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
+        //    GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
+        //    return GetUserProductList;
 
-        }
+        //}
         public ActionResult Product()
         {
             if (!CommonFile.IsUserAuthenticate(this.ControllerContext.HttpContext))

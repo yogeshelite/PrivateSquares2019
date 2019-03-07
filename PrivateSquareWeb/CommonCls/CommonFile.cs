@@ -145,6 +145,7 @@ namespace PrivateSquareWeb.CommonCls
             return GetUserProductList;
 
         }
+
         public static List<BusinessModel> GetUsersBusiness(long UserId)
         {
             var GetUserBusinessList = new List<BusinessModel>();
@@ -312,6 +313,24 @@ namespace PrivateSquareWeb.CommonCls
             string DynamicFileName = Guid.NewGuid().ToString() + Extention;
             FileUpload.SaveAs(targetpath + DynamicFileName);
             return DynamicFileName;
+        }
+
+        public static List<ProductModel> GetPopularProduct()
+        {
+            var GetPopularProductList = new List<ProductModel>();
+            ProductModel objmodel = new ProductModel();
+            List<ProductModel> ListPopularProduct = new List<ProductModel>();
+            var ListAllProduct = GetProduct();
+            var _request = JsonConvert.SerializeObject(objmodel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetPopularProductId, _request);
+            GetPopularProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
+            foreach(var product in GetPopularProductList)
+            {
+                ListPopularProduct.AddRange(ListAllProduct.Where(x => x.Id == product.Id).ToList());
+            }
+
+            return ListPopularProduct;
+
         }
     }
 }

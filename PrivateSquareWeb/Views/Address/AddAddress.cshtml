@@ -67,6 +67,7 @@
                                                     @Html.HiddenFor(m => m.Id)
 
                                                     @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Enter Name", @autocomplete = "off" })
+                                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
 
                                                 </div>
 
@@ -81,6 +82,7 @@
                                                     @*<input class="form-control" type="text" name="phonenumber" value="" placeholder="10-digit number">*@
 
                                                     @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @placeholder = "10-digit number", @autocomplete = "off" })
+                                                    @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
 
                                                 </div>
 
@@ -95,6 +97,7 @@
                                                     @*<input class="form-control" type="text" name="Pincode" value="" placeholder="Pincode">*@
 
                                                     @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control", @placeholder = "Pincode", @autocomplete = "off" })
+                                                    @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
 
                                                 </div>
 
@@ -107,6 +110,7 @@
                                                     <label class="form-control-label">Locality: <span class="tx-danger">*</span></label>
 
                                                     @Html.TextBoxFor(m => m.Locality, new { @class = "form-control", @placeholder = "Locality", @autocomplete = "off" })
+                                                    @Html.ValidationMessageFor(model => model.Locality, "", new { @class = "text-danger" })
 
                                                 </div>
 
@@ -123,6 +127,7 @@
                                                     @*<input class="form-control" type="text" name="City" value="" placeholder="City">*@
 
                                                     @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, "--Select--", new { @class = "form-control select2" })
+                                                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
 
                                                 </div>
 
@@ -137,6 +142,7 @@
                                                     @*<input class="form-control" type="text" name="State" value="" placeholder="State">*@
 
                                                     @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
+                                                    @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
 
                                                 </div>
 

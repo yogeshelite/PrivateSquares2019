@@ -11,5 +11,6 @@ namespace PrivateSquareWeb.Models
         public string UserName { get; set; } = "Not Login";
         public string ProfileImg { get; set; } = "";
         public int CartItemCount { get; set; } = 0;
+        public string SearchBarText { get; set; }
     }
 }
