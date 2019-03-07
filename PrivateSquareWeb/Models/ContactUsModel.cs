@@ -10,7 +10,7 @@ namespace PrivateSquareWeb.Models
     {
         [Required(ErrorMessage = "Name can't  be empty")]
         public string FullName { get; set; }
-        [Required(ErrorMessage = "Mobile No. can't  be empty")]
+        //[Required(ErrorMessage = "Mobile No. can't  be empty")]
         [MinLength(10, ErrorMessage = "Enter 10 Digit")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Mobile must be numeric")]
         public string Mobile { get; set; }
