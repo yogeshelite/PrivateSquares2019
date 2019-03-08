@@ -21,7 +21,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.ForgetPassword(objModel.EmailId, objModel.Password).FirstOrDefault();
         }
 
-      
+
 
         public IEnumerable<GetAllInterest_Result> GetAllInterest()
         {
@@ -58,7 +58,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetNetwork(networkModel.LogInUserId).ToList();
         }
 
-     
+
 
         public IEnumerable<GetProduct_Result> GetProduct(ProductModel objModel)
         {
@@ -72,7 +72,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public IEnumerable<GetProductDetail_Result> GetProductDetail(ProductModel objModel)
         {
-            return Context.GetProductDetail(objModel.Id,objModel.UserId).ToList();
+            return Context.GetProductDetail(objModel.Id, objModel.UserId).ToList();
         }
 
         public IEnumerable<GetProfession_Result> GetProfession()
@@ -92,7 +92,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public IEnumerable<GetAddress_Result> GetUserAddress(AddressModel objModel)
         {
-            return Context.GetAddress(objModel.UserId,objModel.Id).ToList();
+            return Context.GetAddress(objModel.UserId, objModel.Id).ToList();
         }
 
         public IEnumerable<GetUserBusiness_Result> GetUserbusiness(BusinessModel objModel)
@@ -110,7 +110,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetUserProfile(objModel.UserId).ToList();
         }
 
-        public IsBusinessExist_Result   IsBusinessExist(BusinessModel objModel)
+        public IsBusinessExist_Result IsBusinessExist(BusinessModel objModel)
         {
             return Context.IsBusinessExist(objModel.BusinessName).FirstOrDefault();
         }
@@ -133,7 +133,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         }
         public RegisterNewUser_Result RegisterNewUser(LoginModel objModel)
         {
-            return Context.RegisterNewUser(objModel.Name, objModel.EmailId, objModel.Mobile, objModel.Password,objModel.RegisterType).FirstOrDefault();
+            return Context.RegisterNewUser(objModel.Name, objModel.EmailId, objModel.Mobile, objModel.Password, objModel.RegisterType).FirstOrDefault();
         }
 
         public RegisterUser_Result RegisterUser(UserRegisterModel ObjModel)
@@ -146,12 +146,12 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.SaveAddress(objModel.Id, objModel.UserId, objModel.Name, objModel.Mobile, objModel.Pincode, objModel.Locality, objModel.Address, objModel.CityId, objModel.StateId, objModel.Landmark, objModel.AlternatePhone, objModel.Operation).FirstOrDefault();
         }
 
-      
+
 
         public SaveBusiness_Result SaveBusiness(BusinessModel ObjModel)
         {
             return Context.SaveBusiness(ObjModel.Id, ObjModel.BusinessName, ObjModel.Location, ObjModel.BusinessLogo, ObjModel.ProfessionalCatId,
-                ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.PinCode, ObjModel.UserId, ObjModel.Email, ObjModel.Description, ObjModel.Phone, ObjModel.CountryId,ObjModel.Website, ObjModel.Operation).FirstOrDefault();
+                ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.PinCode, ObjModel.UserId, ObjModel.Email, ObjModel.Description, ObjModel.Phone, ObjModel.CountryId, ObjModel.Website, ObjModel.Operation).FirstOrDefault();
 
         }
 
@@ -167,24 +167,24 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         }
 
-        
+
 
         public SaveProduct_Result SaveProduct(ProductModel objModel)
         {
-            return Context.SaveProduct(objModel.Id, objModel.ProductName, objModel.ProductCatId, objModel.ProductImage, 
+            return Context.SaveProduct(objModel.Id, objModel.ProductName, objModel.ProductCatId, objModel.ProductImage,
                 objModel.SellingPrice, objModel.DiscountPrice, objModel.BusinessId, objModel.UserId, objModel.Description,
-                objModel.Operation,objModel.XmlProductImage).FirstOrDefault();
+                objModel.Operation, objModel.XmlProductImage).FirstOrDefault();
 
         }
 
         public SaveProfile_Result SaveProfile(UserProfileModel ObjModel)
         {
-            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword,ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB, ObjModel.Location, ObjModel.Phone, ObjModel.Pincode, ObjModel.CountryId, ObjModel.OfficeAddress, ObjModel.OtherAddress, ObjModel.InterestCatId, ObjModel.XmlData,ObjModel.XmlDataAddress).FirstOrDefault();
+            return Context.SaveProfile(ObjModel.UserId, ObjModel.FirstName, ObjModel.LastName, ObjModel.ProfileImage, ObjModel.Description, ObjModel.EmailId, ObjModel.ProfessionalCatId, ObjModel.Title, ObjModel.ProfessionalKeyword, ObjModel.CityId, ObjModel.Password, ObjModel.GenderId, ObjModel.DOB, ObjModel.Location, ObjModel.Phone, ObjModel.Pincode, ObjModel.CountryId, ObjModel.OfficeAddress, ObjModel.OtherAddress, ObjModel.InterestCatId, ObjModel.XmlData, ObjModel.XmlDataAddress).FirstOrDefault();
         }
 
         public SaveUserForgetPasswordLink_Result SaveUserForgetPasswordLink(LoginModel objModel)
         {
-            return Context.SaveUserForgetPasswordLink(objModel.EmailId,objModel.Operation).FirstOrDefault();
+            return Context.SaveUserForgetPasswordLink(objModel.EmailId, objModel.Operation).FirstOrDefault();
         }
 
         public SaveUserInterest_Result SaveUserInterest(UserInterestModel objModel)
@@ -220,7 +220,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         }
 
-        
+
 
         public SaveOrders_Result SaveOrders(SaleOrderModel objModel)
 
@@ -238,6 +238,16 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         public IEnumerable<GetPopularProductId_Result> GetPopularProductId(ProductModel objModel)
         {
             return Context.GetPopularProductId().ToList();
+        }
+
+        public IEnumerable<GetWishlist_Result> GetWishlist(AddToCartModel objModel)
+        {
+            return Context.GetWishlist(objModel.UserId).ToList();
+        }
+
+        public SaveWishlist_Result SaveWishlist(AddToCartModel objModel)
+        {
+            return Context.SaveWishlist(objModel.UserId,objModel.ProductId,objModel.Operation).FirstOrDefault();
         }
     }
 
@@ -275,7 +285,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         ForgetPassword_Result ForgetPassword(LoginModel objModel);
         ChangePassword_Result ChangePassword(LoginModel objModel);
         SaveContactUs_Result SaveContactUs(ContactUsModel objModel);
-      
+
         IEnumerable<GetProfessionalKeyword_Result> GetProfessionalKeyword(DropDownModel objModel);
         IsEmailExist_Result IsEmailExist(LoginModel objModel);
         IsBusinessExist_Result IsBusinessExist(BusinessModel objModel);
@@ -284,13 +294,15 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         SaveAddress_Result SaveAddress(AddressModel objModel);
         SaveOrders_Result SaveOrders(SaleOrderModel objModel);
 
-       SaveAddToCart_Result SaveAddToCart(AddToCartModel objModel);
+        SaveAddToCart_Result SaveAddToCart(AddToCartModel objModel);
 
         IEnumerable<GetAddToCart_Result> GetAddToCart(AddToCartModel objModel);
 
         IEnumerable<GetOrders_Result> GetOrders(SaleOrderModel objModel);
 
         IEnumerable<GetPopularProductId_Result> GetPopularProductId(ProductModel objModel);
+        IEnumerable<GetWishlist_Result> GetWishlist(AddToCartModel objModel);
+        SaveWishlist_Result SaveWishlist(AddToCartModel objModel);
     }
 
 }

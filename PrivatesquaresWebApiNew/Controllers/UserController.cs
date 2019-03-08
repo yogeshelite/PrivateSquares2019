@@ -669,10 +669,9 @@ namespace PrivatesquaresWebApiNew.Controllers
             return sendJson;
 
         }
+
         [Route("api/User/SaveAddress")]
-
         [HttpPost]
-
         public IHttpActionResult SaveAddress(RequestModel requestModel)
 
         {
@@ -684,12 +683,9 @@ namespace PrivatesquaresWebApiNew.Controllers
             return sendJson;
 
         }
+
         [Route("api/User/SaveOrders")]
-
         [HttpPost]
-
-
-
         public IHttpActionResult SaveOrders(RequestModel requestModel)
 
         {
@@ -708,12 +704,8 @@ namespace PrivatesquaresWebApiNew.Controllers
 
         }
 
-
-
         [Route("api/User/SaveAddToCart")]
-
         [HttpPost]
-
         public IHttpActionResult SaveAddToCart(RequestModel requestModel)
         {
             var data = requestModel.Data;
@@ -722,6 +714,7 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendJson = Json(sendResponse);
             return sendJson;
         }
+
         [Route("api/User/GetAddToCart")]
         [HttpPost]
         public IHttpActionResult GetAddToCart(RequestModel requestModel)
@@ -732,6 +725,7 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendJson = Json(sendResponse);
             return sendJson;
         }
+
         [Route("api/User/GetOrders")]
         [HttpPost]
         public IHttpActionResult GetOrders(RequestModel requestModel)
@@ -752,6 +746,28 @@ namespace PrivatesquaresWebApiNew.Controllers
             var data = requestModel.Data;
             ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetPopularProductId(objProductModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
+        [Route("api/User/GetWishlist")]
+        [HttpPost]
+        public IHttpActionResult GetWishlist(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            AddToCartModel objAddToCartModel = JsonConvert.DeserializeObject<AddToCartModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetWishlist(objAddToCartModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
+        [Route("api/User/SaveWishlist")]
+        [HttpPost]
+        public IHttpActionResult SaveWishlist(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            AddToCartModel objAddToCart = JsonConvert.DeserializeObject<AddToCartModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.SaveWishlist(objAddToCart)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
         }

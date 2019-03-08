@@ -311,6 +311,19 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.GetPopularProductId(objModel);
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel GetWishlist(AddToCartModel objModel)
+        {
+            var _result = _instance.GetWishlist(objModel);
+
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
+
+        public ResponseModel SaveWishlist(AddToCartModel objModel)
+        {
+            var _result = _instance.SaveWishlist(objModel);
+            return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
+        }
     }
     public interface IUserServices
     {
@@ -360,6 +373,8 @@ namespace PrivatesquaresWebApiNew.Services
 
         ResponseModel GetOrders(SaleOrderModel objModel);
         ResponseModel GetPopularProductId(ProductModel objModel);
+        ResponseModel GetWishlist(AddToCartModel objModel);
+        ResponseModel SaveWishlist(AddToCartModel objModel);
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

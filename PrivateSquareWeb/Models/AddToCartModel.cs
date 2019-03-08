@@ -7,6 +7,7 @@ namespace PrivateSquareWeb.Models
 {
     public class AddToCartModel
     {
+        public long UserId { get; set; }
         public long ProductId { get; set; }
         public string ProductName { get; set; }
         public int Qty { get; set; }
@@ -15,6 +16,7 @@ namespace PrivateSquareWeb.Models
         public decimal Amount { get; set; }
         public decimal Discount { get; set; }
         public decimal TotalAmount { get; set; }
+        public string Operation { get; set; }
 
     }
 }
