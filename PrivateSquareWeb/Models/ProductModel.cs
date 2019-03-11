@@ -9,6 +9,8 @@ namespace PrivateSquareWeb.Models
     public class ProductModel
     {
         public long Id { get; set; }
+        public long Sortby { get; set; }   //field used for sorting products
+        public long ProductId { get; set; } // extra productId field for binding the ViewBag.Wishlist
         [Required(ErrorMessage = "Product Name cannot be empty")]
         public string ProductName { get; set; }
         public long ProductCatId { get; set; }

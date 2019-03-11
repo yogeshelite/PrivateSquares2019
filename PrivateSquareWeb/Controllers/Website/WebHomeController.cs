@@ -28,28 +28,6 @@ namespace PrivateSquareWeb.Controllers.Website
 
         }
         
-        //public List<ProductModel> GetProduct()
-        //{
-        //    var GetUserProductList = new List<ProductModel>();
-        //    ProductModel objmodel = new ProductModel();
-        //    LoginModel MdUser = Services.GetLoginUser(this.ControllerContext.HttpContext, _JwtTokenManager);
-        //    //if (MdUser.Id != 0)
-        //    //    objmodel.UserId = Convert.ToInt64(MdUser.Id);
-
-        //   // var _request = JsonConvert.SerializeObject(objmodel);
-        //    //ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProduct, _request);
-        //    //GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
-
-
-        //    var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objmodel));
-        //    ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetProduct, _request);
-        //    GetUserProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
-
-
-
-        //    return GetUserProductList;
-
-        //}
         public ActionResult ProductDetail(long id)
         {
             List<ProductModel> Product = GetProduct(id);
@@ -182,10 +160,7 @@ namespace PrivateSquareWeb.Controllers.Website
             {
             objmodel.UserId = Convert.ToInt64(MdUser.Id);
             }
-            else
-            {
-               return JavaScript("window.alert('Please Login to access wishlist');");
-            }
+            else { return JavaScript("window.alert('Please Login to access wishlist');"); }
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetWishlist, _request);
             var ProductWishlist = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
@@ -200,7 +175,6 @@ namespace PrivateSquareWeb.Controllers.Website
             { objmodel.UserId = Convert.ToInt64(MdUser.Id); }
             else { return JavaScript("window.alert('Please Login to access wishlist');"); }
             objmodel.Operation = "insert";
-            //AddToCart objAddToCart = new AddToCart();
             var result = SaveWishlist(objmodel);
             return JavaScript("window.alert('Product added to the Wishlist');");
             
@@ -212,6 +186,24 @@ namespace PrivateSquareWeb.Controllers.Website
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveWishlist, _request);
             return ObjResponse.Response;
+        }
+
+        public ActionResult DeleteFromWishlist(int ProductId)
+        {
+            AddToCartModel objmodel = new AddToCartModel();
+            
+            LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            if (MdUser.Id != 0)
+            { objmodel.UserId = Convert.ToInt64(MdUser.Id); }
+            else
+            {
+                return View("WebHome");
+            }
+            objmodel.ProductId = ProductId;
+            objmodel.Operation = "delete";
+            var _request = JsonConvert.SerializeObject(objmodel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveWishlist, _request);
+            return JavaScript("window.alert(Product removed successfully);");
         }
         
 
