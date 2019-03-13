@@ -16,5 +16,6 @@ namespace PrivatesquaresWebApiNew.Models
         public string NewPassword { get; set; }
         public string OldPassword { get; set; }
         public string Operation { get; set; }
+        public string RegisterType { get; set; }
     }
 }

@@ -205,7 +205,43 @@ namespace PrivateSquareWeb.Controllers.Website
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveWishlist, _request);
             return JavaScript("window.alert(Product removed successfully);");
         }
-        
 
+
+        
+        public ActionResult ProductQuickView(long ProductId)
+        {
+
+            List<ProductModel> Product = GetProduct(ProductId);
+            ProductModel objModel = new ProductModel();
+            if (Product != null && Product.Count() > 0)
+            {
+                objModel.Id = ProductId;
+                objModel.ProductName = Product[0].ProductName;
+                objModel.ProductCatId = Product[0].ProductCatId;
+                objModel.ProductImage = Product[0].ProductImage;
+                objModel.SellingPrice = Product[0].SellingPrice;
+                objModel.DiscountPrice = Product[0].DiscountPrice;
+                objModel.BusinessId = Product[0].BusinessId;
+                objModel.UserId = Product[0].UserId;
+                objModel.Description = Product[0].Description;
+                objModel.VendorName = Product[0].VendorName;
+                objModel.ProductImages = Product[0].ProductImages;
+
+                List<ProductImages> ListProductImages = new List<ProductImages>();
+                if (!String.IsNullOrEmpty(objModel.ProductImages))
+                {
+                    String[] ProductImages = objModel.ProductImages.Split(',');
+                    ListProductImages = GetSelectedProductImages(ProductImages, objModel.ProductImage);
+                    EditProductImageList = ListProductImages;
+                    ViewBag.ProductImages = ListProductImages;
+                }
+                else
+                {
+                    // String[] ProductImages = new String [0];
+                    ViewBag.ProductImages = ListProductImages;
+                }
+            }
+            return PartialView("_WebQuickView", objModel);
+        }
     }
 }

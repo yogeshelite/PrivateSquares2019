@@ -19,6 +19,8 @@ namespace PrivatesquaresWebApiNew.Models
         public string XmlProductImage { get; set; }
         public string ProductImages { get; set; }
         public string VendorName { get; set; }
+        public string SortOrder { get; set; }
+        public long PageIndex { get; set; }
         public string Operation { get; set; }
     }
 }

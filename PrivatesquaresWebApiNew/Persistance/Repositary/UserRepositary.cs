@@ -249,6 +249,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         {
             return Context.SaveWishlist(objModel.UserId,objModel.ProductId,objModel.Operation).FirstOrDefault();
         }
+
+        public IEnumerable<GetSortedProducts_Result> GetSortedProducts(ProductModel objModel)
+        {
+            return Context.GetSortedProducts(objModel.SortOrder,objModel.PageIndex).ToList();
+        }
     }
 
     public interface IUserRepositary : IGenericRepository<EWT_PSQNEWEntities>
@@ -303,6 +308,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetPopularProductId_Result> GetPopularProductId(ProductModel objModel);
         IEnumerable<GetWishlist_Result> GetWishlist(AddToCartModel objModel);
         SaveWishlist_Result SaveWishlist(AddToCartModel objModel);
+        IEnumerable<GetSortedProducts_Result> GetSortedProducts(ProductModel objModel);
     }
 
 }

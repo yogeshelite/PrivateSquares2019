@@ -23,7 +23,8 @@ namespace PrivateSquareWeb.Models
         [Display(Name = "Re-type Password")]
         [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
         public string ConfirmNewPassword { get; set; }
-       
+        public string RegisterType { get; set; }
         public string Operation { get; set; }
+
     }
 }

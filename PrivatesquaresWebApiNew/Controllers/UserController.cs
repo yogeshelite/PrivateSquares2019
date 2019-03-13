@@ -771,5 +771,16 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendJson = Json(sendResponse);
             return sendJson;
         }
+
+        [Route("api/User/GetSortedProducts")]
+        [HttpPost]
+        public IHttpActionResult GetSortedProducts(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetSortedProducts(objProductModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
     }
 }
