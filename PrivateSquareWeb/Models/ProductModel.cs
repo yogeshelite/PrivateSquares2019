@@ -9,11 +9,12 @@ namespace PrivateSquareWeb.Models
     public class ProductModel
     {
         public long Id { get; set; }
-        public long Sortby { get; set; }   //field used for sorting products
+        public string Sortby { get; set; }   //field used for sorting products
+        public long PageIndex { get; set; }     //field used for pagination of products while showing results in sorting
         public long ProductId { get; set; } // extra productId field for binding the ViewBag.Wishlist
         [Required(ErrorMessage = "Product Name cannot be empty")]
         public string ProductName { get; set; }
-        public long ProductCatId { get; set; }
+        public long? ProductCatId { get; set; }
         public string ProductImage { get; set; }
         [Required(ErrorMessage ="Selling Price cannot be empty")]
         public decimal SellingPrice { get; set; }

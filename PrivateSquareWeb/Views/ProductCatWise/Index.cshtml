@@ -35,6 +35,28 @@
         });
     }
 </script>
+<script type="text/javascript">
+    //$("#sortbyclass select").on('change', function () {
+    //    var params = $(this).children(':selected').data('params');
+    //    alert(params);
+    //});
+    //var Sortby = function (id) {
+    //    var Sortbyid = id;
+    //    $.ajax({
+    //        url: "../../ProductCatWise/Sortby/" + Sortbyid,
+    //        type: "POST",
+    //        success: function (result) {
+    //            console.log(result);
+    //        }
+    //    });
+    //}
+</script>
+<script>
+    var PriceLowToHigh = function () {
+        alert('Product sorted by price (low to high)');
+    }
+</script>
+
 
 @using (Html.BeginForm("ProcessForm", "ProductCatWise", FormMethod.Post))
 {
@@ -65,13 +87,14 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                 <p>Showing 1–12 of 35 results</p>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                <select class="ps-select" title="Default sorting">
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                    <option value="4">Option 4</option>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="sortbyclass">
+                                <select class="ps-select" id="sortby" title="Sort By--">
+                                    <option value="1">Price: Low to High</option>
+                                    <option value="2">Price: High to Low</option>
+                                    <option value="3">Popularity</option>
+                                    <option value="4">Newest Arrivals</option>
                                 </select>
+                                @*@Html.DropDownList("title", Model.ProductName, new { @class="ps-select"})*@
                             </div>
                         </div>
                     </div>
@@ -107,7 +130,7 @@
                     <ul class="ps-list--checked">
                         @foreach (var Cat in ViewBag.ProductCatList)
                         {
-                            <li class="@(ViewBag.SearchCatId==@Cat.Id ? "current":"")" ><a href="/ProductCatWise/Index/@Cat.Id">@Cat.Name </a></li>
+                            <li class="@(ViewBag.SearchCatId==@Cat.Id ? "current":"")"><a href="/ProductCatWise/Index/@Cat.Id">@Cat.Name </a></li>
 
                         }
                         <li><a href="product-listing.html">More</a></li>
@@ -126,7 +149,7 @@
                     <input type="range" id="firstslider" min="0" max="50000" step="100" value="0" onchange="showvalue(this.value)" />
                     <input type="text" id="TxtPriceRange" name="TxtPriceRange" />
                     <input type="submit" id="BtnPriceRange" name="submit" onclick="ProductPriceWise()" value="PriceRange" style="display:none;" />
-                 
+
                 </div>
             </aside>
             <aside class="ps-widget--sidebar ps-widget--category">
@@ -359,3 +382,31 @@
     </div><!-- slim-mainpanel -->
 }
 
+    <script>
+        var pageindexcounter;
+        var sortdropdown = document.getElementById("sortby");
+        sortdropdown.onchange = function () {
+            if (this.selectedIndex !== 0) {
+                //console.log('dropdown selected');
+                var sortorder = this.value;
+                pageindexcounter = 1;
+                var productcatid = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+                $.ajax({
+                    url: "../../ProductCatWise/Sortby",
+                    type: "POST",
+                    data: {
+                        "PageIndex": pageindexcounter,
+                        "productcatid": productcatid,
+                        "sortorder": sortorder,
+
+                    },
+                    success: function (result) {
+                        //console.log(result);
+                        $("#DivItemBind").html(result);
+                        pageindexcounter++;
+                    }
+                });
+
+            }
+        }
+    </script>

@@ -9,7 +9,7 @@ namespace PrivatesquaresWebApiNew.Models
     {
         public long Id { get; set; }
         public string ProductName { get; set; }
-        public long ProductCatId { get; set; }
+        public long? ProductCatId { get; set; }
         public string ProductImage { get; set; }
         public decimal SellingPrice { get; set; }
         public decimal DiscountPrice { get; set; }
@@ -19,7 +19,7 @@ namespace PrivatesquaresWebApiNew.Models
         public string XmlProductImage { get; set; }
         public string ProductImages { get; set; }
         public string VendorName { get; set; }
-        public string SortOrder { get; set; }
+        public string Sortby { get; set; }
         public long PageIndex { get; set; }
         public string Operation { get; set; }
     }

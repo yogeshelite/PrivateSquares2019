@@ -119,5 +119,37 @@ namespace PrivateSquareWeb.Controllers.Website
             //var SearchProductList = ListAllProduct.Where(x => x.DiscountPrice > Convert.ToDecimal(ProductName)).ToList();
             return SearchProductList;
         }
+
+        public ActionResult Sortby(int sortorder,int pageindex,long? productcatid)
+        {
+            ProductModel objModel = new ProductModel();
+            string SortOrder="";
+            switch (sortorder)
+            {
+                case 1:
+                    SortOrder = "DiscountPrice";
+                    break;  
+                case 2:
+                    SortOrder = "DiscountPrice desc";
+                    break;
+                case 3:
+                    SortOrder = "Popularity";
+                    break;
+                case 4:
+                    SortOrder = "RecordDate";
+                    break;
+            }
+      
+            var sortedproducts = CommonFile.GetSortedProducts(SortOrder,pageindex, productcatid);
+            var ProductList = ListAllProduct.Where(x => x.ProductCatId == productcatid).ToList();
+            
+            ViewBag.UsersProduct = sortedproducts;
+            ViewBag.SearchCatId = productcatid;
+            
+            var ProductCatList = CommonFile.GetProductCategory();
+            
+            ViewBag.ProductCatList = ProductCatList;
+            return PartialView("~/Views/ProductCatWise/PartialCatwiseProductValue.cshtml", objModel);
+        }
     }
 }

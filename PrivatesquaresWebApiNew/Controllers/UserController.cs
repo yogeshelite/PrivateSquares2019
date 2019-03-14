@@ -782,5 +782,28 @@ namespace PrivatesquaresWebApiNew.Controllers
             var sendJson = Json(sendResponse);
             return sendJson;
         }
+
+        [Route("api/User/SaveReview")]
+        [HttpPost]
+        public IHttpActionResult SaveReview(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            ContactUsModel objContactUs = JsonConvert.DeserializeObject<ContactUsModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.SaveReview(objContactUs)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
+        [Route("api/User/GetReview")]
+        [HttpPost]
+        public IHttpActionResult GetReview(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            ContactUsModel objContactUsModel = JsonConvert.DeserializeObject<ContactUsModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetReview(objContactUsModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
     }
 }

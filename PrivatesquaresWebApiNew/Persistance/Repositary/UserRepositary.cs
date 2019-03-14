@@ -237,7 +237,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public IEnumerable<GetPopularProductId_Result> GetPopularProductId(ProductModel objModel)
         {
-            return Context.GetPopularProductId().ToList();
+            return Context.GetPopularProductId(objModel.ProductCatId).ToList();
         }
 
         public IEnumerable<GetWishlist_Result> GetWishlist(AddToCartModel objModel)
@@ -252,7 +252,17 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
 
         public IEnumerable<GetSortedProducts_Result> GetSortedProducts(ProductModel objModel)
         {
-            return Context.GetSortedProducts(objModel.SortOrder,objModel.PageIndex).ToList();
+            return Context.GetSortedProducts(objModel.Sortby,objModel.PageIndex,objModel.ProductCatId).ToList();
+        }
+
+        public SaveReview_Result SaveReview(ContactUsModel objModel)
+        {
+            return Context.SaveReview(objModel.ProductId, objModel.UserId, objModel.TotalRating, objModel.GivenRating, objModel.Review, objModel.Operation).FirstOrDefault();
+        }
+
+        public IEnumerable<GetReview_Result> GetReview(ContactUsModel objModel)
+        {
+            return Context.GetReview(objModel.ProductId).ToList();
         }
     }
 
@@ -309,6 +319,8 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetWishlist_Result> GetWishlist(AddToCartModel objModel);
         SaveWishlist_Result SaveWishlist(AddToCartModel objModel);
         IEnumerable<GetSortedProducts_Result> GetSortedProducts(ProductModel objModel);
+        SaveReview_Result SaveReview(ContactUsModel objModel);
+        IEnumerable<GetReview_Result> GetReview(ContactUsModel objModel);
     }
 
 }

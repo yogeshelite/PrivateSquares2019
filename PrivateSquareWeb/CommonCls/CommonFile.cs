@@ -319,17 +319,48 @@ namespace PrivateSquareWeb.CommonCls
         {
             var GetPopularProductList = new List<ProductModel>();
             ProductModel objmodel = new ProductModel();
-            List<ProductModel> ListPopularProduct = new List<ProductModel>();
-            var ListAllProduct = GetProduct();
+            //List<ProductModel> ListPopularProduct = new List<ProductModel>();
+            //var ListAllProduct = GetProduct();
             var _request = JsonConvert.SerializeObject(objmodel);
+            if (objmodel.ProductCatId == 0)
+            {
+                objmodel.ProductCatId = null;
+            }
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetPopularProductId, _request);
             GetPopularProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
-            foreach(var product in GetPopularProductList)
+            //foreach(var product in GetPopularProductList)
+            //{
+            //    ListPopularProduct.AddRange(ListAllProduct.Where(x => x.Id == product.Id).ToList());
+            //}
+
+            return GetPopularProductList;
+
+        }
+
+        public static List<ProductModel> GetSortedProducts(string SortOrder,int PageIndex,long? ProductCatId)
+        {
+            var GetSortedProductList = new List<ProductModel>();
+            ProductModel objmodel = new ProductModel();
+            objmodel.Sortby = SortOrder;
+            
+            objmodel.PageIndex = PageIndex;
+            if (ProductCatId != null)
             {
-                ListPopularProduct.AddRange(ListAllProduct.Where(x => x.Id == product.Id).ToList());
+                objmodel.ProductCatId = Convert.ToInt64(ProductCatId);
             }
 
-            return ListPopularProduct;
+            //objmodel.ProductCatId = ProductCatId;
+            var _request = JsonConvert.SerializeObject(objmodel);
+            ResponseModel objresponse;
+            if (SortOrder == "Popularity")
+            {
+                objresponse = CommonFile.GetApiResponse(Constant.ApiGetPopularProductId, _request);
+                GetSortedProductList = JsonConvert.DeserializeObject<List<ProductModel>>(objresponse.Response);
+                return GetSortedProductList;
+            }
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetSortedProducts, _request);
+            GetSortedProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
+            return GetSortedProductList;
 
         }
     }

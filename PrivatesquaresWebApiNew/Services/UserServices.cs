@@ -331,6 +331,18 @@ namespace PrivatesquaresWebApiNew.Services
 
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel SaveReview(ContactUsModel objModel)
+        {
+            var _result = _instance.SaveReview(objModel);
+            return new ResponseModel() { Response = _result.Response, Success = _result.Success.Value };
+        }
+
+        public ResponseModel GetReview(ContactUsModel objModel)
+        {
+            var _result = _instance.GetReview(objModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -383,6 +395,8 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel GetWishlist(AddToCartModel objModel);
         ResponseModel SaveWishlist(AddToCartModel objModel);
         ResponseModel GetSortedProducts(ProductModel objModel);
+        ResponseModel SaveReview(ContactUsModel objModel);
+        ResponseModel GetReview(ContactUsModel objModel);
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 
