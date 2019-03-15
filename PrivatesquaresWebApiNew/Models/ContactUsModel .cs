@@ -18,6 +18,8 @@ namespace PrivatesquaresWebApiNew.Models
         public decimal GivenRating { get; set; }   //field used for Reviews
         public string Review { get; set; }     //field used for Reviews
         public string Name { get; set; }     //field used for Reviews
+        public string RecordDate { get; set; }  //field used for displaying date of review in Reviews section in Product Details Page
         public string Operation { get; set; }   //field used for Reviews
+       
     }
 }

@@ -3,37 +3,69 @@
 <div class="row row-sm mrg-btm-20">
     @foreach (var Users in ViewBag.UsersProduct)
     {
-        <div class="col-sm-6 col-lg-4 mg-b-20">
-            <div class="card-contact card-min-height">
-                <div class="tx-center">
-                    <a href="/WebHome/ProductDetail/@Users.Id"><img src="~/DocImg/@Users.ProductImage" class="card-img" alt=""></a>
-                    <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">@Users.ProductName</a></h5>
-                    @*<p>@Users.Profession</p>*@
-                    <p>$@Users.SellingPrice</p>
-                    @*<p class="contact-social">
-                            <a href=""><i class="fa fa-facebook"></i></a>
-                            <a href=""><i class="fa fa-twitter"></i></a>
-                            <a href=""><i class="fa fa-google"></i></a>
-                        </p>*@
-                </div><!-- tx-center -->
 
+    <div class="ps-product-wrap">
+        <div class="ps-product--fashion">
+            <div class="ps-product__thumbnail">
+                <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                @{ if (@Users.ProductImage != null)
+                    {
+                        <img src="~/DocImg/@Users.ProductImage" alt="">
+                    }
+                    else
+                    {
+                        <img src="~/WebSiteTheme/images/product/fashion-1.jpg" alt="">
 
-                <p class="contact-item">
-
-                    <span class="text-center">$@Users.DiscountPrice</span>
-                </p><!-- contact-item -->
-                <div class="hobbie-item">
-                    <span class="hobbies">@*@Users.InterestName*@</span>@*<span class="hobbies">Music</span><span class="hobbies">Books</span>*@
-                </div><!-- contact-item -->
-
-
-
-            </div><!-- card -->
+                    }
+                }
+                @{
+                    string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                }
+                <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                <ul class="ps-product__actions">
+                    <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                    <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                </ul>
+            </div>
+            <div class="ps-product__content">
+                <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                <p class="ps-product__price">
+                    <del>$@Users.SellingPrice</del>$@Users.DiscountPrice
+                </p><a class="ps-product__cart" onclick="AddToCartCatWise('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage','@Users.ProductCatId')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+            </div>
         </div>
+    </div>
+
+
+
+
+    <!--<div class="col-sm-6 col-lg-4 mg-b-20">
+         <div class="card-contact card-min-height">
+             <div class="tx-center">
+                 <a href="/WebHome/ProductDetail/@Users.Id"><img src="~/DocImg/@Users.ProductImage" class="card-img" alt=""></a>
+                 <h5 class="mg-t-10 mg-b-5"><a href="" class="contact-name">@Users.ProductName</a></h5>
+                 @*<p>@Users.Profession</p>*@
+                 <p>$@Users.SellingPrice</p>
+                 @*<p class="contact-social">
+                     <a href=""><i class="fa fa-facebook"></i></a>
+                     <a href=""><i class="fa fa-twitter"></i></a>
+                     <a href=""><i class="fa fa-google"></i></a>
+                 </p>*@
+             </div><!-- tx-center -->
+    <!-- <p class="contact-item">
+
+         <span class="text-center">$@Users.DiscountPrice</span>
+     </p><!-- contact-item -->
+    <!-- <div class="hobbie-item">
+         <span class="hobbies">@*@Users.InterestName*@</span>@*<span class="hobbies">Music</span><span class="hobbies">Books</span>*@
+     </div><!-- contact-item -->
+    <!-- </div><!-- card -->
+    <!--</div>
+
+
+
+
+    </div><!-- row -->
     }
-
-
-
-</div><!-- row -->
-
-<a href="" class="btn btn-light btn-block mg-t-20">Load more contacts</a>
+    <a href="" class="btn btn-light btn-block mg-t-20">Load more contacts</a>

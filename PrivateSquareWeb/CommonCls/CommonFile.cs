@@ -363,5 +363,17 @@ namespace PrivateSquareWeb.CommonCls
             return GetSortedProductList;
 
         }
+
+        public static List<ContactUsModel> GetProductReviews(long productid)
+        {
+            var ProductReviewsList = new List<ContactUsModel>();
+            ContactUsModel objmodel = new ContactUsModel();
+            objmodel.ProductId = productid;
+            var _request = JsonConvert.SerializeObject(objmodel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetReview, _request);
+            ProductReviewsList = JsonConvert.DeserializeObject<List<ContactUsModel>>(ObjResponse.Response);
+            return ProductReviewsList;
+
+        }
     }
 }

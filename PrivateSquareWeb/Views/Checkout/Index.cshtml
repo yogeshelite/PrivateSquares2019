@@ -357,7 +357,17 @@
                                         <li><a href="#"><img src="~/WebSiteTheme/images/payment/2.png" alt=""></a></li>
                                         <li><a href="#"><img src="~/WebSiteTheme/images/payment/3.png" alt=""></a></li>
                                     </ul>
-                                    <input type="button" class="ps-btn ps-btn--fullwidth" onclick="PlaceOrder()" value="Place Order">
+                                    @{
+                                        if (ViewBag.TotalAmount == 0)
+                                        {
+                                            <input type="button" disabled class="ps-btn ps-btn--fullwidth" onclick="PlaceOrder()" value="No Items to Place Order">
+                                        }
+                                        else
+                                        {
+                                            <input type="button" class="ps-btn ps-btn--fullwidth" onclick="PlaceOrder()" value="Place Order">
+                                        }
+                                    }
+
                                 </div>
 
                             </footer>

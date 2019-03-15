@@ -4,7 +4,71 @@
     ViewBag.Title = "ProductDetail";
     Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
 }
+<script type="text/javascript">
 
+    var AddToCartSimilarProducts = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
+        var salePrice = SellingPrice;
+        var discountPrice = DiscountPrice;
+        var ProductId = Id;
+        var ProductName = "" + ProductName + "";
+        var Qty = 1;
+        var ImageName = ProductImage;
+        var Price = Number((Number(salePrice) - Number(discountPrice)));
+        var Amount = Number(Price) * Number(Qty);
+
+        var TotalAmount = 0;
+        console.log('ProductId' + ProductId);
+        $.ajax({
+            url: "../../WebHome/AddToCart",
+            type: "POST",
+            data: {
+                ProductId: ProductId,
+                ProductName: ProductName,
+                Qty: Qty,
+                ImageName: ImageName,
+                Price: Price,
+                Amount: Amount,
+                Discount: discountPrice,
+                TotalAmount: TotalAmount
+            },
+            success: function (result) {
+                window.location.href = "/WebHome/ProductDetail/" + location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    var AddToWishlist = function (Id) {
+
+        var ProductId = Id;
+        $.ajax({
+            url: "../../WebHome/AddToWishlist",
+            type: "POST",
+            data: { ProductId: ProductId },
+            success: function (result) { console.log('Product added to wishlist'); },
+            error: function (error) {
+                console.log('error');
+            }
+
+        })
+        //$('form#ajaxForm').trigger('submit');
+
+    }
+</script>
+<script>
+    var ScrollTo = function () {
+        //window.location.href = "#tab_02";
+        //$('#reviewlink').click(function () {
+            $('html, body').animate({
+                'scrollTop': $("#tab_02").position().top
+            });
+        //});
+        
+    }
+</script>
 <script type="text/javascript">
     var GetTotal = function ()
     {
@@ -89,14 +153,14 @@
                                     foreach (var item in ViewBag.ProductImages)
                                     {
                                         <div class="item"><img src="~/DocImg/@item.Name" alt=""></div>
-                                       
+
                                     }
                                 }
                                 @*<div class="item"><img src="~/WebSiteTheme/images/shoe-detail/1.jpg" alt=""></div>
-                                <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/2.jpg" alt=""></div>
-                                <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>
-                                <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>
-                                <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>*@
+                                    <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/2.jpg" alt=""></div>
+                                    <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>
+                                    <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>
+                                    <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>*@
                             </div><a class="popup-youtube ps-product__video" href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img src="~/WebSiteTheme/images/shoe-detail/1.jpg" alt=""><i class="fa fa-play"></i></a>
                         </div>
                         <div class="ps-product__image">
@@ -104,13 +168,13 @@
                                 foreach (var item in ViewBag.ProductImages)
                                 {
 
-                                   
+
                                     <div class="item"><img class="zoom" src="~/DocImg/@item.Name" alt="" data-zoom-image="~/DocImg/@item.Name"></div>
                                 }
                             }
                             @*<div class="item"><img class="zoom" src="~/DocImg/@Model.ProductImage" alt="" data-zoom-image="~/DocImg/@Model.ProductImage"></div>
-                            <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/2.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/2.jpg"></div>
-                            <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/3.jpg"></div>*@
+                                <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/2.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/2.jpg"></div>
+                                <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/3.jpg"></div>*@
                         </div>
                     </div>
                 </div>
@@ -123,7 +187,7 @@
                                 <option value="1">3</option>
                                 <option value="1">4</option>
                                 <option value="2">5</option>
-                            </select><a href="#">(Read all 8 reviews)</a>
+                            </select><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab" id="reviewlink" onclick="ScrollTo()">(Read all reviews)</a>@*<a href="#"  style="display:none"/>*@
                         </div>
                         <h1>@Model.ProductName</h1>
                         <p class="ps-product__category"><a href="#">  Men shoes</a>,<a href="#">  Nike</a>,<a href="#">  Jordan</a></p>
@@ -166,8 +230,8 @@
                             </div>
                         </div>
                         <div class="ps-product__shopping">
-                            <a class="ps-btn" onclick="AddToCart()" >Order Now</a>
-                            <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i class="ps-icon-heart"></i></a><a href="compare.html" title="Compare"><i class="ps-icon-compare"></i></a></div>
+                            <a class="ps-btn" onclick="AddToCart()">Order Now</a>
+                            <div class="ps-product__actions"><a class="mr-10" href="#" onclick="AddToWishlist(@Model.Id)"><i class="ps-icon-heart"></i></a><a href="compare.html" title="Compare"><i class="ps-icon-compare"></i></a></div>
                         </div>
                     </div>
                 </div>
@@ -186,42 +250,42 @@
                     <p>Sweet roll soufflé oat cake apple pie croissant. Pie gummi bears jujubes cake lemon drops gummi bears croissant macaroon pie. Fruitcake tootsie roll chocolate cake Carrot cake cake bear claw jujubes topping cake apple pie. Jujubes gummi bears soufflé candy canes topping gummi bears cake soufflé cake. Cotton candy soufflé sugar plum pastry sweet roll..</p>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="tab_02">
-                    <p class="mb-20">1 review for <strong>Shoes Air Jordan</strong></p>
-                    <div class="ps-review">
-                        <div class="ps-review__thumbnail"><img src="images/user/1.jpg" alt=""></div>
-                        <div class="ps-review__content">
-                            <header>
-                                <select class="ps-rating">
-                                    <option value="1">1</option>
-                                    <option value="1">2</option>
-                                    <option value="1">3</option>
-                                    <option value="1">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                                <p>By<a href=""> Alena Studio</a> - November 25, 2017</p>
-                            </header>
-                            <p>Soufflé danish gummi bears tart. Pie wafer icing. Gummies jelly beans powder. Chocolate bar pudding macaroon candy canes chocolate apple pie chocolate cake. Sweet caramels sesame snaps halvah bear claw wafer. Sweet roll soufflé muffin topping muffin brownie. Tart bear claw cake tiramisu chocolate bar gummies dragée lemon drops brownie.</p>
+                    <p class="mb-20">1 review for <strong>@Model.ProductName</strong></p>
+                    @foreach (var review in ViewBag.ProductReviews)
+                    {
+                        <div class="ps-review">
+                            <div class="ps-review__thumbnail"><img src="images/user/1.jpg" alt=""></div>
+                            <div class="ps-review__content">
+                                <header>
+                                    <select class="ps-rating">
+                                        <option value="@review.GivenRating">1</option>
+                                        <option value="@review.GivenRating">2</option>
+                                        <option value="@review.GivenRating">3</option>
+                                        <option value="@review.GivenRating">4</option>
+                                        <option value="@review.GivenRating">5</option>
+                                    </select>
+                                    <p>By<a href=""> @review.Name</a> @review.RecordDate</p>
+                                </header>
+                                <p>@review.Review</p>
+                            </div>
                         </div>
-                    </div>
+                    }
                     <form class="ps-form--product-review" action="do_action" method="post">
                         <h4>ADD YOUR REVIEW</h4>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <label>Name:<span>*</span></label>
-                                    <input class="form-control" type="text" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label>Email:<span>*</span></label>
-                                    <input class="form-control" type="email" placeholder="">
-                                </div>
+                        <div class="row" id="productreviews">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 " id="allreviews">
+                                @*<div class="form-group">
+                        <label>Name:<span>*</span></label>
+                        <input class="form-control" type="text" placeholder="" id="reviewname">
+                    </div>*@
+
                                 <div class="form-group">
                                     <label>Your rating<span></span></label>
-                                    <select class="ps-rating">
+                                    <select class="ps-rating" id="productrating">
                                         <option value="1">1</option>
-                                        <option value="1">2</option>
-                                        <option value="1">3</option>
-                                        <option value="1">4</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
                                 </div>
@@ -229,10 +293,11 @@
                             <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
                                     <label>Your Review:</label>
-                                    <textarea class="form-control" rows="6"></textarea>
+                                    <input type="text" class="form-control" rows="6" id="reviewcomments" />
                                 </div>
                                 <div class="form-group">
-                                    <button class="ps-btn--outline">Submit Reviews</button>
+                                    @Html.HiddenFor(m => m.Id)
+                                    <button class="ps-btn--outline" onclick="submitreview(@Model.Id)">Submit Reviews</button>
                                 </div>
                             </div>
                         </div>
@@ -270,7 +335,30 @@
         </div>
         <div class="ps-section__content">
             <div class="ps-slider--center owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='ps-icon-arrow-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='ps-icon-arrow-right'&gt;&lt;/i&gt;">
-                <div class="ps-product--fashion">
+                @foreach (var Users in ViewBag.SimilarProductList)
+                {
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a><img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
+                            @{
+                                string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                            }
+                            <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="/WebCompare/Index/@Users.Id" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">@Users.ProductName</a>
+                            <p class="ps-product__price">
+                                <del>@Users.SellingPrice</del>@Users.DiscountPrice
+                            </p><a class="ps-product__cart" href="#" onclick="AddToCartSimilarProducts('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>
+                }
+                @*<div class="ps-product--fashion">
                     <div class="ps-product__thumbnail">
                         <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-1.jpg" alt="">
                         <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
@@ -388,7 +476,7 @@
                         <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
                         <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -398,78 +486,41 @@
         <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a></div>
     </div>
 </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    var productstars;
+    var productrating = document.getElementById("productrating");
+    
+    productrating.onchange = function () {
+        if (this.selectedIndex !== 0) {
+            productstars = this.value;
 
+        }
+    }
+    //var reviewtextarea = document.getElementById("reviewtextarea").value;
+    //var reviewtext = document.getElementById("reviewtextarea").value;
+    //var reviewtext = reviewtextarea;
+    //debugger;
+    var submitreview = function (id) {
+        //debugger;
+        var reviewtext = $.trim($("#reviewcomments").val());
+        var productid = id;
+        $.ajax({
+            url: "../../WebHome/SaveReviews",
+            type: "POST",
+            data: {
+                "productid": productid,
+                "productstars": productstars,
+                "reviewtext": reviewtext,
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<div class="slim-mainpanel">
-    <div class="container">
-        <div class="manager-header">
-            <div class="slim-pageheader">
-                <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Contact Manager</li>
-                </ol>*@
-                <!-- <h6 class="slim-pagetitle">Contact Manager</h6> -->
-            @*</div><!-- slim-pageheader -->
-            <a id="contactNavicon" href="" class="contact-navicon"><i class="icon ion-navicon-round"></i></a>
-        </div><!-- manager-header -->
-
-        <div class="manager-wrapper">
-            <div class="manager-right">
-                <div class="search-box">
-                    <input type="text" class="form-control" placeholder="Search">
-                    <button class="btn btn-primary"><i class="fa fa-search"></i></button>
-                </div>
-                <div class="row">
-                    <div class="col-sm-2" style="margin-top:50px;">
-                        @{ int index = 0;
-                            foreach (var item in ViewBag.ProductImages)
-                            {
-
-                                <div class="col-lg-12 pull-left text-center">
-                                    <img src="~/DocImg/@item.Name" id="@index" />
-                                </div>
-                            }
-                        }
-                    </div>
-                    <div class="col-sm-4">
-                        <img src="~/DocImg/@Model.ProductImage" />
-                    </div>
-                    <div class="col-sm-4">
-                        <h2>@Model.ProductName</h2>
-                        <b>Sale Price:- </b> $@Model.SellingPrice  <br />
-                        <b>Discount Price:-</b> $ @Model.DiscountPrice
-                        <div class="col-sm-12">
-                            @Model.Description
-                        </div>
-                        <div class="col-sm-12">
-                            <b>Vendor :- </b>@Model.VendorName
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <b>Qty:-</b> <input id="TxtQty111" type="number" value="1" onblur="GetTotal()" />
-                        <b>Total:- $</b><label id="TotalAmount">@((Model.SellingPrice - Model.DiscountPrice) * 1) </label>
-                        <input type="button" id="BtnAddToCart" value="Add to cart" onclick="AddToCart()" />
-                        <button id="BtnBuy">Buy Now</button>
-                        <button id="BtnAddToCart">Add to wish list</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
+            },
+            success: function (result) {
+                //console.log(result);
+                //$("#DivItemBind").html(result);
+                //pageindexcounter++;
+                //alert('Thanks for Reviewing this Product :)');
+                window.location.href = "../../Webhome/ProductDetail/" + productid;
+            }
+        });
+    }
+</script>

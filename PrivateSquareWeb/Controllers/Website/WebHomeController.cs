@@ -15,7 +15,7 @@ namespace PrivateSquareWeb.Controllers.Website
         JwtTokenManager _JwtTokenManager = new JwtTokenManager();
         static List<ProductImages> EditProductImageList;
         static List<ProductModel> ListAllProduct;
-        
+
         // GET: WebHome
         public ActionResult Index()
         {
@@ -27,11 +27,12 @@ namespace PrivateSquareWeb.Controllers.Website
             return View();
 
         }
-        
+
         public ActionResult ProductDetail(long id)
         {
             List<ProductModel> Product = GetProduct(id);
             ProductModel objModel = new ProductModel();
+            ViewBag.ProductReviews = CommonFile.GetProductReviews(id);      //ViewBag used for showing reviews on the ProductDetails Page
             if (Product != null && Product.Count() > 0)
             {
                 objModel.Id = id;
@@ -60,7 +61,7 @@ namespace PrivateSquareWeb.Controllers.Website
                     ViewBag.ProductImages = ListProductImages;
                 }
             }
-
+            ViewBag.SimilarProductList = ListAllProduct.Where(x => x.ProductCatId == objModel.ProductCatId).ToList();       //ViewBag for showing similar products in the Product Detail Page
             return View(objModel);
         }
         private List<ProductImages> GetSelectedProductImages(String[] ProductImages, String DefaultImage)
@@ -113,7 +114,7 @@ namespace PrivateSquareWeb.Controllers.Website
             return objAddToCart.RemoveQtyToCartFun(objmodel, this.ControllerContext.HttpContext);
 
         }
-        
+
         [HttpPost]
         public ActionResult ProcessForm(FormCollection frm, string submit)
         {
@@ -147,6 +148,10 @@ namespace PrivateSquareWeb.Controllers.Website
         public ActionResult SearchProducts(HeaderPartialModel objModel)
         {
             ListAllProduct = CommonFile.GetProduct();
+            if(String.IsNullOrWhiteSpace(objModel.SearchBarText))
+            {
+                return RedirectToAction("Index");
+            }
             var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
             ViewBag.UsersProduct = SearchList;
             ViewBag.PopularProducts = CommonFile.GetPopularProduct();
@@ -158,7 +163,7 @@ namespace PrivateSquareWeb.Controllers.Website
             LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
             if (MdUser.Id != 0)
             {
-            objmodel.UserId = Convert.ToInt64(MdUser.Id);
+                objmodel.UserId = Convert.ToInt64(MdUser.Id);
             }
             else { return JavaScript("window.alert('Please Login to access wishlist');"); }
             var _request = JsonConvert.SerializeObject(objmodel);
@@ -177,7 +182,7 @@ namespace PrivateSquareWeb.Controllers.Website
             objmodel.Operation = "insert";
             var result = SaveWishlist(objmodel);
             return JavaScript("window.alert('Product added to the Wishlist');");
-            
+
         }
 
         public string SaveWishlist(AddToCartModel objmodel)
@@ -191,7 +196,7 @@ namespace PrivateSquareWeb.Controllers.Website
         public ActionResult DeleteFromWishlist(int ProductId)
         {
             AddToCartModel objmodel = new AddToCartModel();
-            
+
             LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
             if (MdUser.Id != 0)
             { objmodel.UserId = Convert.ToInt64(MdUser.Id); }
@@ -207,7 +212,7 @@ namespace PrivateSquareWeb.Controllers.Website
         }
 
 
-        
+
         public ActionResult ProductQuickView(long ProductId)
         {
 
@@ -242,6 +247,40 @@ namespace PrivateSquareWeb.Controllers.Website
                 }
             }
             return PartialView("_WebQuickView", objModel);
+        }
+
+        public ActionResult SaveReviews(long productid, int productstars, string reviewtext)
+        {
+            LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            ContactUsModel contactUsModel = new ContactUsModel();
+            if (MdUser.Id != 0)
+            {
+                // objmodel.Name = MdUser.Name;
+                // contactUsModel.ProductId = objmodel.Id;
+                contactUsModel.UserId = Convert.ToInt64(MdUser.Id);
+                contactUsModel.ProductId = productid;
+                contactUsModel.Operation = "insert";
+                contactUsModel.TotalRating = 5;
+                contactUsModel.GivenRating = productstars;
+                contactUsModel.Review = reviewtext;
+
+                //contactUsModel.Review = objmodel.Review;
+            }
+            else
+            {
+                return JavaScript("alert('Please login to review this product')");
+            }
+            var _request = JsonConvert.SerializeObject(contactUsModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveReview, _request);
+            if (ObjResponse.Response == "Review Exists")
+            {
+                return JavaScript("alert('You have already reviewed this product');");
+            }
+            else
+            {
+                ViewBag.ReviewResponse = "Your Review has been submitted sucessfully.";
+            }
+            return RedirectToAction("ProductDetail", productid);
         }
     }
 }

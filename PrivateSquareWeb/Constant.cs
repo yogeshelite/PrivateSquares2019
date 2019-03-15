@@ -51,6 +51,9 @@ namespace PrivateSquareWeb
         public const string ApiGetPopularProductId = "User/GetPopularProductId";
         public const string ApiSaveWishlist = "User/SaveWishlist";
         public const string ApiGetWishlist = "User/GetWishlist";
+        public const string ApiGetSortedProducts = "User/GetSortedProducts";
+        public const string ApiSaveReview = "User/SaveReview";
+        public const string ApiGetReview = "User/GetReview";
 
     }
 }
