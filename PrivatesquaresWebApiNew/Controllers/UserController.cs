@@ -306,10 +306,14 @@ namespace PrivatesquaresWebApiNew.Controllers
             ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
 
             // var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProduct(objProductModel)), Success = true };
-            return Json(new ResponseModel() { Response = new JwtTokenManager()
+            return Json(new ResponseModel()
+            {
+                Response = new JwtTokenManager()
                                                             .GenerateToken(
                                                             JsonConvert.SerializeObject(
-                                                                userServices.GetProduct(objProductModel))), Success = true });
+                                                                userServices.GetProduct(objProductModel))),
+                Success = true
+            });
             // var sendJson = Json(sendResponse);
 
             //return sendJson;
@@ -801,6 +805,28 @@ namespace PrivatesquaresWebApiNew.Controllers
             var data = requestModel.Data;
             ContactUsModel objContactUsModel = JsonConvert.DeserializeObject<ContactUsModel>(data);
             var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetReview(objContactUsModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
+        [Route("api/User/GetCoupon")]
+        [HttpPost]
+        public IHttpActionResult GetCoupon(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            CouponModel objCouponModel = JsonConvert.DeserializeObject<CouponModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetCoupon(objCouponModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
+
+        [Route("api/User/SaveCouponHistory")]
+        [HttpPost]
+        public IHttpActionResult SaveCouponHistory(RequestModel requestModel)
+        {
+            var data = requestModel.Data;
+            CouponModel objCouponModel = JsonConvert.DeserializeObject<CouponModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.SaveCouponHistory(objCouponModel)), Success = true };
             var sendJson = Json(sendResponse);
             return sendJson;
         }
