@@ -35,21 +35,33 @@
         });
     }
 </script>
-<script type="text/javascript">
-    //$("#sortbyclass select").on('change', function () {
-    //    var params = $(this).children(':selected').data('params');
-    //    alert(params);
-    //});
-    //var Sortby = function (id) {
-    //    var Sortbyid = id;
-    //    $.ajax({
-    //        url: "../../ProductCatWise/Sortby/" + Sortbyid,
-    //        type: "POST",
-    //        success: function (result) {
-    //            console.log(result);
-    //        }
-    //    });
-    //}
+<script>
+    var QuickView = function (ProductId) {
+        var ProductId = ProductId;
+        // Call AJAX here
+        $.ajax({
+            method: "POST",
+            url: "../../WebHome/ProductQuickView/", // Your URL here
+            data: { ProductId: ProductId },
+            success: function (result) {
+                //debugger;
+                console.log(result);
+
+                //$('#quickView').innerhtml(result);
+                //document.getElementById("quickView").innerHTML = result;
+                $mymodal = $("#myModal");
+                $mymodal.find("div.modal-body").html(result);
+                $('#openpopup').click();
+                console.log('Click triggered');
+                $mymodal.modal("show");
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+        // Redirect here
+    }
 </script>
 <script>
     var PriceLowToHigh = function () {

@@ -62,11 +62,39 @@
     var ScrollTo = function () {
         //window.location.href = "#tab_02";
         //$('#reviewlink').click(function () {
-            $('html, body').animate({
-                'scrollTop': $("#tab_02").position().top
-            });
+        $('html, body').animate({
+            'scrollTop': $("#tab_02").position().top
+        });
         //});
-        
+
+    }
+</script>
+<script>
+    var QuickView = function (ProductId) {
+        var ProductId = ProductId;
+        // Call AJAX here
+        $.ajax({
+            method: "POST",
+            url: "../../WebHome/ProductQuickView/", // Your URL here
+            data: { ProductId: ProductId },
+            success: function (result) {
+                //debugger;
+                //console.log(result);
+
+                //$('#quickView').innerhtml(result);
+                //document.getElementById("quickView").innerHTML = result;
+                $mymodal = $("#myModal");
+                $mymodal.find("div.modal-body").html(result);
+                $('#openpopup').click();
+                console.log('Click triggered');
+                $mymodal.modal("show");
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+        // Redirect here
     }
 </script>
 <script type="text/javascript">
@@ -275,9 +303,9 @@
                         <div class="row" id="productreviews">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 " id="allreviews">
                                 @*<div class="form-group">
-                        <label>Name:<span>*</span></label>
-                        <input class="form-control" type="text" placeholder="" id="reviewname">
-                    </div>*@
+                                        <label>Name:<span>*</span></label>
+                                        <input class="form-control" type="text" placeholder="" id="reviewname">
+                                    </div>*@
 
                                 <div class="form-group">
                                     <label>Your rating<span></span></label>
@@ -345,7 +373,7 @@
                             }
                             <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
                             <ul class="ps-product__actions">
-                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>
                                 <li><a href="/WebCompare/Index/@Users.Id" title="Compare"><i class="ps-icon-compare"></i></a></li>
                                 <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
                             </ul>
@@ -359,124 +387,124 @@
                     </div>
                 }
                 @*<div class="ps-product--fashion">
-                    <div class="ps-product__thumbnail">
-                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-1.jpg" alt="">
-                        <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
-                        <ul class="ps-product__actions">
-                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
-                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
-                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
-                        </ul>
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-1.jpg" alt="">
+                            <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">
+                                <del>$450.89</del>$200
+                            </p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
                     </div>
-                    <div class="ps-product__content">
-                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
-                        <p class="ps-product__price">
-                            <del>$450.89</del>$200
-                        </p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-2.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
                     </div>
-                </div>
-                <div class="ps-product--fashion">
-                    <div class="ps-product__thumbnail">
-                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-2.jpg" alt="">
-                        <ul class="ps-product__actions">
-                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
-                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
-                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
-                        </ul>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-3.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
                     </div>
-                    <div class="ps-product__content">
-                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
-                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-4.jpg" alt="">
+                            <div class="ps-badge"><span>New</span></div>
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
                     </div>
-                </div>
-                <div class="ps-product--fashion">
-                    <div class="ps-product__thumbnail">
-                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-3.jpg" alt="">
-                        <ul class="ps-product__actions">
-                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
-                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
-                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
-                        </ul>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-5.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
                     </div>
-                    <div class="ps-product__content">
-                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
-                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-6.jpg" alt="">
+                            <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">
+                                <del>$450.89</del>$200
+                            </p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
                     </div>
-                </div>
-                <div class="ps-product--fashion">
-                    <div class="ps-product__thumbnail">
-                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-4.jpg" alt="">
-                        <div class="ps-badge"><span>New</span></div>
-                        <ul class="ps-product__actions">
-                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
-                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
-                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
-                        </ul>
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-7.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
                     </div>
-                    <div class="ps-product__content">
-                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
-                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
-                    </div>
-                </div>
-                <div class="ps-product--fashion">
-                    <div class="ps-product__thumbnail">
-                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-5.jpg" alt="">
-                        <ul class="ps-product__actions">
-                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
-                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
-                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="ps-product__content">
-                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
-                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
-                    </div>
-                </div>
-                <div class="ps-product--fashion">
-                    <div class="ps-product__thumbnail">
-                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-6.jpg" alt="">
-                        <div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>
-                        <ul class="ps-product__actions">
-                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
-                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
-                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="ps-product__content">
-                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
-                        <p class="ps-product__price">
-                            <del>$450.89</del>$200
-                        </p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
-                    </div>
-                </div>
-                <div class="ps-product--fashion">
-                    <div class="ps-product__thumbnail">
-                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-7.jpg" alt="">
-                        <ul class="ps-product__actions">
-                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
-                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
-                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="ps-product__content">
-                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
-                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
-                    </div>
-                </div>
-                <div class="ps-product--fashion">
-                    <div class="ps-product__thumbnail">
-                        <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-8.jpg" alt="">
-                        <ul class="ps-product__actions">
-                            <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
-                            <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
-                            <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="ps-product__content">
-                        <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
-                        <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
-                    </div>
-                </div>*@
+                    <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail">
+                            <a class="ps-product__overlay" href="product-detail.html"></a><img class="lazy" src="~/WebSiteTheme/images/product/fashion-8.jpg" alt="">
+                            <ul class="ps-product__actions">
+                                <li><a href="#" title="Quick View"><i class="ps-icon-eye"></i></a></li>
+                                <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                <li><a href="#" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="ps-product__content">
+                            <a class="ps-product__title" href="product-detail.html">PARKER BACKPACK</a>
+                            <p class="ps-product__price">$350.00</p><a class="ps-product__cart" href="#" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                        </div>
+                    </div>*@
             </div>
         </div>
     </div>
@@ -486,11 +514,33 @@
         <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a></div>
     </div>
 </div>
+
+<input type="button" id="openpopup" href="#quickView" style="display:none" />
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">View Product</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
     var productstars;
     var productrating = document.getElementById("productrating");
-    
+
     productrating.onchange = function () {
         if (this.selectedIndex !== 0) {
             productstars = this.value;

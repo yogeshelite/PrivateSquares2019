@@ -154,47 +154,103 @@
     <div class="container">
         <ul class="nav">
             <li class="nav-item ">
-                <a class="nav-link" href="/Quotes/Index">
-                    <i class="icon fa fa-quotes"></i>
-                    <span>Quotes</span>
-                </a>
-
+                @if (@Model.UserId != 0)
+                {
+                    <a class="nav-link" href="/Quotes/Index">
+                        <i class="icon fa fa-quotes"></i>
+                        <span>Quotes</span>
+                    </a>
+                }
+                @if (@Model.UserId == 0)
+                {
+                    <a class="nav-link" href="~/Login/Index">
+                        <i class="icon fa fa-quotes"></i>
+                        <span>Quotes</span>
+                    </a>
+                }
                 <!-- sub-item -->
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Product/Index">
-                    <i class="icon fa fa-shopping"></i>
-                    <span>Shopping</span>
-                </a>
-
+                @if (@Model.UserId != 0)
+                {
+                    <a class="nav-link" href="/Product/Index">
+                        <i class="icon fa fa-shopping"></i>
+                        <span>Shopping</span>
+                    </a>
+                }
+                @if (@Model.UserId == 0)
+                {
+                    <a class="nav-link" href="~/Login/Index">
+                        <i class="icon fa fa-shopping"></i>
+                        <span>Shopping</span>
+                    </a>
+                }
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Products/ProductList">
-                    <i class="icon fa fa-bullhorn"></i>
-                    <span>Product</span>
-                </a>
-
+                @if (@Model.UserId == 0)
+                {
+                    <a class="nav-link" href="~/Login/Index">
+                        <i class="icon fa fa-bullhorn"></i>
+                        <span>Product</span>
+                    </a>
+                }
+                @if (@Model.UserId != 0)
+                {
+                    <a class="nav-link" href="~/Products/ProductList">
+                        <i class="icon fa fa-bullhorn"></i>
+                        <span>Product</span>
+                    </a>
+                }
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Home/MyBusinessList">
-                    <i class="icon fa fa-bullhorn"></i>
-                    <span>Business</span>
-                </a>
-
+                @if (@Model.UserId != 0)
+                {
+                    <a class="nav-link" href="/Home/MyBusinessList">
+                        <i class="icon fa fa-bullhorn"></i>
+                        <span>Business</span>
+                    </a>
+                }
+                @if (@Model.UserId == 0)
+                {
+                    <a class="nav-link" href="~/Login/Index">
+                        <i class="icon fa fa-bullhorn"></i>
+                        <span>Business</span>
+                    </a>
+                }
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="/Home/NetworkList">
-                    <i class="icon fa fa-slideshare"></i>
-                    <span>Connections</span>
-                </a>
-
+                @if (@Model.UserId != 0)
+                {
+                    <a class="nav-link" href="/Home/NetworkList">
+                        <i class="icon fa fa-slideshare"></i>
+                        <span>Connections</span>
+                    </a>
+                }
+                @if (@Model.UserId == 0)
+                {
+                    <a class="nav-link" href="~/Login/Index">
+                        <i class="icon fa fa-slideshare"></i>
+                        <span>Connections</span>
+                    </a>
+                }
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/Home/Index">
-                    <i class="icon fa fa-home"></i>
-                    <span>Dashboard</span>
+                @if (@Model.UserId == 0)
+                {
+                    <a class="nav-link" href="/Home/Index">
+                        <i class="icon fa fa-home"></i>
+                        <span>Contact Us</span>
 
-                </a>
+                    </a>
+                }
+                @if (@Model.UserId != 0)
+                {
+                    <a class="nav-link" href="/Home/Index">
+                        <i class="icon fa fa-home"></i>
+                        <span>Dashboard</span>
+
+                    </a>
+                }
             </li>
 
         </ul>
