@@ -120,13 +120,23 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.LoginEmail = MdUser.EmailId;
             ViewBag.ItemCount = objAddToCart.GetItemCount(this.ControllerContext.HttpContext);
             ViewBag.TotalAmount = objAddToCart.GetTotalAmountCheckOut(this.ControllerContext.HttpContext);
+            if (ViewBag.TotalAmount < 500)
+            {
+                ViewBag.ShippingCharges = 50;                       //setting shipping/delivery charges
+                ViewBag.TotalAmountAfterCharges = ViewBag.TotalAmount+ViewBag.ShippingCharges;
+            }
+            else
+            {
+                ViewBag.ShippingCharges = 0;
+                ViewBag.TotalAmountAfterCharges = ViewBag.TotalAmount;
+            }
             List<AddressModel> UserAddressList = GetUserAddress();
             ViewBag.UserAddress = UserAddressList;
             bindCountryStateCity();
         }
 
         [HttpPost]
-        public JsonResult PlaceOrder(long AddressId,string PaymentMode)
+        public JsonResult PlaceOrder(long AddressId, string PaymentMode)
         {
             LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
             SaleOrderModel objModel = new SaleOrderModel();
@@ -198,6 +208,64 @@ namespace PrivateSquareWeb.Controllers.Website
 
             #endregion
             return xmlNodeSaleOrder;
+        }
+
+        [HttpPost]
+        public ActionResult GetCoupon(string CouponCode)
+        {
+            CouponModel ObjCouponModel = new CouponModel();
+            LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            if (MdUser.Id != 0)
+                ObjCouponModel.UserId = Convert.ToInt64(MdUser.Id);
+            ObjCouponModel.CouponCode = CouponCode;
+            var _request = JsonConvert.SerializeObject(ObjCouponModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetCoupon, _request);
+            var ObjResponse1 = JsonConvert.DeserializeObject<List<ResponseModel>>(ObjResponse.Response);
+            var couponresponse = ObjResponse1[0].Response.ToString();
+            if (couponresponse.Equals("already used"))
+            {
+                ViewBag.CouponResponse = "Coupon already used";
+                return JavaScript("alert('coupon already used')");
+            }
+            if (couponresponse.Equals("coupon expired"))
+            {
+                ViewBag.CouponResponse = "coupon expired";
+                return JavaScript("alert('Coupon Expired')");
+            }
+            if (couponresponse.Equals("coupon does not exist"))
+            {
+                ViewBag.CouponResponse = "coupon does not exist";
+                return JavaScript("alert('Coupon does not exist')");
+            }
+            else
+            {
+                string[] ArrResponse = couponresponse.Split(',');
+                if (ArrResponse[3] == "Discount")                   //if coupon type is "discount"
+                {
+                    
+                    ViewBag.CouponResponse = ArrResponse[6];
+                   
+                    AddToCart objAddToCart = new AddToCart();
+                    decimal TotalAmount = objAddToCart.GetTotalAmountCheckOut(this.ControllerContext.HttpContext);
+                    if (TotalAmount <Convert.ToInt64(ArrResponse[4]))
+                    {
+                        return JavaScript("alert('Cart value is not sufficient')");
+                    }
+                    ViewBag.TotalAmount = TotalAmount - Convert.ToInt64(ArrResponse[2]);
+                    if (ViewBag.TotalAmount <= 500)
+                    {
+                        ViewBag.TotalAmount += 50;                          //Adding shipping/delivery charges
+                        ViewBag.TotalAmount -= (2*(ViewBag.TotalAmount));  //making the total negative for handling it securely in client side
+                    }
+                    return Json(ViewBag.TotalAmount);
+                }
+                else if(ArrResponse[3]=="BOGO")        //Condition for Coupon Type=="BOGO" (Buy One Get One)
+                {
+                    return JavaScript("alert('Coupon does not exist')");
+                }
+                return JavaScript("alert('Error')");
+       
+            }
         }
     }
 }

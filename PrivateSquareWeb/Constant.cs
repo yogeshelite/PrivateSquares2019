@@ -54,6 +54,7 @@ namespace PrivateSquareWeb
         public const string ApiGetSortedProducts = "User/GetSortedProducts";
         public const string ApiSaveReview = "User/SaveReview";
         public const string ApiGetReview = "User/GetReview";
+        public const string ApiGetCoupon = "User/GetCoupon";
 
     }
 }

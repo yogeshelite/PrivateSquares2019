@@ -40,7 +40,7 @@
                         '</div>' +
                         '<div class="ps-cart-item__content">' +
                         '<a class="ps-cart-item__title" href="/WebHome/ProductDetail/' + JsonResponse[i].ProductId + '">' + JsonResponse[i].ProductName + '</a>' +
-                        '<p><span>Quantity:<i>' + JsonResponse[i].Qty + '</i></span><span>Total:<i>£ ' + JsonResponse[i].Amount + '</i></span></p></div>' +
+                        '<p><span>Quantity:<i>' + JsonResponse[i].Qty + '</i></span><span>Total:<i>₹ ' + JsonResponse[i].Amount + '</i></span></p></div>' +
                         '</div>';
                 }
                 if (JsonResponse.length == null || JsonResponse.length == 0) {
@@ -50,7 +50,7 @@
 
 
                     CartTotal = CartTotal + "<p>Number of items:<span>" + JsonResponse.length + "</span></p>" +
-                        "<p>Item Total:<span>£" + TotalAmount + "</span></p>";
+                        "<p>Item Total:<span>₹" + TotalAmount + "</span></p>";
 
                 }
                 //console.log(CartString);
@@ -242,7 +242,7 @@
 
                                                 <a class="ps-cart-item__title" href="/WebHome/ProductDetail/@item.ProductId"> @item.ProductName</a>
 
-                                                <p><span>Quantity:<i> @item.Qty</i></span><span>Total:<i>£ @item.Amount</i></span></p>
+                                                <p><span>Quantity:<i> @item.Qty</i></span><span>Total:<i>₹ @item.Amount</i></span></p>
 
                                             </div>
 
@@ -260,7 +260,7 @@
 
                             <p>Number of items:<span>@Model.CartItemCount</span></p>
 
-                            <p>Item Total:<span>£ @ViewBag.TotalAmount</span></p>
+                            <p>Item Total:<span>₹ @ViewBag.TotalAmount</span></p>
 
                         </div>
 

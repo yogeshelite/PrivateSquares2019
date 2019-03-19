@@ -1,8 +1,7 @@
 ﻿<script type="text/javascript">
-    var PlaceOrder = function ()
-    {
+    var PlaceOrder = function () {
         var radioAddressBtns = document.getElementsByName("rdoAddress");
-        var AddressId = 0;  
+        var AddressId = 0;
         for (var x = 0; x < radioAddressBtns.length; x++) {
             if (radioAddressBtns[x].checked) {
                 AddressId = radioAddressBtns[x].value;
@@ -13,7 +12,7 @@
             alert("Please Select Shipping Address");
             return;
         }
-       
+
 
 
         var rdoPaymentModeBtns = document.getElementsByName("rdoPaymentMode");
@@ -24,7 +23,7 @@
                 break;
             }
         }
-       
+
 
         $.ajax({
             url: "../../Checkout/PlaceOrder",
@@ -37,12 +36,11 @@
                 console.log(result);
                 var response = JSON.parse(result);
                 alert(response[0].Response)
-                if (response[0].Response == "Order Saved")
-                {
+                if (response[0].Response == "Order Saved") {
                     window.location.href = "/WebHome/Index";
                 }
-                
-              
+
+
             }
         });
     }
@@ -284,7 +282,7 @@
                             <header>
                                 <h3>Your Order</h3>
                             </header>
-                            <div class="content">
+                            <div class="content" id="CheckOutDiv">
                                 <table class="table ps-checkout__products">
                                     <thead>
                                         <tr>
@@ -296,18 +294,32 @@
 
                                         <tr>
                                             <td> Price(@ViewBag.ItemCount)=@ViewBag.TotalAmount</td>
-                                            <td>  @ViewBag.TotalAmount</td>
+                                            <td class="replaceme">@ViewBag.TotalAmount</td>
                                         </tr>
                                         <tr>
                                             <td>Delivery Charges</td>
-                                            <td>$0</td>
+                                            <td class="replacedeliverycharges">₹@ViewBag.ShippingCharges</td>
                                         </tr>
                                         <tr>
                                             <td>Order Total</td>
-                                            <td>$@ViewBag.TotalAmount</td>
+                                            <td class="replaceme2">₹@ViewBag.TotalAmountAfterCharges</td>
+                                        </tr>
+                                        <tr>
+                                            <td>  </td>
+                                            <td>
+                                                <a onclick="showpromocode()" class="float-right" id="promocode">Apply Promo Code</a>
+                                                <label class="replaceme3">@ViewBag.CouponResponse</label>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="form-group">
+                                    <div class="ps-form--icon" style="display:none">
+                                        <i class="fa fa-angle-right"></i>
+                                        <input class="form-control" type="text" placeholder="Apply Promo Code" id="promocodetext">
+                                        <input type="button" class="ps-btn ps-btn--fullwidth" id="SubmitPromoCode" onclick="GetCoupon()" value="APPLY" />
+                                    </div>
+                                </div>
                             </div>
                             <footer>
                                 <h3>Payment Method</h3>
@@ -388,4 +400,50 @@
 }
 
 
+<script>
+    var showpromocode = function () {
+        $('.ps-form--icon').toggle("slide");
+    }
+</script>
+<script>
+    
+    var GetCoupon = function () {
+        var CouponCode = document.getElementById("promocodetext").value;
+        $.ajax({
+            url: "../../Checkout/GetCoupon",
+            type:"POST",
+            data: {
+                "CouponCode": CouponCode
+            },
+            success: function (result) {
+                
+                if (isNaN(result)) { }          //Checking whether TotalAmount is a number or not (NaN means - Not a number)
+                else {
+                    if (result < 0)             //It means amount is less than 500
+                    {
+                        //result -= 50;
+                        $('.replaceme').html(-result);
+                        $('.replaceme2').html(-result);
+                        $('.replacedeliverycharges').html(50);
 
+                        $('.replaceme3').html('Coupon applied successfully');
+                        $('.ps-form--icon').toggle("slide");
+                    }
+                    else                        //means total amount is greater than or equal to 500
+                    {
+                        $('.replaceme').html(result);
+                        $('.replaceme2').html(result);
+                        $('.replaceme3').html('Coupon applied successfully');
+                        $('.ps-form--icon').toggle("slide");
+                    }
+                    
+
+                    console.log(result);
+                }
+                
+
+
+            }
+        });
+    }
+</script>
