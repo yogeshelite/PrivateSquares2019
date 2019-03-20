@@ -8,10 +8,11 @@ namespace PrivatesquaresWebApiNew.Models
     public class SaleOrderModel
     {
 
+        public long Id { get; set; }
         public long UserId { get; set; }
         public long? SaleOrderId { get; set; }
 
-        public long ProductId { get; set; }
+        public long? ProductId { get; set; }
         public string PaymentMode { get; set; }
 
         public string XmlSaleOrderDetail { get; set; }

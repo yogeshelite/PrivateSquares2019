@@ -301,5 +301,37 @@ namespace PrivateSquareWeb.Controllers.Website
          
             return View();
         }
+        public ActionResult MyOrders(SaleOrderModel objmodel)
+        {
+            LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            if (MdUser.Id != 0)
+            {
+                objmodel.UserId = Convert.ToInt64(MdUser.Id);
+            }
+            else { return JavaScript("window.alert('Please Login to access wishlist');"); }
+            var _request = JsonConvert.SerializeObject(objmodel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetOrders, _request);
+            var Orders = JsonConvert.DeserializeObject<List<SaleOrderModel>>(ObjResponse.Response);
+            ViewBag.MyOrders = Orders;
+            return View(objmodel);
+        }
+
+        public ActionResult OrderDetails(long id)
+        {
+            SaleOrderModel objmodel = new SaleOrderModel();
+            LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            if (MdUser.Id != 0)
+            {
+                objmodel.UserId = Convert.ToInt64(MdUser.Id);
+            }
+            objmodel.SaleOrderId = id;
+            objmodel.Id = id;
+            var _request = JsonConvert.SerializeObject(objmodel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetOrders, _request);
+            var Orderdetails = JsonConvert.DeserializeObject<List<SaleOrderModel>>(ObjResponse.Response);
+            ViewBag.Orderdetails = Orderdetails;
+            return View(objmodel);
+        }
+
     }
 }
