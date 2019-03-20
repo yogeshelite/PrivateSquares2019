@@ -80,8 +80,10 @@
                                     <tr><td>Login:@ViewBag.LoginEmail</td></tr>
 
                                     @{int index = 0;
-                                        foreach (var item in ViewBag.UserAddress)
+                                        if (ViewBag.UserAddress != null)
                                         {
+                                            foreach (var item in ViewBag.UserAddress)
+                                            {
 
                                             <tr>
                                                 <td>
@@ -97,9 +99,10 @@
                                                     </p>
                                                 </td>
                                             </tr>
-                                            index++;
+                                                    index++;
+                                                }
+                                            }
                                         }
-                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -117,8 +120,10 @@
 
 
                                             <div class="col-sm-6 col-md-9">
-
-                                                <div class="box-shadow-bc pd-40 addresses min-height">
+                                                <div id="addaddresslink">
+                                                    <a class="ps-btn ps-btn-wdth-100" onclick="addnewaddress()">Add New Address</a>
+                                                </div>
+                                                <div class="box-shadow-bc pd-40 addresses min-height" style="display:none" id="addnewaddress">
 
                                                     <label class="section-sub-title mg-t-20  mg-b-20">Create new address</label>
 
@@ -385,11 +390,25 @@
                             </footer>
                         </div>
                         <div class="ps-shipping">
-                            <h3>FREE SHIPPING</h3>
-                            <p>
-                                YOUR ORDER QUALIFIES FOR FREE SHIPPING.
-                                <br> <a href="#"> Singup </a> for free shipping on every order, every time.
-                            </p>
+                            @{
+                                if (ViewBag.ShippingCharges == 0)
+                                {
+                                    <h3>FREE SHIPPING</h3>
+                                    <p>
+                                        YOUR ORDER QUALIFIES FOR FREE SHIPPING.
+                                        <br>Shop for 500  or more for free shipping on every order, every time.
+                                    </p>
+                                }
+                                else
+                                {
+                                    <h3>FREE SHIPPING</h3>
+                                    <p>
+                                        ADD ITEMS WORTH 500 OR MORE TO QUALIFY FOR FREE SHIPPING.
+                                        <br>Shop for 500  or more for free shipping on every order, every time.
+                                    </p>
+                                }
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -399,7 +418,12 @@
 
 }
 
-
+<script>
+    var addnewaddress = function () {
+        $('#addnewaddress').toggle("slide");
+        $('#addaddresslink').toggle("slide");
+    }
+</script>
 <script>
     var showpromocode = function () {
         $('.ps-form--icon').toggle("slide");

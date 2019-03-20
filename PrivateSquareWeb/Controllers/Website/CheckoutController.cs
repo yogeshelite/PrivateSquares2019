@@ -99,6 +99,7 @@ namespace PrivateSquareWeb.Controllers.Website
                 {
                     //@ViewBag.ResponseMessage = "Your Current Password is Wrong";
                     //ViewBag.UserAddress = ListUserAddress;
+                    PreRequiestCheckout();
                     return View("Index", ObjModel);
                 }
             }
@@ -123,7 +124,7 @@ namespace PrivateSquareWeb.Controllers.Website
             if (ViewBag.TotalAmount < 500)
             {
                 ViewBag.ShippingCharges = 50;                       //setting shipping/delivery charges
-                ViewBag.TotalAmountAfterCharges = ViewBag.TotalAmount+ViewBag.ShippingCharges;
+                ViewBag.TotalAmountAfterCharges = ViewBag.TotalAmount + ViewBag.ShippingCharges;
             }
             else
             {
@@ -134,7 +135,7 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.UserAddress = UserAddressList;
             bindCountryStateCity();
         }
-
+        public static decimal totalamount;
         [HttpPost]
         public JsonResult PlaceOrder(long AddressId, string PaymentMode)
         {
@@ -144,6 +145,12 @@ namespace PrivateSquareWeb.Controllers.Website
 
             objModel = GetSaleOrderValues(ListAddToCart);
             objModel.Operation = "insert";
+            if (totalamount != 0)
+            {
+
+                objModel.TotalAmount = totalamount;
+                SaveCouponHistory(objModel);
+            }
             objModel.PaymentMode = PaymentMode;
             objModel.UserId = MdUser.Id;
             var _request = JsonConvert.SerializeObject(objModel);
@@ -242,30 +249,58 @@ namespace PrivateSquareWeb.Controllers.Website
                 string[] ArrResponse = couponresponse.Split(',');
                 if (ArrResponse[3] == "Discount")                   //if coupon type is "discount"
                 {
-                    
+
                     ViewBag.CouponResponse = ArrResponse[6];
-                   
+
                     AddToCart objAddToCart = new AddToCart();
-                    decimal TotalAmount = objAddToCart.GetTotalAmountCheckOut(this.ControllerContext.HttpContext);
-                    if (TotalAmount <Convert.ToInt64(ArrResponse[4]))
+                    totalamount = objAddToCart.GetTotalAmountCheckOut(this.ControllerContext.HttpContext);
+                    if (totalamount < Convert.ToInt64(ArrResponse[4]))
                     {
                         return JavaScript("alert('Cart value is not sufficient')");
                     }
-                    ViewBag.TotalAmount = TotalAmount - Convert.ToInt64(ArrResponse[2]);
+                    ViewBag.TotalAmount = totalamount - Convert.ToInt64(ArrResponse[2]);
                     if (ViewBag.TotalAmount <= 500)
                     {
                         ViewBag.TotalAmount += 50;                          //Adding shipping/delivery charges
-                        ViewBag.TotalAmount -= (2*(ViewBag.TotalAmount));  //making the total negative for handling it securely in client side
+                        ViewBag.TotalAmount -= (2 * (ViewBag.TotalAmount));  //making the total negative for handling it securely in client side
+                        ViewBag.TotalAmountAfterCharges = ViewBag.TotalAmount;
                     }
+                    //else
+                    //{
+                    //    ViewBag.TotalAmount = TotalAmount;
+                    //}
+                    totalamount = ViewBag.TotalAmount;
+                    SaleOrderModel objmodel = new SaleOrderModel();
                     return Json(ViewBag.TotalAmount);
                 }
-                else if(ArrResponse[3]=="BOGO")        //Condition for Coupon Type=="BOGO" (Buy One Get One)
+                else if (ArrResponse[3] == "BOGO")        //Condition for Coupon Type=="BOGO" (Buy One Get One)
                 {
                     return JavaScript("alert('Coupon does not exist')");
                 }
                 return JavaScript("alert('Error')");
-       
+
             }
+        }
+
+        private void SaveCouponHistory(SaleOrderModel couponModel)
+        {
+            CouponModel ObjcouponModel = new CouponModel();
+            LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
+            if (MdUser.Id != 0)
+            { ObjcouponModel.UserId = MdUser.Id; }
+            ObjcouponModel.CouponId = 1;
+            //ObjcouponModel.UserId = 15;
+            ObjcouponModel.OrderId = 15;
+            ObjcouponModel.Discount = 100;
+            ObjcouponModel.Operation = "insert";
+            var _request = JsonConvert.SerializeObject(ObjcouponModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveCouponHistory, _request);
+            if(ObjResponse.Response.Equals("Coupon History Saved"))
+            {
+                //return "Coupon History Saved";
+            }
+
+            //return "error saving coupon history";
         }
     }
 }
