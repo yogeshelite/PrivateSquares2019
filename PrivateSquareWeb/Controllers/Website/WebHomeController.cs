@@ -145,18 +145,18 @@ namespace PrivateSquareWeb.Controllers.Website
             return SearchProductList;
             //return SearchProductList.OrderBy(s=>s.ProductName).ToList();
         }
-        public ActionResult SearchProducts(HeaderPartialModel objModel)
-        {
-            ListAllProduct = CommonFile.GetProduct();
-            if(String.IsNullOrWhiteSpace(objModel.SearchBarText))
-            {
-                return RedirectToAction("Index");
-            }
-            var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
-            ViewBag.UsersProduct = SearchList;
-            ViewBag.PopularProducts = CommonFile.GetPopularProduct();
-            return View("Index");
-        }
+        //public ActionResult SearchProducts(HeaderPartialModel objModel)
+        //{
+        //    ListAllProduct = CommonFile.GetProduct();
+        //    if(String.IsNullOrWhiteSpace(objModel.SearchBarText))
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //    var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
+        //    ViewBag.UsersProduct = SearchList;
+        //    ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+        //    return View("Index");
+        //}
 
         public ActionResult WishList(ProductModel objmodel)
         {
@@ -181,6 +181,10 @@ namespace PrivateSquareWeb.Controllers.Website
             else { return JavaScript("window.alert('Please Login to access wishlist');"); }
             objmodel.Operation = "insert";
             var result = SaveWishlist(objmodel);
+             if (result == "Product Exists")
+            {
+                return JavaScript("window.alert('Product Already added to the Wishlist');");
+            }
             return JavaScript("window.alert('Product added to the Wishlist');");
 
         }
@@ -190,7 +194,8 @@ namespace PrivateSquareWeb.Controllers.Website
 
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveWishlist, _request);
-            return ObjResponse.Response;
+           
+                return ObjResponse.Response;
         }
 
         public ActionResult DeleteFromWishlist(int ProductId)
@@ -281,6 +286,20 @@ namespace PrivateSquareWeb.Controllers.Website
                 ViewBag.ReviewResponse = "Your Review has been submitted sucessfully.";
             }
             return RedirectToAction("ProductDetail", productid);
+        }
+
+        public ActionResult SearchBar(HeaderPartialModel objModel)
+        {
+            ListAllProduct = CommonFile.GetProduct();
+            if (String.IsNullOrWhiteSpace(objModel.SearchBarText))
+            {
+                return RedirectToAction("Index");
+            }
+            var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
+            ViewBag.UsersProduct = SearchList;
+            ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+         
+            return View();
         }
     }
 }

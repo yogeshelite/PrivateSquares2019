@@ -66,55 +66,56 @@
 
     }
 </script>
-<script>
-    var QuickView = function (ProductId) {
-        var ProductId = ProductId;
-        // Call AJAX here
-        $.ajax({
-            method: "POST",
-            url: "../../WebHome/ProductQuickView/", // Your URL here
-            data: { ProductId: ProductId },
-            success: function (result) {
-                //debugger;
-                console.log(result);
 
-                //$('#quickView').innerhtml(result);
-                //document.getElementById("quickView").innerHTML = result;
-                $mymodal = $("#myModal");
-                $mymodal.find("div.modal-body").html(result);
-                $('#openpopup').click();
-                console.log('Click triggered');
-                $mymodal.modal("show");
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
+<!-- Hide Quick View  -->
+@*<script>
+        var QuickView = function (ProductId) {
+            var ProductId = ProductId;
+            // Call AJAX here
+            $.ajax({
+                method: "POST",
+                url: "../../WebHome/ProductQuickView/", // Your URL here
+                data: { ProductId: ProductId },
+                success: function (result) {
+                    //debugger;
+                    console.log(result);
 
-        // Redirect here
-    }
-</script>
+                    //$('#quickView').innerhtml(result);
+                    //document.getElementById("quickView").innerHTML = result;
+                    $mymodal = $("#myModal");
+                    $mymodal.find("div.modal-body").html(result);
+                    $('#openpopup').click();
+                    console.log('Click triggered');
+                    $mymodal.modal("show");
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+            // Redirect here
+        }
+    </script>*@
 @using (Html.BeginForm("ProcessForm", "WebHome", FormMethod.Post))
 {
-
-    <div class="ps-fashion3--banner">
-        <div class="left">
-            <div class="ps-slider--fashion3 owl-slider" data-owl-auto="true" data-owl-loop="false" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="false">
-                <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner1.jpg"><img src="~/WebSiteTheme/images/banner/banner1.jpg" alt=""></div>
-                <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner2.jpg"><img src="~/WebSiteTheme/images/banner/banner2.jpg" alt=""></div>
-                <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner3.png"><img src="~/WebSiteTheme/images/banner/banner3.png" alt=""></div>
+    @*<div class="ps-fashion3--banner">
+            <div class="left">
+                <div class="ps-slider--fashion3 owl-slider" data-owl-auto="true" data-owl-loop="false" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="false">
+                    <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner1.jpg"><img src="~/WebSiteTheme/images/banner/banner1.jpg" alt=""></div>
+                    <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner2.jpg"><img src="~/WebSiteTheme/images/banner/banner2.jpg" alt=""></div>
+                    <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner3.png"><img src="~/WebSiteTheme/images/banner/banner3.png" alt=""></div>
+                </div>
             </div>
-        </div>
-        <div class="right">
-            <ul class="ps-list--banner">
-                <li class="active"><a href="#">Deal of the Week: Free 50%</a></li>
-                <li><a href="#">New COLORS Safety Razors</a></li>
-                <li><a href="#">SHAVING CREAM SAMPLE PACKS</a></li>
-                <li><a href="#">SEE NEWEST PRODUCTS</a></li>
-                <li><a href="#">COLLECTION THIS SUMMER</a></li>
-            </ul>
-        </div>
-    </div>
+            <div class="right">
+                <ul class="ps-list--banner">
+                    <li class="active"><a href="#">Deal of the Week: Free 50%</a></li>
+                    <li><a href="#">New COLORS Safety Razors</a></li>
+                    <li><a href="#">SHAVING CREAM SAMPLE PACKS</a></li>
+                    <li><a href="#">SEE NEWEST PRODUCTS</a></li>
+                    <li><a href="#">COLLECTION THIS SUMMER</a></li>
+                </ul>
+            </div>
+        </div>*@
     <div class="ps-section pt-80 pb-30">
         <div class="ps-container">
             <div class="ps-section__header text-center">
@@ -147,8 +148,10 @@
                                 <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
                                 @*<div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>*@
                                 <ul class="ps-product__actions">
-                                    <li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <!-- Hide Quick View  -->
+                                    @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
+                                    <!-- Hide Compare  -->
+                                    @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
                                     <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
                                 </ul>
                             </div>
@@ -186,8 +189,10 @@
                                 }
                                 <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
                                 <ul class="ps-product__actions">
-                                    <li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                    <!-- Hide Quick View  -->
+                                    @*<li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>*@
+                                    <!-- Hide Compare  -->
+                                    @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
 
                                     <li><a href="#" class="submit-link" onclick="AddToWishlist(@Users.Id)" title="Favorite"><i class="ps-icon-heart"></i></a></li>
                                     <li><input type="submit" style="display:none" value="Save" /></li>
@@ -207,11 +212,13 @@
             </div>
         </div>
     </div>
-    <div class="ps-section--partner">
-        <div class="ps-container">
-            <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a></div>
-        </div>
-    </div>
+
+    <!-- Hide Nouthemes  -->
+    @*<div class="ps-section--partner">
+            <div class="ps-container">
+                <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a></div>
+            </div>
+        </div>*@
     <div class="ps-section--features">
         <div class="ps-container">
             <div class="row">
@@ -248,104 +255,29 @@
             </div>
         </div>
     </div>
-    @*<div class="ps-modal default" id="quickView">*@
-    @*<div class="ps-modal__content">
-            <div class="ps-modal__remove"><i class="fa fa-remove"></i></div>
-            <div class="ps-product--detail">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                        <div class="ps-product__thumbnail">
-                            <div class="ps-product__preview">
-                                <div class="ps-product__variants">
-                                    <div class="item"><img src="images/shoe-detail/1.jpg" alt=""></div>
-                                    <div class="item"><img src="images/shoe-detail/2.jpg" alt=""></div>
-                                    <div class="item"><img src="images/shoe-detail/3.jpg" alt=""></div>
-                                    <div class="item"><img src="images/shoe-detail/3.jpg" alt=""></div>
-                                    <div class="item"><img src="images/shoe-detail/3.jpg" alt=""></div>
-                                </div>
-                            </div>
-                            <div class="ps-product__image">
-                                <div class="item"><img src="images/shoe-detail/1.jpg" alt="" data-zoom-image="images/shoe-detail/1.jpg"></div>
-                                <div class="item"><img src="images/shoe-detail/2.jpg" alt="" data-zoom-image="images/shoe-detail/2.jpg"></div>
-                                <div class="item"><img src="images/shoe-detail/3.jpg" alt="" data-zoom-image="images/shoe-detail/3.jpg"></div>
-                            </div>
-                        </div>
+
+    <!-- Hide Quick View  -->
+
+    @*<input type="button" id="openpopup" href="#quickView" style="display:none" />
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">View Product</h4>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                        <div class="ps-product__info">
-                            <div class="ps-product__rating">
-                                <select class="ps-rating">
-                                    <option value="1">1</option>
-                                    <option value="1">2</option>
-                                    <option value="1">3</option>
-                                    <option value="1">4</option>
-                                    <option value="2">5</option>
-                                </select>
-                            </div>
-                            <h1>Air strong  training</h1>
-                            <p class="ps-product__category"><a href="#">  Men shoes</a>,<a href="#">  Nike</a>,<a href="#">  Jordan</a></p>
-                            <h3 class="ps-product__price"><span>£</span> 115 <del><span>£</span> 330</del></h3>
-                            <div class="ps-product__short-desc">
-                                <p>The Nike Free RN 2017 Men's Running Shoe weighs less than previous versions and features an updated knit material…</p>
-                            </div>
-                            <div class="ps-product__block ps-product__style">
-                                <h4>CHOOSE YOUR COLOR</h4>
-                                <div class="ps-radio ps-radio--inline">
-                                    <input class="form-control" type="radio" id="radio-0" name="type-1">
-                                    <label for="radio-0"></label>
-                                </div>
-                                <div class="ps-radio ps-radio--inline ps-radio--color1">
-                                    <input class="form-control" type="radio" id="radio1" name="type-1">
-                                    <label for="radio1"></label>
-                                </div>
-                                <div class="ps-radio ps-radio--inline ps-radio--color2">
-                                    <input class="form-control" type="radio" id="radio2" name="type-1">
-                                    <label for="radio2"></label>
-                                </div>
-                                <div class="ps-radio ps-radio--inline ps-radio--color3">
-                                    <input class="form-control" type="radio" id="radio3" name="type-1">
-                                    <label for="radio3"></label>
-                                </div>
-                            </div>
-                            <div class="ps-product__block ps-product__size">
-                                <h4>CHOOSE SIZE & QUANTITY<a href="#">Size chart</a></h4>
-                                <select class="ps-select selectpicker" title="Select Size">
-                                    <option value="6">7</option>
-                                </select>
-                                <div class="form-group ps-number">
-                                    <input class="form-control" type="text" value="1"><span class="up"></span><span class="down"></span>
-                                </div>
-                            </div>
-                            <div class="ps-product__shopping">
-                                <a class="ps-btn" href="cart.html">Order Now</a>
-                                <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i class="ps-icon-heart"></i></a><a href="compare.html" title="Compare"><i class="ps-icon-compare"></i></a></div>
-                            </div>
-                        </div>
+                    <div class="modal-body">
                     </div>
-                </div>
-            </div>
-        </div>*@
-    <input type="button" id="openpopup" href="#quickView" style="display:none" />
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">View Product</h4>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    @*<button type="button" class="btn" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>*@
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    @*</div>*@
+                    <div class="modal-footer">
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->*@
+
 }
 
 

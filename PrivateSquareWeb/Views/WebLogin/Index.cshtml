@@ -58,7 +58,8 @@
         //emailIdRegister,passwordRegister
         var email = document.getElementById('emailIdRegister').value;
         var password = document.getElementById('passwordRegister').value;
-
+        var letters = /^[A-Za-z]+$/;
+        var mailformat = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var name = document.getElementById('Name').value;
         if (name == '') {
             document.getElementById("valNameRegister").innerText = "Name Required";
@@ -66,7 +67,11 @@
             //var p = document.getElementById("RegisMess");
             //p.innerText = "Please Fill Email,Password,Name";
             return;
-        }
+        } else if (!name.match(letters)) {
+            document.getElementById("valNameRegister").innerText = "Please input alphabet characters only.";
+            return;
+        }  
+
         else {
 
             document.getElementById("valNameRegister").innerText = "";
@@ -75,13 +80,23 @@
             document.getElementById("valemailIdRegister").innerText = "Email/Mobile Required";
             return;
 
-        } else {
+        }
+        else if (!email.match(mailformat)) {
+            document.getElementById("valemailIdRegister").innerText = "Incorrect Email.";
+            return;
+        }  
+        else {
             document.getElementById("valemailIdRegister").innerText = "";
         }
         if (password == '') {
             document.getElementById("valpasswordRegister").innerText = "Password Required";
             return;
-        } else {
+        }
+        else if (password.length < 6) {
+            document.getElementById("valpasswordRegister").innerText = "Password must be at least 6 characters long.";
+            return;
+        }  
+        else {
             document.getElementById("valpasswordRegister").innerText = "";
         }
 
@@ -125,6 +140,20 @@
             });
         }
     }
+   
+
+</script>
+<script>
+
+    var HideSignIn = function() {
+       
+            $("#SignIn").hide();
+    }
+
+    var HideSignUp = function () {
+        $("#SignIn").show();
+        
+    }
 </script>
 
 @using (Html.BeginForm("LoginUser", "WebLogin", FormMethod.Post))
@@ -146,7 +175,7 @@
 
         <div class="col-lg-6 col-lg-offset-3">
 
-            <div>
+            <div id="SignIn">
 
                 <button class="btn btn-block btn-sign-in">Login with facebook</button>
 
@@ -196,7 +225,7 @@
 
 
 
-                <p class="mg-b-0 text-center">Don't have an account? <a href="#" class="sign-up-col" id="step-2">Sign Up</a></p>
+                <p class="mg-b-0 text-center">Don't have an account? <a href="#" class="sign-up-col" id="step-2" onclick="HideSignIn()">Sign Up</a></p>
 
 
 
@@ -248,7 +277,7 @@
 
 
 
-                <p class="mg-b-0 text-center">Don't have an account? <a href="#" class="pvt-sign-text" id="step-1">Sign In</a></p>
+                <p class="mg-b-0 text-center">Have an account? <a href="#" class="pvt-sign-text" id="step-1" onclick="HideSignUp()">Sign In</a></p>
 
 
 

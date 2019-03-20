@@ -15,7 +15,7 @@
         var ProductName = "" + ProductName + "";
         var Qty = 1;
         var ImageName = ProductImage;
-        var Price = Number((Number(salePrice) - Number(discountPrice)));
+        var Price = discountPrice; /*Number((Number(salePrice) - Number(discountPrice)));*/
         var Amount = Number(Price) * Number(Qty);
 
         var TotalAmount = 0;
@@ -45,34 +45,35 @@
         });
     }
 </script>
-<script>
-    var QuickView = function (ProductId) {
-        var ProductId = ProductId;
-        // Call AJAX here
-        $.ajax({
-            method: "POST",
-            url: "../../WebHome/ProductQuickView/", // Your URL here
-            data: { ProductId: ProductId },
-            success: function (result) {
-                //debugger;
-                console.log(result);
+<!-- Hide Quick View  -->
+@*<script>
+        var QuickView = function (ProductId) {
+            var ProductId = ProductId;
+            // Call AJAX here
+            $.ajax({
+                method: "POST",
+                url: "../../WebHome/ProductQuickView/", // Your URL here
+                data: { ProductId: ProductId },
+                success: function (result) {
+                    //debugger;
+                    console.log(result);
 
-                //$('#quickView').innerhtml(result);
-                //document.getElementById("quickView").innerHTML = result;
-                $mymodal = $("#myModal");
-                $mymodal.find("div.modal-body").html(result);
-                $('#openpopup').click();
-                console.log('Click triggered');
-                $mymodal.modal("show");
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
+                    //$('#quickView').innerhtml(result);
+                    //document.getElementById("quickView").innerHTML = result;
+                    $mymodal = $("#myModal");
+                    $mymodal.find("div.modal-body").html(result);
+                    $('#openpopup').click();
+                    console.log('Click triggered');
+                    $mymodal.modal("show");
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
 
-        // Redirect here
-    }
-</script>
+            // Redirect here
+        }
+    </script>*@
 <script type="text/javascript">
     var AddToWishlist = function (Id) {
 
@@ -113,8 +114,10 @@
                 }
                 <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
                 <ul class="ps-product__actions">
-                    <li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>
-                    <li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                    <!-- Hide Quick View  -->
+                    @*<li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>*@
+                    <!-- Hide Compare -->
+                    @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
                     <li><a href="#" title="Favorite"><i class="ps-icon-heart" onclick="AddToWishlist(@Users.Id)"></i></a></li>
                 </ul>
             </div>
@@ -127,23 +130,24 @@
         </div>
     </div>
 }
-<input type="button" id="openpopup" href="#quickView" style="display:none" />
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close"
-                        data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">View Product</h4>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                @*<button type="button" class="btn" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>*@
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
+<!-- Hide Quick View  -->
+@*<input type="button" id="openpopup" href="#quickView" style="display:none" />
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">View Product</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->*@
