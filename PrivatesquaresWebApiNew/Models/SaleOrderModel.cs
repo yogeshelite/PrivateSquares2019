@@ -9,6 +9,11 @@ namespace PrivatesquaresWebApiNew.Models
     {
 
         public long Id { get; set; }
+        public string ProductName { get; set; }
+        public string ProductImage { get; set; }
+        public string ProductImages { get; set; }
+        public string Quantity { get; set; }
+        public string VendorName { get; set; }
         public long UserId { get; set; }
         public long? SaleOrderId { get; set; }
 

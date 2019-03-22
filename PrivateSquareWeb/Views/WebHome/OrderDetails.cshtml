@@ -20,24 +20,24 @@
                     <tr>
                         <th>ProductName</th>
                         <th>PRICE</th>
-                        <th>ORDER DATE</th>
+                        <th>Product</th>
                         <th>Quantity</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @*@foreach (var orders in ViewBag.Orderdetails)
-                    {*@
+                    @foreach (var orders in ViewBag.Orderdetails)
+                    {
                         <tr>
-                            <td><a class="ps-product--compare" href="#"><img class="mr-15" src="~/DocImg/user.png" alt="">@orders.ProductName</a></td>
-                            <td></td>
-                            <td><a class="ps-product-link" href="#">View Order</a></td>
+                            <td><a class="ps-product--compare" href="#"><img class="mr-15" src="~/DocImg/user.png" alt="Product Image">@orders.ProductName</a></td>
+                            <td>₹ @orders.Amount</td>
+                            <td><a class="ps-product-link" href="~/WebHome/ProductDetail/@orders.Id">View Product</a></td>
                             <td>
-                                
+                                @orders.Quantity
                                 @*<div class="ps-remove"></div>*@
                             </td>
                         </tr>
-                  
+                    }
                     @*<tr>
                             <td><a class="ps-product--compare" href="product-detail.html"><img class="mr-15" src="~/WebSiteTheme/images/shopping-cart/2.jpg" alt=""> The Crusty Croissant</a></td>
                             <td>$150</td>
@@ -61,7 +61,7 @@
 </div>
 <div class="ps-section--partner">
     <div class="ps-container">
-        <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a></div>
+        @*<div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a></div>*@
     </div>
 </div>
 <div class="ps-section--features">

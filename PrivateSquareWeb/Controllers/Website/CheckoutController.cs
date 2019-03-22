@@ -295,12 +295,18 @@ namespace PrivateSquareWeb.Controllers.Website
             ObjcouponModel.Operation = "insert";
             var _request = JsonConvert.SerializeObject(ObjcouponModel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveCouponHistory, _request);
-            if(ObjResponse.Response.Equals("Coupon History Saved"))
+            if (ObjResponse.Response.Equals("Coupon History Saved"))
             {
                 //return "Coupon History Saved";
             }
 
             //return "error saving coupon history";
+        }
+
+        
+        public ActionResult OrderSuccessful()
+        {
+            return View();
         }
     }
 }
