@@ -116,6 +116,10 @@
                 </ul>
             </div>
         </div>*@
+    {
+        //Html.RenderPartial("_Header");
+        Html.RenderAction("WebSiteSidebar", "WebSidebar");
+    }
     <div class="ps-section pt-80 pb-30">
         <div class="ps-container">
             <div class="ps-section__header text-center">
@@ -159,7 +163,7 @@
                             <div class="ps-product__content">
                                 <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
                                 <p class="ps-product__price">
-                                    <del>@Users.SellingPrice</del>@Users.DiscountPrice
+                                    <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
                                 </p><a class="ps-product__cart" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
                             </div>
                         </div>
@@ -202,7 +206,7 @@
                             <div class="ps-product__content">
                                 <a class="ps-product__title" href="product-detail.html">@Users.ProductName</a>
                                 <p class="ps-product__price">
-                                    <del>@Users.SellingPrice</del>@Users.DiscountPrice
+                                    <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
                                 </p><a class="ps-product__cart" href="#" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
                             </div>
                         </div>

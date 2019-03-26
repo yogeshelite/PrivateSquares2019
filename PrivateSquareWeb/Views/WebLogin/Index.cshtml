@@ -58,7 +58,7 @@
         //emailIdRegister,passwordRegister
         var email = document.getElementById('emailIdRegister').value;
         var password = document.getElementById('passwordRegister').value;
-        var letters = /^[A-Za-z]+$/;
+        var letters = /^[a-zA-Z]+(\s{0,1}[a-zA-Z ])*$/;
         var mailformat = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var name = document.getElementById('Name').value;
         if (name == '') {

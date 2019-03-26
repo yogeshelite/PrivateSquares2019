@@ -97,7 +97,7 @@
 /* ------------------------------------------------------ */
 /* ############### 1. GOOGLE FONTS IMPORT ############### */
 /* ------------------------------------------------------ */
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700");
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700");
@@ -160,14 +160,15 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block; }
 
 body {
-  margin: 0;
-  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #868ba1;
-  text-align: left;
-  background-color: #f0f2f7; }
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #868ba1;
+    text-align: left;
+    background-color: #f0f2f7;
+}
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
@@ -1357,13 +1358,13 @@ pre {
   display: block;
   width: 100%;
   padding: 0.594rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 16px;
   line-height: 1.5;
   color: #495057;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 3px;
+  border: 2px solid #dfdfdf;
+  border-radius: 3px !important;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
   @media screen and (prefers-reduced-motion: reduce) {
     .form-control, .dataTables_filter input {
@@ -1374,7 +1375,7 @@ pre {
   .form-control:focus, .dataTables_filter input:focus {
     color: #495057;
     background-color: #fff;
-    border-color: #8ec2f3;
+    border-color: #5641D6;
     outline: 0;
     box-shadow: none; }
   .form-control::placeholder, .dataTables_filter input::placeholder {
@@ -12216,13 +12217,16 @@ textarea.parsley-success:focus {
     margin-top: 0; }
 
 .section-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #343a40;
-  text-transform: uppercase;
-  margin-top: 20px;
-  display: block;
-  letter-spacing: 1px; }
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+  display: block; }
+.section-sub-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    display: block;
+}
   @media (min-width: 576px) {
     .section-title {
       margin-top: 40px; } }
@@ -35308,6 +35312,9 @@ a.hover-white-8:hover, a.hover-white-8:focus {
 
 .tx-16 {
   font-size: 16px; }
+.tx-17 {
+    font-size: 17px;
+}
 
 .tx-16-force {
   font-size: 16px !important; }
@@ -41273,3 +41280,171 @@ a.hover-white-8:hover, a.hover-white-8:focus {
 }
 
 /*end sign-up*/
+.box-shadow-bc {
+    -webkit-box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.21);
+    -moz-box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.21);
+    box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.21);
+    background-color: #fff;
+    width: 100%;
+    display: block;
+    float: left;
+}
+.profile-title{ color:#000; text-transform:uppercase;}
+.link-button {
+    font-size: 14px;
+    color: #5641D6;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    width: 130px;
+    margin: 0 auto;
+}
+.custom-file-input-1 {
+    position: relative;
+    z-index: 2;
+    width: 130px;
+    margin: 0;
+    opacity: 0;
+}
+.account-list{ list-style-type:none; display:block; float:left; width:100%; margin:0px; padding:0px 0 60px 0;}
+.account-list li{display:block; float:left; width:100%; padding:0px;}
+.account-list li a{ color:#8A8A8A; font-size:16px; padding:12px 0 12px 33px; display:block; float:left; width:100%;}
+.account-list .active {
+        background-color: #D8EBFC;
+    }
+.account-list .active a{
+        color: #5641D6;
+    }
+/* label animation*/
+
+
+.form-group {
+    position: relative;
+    & + .form-group
+
+{
+    margin-top: 30px;
+}
+
+}
+
+.form-control-label {
+    position: absolute;
+    left: 13px;
+    top: 15px;
+    color: #999;
+    background-color: #fff;
+    z-index: -10;
+    transition: transform 150ms ease-out, font-size 150ms ease-out;
+}
+
+.focused .form-control-label {
+    transform: translateY(-125%);
+    font-size: 12px;
+    color: #5641D6;
+    z-index: 10;
+    padding: 0 5px;
+}
+
+.form-input {
+    position: relative;
+    padding: 12px 0px 5px 0;
+    width: 100%;
+    outline: 0;
+    border: 0;
+    box-shadow: 0 1px 0 0 #e5e5e5;
+    transition: box-shadow 150ms ease-out;
+    &:focus
+
+{
+    box-shadow: 0 2px 0 0 blue;
+}
+
+}
+
+.form-input.filled {
+    box-shadow: 0 2px 0 0 lightgreen;
+}
+.address-icon { width:35px;}
+.addresses p {
+    font-size: 16px;
+    color: #000;
+    margin-top: 12px;
+}
+.common-button {
+    width: 258px;
+    height: 49px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 30px;
+    margin-bottom: 0px !important;
+    border-radius: 3px;
+}
+.save-button {
+    width: 122px;
+    height: 49px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 30px;
+    margin-bottom: 0px !important;
+    background: #4350C5;
+    color: #fff;
+    border-radius: 3px;
+    border: 2px solid #4350C5;
+}
+    .save-button:hover {
+        background: #fff;
+        color: #4350C5;
+        line-height: 30px;
+        border: 2px solid #4350C5;
+    }
+.cancel-button {
+    background: #fff;
+    color: #4350C5;
+    width: 122px;
+    height: 49px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 30px;
+    margin-bottom: 0px !important;
+    border: 2px solid #4350C5;
+    border-radius: 3px;
+}
+.cancel-button:hover {
+    width: 122px;
+    height: 49px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 30px;
+    margin-bottom: 0px !important;
+    background: #4350C5;
+    color: #fff;
+    border-radius: 3px;
+    border: 2px solid #4350C5;
+}
+
+
+ .min-height {
+    min-height: 523px;
+}
+ /* Addresses */
+.manage-addresses {
+min-height:147px;
+}
+.manage-addresses h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+.manage-addresses p {
+    font-size: 12px;
+    color: #A1A1A1; margin-bottom:0px;
+}
+.editAddress{font-size:15px; color:#126970;}
+.manage-addresses .addNewAddress{ font-size:18px; color:#5641D6;}
+.add_address {
+    width: 31px;
+    display: block;margin:0 auto; margin-top:25px; margin-bottom:10px;
+}
