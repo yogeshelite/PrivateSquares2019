@@ -7,7 +7,7 @@
         var divCartTotal = document.getElementById('CartTotal');
         var CartString = "";
         var CartTotal = "";
-        
+
 
         $.ajax({
             url: "../../WebsiteHeader/RemoveToCart",
@@ -70,36 +70,21 @@
 
 
 <div class="header--sidebar"></div>
-
 <header class="header" data-sticky="true">
-
     <div class="header__top">
-
         <div class="container-fluid">
-
             <div class="row">
-
                 <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
-
                     <p>460 West 34th Street, 15th floor, New York - Hotline: 804-377-3580 - 804-399-3580</p>
-
                 </div>
-
                 <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-
                     <div class="header__actions">
-
                         @{ if (@Model.UserId != 0)
 
                             {
                                 <a href="/Checkout/Index">Checkout</a>
                                 <div class="btn-group ps-dropdown">
-
-
-
                                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Model.UserName<i class="fa fa-angle-down"></i></a>
-
-
 
                                     <ul class="dropdown-menu">
 
@@ -133,81 +118,49 @@
                         }
 
 
-
-
-
-
-
-
-
-
-
                     </div>
-
-
-
                 </div>
-
-
-
             </div>
-
-
-
         </div>
-
-
-
     </div>
-
-
-
     <nav class="navigation">
-
-
-
         <div class="container-fluid">
-
-
-
             <div class="left">
-
-
-
                 <div class="header__logo"><a class="ps-logo" href="/WebHome/Index"><img src="~/WebSiteTheme/images/logo.png" alt=""></a></div>
-
-
-
             </div>
-
-
 
             <div class="center">
 
+                @using (Html.BeginForm("SearchBar", "WebHome", FormMethod.Post, new { @class = "" }))
+                {
+                    @*<select class="ps-select selectpicker col-lg-4 pull-left" title="Select Category">
+                            <option value="0">Select Category</option>
+                            <option value="1">2</option>
+                            <option value="2">3</option>
+                            <option value="3">4</option>
+                            <option value="4">5</option>
+                            <option value="5">6</option>
+                        </select>*@
+
+                    @Html.DropDownListFor(m => m.ParentCatId, ViewBag.ParentCategories as SelectList, "--Select--", new { @class = "ps-select selectpicker col-lg-4 pull-left" })
+                    <div class="col-lg-8 pull-left">
+
+                        @*<form class="ps-form--search" action="do_action" method="post">*@
+
+                        @Html.TextBoxFor(m => m.SearchBarText, new { @class = "form-control", placeholder = "Search Product…", value = "TxtSearch", id = "TxtSearch" })
+                        @*<input class="form-control" type="text" placeholder="Search Product…">*@
+                        <button class="search-top"><i class="ps-icon-search"></i></button>
+
+                        @*<button><i class="ps-icon-search"></i></button>*@
+
+                        @*</form>*@
 
 
-                <ul class="main-menu menu">
-
-
-
-                    <li class="current-menu-item">
-
-                        <a href="/WebHome/Index">Home</a>
-
-                    </li>
-
-                    <li><a href="/ProductCatWise/Index/1">Electronics</a></li>
-
-                    <li><a href="/ProductCatWise/Index/2">Kitchen</a></li>
-
-                    <li><a href="/WebContactUs/Index">Contact</a></li>
-
-                </ul>
+                    </div>
+                }
 
             </div>
-
             <div class="right">
-
                 <div class="menu-toggle"><span></span></div>
 
                 <div class="ps-cart">
@@ -269,33 +222,12 @@
                     </div>
 
                 </div>
-                @using (Html.BeginForm("SearchBar", "WebHome", FormMethod.Post, new { @class = "ps-form--search" }))
-                {
-                    @*<form class="ps-form--search" action="do_action" method="post">*@
-
-                    @Html.TextBoxFor(m => m.SearchBarText, new { @class = "form-control", placeholder = "Search Product…", value= "TxtSearch",id= "TxtSearch" })
-                    @*<input class="form-control" type="text" placeholder="Search Product…">*@
-                    < input type="submit" class="ps-icon-search"/>
-                    @*<button><i class="ps-icon-search"></i></button>*@
-
-                    @*</form>*@
-                }
 
 
             </div>
-
-
-
         </div>
-
-
-
     </nav>
-
-
-
 </header>
-
 
 
 

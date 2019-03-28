@@ -22,7 +22,7 @@ namespace PrivateSquareWeb.Controllers.Website
             var SearchProductList = ListAllProduct.Where(x => x.ProductCatId == id).ToList();
             ViewBag.SearchCatId = id;
             ViewBag.UsersProduct = SearchProductList;
-            var ProductCatList = CommonFile.GetProductCategory();
+            var ProductCatList = CommonFile.GetProductCategory(id);
             // ViewBag.ProductCatList = ProductCatList;
             ViewBag.ProductCatList = ProductCatList;
             return View();
@@ -49,13 +49,13 @@ namespace PrivateSquareWeb.Controllers.Website
             {
                 case "Search":
                     ViewBag.UsersProduct = SearchProduct(SearchText);
-                    var ProductCatList = CommonFile.GetProductCategory();
+                    var ProductCatList = CommonFile.GetProductCategory(null);
 
                     ViewBag.ProductCatList = ProductCatList;
                     break;
                 case "PriceRange":
                     ViewBag.UsersProduct = SearchPriceRange(SearchPrice, 0);
-                    var ProductCatListPrice = CommonFile.GetProductCategory();
+                    var ProductCatListPrice = CommonFile.GetProductCategory(null);
                     ViewBag.ProductCatList = ProductCatListPrice;
                     // return PartialCatwiseProductValue(2);
                     break;
@@ -80,7 +80,7 @@ namespace PrivateSquareWeb.Controllers.Website
 
 
             ViewBag.UsersProduct = SearchProductList;
-            var ProductCatList = CommonFile.GetProductCategory();
+            var ProductCatList = CommonFile.GetProductCategory(id);
             // ViewBag.ProductCatList = ProductCatList;
             ViewBag.ProductCatList = ProductCatList;
             return PartialView("~/Views/ProductCatWise/PartialCatwiseProductValue.cshtml", objModel);
@@ -96,7 +96,7 @@ namespace PrivateSquareWeb.Controllers.Website
             var SearchProductList = SearchPriceRange(Price.ToString(), CategoryId);
 
             ViewBag.UsersProduct = SearchProductList;
-            var ProductCatList = CommonFile.GetProductCategory();
+            var ProductCatList = CommonFile.GetProductCategory(CategoryId);
             // ViewBag.ProductCatList = ProductCatList;
             ViewBag.ProductCatList = ProductCatList;
             return PartialView("~/Views/ProductCatWise/PartialCatwiseProductPrice.cshtml", objModel);
@@ -146,7 +146,7 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.UsersProduct = sortedproducts;
             ViewBag.SearchCatId = productcatid;
             
-            var ProductCatList = CommonFile.GetProductCategory();
+            var ProductCatList = CommonFile.GetProductCategory(null);
             
             ViewBag.ProductCatList = ProductCatList;
             return PartialView("~/Views/ProductCatWise/PartialCatwiseProductValue.cshtml", objModel);

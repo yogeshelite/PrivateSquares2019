@@ -12,5 +12,6 @@ namespace PrivateSquareWeb.Models
         public string ProfileImg { get; set; } = "";
         public int CartItemCount { get; set; } = 0;
         public string SearchBarText { get; set; }
+        public long ParentCatId { get; set; }
     }
 }

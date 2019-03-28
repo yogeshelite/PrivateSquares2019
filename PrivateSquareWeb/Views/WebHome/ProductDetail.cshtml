@@ -72,33 +72,33 @@
 
 <!-- Hide Quick View  -->
 @*<script>
-    var QuickView = function (ProductId) {
-        var ProductId = ProductId;
-        // Call AJAX here
-        $.ajax({
-            method: "POST",
-            url: "../../WebHome/ProductQuickView/", // Your URL here
-            data: { ProductId: ProductId },
-            success: function (result) {
-                //debugger;
-                //console.log(result);
+        var QuickView = function (ProductId) {
+            var ProductId = ProductId;
+            // Call AJAX here
+            $.ajax({
+                method: "POST",
+                url: "../../WebHome/ProductQuickView/", // Your URL here
+                data: { ProductId: ProductId },
+                success: function (result) {
+                    //debugger;
+                    //console.log(result);
 
-                //$('#quickView').innerhtml(result);
-                //document.getElementById("quickView").innerHTML = result;
-                $mymodal = $("#myModal");
-                $mymodal.find("div.modal-body").html(result);
-                $('#openpopup').click();
-                console.log('Click triggered');
-                $mymodal.modal("show");
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
+                    //$('#quickView').innerhtml(result);
+                    //document.getElementById("quickView").innerHTML = result;
+                    $mymodal = $("#myModal");
+                    $mymodal.find("div.modal-body").html(result);
+                    $('#openpopup').click();
+                    console.log('Click triggered');
+                    $mymodal.modal("show");
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
 
-        // Redirect here
-    }
-</script>*@
+            // Redirect here
+        }
+    </script>*@
 <script type="text/javascript">
     var GetTotal = function ()
     {
@@ -176,32 +176,15 @@
             <div class="row">
                 <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 ">
                     <div class="ps-product__thumbnail">
-                        <div class="ps-product__preview">
-                            <div class="ps-product__variants">
 
-                                @{ int index1 = 0;
+                        <div class="ps-product__image">
+                            <div class="item"><img class="zoom" src="~/DocImg/@Model.ProductImage" alt="" data-zoom-image="~/DocImg/@Model.ProductImage"></div>
+                            @*@{ int index2 = 0;
                                     foreach (var item in ViewBag.ProductImages)
                                     {
-                                        <div class="item"><img src="~/DocImg/@item.Name" alt=""></div>
-
+                                        <div class="item"><img class="zoom" src="~/DocImg/@item.Name" alt="" data-zoom-image="~/DocImg/@item.Name"></div>
                                     }
-                                }
-                                @*<div class="item"><img src="~/WebSiteTheme/images/shoe-detail/1.jpg" alt=""></div>
-                                    <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/2.jpg" alt=""></div>
-                                    <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>
-                                    <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>
-                                    <div class="item"><img src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt=""></div>*@
-                            </div><a class="popup-youtube ps-product__video" href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img src="~/WebSiteTheme/images/shoe-detail/1.jpg" alt=""><i class="fa fa-play"></i></a>
-                        </div>
-                        <div class="ps-product__image">
-                            @{ int index2 = 0;
-                                foreach (var item in ViewBag.ProductImages)
-                                {
-
-
-                                    <div class="item"><img class="zoom" src="~/DocImg/@item.Name" alt="" data-zoom-image="~/DocImg/@item.Name"></div>
-                                }
-                            }
+                                }*@
                             @*<div class="item"><img class="zoom" src="~/DocImg/@Model.ProductImage" alt="" data-zoom-image="~/DocImg/@Model.ProductImage"></div>
                                 <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/2.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/2.jpg"></div>
                                 <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/3.jpg"></div>*@
@@ -220,53 +203,28 @@
                             </select><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab" id="reviewlink" onclick="ScrollTo()">(Read all reviews)</a>@*<a href="#"  style="display:none"/>*@
                         </div>
                         <h1>@Model.ProductName</h1>
-                        <p class="ps-product__category"><a href="#">  Men shoes</a>,<a href="#">  Nike</a>,<a href="#">  Jordan</a></p>
-                        <h3 class="ps-product__price"><span>£</span> @Model.DiscountPrice <del><span>£</span> @Model.SellingPrice</del></h3>
+                        <p class="ps-product__category">@*<a href="#">Men</a>,<a href="#">  Nike</a>,<a href="#">  Jordan</a>*@</p>
+                        <h3 class="ps-product__price"><span>₹</span> @Model.DiscountPrice <del><span>₹</span> @Model.SellingPrice</del></h3>
                         <div class="ps-product__short-desc">
-                            <p>The Nike Free RN 2017 Men's Running Shoe weighs less than previous versions and features an updated knit material…</p>
+                            <p>@Model.Description</p>
                         </div>
-                        <div class="ps-product__block ps-product__style">
-                            <h4>CHOOSE YOUR COLOR</h4>
-                            <div class="ps-radio ps-radio--inline">
-                                <input class="form-control" type="radio" id="radio-0" name="type-1">
-                                <label for="radio-0"></label>
-                            </div>
-                            <div class="ps-radio ps-radio--inline ps-radio--color1">
-                                <input class="form-control" type="radio" id="radio1" name="type-1">
-                                <label for="radio1"></label>
-                            </div>
-                            <div class="ps-radio ps-radio--inline ps-radio--color2">
-                                <input class="form-control" type="radio" id="radio2" name="type-1">
-                                <label for="radio2"></label>
-                            </div>
-                            <div class="ps-radio ps-radio--inline ps-radio--color3">
-                                <input class="form-control" type="radio" id="radio3" name="type-1">
-                                <label for="radio3"></label>
-                            </div>
-                        </div>
+
                         <div class="ps-product__block ps-product__size">
-                            <h4>CHOOSE SIZE & QUANTITY<a href="#">Size chart</a></h4>
-                            <select class="ps-select selectpicker" title="Select Size">
-                                <option value="0">1</option>
-                                <option value="1">2</option>
-                                <option value="2">3</option>
-                                <option value="3">4</option>
-                                <option value="4">5</option>
-                                <option value="5">6</option>
-                            </select>
-                            <div class="form-group ps-number">
+                            <h4>CHOOSE QUANTITY</h4>
+
+                            <div class="form-group ps-number pull-left">
                                 <input id="TxtQty" class="form-control" type="text" value="1" onblur="GetTotal()"><span class="up"></span><span class="down"></span>
                                 @*<input class="form-control" type="text" value="1"><span class="up"></span><span class="down"></span>*@
                             </div>
                         </div>
                         <div class="ps-product__shopping">
                             <a class="ps-btn" onclick="AddToCart()">Order Now</a>
-                            <div class="ps-product__actions"><a class="mr-10" href="#" onclick="AddToWishlist(@Model.Id)"><i class="ps-icon-heart"></i></a><a href="compare.html" title="Compare"><i class="ps-icon-compare"></i></a></div>
+                            <div class="ps-product__actions"><a class="mr-10" href="#" onclick="AddToWishlist(@Model.Id)"><i class="ps-icon-heart"></i></a></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="ps-product__content">
+            @*<div class="ps-product__content">
                 <ul class="tab-list" role="tablist">
                     <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Overview</a></li>
                     <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">Review</a></li>
@@ -309,7 +267,7 @@
                                         <input class="form-control" type="text" placeholder="" id="reviewname">
                                     </div>*@
 
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <label>Your rating<span></span></label>
                                     <select class="ps-rating" id="productrating">
                                         <option value="1">1</option>
@@ -318,9 +276,9 @@
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
+                                </div>*@
+                            @*</div>*@
+                            @*<div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
                                     <label>Your Review:</label>
                                     <input type="text" class="form-control" rows="6" id="reviewcomments" />
@@ -329,11 +287,11 @@
                                     @Html.HiddenFor(m => m.Id)
                                     <button class="ps-btn--outline" onclick="submitreview(@Model.Id)">Submit Reviews</button>
                                 </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="tab-pane" role="tabpanel" id="tab_03">
+                            </div>*@
+                        @*</div>*@
+                    @*</form>*@
+                @*</div>*@
+                @*<div class="tab-pane" role="tabpanel" id="tab_03">
                     <p>Add your tag <span> *</span></p>
                     <form class="ps-form--create-tags" action="_action" method="post">
                         <div class="form-group">
@@ -342,8 +300,8 @@
                         </div>
                     </form>
                     <p>Use spaces to separate tags. Use single quotes ( * ) for phrases.</p>
-                </div>
-                <div class="tab-pane" role="tabpanel" id="tab_04">
+                </div>*@
+                @*<div class="tab-pane" role="tabpanel" id="tab_04">
                     <form class="ps-form--addition" action="do_action" method="post">
                         <div class="form-group">
                             <textarea class="form-control" rows="6" placeholder="Enter your addition here..."></textarea>
@@ -352,10 +310,10 @@
                             <button class="ps-btn--outline">Submit</button>
                         </div>
                     </form>
-                </div>
+                </div>*@
             </div>
         </div>
-    </div>
+    @*</div>*@
 </main>
 <div class="ps-section pb-50">
     <div class="ps-container">
@@ -384,7 +342,7 @@
                         <div class="ps-product__content">
                             <a class="ps-product__title" href="product-detail.html">@Users.ProductName</a>
                             <p class="ps-product__price">
-                                <del>@Users.SellingPrice</del>@Users.DiscountPrice
+                                <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
                             </p><a class="ps-product__cart" href="#" onclick="AddToCartSimilarProducts('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
                         </div>
                     </div>
@@ -401,24 +359,24 @@
 </div>
 
 @*<input type="button" id="openpopup" href="#quickView" style="display:none" />
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close"
-                        data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">View Product</h4>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-               
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->*@
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">View Product</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->*@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>

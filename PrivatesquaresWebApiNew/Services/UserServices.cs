@@ -183,9 +183,9 @@ namespace PrivatesquaresWebApiNew.Services
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
 
-        public ResponseModel GetProductCategory()
+        public ResponseModel GetProductCategory(DropDownModel objModel)
         {
-            var _result = _instance.GetProductCategory();
+            var _result = _instance.GetProductCategory(objModel);
 
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
@@ -382,7 +382,7 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel GetCountry();
         ResponseModel GetState(DropDownModel objModel);
         ResponseModel GetCity(DropDownModel objModel);
-        ResponseModel GetProductCategory();
+        ResponseModel GetProductCategory(DropDownModel objModel);
         ResponseModel GetProductDetail(ProductModel objModel);
         ResponseModel GetBusinessDetail(BusinessModel objModel);
         ResponseModel LoginUser(LoginModel objModel);

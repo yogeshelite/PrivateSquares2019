@@ -3960,7 +3960,7 @@ main.ps-main {
   overflow-y: hidden; }
 
 /*2.15 loader*/
-/*.ps-loading:before, .ps-loading:after {
+.ps-loading:before, .ps-loading:after {
   content: '';
   position: fixed;
   z-index: 1000000; }
@@ -3991,7 +3991,7 @@ main.ps-main {
   opacity: 0;
   -webkit-transition-delay: 0.5s;
   -moz-transition-delay: 0.5s;
-  transition-delay: 0.5s; }*/
+  transition-delay: 0.5s; }
 
 @keyframes animLoader {
   to {

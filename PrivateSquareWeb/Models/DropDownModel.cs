@@ -11,5 +11,6 @@ namespace PrivateSquareWeb.Models
         public String Name { get; set; }
         public long? CountryId { get; set; }
         public long? StateId { get; set; }
+        public long? ParentCatId { get; set; }
     }
 }

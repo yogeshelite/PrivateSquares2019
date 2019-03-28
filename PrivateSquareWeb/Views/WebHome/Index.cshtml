@@ -66,65 +66,77 @@
 
     }
 </script>
+<div class="ps-hero pd-sm"></div>
+<main class="ps-main ps-products-listing pd-23">
+    <!-- Hide Quick View  -->
+    @*<script>
+            var QuickView = function (ProductId) {
+                var ProductId = ProductId;
+                // Call AJAX here
+                $.ajax({
+                    method: "POST",
+                    url: "../../WebHome/ProductQuickView/", // Your URL here
+                    data: { ProductId: ProductId },
+                    success: function (result) {
+                        //debugger;
+                        console.log(result);
 
-<!-- Hide Quick View  -->
-@*<script>
-        var QuickView = function (ProductId) {
-            var ProductId = ProductId;
-            // Call AJAX here
-            $.ajax({
-                method: "POST",
-                url: "../../WebHome/ProductQuickView/", // Your URL here
-                data: { ProductId: ProductId },
-                success: function (result) {
-                    //debugger;
-                    console.log(result);
+                        //$('#quickView').innerhtml(result);
+                        //document.getElementById("quickView").innerHTML = result;
+                        $mymodal = $("#myModal");
+                        $mymodal.find("div.modal-body").html(result);
+                        $('#openpopup').click();
+                        console.log('Click triggered');
+                        $mymodal.modal("show");
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
 
-                    //$('#quickView').innerhtml(result);
-                    //document.getElementById("quickView").innerHTML = result;
-                    $mymodal = $("#myModal");
-                    $mymodal.find("div.modal-body").html(result);
-                    $('#openpopup').click();
-                    console.log('Click triggered');
-                    $mymodal.modal("show");
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-
-            // Redirect here
-        }
-    </script>*@
-@using (Html.BeginForm("ProcessForm", "WebHome", FormMethod.Post))
-{
-    @*<div class="ps-fashion3--banner">
-            <div class="left">
-                <div class="ps-slider--fashion3 owl-slider" data-owl-auto="true" data-owl-loop="false" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="false">
-                    <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner1.jpg"><img src="~/WebSiteTheme/images/banner/banner1.jpg" alt=""></div>
-                    <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner2.jpg"><img src="~/WebSiteTheme/images/banner/banner2.jpg" alt=""></div>
-                    <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner3.png"><img src="~/WebSiteTheme/images/banner/banner3.png" alt=""></div>
+                // Redirect here
+            }
+        </script>*@
+    @using (Html.BeginForm("ProcessForm", "WebHome", FormMethod.Post))
+    {
+        @*<div class="ps-fashion3--banner">
+                <div class="left">
+                    <div class="ps-slider--fashion3 owl-slider" data-owl-auto="true" data-owl-loop="false" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="false">
+                        <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner1.jpg"><img src="~/WebSiteTheme/images/banner/banner1.jpg" alt=""></div>
+                        <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner2.jpg"><img src="~/WebSiteTheme/images/banner/banner2.jpg" alt=""></div>
+                        <div class="ps-banner--3 bg--cover" data-background="~/WebSiteTheme/images/banner/banner3.png"><img src="~/WebSiteTheme/images/banner/banner3.png" alt=""></div>
+                    </div>
                 </div>
-            </div>
-            <div class="right">
-                <ul class="ps-list--banner">
-                    <li class="active"><a href="#">Deal of the Week: Free 50%</a></li>
-                    <li><a href="#">New COLORS Safety Razors</a></li>
-                    <li><a href="#">SHAVING CREAM SAMPLE PACKS</a></li>
-                    <li><a href="#">SEE NEWEST PRODUCTS</a></li>
-                    <li><a href="#">COLLECTION THIS SUMMER</a></li>
-                </ul>
-            </div>
-        </div>*@
+                <div class="right">
+                    <ul class="ps-list--banner">
+                        <li class="active"><a href="#">Deal of the Week: Free 50%</a></li>
+                        <li><a href="#">New COLORS Safety Razors</a></li>
+                        <li><a href="#">SHAVING CREAM SAMPLE PACKS</a></li>
+                        <li><a href="#">SEE NEWEST PRODUCTS</a></li>
+                        <li><a href="#">COLLECTION THIS SUMMER</a></li>
+                    </ul>
+                </div>
+            </div>*@
+
     {
         //Html.RenderPartial("_Header");
+
         Html.RenderAction("WebSiteSidebar", "WebSidebar");
     }
-    <div class="ps-section pt-80 pb-30">
-        <div class="ps-container">
-            <div class="ps-section__header text-center">
-                <h2 class="ps-section__title">SPECIAL PRODUCT</h2>
-                <p>Featured collections created and curated by our editors</p>
+    <div class="ps-content" data-mh="product-page">
+        <div class="ps-product-group" data-item="5">
+            <div class="ps-product-group__header">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                        <a class="ps-collection" href="product-listing.html">
+                            <img src="~/WebSiteTheme/images/banner.jpg" /></a>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                        <a class="ps-collection" href="product-listing.html">
+                            <img src="~/WebSiteTheme/images/banner1.jpg" />
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="ps-section__content">
                 @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
@@ -168,7 +180,7 @@
                             </div>
                         </div>
                     </div>
-                }
+                                    }
 
 
             </div>
@@ -179,7 +191,7 @@
         <div class="ps-container">
             <div class="ps-section__header text-center">
                 <h2 class="ps-section__title">POPULAR PRODUCTS</h2>
-                <p>Here are key products that bring fashionistas to PS Store.</p>
+                <p>Here are key products that bring shoppers to NearByCart Store.</p>
             </div>
             <div class="ps-section__content">
                 <div class="ps-slider--center owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='ps-icon-arrow-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='ps-icon-arrow-right'&gt;&lt;/i&gt;">
@@ -210,7 +222,7 @@
                                 </p><a class="ps-product__cart" href="#" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
                             </div>
                         </div>
-                    }
+                                    }
 
                 </div>
             </div>
@@ -218,71 +230,71 @@
     </div>
 
     <!-- Hide Nouthemes  -->
-    @*<div class="ps-section--partner">
-            <div class="ps-container">
-                <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a></div>
-            </div>
-        </div>*@
-    <div class="ps-section--features">
-        <div class="ps-container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                    <div class="ps-iconbox">
-                        <header>
-                            <i class="ps-icon-delivery"></i>
-                            <h3>FREE SHIPPING</h3>
-                            <p>ON ORDER OVER $199</p>
-                        </header>
-                        <p>Want to track a package? Find tracking information and order details from Your Orders.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                    <div class="ps-iconbox">
-                        <header>
-                            <i class="ps-icon-wallet"></i>
-                            <h3>100% MONEY BACK.</h3>
-                            <p>WITHIN 30 DAYS AFTER DELIVERY.</p>
-                        </header>
-                        <p>You may return most new, unopened items sold within 30 days of delivery for a full refund.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                    <div class="ps-iconbox">
-                        <header>
-                            <i class="ps-icon-customer-service"></i>
-                            <h3>SUPPORT 24/7.</h3>
-                            <p>WE CAN HELP YOU ONLINE.</p>
-                        </header>
-                        <p>We offer a 24/7 customer hotline so you're never alone if you have a question.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                                    @*<div class="ps-section--partner">
+                                            <div class="ps-container">
+                                                <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a></div>
+                                            </div>
+                                        </div>*@
+                                    <div class="ps-section--features">
+                                        <div class="ps-container">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                                                    <div class="ps-iconbox">
+                                                        <header>
+                                                            <i class="ps-icon-delivery"></i>
+                                                            <h3>FREE SHIPPING</h3>
+                                                            <p>ON ORDER OVER $199</p>
+                                                        </header>
+                                                        <p>Want to track a package? Find tracking information and order details from Your Orders.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                                                    <div class="ps-iconbox">
+                                                        <header>
+                                                            <i class="ps-icon-wallet"></i>
+                                                            <h3>100% MONEY BACK.</h3>
+                                                            <p>WITHIN 30 DAYS AFTER DELIVERY.</p>
+                                                        </header>
+                                                        <p>You may return most new, unopened items sold within 30 days of delivery for a full refund.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                                                    <div class="ps-iconbox">
+                                                        <header>
+                                                            <i class="ps-icon-customer-service"></i>
+                                                            <h3>SUPPORT 24/7.</h3>
+                                                            <p>WE CAN HELP YOU ONLINE.</p>
+                                                        </header>
+                                                        <p>We offer a 24/7 customer hotline so you're never alone if you have a question.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
     <!-- Hide Quick View  -->
 
-    @*<input type="button" id="openpopup" href="#quickView" style="display:none" />
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close"
-                                data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">View Product</h4>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
+                                    @*<input type="button" id="openpopup" href="#quickView" style="display:none" />
+                                        <div class="modal fade" id="myModal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close"
+                                                                data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title">View Product</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    </div>
+                                                    <div class="modal-footer">
 
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->*@
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->*@
 
-}
-
+                                    }
+    </main>
 
 

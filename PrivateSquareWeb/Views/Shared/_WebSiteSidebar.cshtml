@@ -7,10 +7,63 @@
         </div>
         <div class="ps-widget__content">
             <ul class="ps-list--checked">
-                @foreach (var Cat in ViewBag.ProductCatList)
-                {
-                    <li class="@(ViewBag.SearchCatId==@Cat.Id ? "current":"")"><a href="/ProductCatWise/Index/@Cat.Id">@Cat.Name </a></li>
+                @{
+                    foreach (var Cat in ViewBag.ProductCatList)
+                    {
+                        if (Cat.ParentCatId == 0)
+                        {
+                            <li><a data-toggle="collapse" data-target="#subcategories@(Cat.Id)">@Cat.Name </a></li>
 
+                        }
+                        <li>
+                            <div id="subcategories@(Cat.Id)" class="collapse">
+                                @{ if (Cat.Id == 36)
+                                    {
+                                        foreach (var item in ViewBag.ProdCatList36)
+                                        {
+                                <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                        }
+                                    }
+                                    if (Cat.Id == 37)
+                                    {
+                                        foreach (var item in ViewBag.ProdCatList37)
+                                        {
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                        }
+                                    }
+                                    if (Cat.Id == 38)
+                                    {
+                                        foreach (var item in ViewBag.ProdCatList38)
+                                        {
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                        }
+                                    }
+                                    if (Cat.Id == 39)
+                                    {
+                                        foreach (var item in ViewBag.ProdCatList39)
+                                        {
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                        }
+                                    }
+                                    if (Cat.Id == 41)
+                                    {
+                                        foreach (var item in ViewBag.ProdCatList41)
+                                        {
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                        }
+                                    }
+                                    if (Cat.Id == 42)
+                                    {
+                                        foreach (var item in ViewBag.ProdCatList42)
+                                        {
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                        }
+                                    }
+                                }
+                                
+                            </div>
+                        </li>
+                    }
                 }
                 <li><a href="product-listing.html">More</a></li>
             </ul>
@@ -37,7 +90,16 @@
         </div>
         <div class="ps-widget__content">
             <ul class="ps-list--checked">
-                <li class="current"><a href="product-listing.html">Nike(521)</a></li>
+                <li class="current"><a data-toggle="collapse" data-target="#demo">Category 1</a></li>
+                <li>
+                    <div id="demo" class="collapse">
+                        <ul>
+                            <li>subcategory 1</li>
+                            <li>SubCategory 2</li>
+                            <li>SubCategory 3</li>
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="product-listing.html">Adidas(76)</a></li>
                 <li><a href="product-listing.html">Baseball(69)</a></li>
                 <li><a href="product-listing.html">Gucci(36)</a></li>
@@ -131,4 +193,8 @@
         </aside>
     </div>
 </aside>
+@*<ul id="demo" class="collapse">
+        <li>collapse 1</li>
+        <li>Collapse 2</li>
+    </ul>*@
 

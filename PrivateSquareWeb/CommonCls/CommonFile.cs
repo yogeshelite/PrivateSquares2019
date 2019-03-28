@@ -107,13 +107,16 @@ namespace PrivateSquareWeb.CommonCls
             //ProfessionList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
             return ProfessionList;
         }
-        public static List<DropDownModel> GetProductCategory()
+        public static List<DropDownModel> GetProductCategory(long? ParentId)
         {
             var ProductCategoryList = new List<DropDownModel>();
             DropDownModel objDropdown = new DropDownModel();
-
-            var _request = _JwtTokenManager.GenerateToken(JsonConvert.SerializeObject(objDropdown));
-            ResponseModel ObjResponse = CommonFile.GetApiResponseJWT(Constant.ApiGetProductCategory, _request);
+            if (ParentId != null)
+            {
+                objDropdown.ParentCatId = ParentId;
+            }
+            var _request = JsonConvert.SerializeObject(objDropdown);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetProductCategory, _request);
             ProductCategoryList = JsonConvert.DeserializeObject<List<DropDownModel>>(ObjResponse.Response);
 
 

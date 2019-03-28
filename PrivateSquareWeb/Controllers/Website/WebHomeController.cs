@@ -22,7 +22,7 @@ namespace PrivateSquareWeb.Controllers.Website
             ListAllProduct = CommonFile.GetProduct();
             ViewBag.UsersProduct = ListAllProduct;
             ViewBag.PopularProducts = CommonFile.GetPopularProduct();
-            var ProductCatList = CommonFile.GetProductCategory();
+            var ProductCatList = CommonFile.GetProductCategory(null);
             ViewBag.ProductCatList = ProductCatList;
             return View();
 
@@ -123,7 +123,7 @@ namespace PrivateSquareWeb.Controllers.Website
             {
                 case "Search":
                     ViewBag.UsersProduct = SearchProduct(SearchText);
-                    var ProductCatList = CommonFile.GetProductCategory();
+                    var ProductCatList = CommonFile.GetProductCategory(null);
 
                     ViewBag.ProductCatList = ProductCatList;
                     break;
@@ -181,7 +181,7 @@ namespace PrivateSquareWeb.Controllers.Website
             else { return JavaScript("window.alert('Please Login to access wishlist');"); }
             objmodel.Operation = "insert";
             var result = SaveWishlist(objmodel);
-             if (result == "Product Exists")
+            if (result == "Product Exists")
             {
                 return JavaScript("window.alert('Product Already added to the Wishlist');");
             }
@@ -194,8 +194,8 @@ namespace PrivateSquareWeb.Controllers.Website
 
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiSaveWishlist, _request);
-           
-                return ObjResponse.Response;
+
+            return ObjResponse.Response;
         }
 
         public ActionResult DeleteFromWishlist(int ProductId)
@@ -295,10 +295,20 @@ namespace PrivateSquareWeb.Controllers.Website
             {
                 return RedirectToAction("Index");
             }
-            var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
-            ViewBag.UsersProduct = SearchList;
-            ViewBag.PopularProducts = CommonFile.GetPopularProduct();
-         
+            if (objModel.ParentCatId == 0)
+            {
+                var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
+                ViewBag.UsersProduct = SearchList;
+                ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+            }
+            else
+            {
+                var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
+
+                var SearchListWithCategory = SearchList.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
+                ViewBag.UsersProduct = SearchListWithCategory;
+                ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+            }
             return View();
         }
         public ActionResult MyOrders(SaleOrderModel objmodel)

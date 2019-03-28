@@ -15,6 +15,7 @@ namespace PrivateSquareWeb.Models
         [Required(ErrorMessage = "Product Name cannot be empty")]
         public string ProductName { get; set; }
         public long? ProductCatId { get; set; }
+        public long? ParentCatId { get; set; }
         public string ProductImage { get; set; }
         [Required(ErrorMessage ="Selling Price cannot be empty")]
         public decimal SellingPrice { get; set; }

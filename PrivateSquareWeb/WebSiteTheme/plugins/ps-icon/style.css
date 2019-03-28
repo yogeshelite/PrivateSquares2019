@@ -88,3 +88,9 @@
 .ps-icon-cart:before {
   content: "\e913";
 }
+.pd-sm{ padding: 3px !important;}
+.pd-23{ padding-top:23px !important; }
+.ps-product--fashion{ border:1px solid #eee;}
+.search-top{position: absolute;top: 5px;right: 21px;background: #ffa927; outline: none; border: 0; width: 40px;height: 40px;}
+.header__logo{margin-top: 0px;}
+.ps-cart{margin-top: 10px;}

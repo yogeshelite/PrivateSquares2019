@@ -60,7 +60,7 @@ namespace PrivateSquareWeb.Controllers.User
             long UserId = 0;
             if (MdUser.Id != 0)
                 UserId = MdUser.Id;
-            var ProductCatList = CommonFile.GetProductCategory();
+            var ProductCatList = CommonFile.GetProductCategory(null);
             ViewBag.ProductCatList = new SelectList(ProductCatList, "Id", "Name");
             var BusinessList = CommonFile.GetUsersBusiness(UserId);
             ViewBag.BusinessList = new SelectList(BusinessList, "Id", "BusinessName");

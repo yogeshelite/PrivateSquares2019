@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PrivateSquareWeb.CommonCls;
 
 namespace PrivateSquareWeb.Controllers.Website
 {
@@ -27,6 +28,8 @@ namespace PrivateSquareWeb.Controllers.Website
             objModel.CartItemCount = ListAddToCart.Count();
             ViewBag.AddToCart = ListAddToCart;
             ViewBag.TotalAmount = GetTotalAmount(ListAddToCart);
+            var parentcategories = CommonFile.GetProductCategory(0);
+            ViewBag.ParentCategories = new SelectList(parentcategories, "Id", "Name");
             return PartialView("~/Views/Shared/_WebsiteHeader.cshtml", objModel);
         }
         public JsonResult RemoveToCart(int index)
@@ -41,5 +44,8 @@ namespace PrivateSquareWeb.Controllers.Website
             AddToCart objAddToCart = new AddToCart();
             return objAddToCart.GetTotalAmount(ListCart);
         }
+
+
+
     }
 }

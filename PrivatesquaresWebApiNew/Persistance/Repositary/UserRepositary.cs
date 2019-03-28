@@ -65,9 +65,9 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
             return Context.GetProduct(objModel.UserId).ToList();
         }
 
-        public IEnumerable<GetProductCategory_Result> GetProductCategory()
+        public IEnumerable<GetProductCategory_Result> GetProductCategory(DropDownModel objModel)
         {
-            return Context.GetProductCategory().ToList();
+            return Context.GetProductCategory(objModel.ParentCatId).ToList();
         }
 
         public IEnumerable<GetProductDetail_Result> GetProductDetail(ProductModel objModel)
@@ -302,7 +302,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetCountry_Result> GetCountry();
         IEnumerable<GetState_Result> GetState(DropDownModel objModel);
         IEnumerable<GetCity_Result> GetCity(DropDownModel objModel);
-        IEnumerable<GetProductCategory_Result> GetProductCategory();
+        IEnumerable<GetProductCategory_Result> GetProductCategory(DropDownModel objModel);
         IEnumerable<GetProductDetail_Result> GetProductDetail(ProductModel objModel);
         IEnumerable<GetBusinessDetail_Result> GetBusinessDetail(BusinessModel objModel);
         AuthenticateLogin_Result LoginUser(LoginModel objModel);

@@ -426,13 +426,13 @@ namespace PrivatesquaresWebApiNew.Controllers
         // public IHttpActionResult Registeration(RequestModel requestModel)
         public IHttpActionResult GetProductCategory(RequestModel requestModel)
         {
-            return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.GetProductCategory())), Success = true });
+            //return Json(new ResponseModel() { Response = new JwtTokenManager().GenerateToken(JsonConvert.SerializeObject(userServices.GetProductCategory())), Success = true });
 
-            //var data = requestModel.Data;
-            //DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
-            //var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProductCategory()), Success = true };
-            //var sendJson = Json(sendResponse);
-            //return sendJson;
+            var data = requestModel.Data;
+            DropDownModel objDropDownModel = JsonConvert.DeserializeObject<DropDownModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetProductCategory(objDropDownModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
         }
         [Route("api/User/GetCity")]
         [HttpPost]
