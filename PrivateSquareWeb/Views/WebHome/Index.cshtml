@@ -118,183 +118,462 @@
                 </div>
             </div>*@
 
-    {
-        //Html.RenderPartial("_Header");
+        {
+            //Html.RenderPartial("_Header");
 
-        Html.RenderAction("WebSiteSidebar", "WebSidebar");
-    }
-    <div class="ps-content" data-mh="product-page">
-        <div class="ps-product-group" data-item="5">
-            <div class="ps-product-group__header">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                        <a class="ps-collection" href="product-listing.html">
-                            <img src="~/WebSiteTheme/images/banner.jpg" /></a>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                        <a class="ps-collection" href="product-listing.html">
-                            <img src="~/WebSiteTheme/images/banner1.jpg" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="ps-section__content">
-                @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
-                @foreach (var Users in ViewBag.UsersProduct)
-                {
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                        <div class="ps-product--fashion">
-                            <div class="ps-product__thumbnail">
-                                <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
-                                @{ if (@Users.ProductImage == null)
-
-                                    {
-                                        <img class="lazy" src="~/DocImg/deafult.png" alt="">
-
-                                    }
-                                    else
-                                    {
-                                        <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
-
-                                    }
-                                }
-                                @{
-                                    string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
-                                }
-                                <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
-                                @*<div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>*@
-                                <ul class="ps-product__actions">
-                                    <!-- Hide Quick View  -->
-                                    @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
-                                    <!-- Hide Compare  -->
-                                    @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
-                                    <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
-                                </ul>
-                            </div>
-
-                            <div class="ps-product__content">
-                                <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
-                                <p class="ps-product__price">
-                                    <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
-                                </p><a class="ps-product__cart" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
-                            </div>
+            Html.RenderAction("WebSiteSidebar", "WebSidebar");
+        }
+        <div class="ps-content" data-mh="product-page">
+            <div class="ps-product-group" data-item="5">
+                <div class="ps-product-group__header">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                            <a class="ps-collection" href="#">
+                                <img src="~/WebSiteTheme/images/banner.jpg" />
+                            </a>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                            <a class="ps-collection" href="#">
+                                <img src="~/WebSiteTheme/images/banner1.jpg" />
+                            </a>
                         </div>
                     </div>
-                                    }
-
-
-            </div>
-        </div>
-    </div>
-
-    <div class="ps-section pt-60 pb-30">
-        <div class="ps-container">
-            <div class="ps-section__header text-center">
-                <h2 class="ps-section__title">POPULAR PRODUCTS</h2>
-                <p>Here are key products that bring shoppers to NearByCart Store.</p>
-            </div>
-            <div class="ps-section__content">
-                <div class="ps-slider--center owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='ps-icon-arrow-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='ps-icon-arrow-right'&gt;&lt;/i&gt;">
-                    @foreach (var Users in ViewBag.PopularProducts)
+                </div>
+                <div class="nearCart_header col-lg-12">
+                    <h2>Beauty & Personal care</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/36">View More</a>
+                </div>
+                <div class="ps-section__content">
+                    @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
+                    @foreach (var Users in ViewBag.PopularProducts36)
                     {
-                        <div class="ps-product--fashion">
-                            <div class="ps-product__thumbnail">
-                                <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a><img class="lazy" src="~/DocImg/@Users.ProductImage" alt="Product">
-                                @{
-                                    string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
-                                }
-                                <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
-                                <ul class="ps-product__actions">
-                                    <!-- Hide Quick View  -->
-                                    @*<li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>*@
-                                    <!-- Hide Compare  -->
-                                    @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="ps-product--fashion">
+                                <div class="ps-product__thumbnail">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    @{ if (@Users.ProductImage == null)
 
-                                    <li><a href="#" class="submit-link" onclick="AddToWishlist(@Users.Id)" title="Favorite"><i class="ps-icon-heart"></i></a></li>
-                                    <li><input type="submit" style="display:none" value="Save" /></li>
+                                        {
+                                            <img class="lazy" src="~/DocImg/deafult.png" alt="">
 
-                                </ul>
-                            </div>
-                            <div class="ps-product__content">
-                                <a class="ps-product__title" href="product-detail.html">@Users.ProductName</a>
-                                <p class="ps-product__price">
-                                    <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
-                                </p><a class="ps-product__cart" href="#" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
+
+                                        }
+                                    }
+                                    @{
+                                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                                    }
+                                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                                    @*<div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>*@
+                                    <ul class="ps-product__actions">
+                                        <!-- Hide Quick View  -->
+                                        @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
+                                        <!-- Hide Compare  -->
+                                        @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                                        <li><a href="javascript:void();" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-product__content">
+                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                                    <p class="ps-product__price">
+                                        <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
+                                    </p>
+                                </div>
                             </div>
                         </div>
+                    }
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="ps-content" data-mh="product-page">
+            <div class="ps-product-group" data-item="5">
+                <div class="nearCart_header col-lg-12 mt-15">
+                    <h2>Household Supplies</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/37">View More</a>
+                </div>
+                <div class="ps-section__content">
+                    @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
+                    @foreach (var Users in ViewBag.PopularProducts37)
+                    {
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="ps-product--fashion">
+                                <div class="ps-product__thumbnail">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    @{ if (@Users.ProductImage == null)
+
+                                        {
+                                            <img class="lazy" src="~/DocImg/deafult.png" alt="">
+
+                                        }
+                                        else
+                                        {
+                                            <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
+
+                                        }
                                     }
+                                    @{
+                                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                                    }
+                                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                                    @*<div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>*@
+                                    <ul class="ps-product__actions">
+                                        <!-- Hide Quick View  -->
+                                        @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
+                                        <!-- Hide Compare  -->
+                                        @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                                        <li><a href="javascript:void();" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-product__content">
+                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                                    <p class="ps-product__price">
+                                        <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
 
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Hide Nouthemes  -->
-                                    @*<div class="ps-section--partner">
-                                            <div class="ps-container">
-                                                <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a></div>
-                                            </div>
-                                        </div>*@
-                                    <div class="ps-section--features">
-                                        <div class="ps-container">
-                                            <div class="row">
-                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                                                    <div class="ps-iconbox">
-                                                        <header>
-                                                            <i class="ps-icon-delivery"></i>
-                                                            <h3>FREE SHIPPING</h3>
-                                                            <p>ON ORDER OVER $199</p>
-                                                        </header>
-                                                        <p>Want to track a package? Find tracking information and order details from Your Orders.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                                                    <div class="ps-iconbox">
-                                                        <header>
-                                                            <i class="ps-icon-wallet"></i>
-                                                            <h3>100% MONEY BACK.</h3>
-                                                            <p>WITHIN 30 DAYS AFTER DELIVERY.</p>
-                                                        </header>
-                                                        <p>You may return most new, unopened items sold within 30 days of delivery for a full refund.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                                                    <div class="ps-iconbox">
-                                                        <header>
-                                                            <i class="ps-icon-customer-service"></i>
-                                                            <h3>SUPPORT 24/7.</h3>
-                                                            <p>WE CAN HELP YOU ONLINE.</p>
-                                                        </header>
-                                                        <p>We offer a 24/7 customer hotline so you're never alone if you have a question.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+        <div class="ps-content" data-mh="product-page">
+            <div class="ps-product-group" data-item="5">
+                <div class="nearCart_header col-lg-12 mt-15">
+                    <h2>Diet & Nutrition</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/38">View More</a>
+                </div>
+                <div class="ps-section__content">
+                    @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
+                    @foreach (var Users in ViewBag.PopularProducts38)
+                    {
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="ps-product--fashion">
+                                <div class="ps-product__thumbnail">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    @{ if (@Users.ProductImage == null)
 
-    <!-- Hide Quick View  -->
+                                        {
+                                            <img class="lazy" src="~/DocImg/deafult.png" alt="">
 
-                                    @*<input type="button" id="openpopup" href="#quickView" style="display:none" />
-                                        <div class="modal fade" id="myModal">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close"
-                                                                data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <h4 class="modal-title">View Product</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                    </div>
-                                                    <div class="modal-footer">
+                                        }
+                                        else
+                                        {
+                                            <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
 
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->*@
-
+                                        }
                                     }
-    </main>
+                                    @{
+                                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                                    }
+                                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                                    @*<div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>*@
+                                    <ul class="ps-product__actions">
+                                        <!-- Hide Quick View  -->
+                                        @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
+                                        <!-- Hide Compare  -->
+                                        @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                                        <li><a href="javascript:void();"  onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-product__content">
+                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                                    <p class="ps-product__price">
+                                        <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
 
 
+                </div>
+            </div>
+        </div>
+
+        <div class="ps-content" data-mh="product-page">
+            <div class="ps-product-group" data-item="5">
+                <div class="nearCart_header col-lg-12 mt-15">
+                    <h2>All Grocery & Gourmet Foods</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/39">View More</a>
+                </div>
+                <div class="ps-section__content">
+                    @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
+                    @foreach (var Users in ViewBag.PopularProducts39)
+                    {
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="ps-product--fashion">
+                                <div class="ps-product__thumbnail">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    @{ if (@Users.ProductImage == null)
+
+                                        {
+                                            <img class="lazy" src="~/DocImg/deafult.png" alt="">
+
+                                        }
+                                        else
+                                        {
+                                            <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
+
+                                        }
+                                    }
+                                    @{
+                                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                                    }
+                                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                                    @*<div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>*@
+                                    <ul class="ps-product__actions">
+                                        <!-- Hide Quick View  -->
+                                        @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
+                                        <!-- Hide Compare  -->
+                                        @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                                        <li><a href="javascript:void();"  onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-product__content">
+                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                                    <p class="ps-product__price">
+                                        <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="ps-content" data-mh="product-page">
+            <div class="ps-product-group" data-item="5">
+                <div class="nearCart_header col-lg-12 mt-15">
+                    <h2>Baby Care</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/40">View More</a>
+                </div>
+                <div class="ps-section__content">
+                    @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
+                    @foreach (var Users in ViewBag.PopularProducts41)
+                    {
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="ps-product--fashion">
+                                <div class="ps-product__thumbnail">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    @{ if (@Users.ProductImage == null)
+
+                                        {
+                                            <img class="lazy" src="~/DocImg/deafult.png" alt="">
+
+                                        }
+                                        else
+                                        {
+                                            <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
+
+                                        }
+                                    }
+                                    @{
+                                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                                    }
+                                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                                    @*<div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>*@
+                                    <ul class="ps-product__actions">
+                                        <!-- Hide Quick View  -->
+                                        @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
+                                        <!-- Hide Compare  -->
+                                        @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                                        <li><a href="javascript:void();" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-product__content">
+                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                                    <p class="ps-product__price">
+                                        <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="ps-content" data-mh="product-page">
+            <div class="ps-product-group" data-item="5">
+                <div class="nearCart_header col-lg-12 mt-15">
+                    <h2>Bakery, Cakes & Dairy</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/42">View More</a>
+                </div>
+                <div class="ps-section__content">
+                    @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
+                    @foreach (var Users in ViewBag.PopularProducts42)
+                    {
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="ps-product--fashion">
+                                <div class="ps-product__thumbnail">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    @{ if (@Users.ProductImage == null)
+
+                                        {
+                                            <img class="lazy" src="~/DocImg/deafult.png" alt="">
+
+                                        }
+                                        else
+                                        {
+                                            <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
+
+                                        }
+                                    }
+                                    @{
+                                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                                    }
+                                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                                    @*<div class="ps-badge ps-badge--sale-off"><span>-40%</span></div>*@
+                                    <ul class="ps-product__actions">
+                                        <!-- Hide Quick View  -->
+                                        @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
+                                        <!-- Hide Compare  -->
+                                        @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                                        <li><a href="javascript:void();" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-product__content">
+                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                                    <p class="ps-product__price">
+                                        <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="ps-section mt-100 pb-30">
+            <div class="ps-container">
+                <div class="ps-section__header text-center">
+                    <h2 class="ps-section__title">POPULAR PRODUCTS</h2>
+                    <p>Here are key products that bring shoppers to NearByCart Store.</p>
+                </div>
+                <div class="ps-section__content">
+                    <div class="ps-slider--center owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='ps-icon-arrow-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='ps-icon-arrow-right'&gt;&lt;/i&gt;">
+                        @foreach (var Users in ViewBag.PopularProducts)
+                        {
+                            <div class="ps-product--fashion">
+                                <div class="ps-product__thumbnail">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a><img class="lazy" src="~/DocImg/@Users.ProductImage" alt="Product">
+                                    @{
+                                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                                    }
+                                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                                    <ul class="ps-product__actions">
+                                        <!-- Hide Quick View  -->
+                                        @*<li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>*@
+                                        <!-- Hide Compare  -->
+                                        @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                                        <li><a href="javascript:void(0);" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void(0);" class="submit-link" onclick="AddToWishlist(@Users.Id)" title="Favorite"><i class="ps-icon-heart"></i></a></li>
+                                        <li><input type="submit" style="display:none" value="Save" /></li>
+
+                                    </ul>
+                                </div>
+                                <div class="ps-product__content">
+                                    <a class="ps-product__title" href="product-detail.html">@Users.ProductName</a>
+                                    <p class="ps-product__price">
+                                        <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
+                                    </p>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hide Nouthemes  -->
+        @*<div class="ps-section--partner">
+                <div class="ps-container">
+                    <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/1.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/2.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/3.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/4.png" alt=""></a><a href="#"><img src="~/WebSiteTheme/images/partner/5.png" alt=""></a></div>
+                </div>
+            </div>*@
+        <div class="ps-section--features">
+            <div class="ps-container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                        <div class="ps-iconbox">
+                            <header>
+                                <i class="ps-icon-delivery"></i>
+                                <h3>FREE SHIPPING</h3>
+                                <p>ON ORDER OVER $199</p>
+                            </header>
+                            <p>Want to track a package? Find tracking information and order details from Your Orders.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                        <div class="ps-iconbox">
+                            <header>
+                                <i class="ps-icon-wallet"></i>
+                                <h3>100% MONEY BACK.</h3>
+                                <p>WITHIN 30 DAYS AFTER DELIVERY.</p>
+                            </header>
+                            <p>You may return most new, unopened items sold within 30 days of delivery for a full refund.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                        <div class="ps-iconbox">
+                            <header>
+                                <i class="ps-icon-customer-service"></i>
+                                <h3>SUPPORT 24/7.</h3>
+                                <p>WE CAN HELP YOU ONLINE.</p>
+                            </header>
+                            <p>We offer a 24/7 customer hotline so you're never alone if you have a question.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hide Quick View  -->
+
+        @*<input type="button" id="openpopup" href="#quickView" style="display:none" />
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">View Product</h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->*@
+
+    }
+</main>

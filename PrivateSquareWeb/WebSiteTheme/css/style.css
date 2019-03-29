@@ -7048,7 +7048,13 @@ html .bg--parallax {
   margin: 0;
   padding: 0;
   list-style: none; }
+.nearCart_header h2 { font-size: 20px;border-bottom: 3px solid #ffa927; display: inline-block; padding-bottom: 6px;}
+.nearCart_header a {float: right;  background-color: #fff; padding: 3px 10px; border-radius: 3px; border: 2px solid #ffa927;}
+
 
 /*6. CUSTOM*/
 
 /*# sourceMappingURL=style.css.map */
+.dropdown:hover .dropdown-content {
+    display: block;
+}

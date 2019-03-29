@@ -295,7 +295,7 @@ namespace PrivateSquareWeb.Controllers.Website
             return RedirectToAction("ProductDetail", productid);
         }
 
-        public ActionResult SearchBar(HeaderPartialModel objModel,int pageindex)
+        public ActionResult SearchBar(HeaderPartialModel objModel)
         {
             ListAllProduct = CommonFile.GetProduct();
             if (String.IsNullOrWhiteSpace(objModel.SearchBarText))

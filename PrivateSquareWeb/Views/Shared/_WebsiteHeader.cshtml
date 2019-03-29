@@ -75,49 +75,51 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
-                    <p>460 West 34th Street, 15th floor, New York - Hotline: 804-377-3580 - 804-399-3580</p>
+                    <p>SCO 68, Swastik Vihar, Sector 5 MDC, Panchkula, Haryana 134114</p>
                 </div>
                 <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="header__actions">
-                        @{ if (@Model.UserId != 0)
+                    <div class="dropdown">
+                        <div class="header__actions">
+                            @{ if (@Model.UserId != 0)
 
-                            {
-                                <a href="/Checkout/Index">Checkout</a>
-                                <div class="btn-group ps-dropdown">
-                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Model.UserName<i class="fa fa-angle-down"></i></a>
+                                {
+                                    <a href="/Checkout/Index">Checkout</a>
+                                    <div class="btn-group ps-dropdown">
+                                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Model.UserName<i class="fa fa-angle-down"></i></a>
 
-                                    <ul class="dropdown-menu">
+                                        <ul class="dropdown-menu dropdown-content">
 
-                                        <li><a href="~/WebHome/MyOrders">My Orders</a></li>
-                                        <li><a href="~/WebHome/WishList">My Wishlist</a></li>
+                                            <li><a href="~/WebHome/MyOrders">My Orders</a></li>
+                                            <li><a href="~/WebHome/WishList">My Wishlist</a></li>
 
-                                        <li><a href="/WebLogin/Logout">Log Out</a></li>
-
-
-
-                                    </ul>
+                                            <li><a href="/WebLogin/Logout">Log Out</a></li>
 
 
 
-                                </div>
+                                        </ul>
+
+
+
+                                    </div>
 
 
 
 
+
+                                }
+
+                                else if (@Model.UserId == 0)
+
+                                {
+
+                                    <a href="/WebLogin/Index">Login & Regiser</a>
+
+                                }
 
                             }
 
-                            else if (@Model.UserId == 0)
 
-                            {
-
-                                <a href="/WebLogin/Index">Login & Regiser</a>
-
-                            }
-
-                        }
-
-
+                        </div>
                     </div>
                 </div>
             </div>
