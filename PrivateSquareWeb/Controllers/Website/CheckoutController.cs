@@ -174,6 +174,7 @@ namespace PrivateSquareWeb.Controllers.Website
                 TotalDiscount += ListCart[i].Discount;
             }
             SaleOrderModel objModel = new SaleOrderModel();
+            if (TotalAmount <= 500) { TotalAmount += 50; }
             objModel.TotalAmount = TotalAmount;
             objModel.TotalDiscount = TotalDiscount;
             objModel.XmlSaleOrderDetail = ListToXml(ListCart);
@@ -303,7 +304,7 @@ namespace PrivateSquareWeb.Controllers.Website
             //return "error saving coupon history";
         }
 
-        
+
         public ActionResult OrderSuccessful()
         {
             return View();

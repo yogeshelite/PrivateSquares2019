@@ -17,11 +17,18 @@ namespace PrivateSquareWeb.Controllers.Website
         static List<ProductModel> ListAllProduct;
 
         // GET: WebHome
+     
         public ActionResult Index()
         {
             ListAllProduct = CommonFile.GetProduct();
-            ViewBag.UsersProduct = ListAllProduct;
-            ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+            //ViewBag.UsersProduct = ListAllProduct;
+            ViewBag.PopularProducts = CommonFile.GetPopularProduct(0);
+            ViewBag.PopularProducts36 = (CommonFile.GetPopularProduct(36)).Take(4);
+            ViewBag.PopularProducts37 = (CommonFile.GetPopularProduct(37)).Take(4);
+            ViewBag.PopularProducts38 = (CommonFile.GetPopularProduct(38)).Take(4);
+            ViewBag.PopularProducts39 = (CommonFile.GetPopularProduct(39)).Take(4);
+            ViewBag.PopularProducts41 = (CommonFile.GetPopularProduct(41)).Take(4);
+            ViewBag.PopularProducts42 = (CommonFile.GetPopularProduct(42)).Take(4);
             var ProductCatList = CommonFile.GetProductCategory(null);
             ViewBag.ProductCatList = ProductCatList;
             return View();
@@ -288,26 +295,39 @@ namespace PrivateSquareWeb.Controllers.Website
             return RedirectToAction("ProductDetail", productid);
         }
 
-        public ActionResult SearchBar(HeaderPartialModel objModel)
+        public ActionResult SearchBar(HeaderPartialModel objModel,int pageindex)
         {
             ListAllProduct = CommonFile.GetProduct();
             if (String.IsNullOrWhiteSpace(objModel.SearchBarText))
             {
-                return RedirectToAction("Index");
+                //var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
+                if (objModel.ParentCatId == 0)
+                {
+                    ViewBag.UsersProduct = ListAllProduct;
+                    ViewBag.SearchResultCount = ListAllProduct.Count;
+                    return View();
+                }
+                var SearchListWithCategory = ListAllProduct.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
+                ViewBag.UsersProduct = SearchListWithCategory;
+                //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+                ViewBag.SearchResultCount = SearchListWithCategory.Count;
+                return View();
             }
             if (objModel.ParentCatId == 0)
             {
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
                 ViewBag.UsersProduct = SearchList;
-                ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+                //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+                ViewBag.SearchResultCount = SearchList.Count;
             }
             else
             {
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
 
                 var SearchListWithCategory = SearchList.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory;
-                ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+                ViewBag.UsersProduct = SearchListWithCategory.Take(10);
+                //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
+                ViewBag.SearchResultCount = SearchListWithCategory.Count;
             }
             return View();
         }
@@ -318,7 +338,7 @@ namespace PrivateSquareWeb.Controllers.Website
             {
                 objmodel.UserId = Convert.ToInt64(MdUser.Id);
             }
-            else { return JavaScript("window.alert('Please Login to access wishlist');"); }
+            else { return JavaScript("window.alert('Please Log-In');"); }
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetOrders, _request);
             var Orders = JsonConvert.DeserializeObject<List<SaleOrderModel>>(ObjResponse.Response);
@@ -342,6 +362,6 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.Orderdetails = Orderdetails;
             return View(objmodel);
         }
-
+     
     }
 }

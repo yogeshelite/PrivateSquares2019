@@ -216,7 +216,7 @@
                                                 <img class="mr-15" src="~/DocImg/@item.ImageName" alt="">  @item.ProductName
                                             </a>
                                         </td>
-                                        <td>$@item.Price</td>
+                                        <td>₹ @item.Price</td>
                                         <td>
                                             <div class="form-group--number">
                                                 <button class="minus" onclick="RemoveToCartViewCart('@item.ProductId','@item.ProductName','@item.ImageName','@item.Price','@item.Amount','@index')"><span>-</span></button>
@@ -224,7 +224,7 @@
                                                 <button class="plus" onclick="AddToCartViewCart('@item.ProductId','@item.ProductName','@item.ImageName','@item.Price','@item.Amount')"><span>+</span></button>
                                             </div>
                                         </td>
-                                        <td>$ @item.Amount</td>
+                                        <td>₹ @item.Amount</td>
                                         <td>
                                             <div><input class="ps-remove" value="X" type="button" onclick="DeleteItemView(@index)" /></div>
                                         </td>

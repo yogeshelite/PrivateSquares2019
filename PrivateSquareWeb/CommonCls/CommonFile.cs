@@ -318,17 +318,22 @@ namespace PrivateSquareWeb.CommonCls
             return DynamicFileName;
         }
 
-        public static List<ProductModel> GetPopularProduct()
+        public static List<ProductModel> GetPopularProduct(long Catid)
         {
             var GetPopularProductList = new List<ProductModel>();
             ProductModel objmodel = new ProductModel();
             //List<ProductModel> ListPopularProduct = new List<ProductModel>();
             //var ListAllProduct = GetProduct();
-            var _request = JsonConvert.SerializeObject(objmodel);
-            if (objmodel.ProductCatId == 0)
+
+            if (Catid == 0)
             {
                 objmodel.ProductCatId = null;
             }
+            else
+            {
+                objmodel.ProductCatId = Catid;
+            }
+            var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetPopularProductId, _request);
             GetPopularProductList = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);
             //foreach(var product in GetPopularProductList)
