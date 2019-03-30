@@ -19,10 +19,10 @@ namespace PrivateSquareWeb.Controllers.Website
         public ActionResult Index(long? id)
         {
             ListAllProduct = CommonFile.GetProduct();
-            var SearchProductList = ListAllProduct.Where(x => x.ProductCatId == id).ToList();
+            var SearchProductList = ListAllProduct.Where(x => x.ParentCatId == id).ToList();
             ViewBag.SearchCatId = id;
             ViewBag.UsersProduct = SearchProductList;
-            var ProductCatList = CommonFile.GetProductCategory(id);
+            var ProductCatList = CommonFile.GetProductCategory(null);
             // ViewBag.ProductCatList = ProductCatList;
             ViewBag.ProductCatList = ProductCatList;
             return View();
@@ -75,7 +75,14 @@ namespace PrivateSquareWeb.Controllers.Website
             else
             {
                 objModel.ProductCatId = Convert.ToInt64(id);
-                SearchProductList = ListAllProduct.Where(x => x.ProductCatId == id).ToList();
+                if (!CommonFile.IsParentCategory(id))
+                {
+                    SearchProductList = ListAllProduct.Where(x => x.ProductCatId == id).ToList();
+                }
+                else
+                {
+                    SearchProductList = ListAllProduct.Where(x => x.ParentCatId == id).ToList();
+                }
             }
 
 
@@ -120,15 +127,15 @@ namespace PrivateSquareWeb.Controllers.Website
             return SearchProductList;
         }
 
-        public ActionResult Sortby(int sortorder,int pageindex,long? productcatid)
+        public ActionResult Sortby(int sortorder, int pageindex, long? productcatid)
         {
             ProductModel objModel = new ProductModel();
-            string SortOrder="";
+            string SortOrder = "";
             switch (sortorder)
             {
                 case 1:
                     SortOrder = "DiscountPrice";
-                    break;  
+                    break;
                 case 2:
                     SortOrder = "DiscountPrice desc";
                     break;
@@ -139,15 +146,15 @@ namespace PrivateSquareWeb.Controllers.Website
                     SortOrder = "RecordDate";
                     break;
             }
-      
-            var sortedproducts = CommonFile.GetSortedProducts(SortOrder,pageindex, productcatid);
+
+            var sortedproducts = CommonFile.GetSortedProducts(SortOrder, pageindex, productcatid);
             var ProductList = ListAllProduct.Where(x => x.ProductCatId == productcatid).ToList();
-            
+
             ViewBag.UsersProduct = sortedproducts;
             ViewBag.SearchCatId = productcatid;
-            
+
             var ProductCatList = CommonFile.GetProductCategory(null);
-            
+
             ViewBag.ProductCatList = ProductCatList;
             return PartialView("~/Views/ProductCatWise/PartialCatwiseProductValue.cshtml", objModel);
         }

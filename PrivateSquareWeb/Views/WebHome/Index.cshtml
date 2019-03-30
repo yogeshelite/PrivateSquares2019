@@ -40,7 +40,9 @@
             },
             success: function (result) {
                 //console.log(result);
-                window.location.href = "/WebHome/Index";
+                //console.log($("#CartCount"));
+                $("#Cartcontent").load(location.href + ' #Cartcontent');
+                //window.location.href = "/WebHome/Index";
             },
             error: function (error) {
                 console.log(error);

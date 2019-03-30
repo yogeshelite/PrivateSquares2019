@@ -303,20 +303,24 @@ namespace PrivateSquareWeb.Controllers.Website
                 //var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
                 if (objModel.ParentCatId == 0)
                 {
-                    ViewBag.UsersProduct = ListAllProduct;
+                    ViewBag.UsersProduct = ListAllProduct.Take(12);
                     ViewBag.SearchResultCount = ListAllProduct.Count;
+                    var jsonString1 = "{\"ParentCatId\":\"" + objModel.ParentCatId + "\",\"SearchBarText\":\"" + objModel.SearchBarText + "\"}";
+                    Services.SetCookie(this.ControllerContext.HttpContext, "SearchBarCookie",jsonString1.ToString());
                     return View();
                 }
                 var SearchListWithCategory = ListAllProduct.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory;
+                ViewBag.UsersProduct = SearchListWithCategory.Take(12);
                 //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
+                var jsonString2 = "{\"ParentCatId\":\"" + objModel.ParentCatId + "\",\"SearchBarText\":\"" + objModel.SearchBarText + "\"}";
+                Services.SetCookie(this.ControllerContext.HttpContext, "SearchBarCookie", jsonString2.ToString());
                 return View();
             }
             if (objModel.ParentCatId == 0)
             {
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
-                ViewBag.UsersProduct = SearchList;
+                ViewBag.UsersProduct = SearchList.Take(12);
                 //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
                 ViewBag.SearchResultCount = SearchList.Count;
             }
@@ -325,10 +329,12 @@ namespace PrivateSquareWeb.Controllers.Website
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
 
                 var SearchListWithCategory = SearchList.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory.Take(10);
+                ViewBag.UsersProduct = SearchListWithCategory.Take(12);
                 //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
             }
+            var jsonString = "{\"ParentCatId\":\"" + objModel.ParentCatId + "\",\"SearchBarText\":\"" + objModel.SearchBarText + "\"}";
+            Services.SetCookie(this.ControllerContext.HttpContext, "SearchBarCookie", jsonString.ToString());
             return View();
         }
         public ActionResult MyOrders(SaleOrderModel objmodel)
@@ -361,6 +367,56 @@ namespace PrivateSquareWeb.Controllers.Website
             var Orderdetails = JsonConvert.DeserializeObject<List<SaleOrderModel>>(ObjResponse.Response);
             ViewBag.Orderdetails = Orderdetails;
             return View(objmodel);
+        }
+
+        public ActionResult NextPage(long id)
+        {
+            int pageindex = (int)id;
+            HeaderPartialModel objModel = new HeaderPartialModel();
+            string SearchCookieValue = Services.GetCookie(this.HttpContext, "SearchBarCookie").Value;
+            dynamic _data = SearchCookieValue;
+            var json = JsonConvert.DeserializeObject<Dictionary<string, object>>(_data);
+            if (json.ContainsKey("unique_name"))
+            {
+                objModel = JsonConvert.DeserializeObject<HeaderPartialModel>(json["unique_name"].ToString());
+
+            }
+            #region  For binding products in next page
+
+            ListAllProduct = CommonFile.GetProduct();
+            if (String.IsNullOrWhiteSpace(objModel.SearchBarText))
+            {
+               
+                if (objModel.ParentCatId == 0)
+                {
+                    ViewBag.UsersProduct = ListAllProduct.Skip((pageindex-1)*12).Take(12);
+                    ViewBag.SearchResultCount = ListAllProduct.Count;  
+                    return View("SearchBar");
+                }
+                var SearchListWithCategory = ListAllProduct.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
+                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * 12).Take(12);
+                ViewBag.SearchResultCount = SearchListWithCategory.Count;
+                return View("SearchBar");
+            }
+            if (objModel.ParentCatId == 0)
+            {
+                var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
+                ViewBag.UsersProduct = SearchList.Skip((pageindex - 1) * 12).Take(12);
+                ViewBag.SearchResultCount = SearchList.Count;
+            }
+            else
+            {
+                var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
+
+                var SearchListWithCategory = SearchList.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
+                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * 12).Take(12);
+               
+                ViewBag.SearchResultCount = SearchListWithCategory.Count;
+            }
+            
+            #endregion
+
+            return View("SearchBar");
         }
      
     }

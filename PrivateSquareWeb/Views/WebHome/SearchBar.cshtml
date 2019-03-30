@@ -221,7 +221,7 @@
                                 <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
                                 while (n <= (ViewBag.SearchResultCount / 10))
                                 {
-                                    <li><a href="#">@n</a></li>
+                                    <li><a href="~/WebHome/NextPage/@n">@n</a></li>
                                     n++;
                                 }
                                 <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
@@ -242,8 +242,8 @@
                                 if ((ViewBag.SearchResultCount % 10) != 0)
                                 {
                                     <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
+                                    <li class="active"><a href="~/WebHome/NextPage/2">1</a></li>
+                                    <li><a href="~/WebHome/NextPage/2">2</a></li>
                                 }
                                 else
                                 {

@@ -383,5 +383,14 @@ namespace PrivateSquareWeb.CommonCls
             return ProductReviewsList;
 
         }
+        public static bool IsParentCategory(long? id)
+        {
+            if (id == 36 || id == 37 || id == 38 || id == 39 || id == 41 || id == 42) { return true; }
+            else
+            {
+                return false;
+            }
+            
+        }
     }
 }
