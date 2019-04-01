@@ -274,6 +274,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         {
             return Context.SaveCouponHistory(objModel.CouponId, objModel.UserId, objModel.OrderId, objModel.Discount, objModel.Operation).FirstOrDefault();
         }
+
+        public IsParentCategory_Result IsParentCategory(ProductModel objModel)
+        {
+            return Context.IsParentCategory(objModel.ProductCatId).FirstOrDefault();
+        }
     }
 
     public interface IUserRepositary : IGenericRepository<EWT_PSQNEWEntities>
@@ -333,6 +338,7 @@ namespace PrivatesquaresWebApiNew.Persistance.Repositary
         IEnumerable<GetReview_Result> GetReview(ContactUsModel objModel);
         IEnumerable<GetCoupon_Result> GetCoupon(CouponModel objModel);
         SaveCouponHistory_Result SaveCouponHistory(CouponModel objModel);
+        IsParentCategory_Result IsParentCategory(ProductModel objModel);
     }
 
 }

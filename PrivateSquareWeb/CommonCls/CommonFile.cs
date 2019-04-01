@@ -385,12 +385,20 @@ namespace PrivateSquareWeb.CommonCls
         }
         public static bool IsParentCategory(long? id)
         {
-            if (id == 36 || id == 37 || id == 38 || id == 39 || id == 41 || id == 42) { return true; }
-            else
-            {
-                return false;
-            }
-            
+            ProductModel ObjModel = new ProductModel();
+            ObjModel.ProductCatId = id;
+            var _request = JsonConvert.SerializeObject(ObjModel);
+            ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiIsParentCategory, _request);
+            ResponseModel ObjResponse2 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponse.Response);
+            if(ObjResponse2.Response == "Exist")
+            { return true; }
+            else { return false; }
+            //return GetPopularProductList;
+            //if (id == 36 || id == 37 || id == 38 || id == 39 || id == 41 || id == 42) { return true; }
+            //else
+            //{
+            //    return false;
+            //}
         }
     }
 }

@@ -99,7 +99,12 @@
                             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
                                 <div class="ps-filter__result">
                                     @if (ViewBag.SearchResultCount >= 12)
-                                    {<p>Showing 1–10 of @ViewBag.SearchResultCount results</p>}
+                                    {
+                                       
+                                            <p>Showing @(ViewBag.ProductsFrom)–@((ViewBag.ProductsFrom)+ ViewBag.ToProductsCount) of @ViewBag.SearchResultCount results</p>
+                                        
+                                   
+                                }
                                 else
                                 {<p>Showing 1–@ViewBag.SearchResultCount of @ViewBag.SearchResultCount results</p>}
                                 </div>
@@ -217,20 +222,24 @@
                         <ul class="pagination">
                             @if ((ViewBag.SearchResultCount / 10) > 1)
                             {
-                                var n = 1;
-                                <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                while (n <= (ViewBag.SearchResultCount / 10))
+                                var n = ViewBag.LowerLimit;
+                                <li><a href="~/WebHome/PreviousPages/@(ViewBag.LowerLimit-1)"><i class="fa fa-angle-left"></i></a></li>
+                                do
                                 {
                                     <li><a href="~/WebHome/NextPage/@n">@n</a></li>
                                     n++;
                                 }
-                                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                                while (n <= (ViewBag.NumberOfPages));
+                                if ((ViewBag.SearchResultCount / 10) > ViewBag.NumberOfPages)
+                                {
+                                    <li><a href="~/WebHome/MorePages/@n"><i class="fa fa-angle-right"></i></a></li>
+                                }
                                 @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">...</a></li>
-            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">...</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
                             }
                             else
                             {
@@ -238,16 +247,17 @@
                                 {
                                     <li class="active"><a href="#">1</a></li>
                                 }
-                                else { 
-                                if ((ViewBag.SearchResultCount % 10) != 0)
-                                {
-                                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                    <li class="active"><a href="~/WebHome/NextPage/2">1</a></li>
-                                    <li><a href="~/WebHome/NextPage/2">2</a></li>
-                                }
                                 else
                                 {
-                                    <li class="active"><a href="#">1</a></li>
+                                    if ((ViewBag.SearchResultCount % 10) != 0)
+                                    {
+                                        @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
+                                        <li class="active"><a href="~/WebHome/NextPage/1">1</a></li>
+                                        <li><a href="~/WebHome/NextPage/2">2</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="active"><a href="#">1</a></li>
                                     }
                                 }
                             }
@@ -271,7 +281,7 @@
                     <header>
                         <i class="ps-icon-delivery"></i>
                         <h3>FREE SHIPPING</h3>
-                        <p>ON ORDER OVER $199</p>
+                        <p>ON ORDER OVER 500</p>
                     </header>
                     <p>Want to track a package? Find tracking information and order details from Your Orders.</p>
                 </div>

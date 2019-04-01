@@ -19,7 +19,11 @@ namespace PrivateSquareWeb.Controllers.Website
         public ActionResult Index(long? id)
         {
             ListAllProduct = CommonFile.GetProduct();
-            var SearchProductList = ListAllProduct.Where(x => x.ParentCatId == id).ToList();
+            var SearchProductList=new List<ProductModel>();
+            if (!CommonFile.IsParentCategory(id)) { 
+            SearchProductList = ListAllProduct.Where(x => x.ProductCatId == id).ToList();
+            }
+            else { SearchProductList = ListAllProduct.Where(x => x.ParentCatId == id).ToList(); }
             ViewBag.SearchCatId = id;
             ViewBag.UsersProduct = SearchProductList;
             var ProductCatList = CommonFile.GetProductCategory(null);
