@@ -190,7 +190,8 @@ namespace PrivateSquareWeb.Controllers.Website
             var result = SaveWishlist(objmodel);
             if (result == "Product Exists")
             {
-                return JavaScript("window.alert('Product Already added to the Wishlist');");
+                
+                return JavaScript("window.alert('Product already added to the Wishlist');");
             }
             return JavaScript("window.alert('Product added to the Wishlist');");
 
@@ -495,6 +496,8 @@ namespace PrivateSquareWeb.Controllers.Website
                     {
                         ViewBag.NumberOfPages = ViewBag.LowerLimit + 4;
                     }
+                    ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                    ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                     return View("SearchBar");
                 }
                 var SearchListWithCategory = ListAllProduct.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
@@ -508,6 +511,8 @@ namespace PrivateSquareWeb.Controllers.Website
                 {
                     ViewBag.NumberOfPages = pageindex + 4;
                 }
+                ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                 return View("SearchBar");
             }
             if (objModel.ParentCatId == 0)
@@ -535,10 +540,13 @@ namespace PrivateSquareWeb.Controllers.Website
             {
                 ViewBag.NumberOfPages = pageindex + 4;
             }
+            ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+            ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
             return View("SearchBar");
         }
         public ActionResult PreviousPages(long id)
         {
+            if (id == 0) { return JavaScript("alert('End of Page')"); }
             int pageindex = (int)id;
             ViewBag.PageIndex = pageindex;
             HeaderPartialModel objModel = new HeaderPartialModel();
@@ -574,6 +582,8 @@ namespace PrivateSquareWeb.Controllers.Website
                     {
                         ViewBag.NumberOfPages = pageindex + 4;
                     }
+                    ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                    ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                     return View("SearchBar");
                 }
                 var SearchListWithCategory = ListAllProduct.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
@@ -587,6 +597,8 @@ namespace PrivateSquareWeb.Controllers.Website
                 {
                     ViewBag.NumberOfPages = pageindex + 4;
                 }
+                ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                 return View("SearchBar");
             }
             if (objModel.ParentCatId == 0)
@@ -606,7 +618,8 @@ namespace PrivateSquareWeb.Controllers.Website
             }
 
             #endregion
-
+            ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+            ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
             return View("SearchBar");
         }
     }

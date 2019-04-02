@@ -3,7 +3,7 @@
 <script type="text/javascript">
 
     var AddToCartCatWise = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage, ProductCatId) {
-        console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage + "  CategoryId" + ProductCatId);
+        //console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage + "  CategoryId" + ProductCatId);
         //var Qty = document.getElementById('TxtQty').value;
         //if (Qty.trim() == '' || Qty.trim() == null) {
         //    alert('Minum 1 Qty Required');
@@ -19,7 +19,7 @@
         var Amount = Number(Price) * Number(Qty);
 
         var TotalAmount = 0;
-        console.log('ProductId' + ProductId);
+        //console.log('ProductId' + ProductId);
         $.ajax({
             url: "../../WebHome/AddToCart",
             type: "POST",
@@ -37,7 +37,9 @@
             },
             success: function (result) {
                 //console.log(result);
-                window.location.href = "/ProductCatWise/Index/" + ProductCatId;
+                //window.location.href = "/ProductCatWise/Index/" + ProductCatId;
+                $("#Cartcontent").load(location.href + ' #Cartcontent');
+                alert('Product Added to the cart');
             },
             error: function (error) {
                 console.log(error);
@@ -130,24 +132,50 @@
         </div>
     </div>
 }
-
-<!-- Hide Quick View  -->
-@*<input type="button" id="openpopup" href="#quickView" style="display:none" />
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">View Product</h4>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->*@
+    <div class="ps-product-group__footer">
+        <div class="ps-pagination">
+            <ul class="pagination">
+                @if ((ViewBag.SearchResultCount / 10) > 1)
+                {
+                    var n = ViewBag.LowerLimit;
+                    <li><a href="~/ProductCatWise/PreviousPages/@(ViewBag.LowerLimit-1)"><i class="fa fa-angle-left"></i></a></li>
+                    do
+                    {
+                        <li><a onclick="nextpage(@n)">@n</a></li>
+                        n++;
+                    }
+                    while (n <= (ViewBag.NumberOfPages));
+                    if ((ViewBag.SearchResultCount / 10) > ViewBag.NumberOfPages)
+                    {
+                        <li><a href="~/ProductCatWise/MorePages/@n"><i class="fa fa-angle-right"></i></a></li>
+                    }
+                    @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">...</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
+                }
+                else
+                {
+                    if (ViewBag.SearchResultCount < 10)
+                    {
+                        <li class="active"><a href="#">1</a></li>
+                    }
+                    else
+                    {
+                        if ((ViewBag.SearchResultCount % 10) != 0)
+                        {
+                            @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
+                            <li class="active"><a href="~/ProductCatWise/NextPage/1">1</a></li>
+                            <li><a onclick="nextpage(2)">2</a></li>
+                        }
+                        else
+                        {
+                            <li class="active"><a href="#">1</a></li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </div>

@@ -29,7 +29,7 @@
                     @foreach (var orders in ViewBag.Orderdetails)
                     {
                         <tr>
-                            <td><a class="ps-product--compare" href="#"><img class="mr-15" src="~/DocImg/user.png" alt="Product Image">@orders.ProductName</a></td>
+                            <td><a class="ps-product--compare" href="#"><img class="mr-15" src="~/DocImg/@orders.ProductImage" alt="Product Image">@orders.ProductName</a></td>
                             <td>₹ @orders.Amount</td>
                             <td><a class="ps-product-link" href="~/WebHome/ProductDetail/@orders.Id">View Product</a></td>
                             <td>

@@ -19,5 +19,6 @@ namespace PrivateSquareWeb.Models
         public string IsRedeemAllowed { get; set; }
         public string Description { get; set; }
         public string Operation { get; set; }
+        public Boolean IsCouponApplied { get; set; }
     }
 }

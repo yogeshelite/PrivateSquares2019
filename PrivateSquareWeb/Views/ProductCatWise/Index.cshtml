@@ -43,7 +43,8 @@
             },
             success: function (result) {
                 //console.log(result);
-                window.location.href = "/WebHome/Index";
+                $("#Cartcontent").load(location.href + ' #Cartcontent');
+                alert('Product Added to the cart');
             },
             error: function (error) {
                 console.log(error);
@@ -144,7 +145,7 @@
                     <div class="ps-product-group__action">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                <p>Showing 1–12 of 35 results</p>
+                                <p>Showing 1–12 of @ViewBag.SearchResultCount results</p>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="sortbyclass">
                                 <select class="ps-select" id="sortby" title="Sort By--">
@@ -166,18 +167,7 @@
                     </div>
 
                 </div>
-                <div class="ps-product-group__footer">
-                    <div class="ps-pagination">
-                        <ul class="pagination">
-                            <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">...</a></li>
-                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <aside class="ps-sidebar" data-mh="product-page">
@@ -192,7 +182,7 @@
                             <li class="@(ViewBag.SearchCatId==@Cat.Id ? "current":"")"><a href="/ProductCatWise/Index/@Cat.Id">@Cat.Name </a></li>
 
                         }
-                        <li><a href="product-listing.html">More</a></li>
+                        <li><a href="#">More</a></li>
                     </ul>
                 </div>
             </aside>
@@ -203,7 +193,7 @@
                 </div>
                 <div class="ps-widget__content">
                     <div class="ac-slider" data-default-min="300" data-default-max="2000" data-max="3450" data-step="50" data-unit="$"></div>
-                    <p class="ac-slider__meta">Price:<span class="ac-slider__value ac-slider__min"> 10</span>-<span class="ac-slider__value ac-slider__max">50000</span></p>
+                    <p class="ac-slider__meta">Price:<span class="ac-slider__value ac-slider__min"> 10</span>-<span class="ac-slider__value ac-slider__max">10000</span></p>
 
                     <input type="range" id="firstslider" min="0" max="10000" step="100" value="0" onchange="showvalue(this.value)" /><br>
                     <input type="text" id="TxtPriceRange" name="TxtPriceRange" />
@@ -467,5 +457,22 @@
             });
 
         }
+    }
+</script>
+<script>
+    var nextpage = function (id) {
+        //var productcatid = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+        console.log(id);
+        $.ajax({
+            url: "../../ProductCatWise/NextPage/",
+            type: "POST",
+            data: {
+                "id": id
+            },
+            success: function (result) {
+                //console.log(result);
+                $("#DivItemBind").html(result);
+            }
+        });
     }
 </script>

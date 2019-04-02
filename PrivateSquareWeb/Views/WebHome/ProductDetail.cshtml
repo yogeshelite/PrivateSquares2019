@@ -69,36 +69,6 @@
 
     }
 </script>
-
-<!-- Hide Quick View  -->
-@*<script>
-        var QuickView = function (ProductId) {
-            var ProductId = ProductId;
-            // Call AJAX here
-            $.ajax({
-                method: "POST",
-                url: "../../WebHome/ProductQuickView/", // Your URL here
-                data: { ProductId: ProductId },
-                success: function (result) {
-                    //debugger;
-                    //console.log(result);
-
-                    //$('#quickView').innerhtml(result);
-                    //document.getElementById("quickView").innerHTML = result;
-                    $mymodal = $("#myModal");
-                    $mymodal.find("div.modal-body").html(result);
-                    $('#openpopup').click();
-                    console.log('Click triggered');
-                    $mymodal.modal("show");
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-
-            // Redirect here
-        }
-    </script>*@
 <script type="text/javascript">
     var GetTotal = function ()
     {
@@ -193,15 +163,7 @@
                 </div>
                 <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 ">
                     <div class="ps-product__info">
-                        <div class="ps-product__rating">
-                            <select class="ps-rating">
-                                <option value="1">1</option>
-                                <option value="1">2</option>
-                                <option value="1">3</option>
-                                <option value="1">4</option>
-                                <option value="2">5</option>
-                            </select><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab" id="reviewlink" onclick="ScrollTo()">(Read all reviews)</a>@*<a href="#"  style="display:none"/>*@
-                        </div>
+                        
                         <h1>@Model.ProductName</h1>
                         <p class="ps-product__category">@*<a href="#">Men</a>,<a href="#">  Nike</a>,<a href="#">  Jordan</a>*@</p>
                         <h3 class="ps-product__price"><span>₹</span> @Model.DiscountPrice <del><span>₹</span> @Model.SellingPrice</del></h3>
@@ -319,7 +281,7 @@
     <div class="ps-container">
         <div class="ps-section__header text-center">
             <h2 class="ps-section__title">YOU MIGHT ALSO LIKE</h2>
-            <p>Here are key products that bring fashionistas to Xuper Store.</p>
+            <p>Here are key products that bring shoppers to NearByCart Store.</p>
         </div>
         <div class="ps-section__content">
             <div class="ps-slider--center owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='ps-icon-arrow-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='ps-icon-arrow-right'&gt;&lt;/i&gt;">
@@ -335,7 +297,7 @@
                             <ul class="ps-product__actions">
                                 <!-- Hide Quick View  -->
                                 @*<li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>*@
-                                <li><a href="/WebCompare/Index/@Users.Id" title="Compare"><i class="ps-icon-compare"></i></a></li>
+                                @*<li><a href="/WebCompare/Index/@Users.Id" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
                                 <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
                             </ul>
                         </div>

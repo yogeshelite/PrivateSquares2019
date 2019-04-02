@@ -135,7 +135,7 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.UserAddress = UserAddressList;
             bindCountryStateCity();
         }
-        public static decimal totalamount;
+        //public static decimal totalamount;
         [HttpPost]
         public JsonResult PlaceOrder(long AddressId, string PaymentMode)
         {
@@ -145,12 +145,10 @@ namespace PrivateSquareWeb.Controllers.Website
 
             objModel = GetSaleOrderValues(ListAddToCart);
             objModel.Operation = "insert";
-            if (totalamount != 0)
-            {
-
-                objModel.TotalAmount = totalamount;
-                SaveCouponHistory(objModel);
-            }
+            //if (objModel.IsCouponApplied)
+           // {
+                //SaveCouponHistory(objModel);
+            //}
             objModel.PaymentMode = PaymentMode;
             objModel.UserId = MdUser.Id;
             var _request = JsonConvert.SerializeObject(objModel);
@@ -217,10 +215,11 @@ namespace PrivateSquareWeb.Controllers.Website
             #endregion
             return xmlNodeSaleOrder;
         }
-
+        public bool iscouponapplied;
         [HttpPost]
         public ActionResult GetCoupon(string CouponCode)
         {
+
             CouponModel ObjCouponModel = new CouponModel();
             LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
             if (MdUser.Id != 0)
@@ -247,39 +246,42 @@ namespace PrivateSquareWeb.Controllers.Website
             }
             else
             {
-                string[] ArrResponse = couponresponse.Split(',');
-                if (ArrResponse[3] == "Discount")                   //if coupon type is "discount"
+                if (iscouponapplied == false)
                 {
-
-                    ViewBag.CouponResponse = ArrResponse[6];
-
-                    AddToCart objAddToCart = new AddToCart();
-                    totalamount = objAddToCart.GetTotalAmountCheckOut(this.ControllerContext.HttpContext);
-                    if (totalamount < Convert.ToInt64(ArrResponse[4]))
+                    string[] ArrResponse = couponresponse.Split(',');
+                    if (ArrResponse[3] == "Discount")                   //if coupon type is "discount"
                     {
-                        return JavaScript("alert('Cart value is not sufficient')");
+
+                        ViewBag.CouponResponse = ArrResponse[6];
+
+                        AddToCart objAddToCart = new AddToCart();
+                        var totalamount = objAddToCart.GetTotalAmountCheckOut(this.ControllerContext.HttpContext);
+                        if (totalamount < Convert.ToInt64(ArrResponse[4]))
+                        {
+                            return JavaScript("alert('Cart value is not sufficient')");
+                        }
+                        ViewBag.TotalAmount = totalamount - Convert.ToInt64(ArrResponse[2]);
+                        if (ViewBag.TotalAmount <= 500)
+                        {
+                            ViewBag.TotalAmount += 50;                          //Adding shipping/delivery charges
+                            ViewBag.TotalAmount -= (2 * (ViewBag.TotalAmount));  //making the total negative for handling it securely in client side
+                            ViewBag.TotalAmountAfterCharges = ViewBag.TotalAmount;
+                        }
+                        totalamount = ViewBag.TotalAmount;
+                        SaleOrderModel objmodel = new SaleOrderModel();
+                        objmodel.TotalAmount = totalamount;
+                        ObjCouponModel.IsCouponApplied = true;
+                        iscouponapplied = true;
+                        objmodel.IsCouponApplied = true;
+                        return Json(ViewBag.TotalAmount);
                     }
-                    ViewBag.TotalAmount = totalamount - Convert.ToInt64(ArrResponse[2]);
-                    if (ViewBag.TotalAmount <= 500)
+                    else if (ArrResponse[3] == "BOGO")        //Condition for Coupon Type=="BOGO" (Buy One Get One)
                     {
-                        ViewBag.TotalAmount += 50;                          //Adding shipping/delivery charges
-                        ViewBag.TotalAmount -= (2 * (ViewBag.TotalAmount));  //making the total negative for handling it securely in client side
-                        ViewBag.TotalAmountAfterCharges = ViewBag.TotalAmount;
+                        return JavaScript("alert('Coupon does not exist')");
                     }
-                    //else
-                    //{
-                    //    ViewBag.TotalAmount = TotalAmount;
-                    //}
-                    totalamount = ViewBag.TotalAmount;
-                    SaleOrderModel objmodel = new SaleOrderModel();
-                    return Json(ViewBag.TotalAmount);
-                }
-                else if (ArrResponse[3] == "BOGO")        //Condition for Coupon Type=="BOGO" (Buy One Get One)
-                {
-                    return JavaScript("alert('Coupon does not exist')");
+                    return JavaScript("alert('Error')");
                 }
                 return JavaScript("alert('Error')");
-
             }
         }
 

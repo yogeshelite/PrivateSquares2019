@@ -44,7 +44,8 @@
             },
             success: function (result) {
                 //console.log(result);
-                window.location.href = "/WebHome/Index";
+                $("#Cartcontent").load(location.href + ' #Cartcontent');
+                alert('Product Added to the cart');
             },
             error: function (error) {
                 console.log(error);

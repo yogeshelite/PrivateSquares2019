@@ -22,7 +22,7 @@
         var Amount = Number(Price) * Number(Qty);
 
         var TotalAmount = 0;
-        console.log('ProductId' + ProductId);
+        //console.log('ProductId' + ProductId);
         $.ajax({
             url: "../../WebHome/AddToCart",
             type: "POST",
@@ -42,6 +42,7 @@
                 //console.log(result);
                 //console.log($("#CartCount"));
                 $("#Cartcontent").load(location.href + ' #Cartcontent');
+                alert('Product Added to the cart');
                 //window.location.href = "/WebHome/Index";
             },
             error: function (error) {
@@ -68,6 +69,7 @@
 
     }
 </script>
+
 <div class="ps-hero pd-sm"></div>
 <main class="ps-main ps-products-listing pd-23">
     <!-- Hide Quick View  -->
@@ -285,7 +287,7 @@
                                         @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
                                         <!-- Hide Compare  -->
                                         @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
-                                        <li><a href="javascript:void();"  onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void();" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
                                         <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
                                     </ul>
                                 </div>
@@ -340,7 +342,7 @@
                                         @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
                                         <!-- Hide Compare  -->
                                         @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
-                                        <li><a href="javascript:void();"  onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void();" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
                                         <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
                                     </ul>
                                 </div>

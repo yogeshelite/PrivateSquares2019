@@ -27,5 +27,6 @@ namespace PrivateSquareWeb.Models
         public string ProductImages { get; set; }
         public string VendorName { get; set; }
         public string Operation { get; set; }
+        public int SearchResultCount { get; set; }
     }
 }

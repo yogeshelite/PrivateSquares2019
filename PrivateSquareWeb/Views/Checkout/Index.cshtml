@@ -52,7 +52,7 @@
     Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
 }
 
-@using (Html.BeginForm("AddressesList", "Checkout", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddressesList", "Checkout", FormMethod.Post, new { enctype = "multipart/form-data",id="AddressForm"}))
 
 {
     @Html.AntiForgeryToken()
@@ -263,7 +263,7 @@
 
                                                                     <a href="~/ViewCart/ViewCart" class="btn cancel-button mg-r-10">CANCEL</a>
 
-                                                                    <input type="submit" class="btn save-button" onclick="AddAddress()" value="SAVE" />
+                                                                    <input type="button" class="btn save-button" onclick="AddAddress()" value="SAVE" />
 
                                                                 </div>
 
@@ -454,14 +454,14 @@
                         $('.replaceme2').html(-result);
                         $('.replacedeliverycharges').html(50);
 
-                        $('.replaceme3').html('Coupon applied successfully');
+                        $('.replaceme3').html(CouponCode+' Coupon applied successfully');
                         $('.ps-form--icon').toggle("slide");
                     }
                     else                        //means total amount is greater than or equal to 500
                     {
                         $('.replaceme').html(result);
                         $('.replaceme2').html(result);
-                        $('.replaceme3').html('Coupon applied successfully');
+                        $('.replaceme3').html(CouponCode+' Coupon applied successfully');
                         $('.ps-form--icon').toggle("slide");
                     }
                     
@@ -488,5 +488,10 @@
         $('.ps-checkout__billing').show("slide");
         
         $('#pickupdetails').hide("slide");
+    }
+</script>
+<script>
+    var AddAddress = function () {
+        $("#AddressForm").submit();
     }
 </script>
