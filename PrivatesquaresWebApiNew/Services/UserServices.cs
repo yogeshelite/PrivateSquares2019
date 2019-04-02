@@ -361,6 +361,12 @@ namespace PrivatesquaresWebApiNew.Services
             var _result = _instance.IsParentCategory(objModel);
             return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
         }
+
+        public ResponseModel GetChildCategory(ProductModel objModel)
+        {
+            var _result = _instance.GetChildCategory(objModel);
+            return new ResponseModel() { Response = JsonConvert.SerializeObject(_result), Success = true };
+        }
     }
     public interface IUserServices
     {
@@ -418,6 +424,7 @@ namespace PrivatesquaresWebApiNew.Services
         ResponseModel GetCoupon(CouponModel objModel);
         ResponseModel SaveCouponHistory(CouponModel objModel);
         ResponseModel IsParentCategory(ProductModel objModel);
+        ResponseModel GetChildCategory(ProductModel objModel);
         #region Commented Code For Sample Code
         //ResponseModel RegisterUser(UserModel userModel);
 

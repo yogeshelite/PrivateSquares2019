@@ -841,5 +841,17 @@ namespace PrivatesquaresWebApiNew.Controllers
             return Json(new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.IsParentCategory(objProductModel)), Success = true });
 
         }
+
+        [Route("api/User/GetChildCategory")]
+        [HttpPost]
+        public IHttpActionResult GetChildCategory(RequestModel requestModel)
+        {
+
+            var data = requestModel.Data;
+            ProductModel objProductModel = JsonConvert.DeserializeObject<ProductModel>(data);
+            var sendResponse = new ResponseModel() { Response = JsonConvert.SerializeObject(userServices.GetChildCategory(objProductModel)), Success = true };
+            var sendJson = Json(sendResponse);
+            return sendJson;
+        }
     }
 }
