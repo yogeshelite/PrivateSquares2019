@@ -4,6 +4,7 @@
     ViewBag.Title = "ProductDetail";
     Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
 }
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
     var AddToCartSimilarProducts = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
@@ -32,7 +33,9 @@
                 TotalAmount: TotalAmount
             },
             success: function (result) {
-                window.location.href = "/WebHome/ProductDetail/" + location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+                $("#Cartcontent").load(location.href + ' #Cartcontent');
+                //window.location.href = "/WebHome/ProductDetail/" + location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+                swal(" ", "Product Added to the Cart", "success");
             },
             error: function (error) {
                 console.log(error);
@@ -48,7 +51,17 @@
             url: "../../WebHome/AddToWishlist",
             type: "POST",
             data: { ProductId: ProductId },
-            success: function (result) { console.log('Product added to wishlist'); },
+            success: function (result) {
+                if (result == "Please Login to access wishlist") {
+                    swal(result);
+                }
+                else if (result == "Product Exists") {
+                    swal("Product already added to the Wishlist");
+                }
+                else {
+                    swal(" ", result, "success");
+                }
+            },
             error: function (error) {
                 console.log('error');
             }
