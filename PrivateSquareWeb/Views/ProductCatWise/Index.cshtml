@@ -6,6 +6,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
 }
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
     var AddToCart = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
@@ -44,7 +45,7 @@
             success: function (result) {
                 //console.log(result);
                 $("#Cartcontent").load(location.href + ' #Cartcontent');
-                alert('Product Added to the cart');
+                swal(" ", "Product Added to the Cart", "success");
             },
             error: function (error) {
                 console.log(error);
@@ -202,104 +203,104 @@
                 </div>
             </aside>
             @*<aside class="ps-widget--sidebar ps-widget--category">
+            <div class="ps-widget__header">
+                <h3>Brands</h3>
+            </div>
+            <div class="ps-widget__content">
+                <ul class="ps-list--checked">
+                    <li class="current"><a href="product-listing.html">Nike(521)</a></li>
+                    <li><a href="product-listing.html">Adidas(76)</a></li>
+                    <li><a href="product-listing.html">Baseball(69)</a></li>
+                    <li><a href="product-listing.html">Gucci(36)</a></li>
+                    <li><a href="product-listing.html">Dior(108)</a></li>
+                    <li><a href="product-listing.html">B&G(108)</a></li>
+                    <li><a href="product-listing.html">Louis Vuiton(47)</a></li>
+                </ul>
+            </div>
+        </aside>
+        <aside class="ps-widget--sidebar ps-widget--category">
+            <div class="ps-widget__header">
+                <h3>Width</h3>
+            </div>
+            <div class="ps-widget__content">
+                <ul class="ps-list--checked">
+                    <li class="current"><a href="product-listing.html">Narrow</a></li>
+                    <li><a href="product-listing.html">Regular</a></li>
+                    <li><a href="product-listing.html">Wide</a></li>
+                    <li><a href="product-listing.html">Extra Wide</a></li>
+                </ul>
+            </div>
+        </aside>
+        <div class="ps-sticky">
+            <aside class="ps-widget--sidebar">
                 <div class="ps-widget__header">
-                    <h3>Brands</h3>
+                    <h3>Size</h3>
                 </div>
                 <div class="ps-widget__content">
-                    <ul class="ps-list--checked">
-                        <li class="current"><a href="product-listing.html">Nike(521)</a></li>
-                        <li><a href="product-listing.html">Adidas(76)</a></li>
-                        <li><a href="product-listing.html">Baseball(69)</a></li>
-                        <li><a href="product-listing.html">Gucci(36)</a></li>
-                        <li><a href="product-listing.html">Dior(108)</a></li>
-                        <li><a href="product-listing.html">B&G(108)</a></li>
-                        <li><a href="product-listing.html">Louis Vuiton(47)</a></li>
+                    <table class="table ps-table--size">
+                        <tbody>
+                            <tr>
+                                <td class="active">3</td>
+                                <td>5.5</td>
+                                <td>8</td>
+                                <td>10.5</td>
+                                <td>13</td>
+                            </tr>
+                            <tr>
+                                <td>3.5</td>
+                                <td>6</td>
+                                <td>8.5</td>
+                                <td>11</td>
+                                <td>13.5</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>6.5</td>
+                                <td>9</td>
+                                <td>11.5</td>
+                                <td>14</td>
+                            </tr>
+                            <tr>
+                                <td>4.5</td>
+                                <td>7</td>
+                                <td>9.5</td>
+                                <td>12</td>
+                                <td>14.5</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>7.5</td>
+                                <td>10</td>
+                                <td>12.5</td>
+                                <td>15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </aside>
+            <aside class="ps-widget--sidebar">
+                <div class="ps-widget__header">
+                    <h3>Color</h3>
+                </div>
+                <div class="ps-widget__content">
+                    <ul class="ps-list--color">
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
                     </ul>
                 </div>
             </aside>
-            <aside class="ps-widget--sidebar ps-widget--category">
-                <div class="ps-widget__header">
-                    <h3>Width</h3>
-                </div>
-                <div class="ps-widget__content">
-                    <ul class="ps-list--checked">
-                        <li class="current"><a href="product-listing.html">Narrow</a></li>
-                        <li><a href="product-listing.html">Regular</a></li>
-                        <li><a href="product-listing.html">Wide</a></li>
-                        <li><a href="product-listing.html">Extra Wide</a></li>
-                    </ul>
-                </div>
-            </aside>
-            <div class="ps-sticky">
-                <aside class="ps-widget--sidebar">
-                    <div class="ps-widget__header">
-                        <h3>Size</h3>
-                    </div>
-                    <div class="ps-widget__content">
-                        <table class="table ps-table--size">
-                            <tbody>
-                                <tr>
-                                    <td class="active">3</td>
-                                    <td>5.5</td>
-                                    <td>8</td>
-                                    <td>10.5</td>
-                                    <td>13</td>
-                                </tr>
-                                <tr>
-                                    <td>3.5</td>
-                                    <td>6</td>
-                                    <td>8.5</td>
-                                    <td>11</td>
-                                    <td>13.5</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>6.5</td>
-                                    <td>9</td>
-                                    <td>11.5</td>
-                                    <td>14</td>
-                                </tr>
-                                <tr>
-                                    <td>4.5</td>
-                                    <td>7</td>
-                                    <td>9.5</td>
-                                    <td>12</td>
-                                    <td>14.5</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>7.5</td>
-                                    <td>10</td>
-                                    <td>12.5</td>
-                                    <td>15</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </aside>
-                <aside class="ps-widget--sidebar">
-                    <div class="ps-widget__header">
-                        <h3>Color</h3>
-                    </div>
-                    <div class="ps-widget__content">
-                        <ul class="ps-list--color">
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                        </ul>
-                    </div>
-                </aside>
-            </div>*@
+        </div>*@
         </aside>
     </main>
 

@@ -185,15 +185,20 @@ namespace PrivateSquareWeb.Controllers.Website
             LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
             if (MdUser.Id != 0)
             { objmodel.UserId = Convert.ToInt64(MdUser.Id); }
-            else { return JavaScript("window.alert('Please Login to access wishlist');"); }
+            else
+            {
+                //ViewBag.WishListResponse = "Please Login to access wishlist";
+                return Json("Please Login to access wishlist");
+            }
             objmodel.Operation = "insert";
             var result = SaveWishlist(objmodel);
             if (result == "Product Exists")
             {
-                
-                return JavaScript("window.alert('Product already added to the Wishlist');");
+                //ViewBag.WishListResponse = "Product already added to the Wishlist";
+                return Json("Product already added to the Wishlist");
             }
-            return JavaScript("window.alert('Product added to the Wishlist');");
+            //ViewBag.WishListResponse = "Product added to the Wishlist";
+            return Json("Product added to the Wishlist");
 
         }
 
@@ -358,6 +363,13 @@ namespace PrivateSquareWeb.Controllers.Website
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetOrders, _request);
             var Orders = JsonConvert.DeserializeObject<List<SaleOrderModel>>(ObjResponse.Response);
+            foreach (var orders in Orders)
+            {
+
+                DateTime date = orders.OrderDate;
+                TimeSpan time = new TimeSpan(12, 30, 00);
+                orders.OrderDate = orders.OrderDate.Add(time);
+            }
             ViewBag.MyOrders = Orders;
             return View(objmodel);
         }
@@ -406,7 +418,7 @@ namespace PrivateSquareWeb.Controllers.Website
                 if (objModel.ParentCatId == 0)
                 {
                     ViewBag.UsersProduct = ListAllProduct.Skip((pageindex - 1) * 12).Take(12);
-                    ViewBag.ProductsFrom = ((pageindex - 1) * 12)+1;
+                    ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
                     ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                     ViewBag.SearchResultCount = ListAllProduct.Count;
                     if ((ViewBag.SearchResultCount / 10) < (ViewBag.LowerLimit + 4))
@@ -448,8 +460,8 @@ namespace PrivateSquareWeb.Controllers.Website
 
                 var SearchListWithCategory = SearchList.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
                 ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * 12).Take(12);
-                ViewBag.ProductsFrom = ((pageindex - 1) * 12)+1;
-                ViewBag.ToProductsCount = (Enumerable.Count(ViewBag.UsersProduct)-1);
+                ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                ViewBag.ToProductsCount = (Enumerable.Count(ViewBag.UsersProduct) - 1);
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
             }
 

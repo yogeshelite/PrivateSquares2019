@@ -6,7 +6,7 @@
     ViewBag.Title = "SearchBar";
     Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
 }
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
     var AddToCart = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
@@ -45,7 +45,7 @@
             success: function (result) {
                 //console.log(result);
                 $("#Cartcontent").load(location.href + ' #Cartcontent');
-                alert('Product Added to the cart');
+                swal(" ", "Product Added to the Cart", "success");
             },
             error: function (error) {
                 console.log(error);
@@ -55,13 +55,15 @@
 </script>
 <script type="text/javascript">
     var AddToWishlist = function (Id) {
-
+       
         var ProductId = Id;
         $.ajax({
             url: "../../WebHome/AddToWishlist",
             type: "POST",
             data: { ProductId: ProductId },
-            success: function (result) { console.log('Product added to wishlist'); },
+            success: function (result) {
+                swal(" ", result, "success");
+            },
             error: function (error) {
                 console.log('error');
             }
@@ -81,194 +83,193 @@
     @using (Html.BeginForm("SearchBar", "WebHome", FormMethod.Post))
     {
 
+           {
+            Html.RenderAction("WebSiteSidebar", "WebSidebar"); 
 
-
-        {
-            Html.RenderAction("WebSiteSidebar", "WebSidebar");
-        }
+            }
         <div class="ps-content" data-mh="product-page">
-            <div class="ps-product-group no-sidebar pt-40" data-item="4">
-                <div class="ps-product-group__header">
-                    <div class="ps-filter">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
-                                @*<div class="ps-filter__trigger">
-                                        <div class="ps-filter__icon"><span></span></div>
-                                        <p>Filter Product</p>
-                                    </div>*@
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
-                                <div class="ps-filter__result">
-                                    @if (ViewBag.SearchResultCount >= 12)
-                                    {
-                                       
-                                            <p>Showing @(ViewBag.ProductsFrom)–@((ViewBag.ProductsFrom)+ ViewBag.ToProductsCount) of @ViewBag.SearchResultCount results</p>
-                                        
-                                   
-                                }
-                                else
-                                {<p>Showing 1–@ViewBag.SearchResultCount of @ViewBag.SearchResultCount results</p>}
+                <div class="ps-product-group no-sidebar pt-40" data-item="4">
+                    <div class="ps-product-group__header">
+                        <div class="ps-filter">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
+                                    @*<div class="ps-filter__trigger">
+                                            <div class="ps-filter__icon"><span></span></div>
+                                            <p>Filter Product</p>
+                                        </div>*@
                                 </div>
-                            </div>
-                        </div>
-                        @*<div class="ps-filter__content">
-                                <div class="ps-filter__column" data-mh="column">
-                                    <h3>SORT CATEGORIES BY</h3>
-                                    <ul class="ps-list--filter">
-                                        <li class="current"><a href="product-listing.html">All</a></li>
-                                        <li><a href="product-listing.html">Men</a></li>
-                                        <li><a href="product-listing.html">Women</a></li>
-                                        <li><a href="product-listing.html">Suite & Jean</a></li>
-                                        <li><a href="product-listing.html">Accessories</a></li>
-                                        <li><a href="product-listing.html">Kids</a></li>
-                                        <li><a href="product-listing.html">Handmade</a></li>
-                                    </ul>
-                                </div>
-                                <div class="ps-filter__column" data-mh="column">
-                                    <h3>SORT PRODUCTS BY</h3>
-                                    <ul class="ps-list--filter">
-                                        <li class="current"><a href="product-listing.html">Default Sorting</a></li>
-                                        <li><a href="product-listing.html">Sort by popularity</a></li>
-                                        <li><a href="product-listing.html">Sort by average rating</a></li>
-                                        <li><a href="product-listing.html">Sort by newness</a></li>
-                                        <li><a href="product-listing.html">Sort by price: low to high</a></li>
-                                        <li><a href="product-listing.html">Sort by price: high to low</a></li>
-                                    </ul>
-                                </div>
-                                <div class="ps-filter__column" data-mh="column">
-                                    <h3>FILTER BY PRICE</h3>
-                                    <ul class="ps-list--filter">
-                                        <li class="current"><a href="product-listing.html">All</a></li>
-                                        <li><a href="product-listing.html">£10.00 - £110.00</a></li>
-                                        <li><a href="product-listing.html">£110.00 - £210.00</a></li>
-                                        <li><a href="product-listing.html">£210.00 - £310.00</a></li>
-                                        <li><a href="product-listing.html">£310.00+</a></li>
-                                    </ul>
-                                </div>
-                                <div class="ps-filter__column" data-mh="column">
-                                    <h3>FILTER BY PRICE</h3>
-                                    <ul class="ps-list--color">
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                    </ul>
-                                </div>
-                                <div class="ps-filter__column" data-mh="column">
-                                    <h3>FILTER BY PRICE</h3>
-                                    <ul class="ps-list--filter">
-                                        <li class="current"><a href="product-listing.html">All</a></li>
-                                        <li><a href="product-listing.html">New</a></li>
-                                        <li><a href="product-listing.html">SaleOff</a></li>
-                                        <li><a href="product-listing.html">Show Only Products On Sale</a></li>
-                                        <li><a href="product-listing.html">In Stock Only</a></li>
-                                        <li><a href="product-listing.html">Out of stock</a></li>
-                                    </ul>
-                                </div>
-                            </div>*@
-                    </div>
-                </div>
-                <div class="ps-product-group__content">
-                    @foreach (var Users in ViewBag.UsersProduct)
-                    {
-                        <div class="ps-product-group__action"></div>
-                        <div class="ps-product-wrap">
-                            <div class="ps-product--fashion">
-                                <div class="ps-product__thumbnail">
-                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
-                                    @{ if (@Users.ProductImage == null)
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+                                    <div class="ps-filter__result">
+                                        @if (ViewBag.SearchResultCount >= 12)
                                         {
-                                            <img src="~/DocImg/deafult.png" alt="">
+
+                                            <p>Showing @(ViewBag.ProductsFrom)–@((ViewBag.ProductsFrom) + ViewBag.ToProductsCount) of @ViewBag.SearchResultCount results</p>
+
+
                                         }
                                         else
-                                        {
-                                            <img src="~/DocImg/@Users.ProductImage" alt="">
-                                        }
-                                    }
-                                    @{
-                                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
-                                    }
-                                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
-                                    <ul class="ps-product__actions">
-                                        <!-- Hide Quick View  -->
-                                        @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
-                                        <!-- Hide Compare  -->
-                                        @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
-                                        <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="ps-product__content">
-                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
-                                    <p class="ps-product__price">
-                                        <del>@Users.SellingPrice</del>@Users.DiscountPrice
-                                    </p><a class="ps-product__cart" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                                        {<p>Showing 1–@ViewBag.SearchResultCount of @ViewBag.SearchResultCount results</p>}
+                                    </div>
                                 </div>
                             </div>
+                            @*<div class="ps-filter__content">
+                                    <div class="ps-filter__column" data-mh="column">
+                                        <h3>SORT CATEGORIES BY</h3>
+                                        <ul class="ps-list--filter">
+                                            <li class="current"><a href="product-listing.html">All</a></li>
+                                            <li><a href="product-listing.html">Men</a></li>
+                                            <li><a href="product-listing.html">Women</a></li>
+                                            <li><a href="product-listing.html">Suite & Jean</a></li>
+                                            <li><a href="product-listing.html">Accessories</a></li>
+                                            <li><a href="product-listing.html">Kids</a></li>
+                                            <li><a href="product-listing.html">Handmade</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ps-filter__column" data-mh="column">
+                                        <h3>SORT PRODUCTS BY</h3>
+                                        <ul class="ps-list--filter">
+                                            <li class="current"><a href="product-listing.html">Default Sorting</a></li>
+                                            <li><a href="product-listing.html">Sort by popularity</a></li>
+                                            <li><a href="product-listing.html">Sort by average rating</a></li>
+                                            <li><a href="product-listing.html">Sort by newness</a></li>
+                                            <li><a href="product-listing.html">Sort by price: low to high</a></li>
+                                            <li><a href="product-listing.html">Sort by price: high to low</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ps-filter__column" data-mh="column">
+                                        <h3>FILTER BY PRICE</h3>
+                                        <ul class="ps-list--filter">
+                                            <li class="current"><a href="product-listing.html">All</a></li>
+                                            <li><a href="product-listing.html">£10.00 - £110.00</a></li>
+                                            <li><a href="product-listing.html">£110.00 - £210.00</a></li>
+                                            <li><a href="product-listing.html">£210.00 - £310.00</a></li>
+                                            <li><a href="product-listing.html">£310.00+</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ps-filter__column" data-mh="column">
+                                        <h3>FILTER BY PRICE</h3>
+                                        <ul class="ps-list--color">
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                            <li><a href="#"></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ps-filter__column" data-mh="column">
+                                        <h3>FILTER BY PRICE</h3>
+                                        <ul class="ps-list--filter">
+                                            <li class="current"><a href="product-listing.html">All</a></li>
+                                            <li><a href="product-listing.html">New</a></li>
+                                            <li><a href="product-listing.html">SaleOff</a></li>
+                                            <li><a href="product-listing.html">Show Only Products On Sale</a></li>
+                                            <li><a href="product-listing.html">In Stock Only</a></li>
+                                            <li><a href="product-listing.html">Out of stock</a></li>
+                                        </ul>
+                                    </div>
+                                </div>*@
                         </div>
+                    </div>
+                    <div class="ps-product-group__content">
+                        @foreach (var Users in ViewBag.UsersProduct)
+                        {
+                            <div class="ps-product-group__action"></div>
+                            <div class="ps-product-wrap">
+                                <div class="ps-product--fashion">
+                                    <div class="ps-product__thumbnail">
+                                        <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                        @{ if (@Users.ProductImage == null)
+                                            {
+                                                <img src="~/DocImg/deafult.png" alt="">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/DocImg/@Users.ProductImage" alt="">
+                                            }
+                                        }
+                                        @{
+                                            string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                                        }
+                                        <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                                        <ul class="ps-product__actions">
+                                            <!-- Hide Quick View  -->
+                                            @*<li><a class="ps-modal-open" id="Quickviewlink" onclick="QuickView(@Users.Id)" title="Quick View"><i class="ps-icon-eye"></i></a></li>*@
+                                            <!-- Hide Compare  -->
+                                            @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                                            <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ps-product__content">
+                                        <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                                        <p class="ps-product__price">
+                                            <del>@Users.SellingPrice</del>@Users.DiscountPrice
+                                        </p><a class="ps-product__cart" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
 
 
-                    }
+                        }
 
-                </div>
-                <div class="ps-product-group__footer">
-                    <div class="ps-pagination mb-50">
-                        <ul class="pagination">
-                            @if ((ViewBag.SearchResultCount / 10) > 1)
-                            {
-                                var n = ViewBag.LowerLimit;
-                                <li><a href="~/WebHome/PreviousPages/@(ViewBag.LowerLimit-1)"><i class="fa fa-angle-left"></i></a></li>
-                                do
+                    </div>
+                    <div class="ps-product-group__footer">
+                        <div class="ps-pagination mb-50">
+                            <ul class="pagination">
+                                @if ((ViewBag.SearchResultCount / 10) > 1)
                                 {
-                                    <li><a href="~/WebHome/NextPage/@n">@n</a></li>
-                                    n++;
-                                }
-                                while (n <= (ViewBag.NumberOfPages));
-                                if ((ViewBag.SearchResultCount / 10) > ViewBag.NumberOfPages)
-                                {
-                                    <li><a href="~/WebHome/MorePages/@n"><i class="fa fa-angle-right"></i></a></li>
-                                }
-                                @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">...</a></li>
-                                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
-                            }
-                            else
-                            {
-                                if (ViewBag.SearchResultCount < 10)
-                                {
-                                    <li class="active"><a href="#">1</a></li>
+                                    var n = ViewBag.LowerLimit;
+                                    <li><a href="~/WebHome/PreviousPages/@(ViewBag.LowerLimit-1)"><i class="fa fa-angle-left"></i></a></li>
+                                    do
+                                    {
+                                        <li><a href="~/WebHome/NextPage/@n">@n</a></li>
+                                        n++;
+                                    }
+                                    while (n <= (ViewBag.NumberOfPages));
+                                    if ((ViewBag.SearchResultCount / 10) > ViewBag.NumberOfPages)
+                                    {
+                                        <li><a href="~/WebHome/MorePages/@n"><i class="fa fa-angle-right"></i></a></li>
+                                    }
+                                    @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">...</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
                                 }
                                 else
                                 {
-                                    if ((ViewBag.SearchResultCount % 10) != 0)
-                                    {
-                                        @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
-                                        <li class="active"><a href="~/WebHome/NextPage/1">1</a></li>
-                                        <li><a href="~/WebHome/NextPage/2">2</a></li>
-                                    }
-                                    else
+                                    if (ViewBag.SearchResultCount < 10)
                                     {
                                         <li class="active"><a href="#">1</a></li>
                                     }
+                                    else
+                                    {
+                                        if ((ViewBag.SearchResultCount % 10) != 0)
+                                        {
+                                            @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
+                                            <li class="active"><a href="~/WebHome/NextPage/1">1</a></li>
+                                            <li><a href="~/WebHome/NextPage/2">2</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="active"><a href="#">1</a></li>
+                                        }
+                                    }
                                 }
-                            }
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-</main>
+            }
+    </main>
 <div class="ps-section--partner">
     <div class="ps-container">
         <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a></div>

@@ -16,7 +16,7 @@ namespace PrivateSquareWeb.Controllers.Website
         {
             return View();
         }
-        public PartialViewResult HeaderValue()
+        public PartialViewResult HeaderValue(HeaderPartialModel objmodel1)
         {
             HeaderPartialModel objModel = new HeaderPartialModel();
             LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
@@ -29,7 +29,9 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.AddToCart = ListAddToCart;
             ViewBag.TotalAmount = GetTotalAmount(ListAddToCart);
             var parentcategories = CommonFile.GetProductCategory(0);
+
             ViewBag.ParentCategories = new SelectList(parentcategories, "Id", "Name");
+            objModel.ParentCatId = objmodel1.ParentCatId;
             return PartialView("~/Views/Shared/_WebsiteHeader.cshtml", objModel);
         }
         public JsonResult RemoveToCart(int index)
@@ -45,7 +47,7 @@ namespace PrivateSquareWeb.Controllers.Website
             return objAddToCart.GetTotalAmount(ListCart);
         }
 
-
+      
 
     }
 }

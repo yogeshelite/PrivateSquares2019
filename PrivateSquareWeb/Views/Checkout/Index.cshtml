@@ -1,4 +1,5 @@
-﻿<script type="text/javascript">
+﻿<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
     var PlaceOrder = function () {
         var radioAddressBtns = document.getElementsByName("rdoAddress");
         var AddressId = 0;
@@ -9,7 +10,8 @@
             }
         }
         if (AddressId == 0) {
-            alert("Please Select Shipping Address");
+            swal("Please Select Shipping Address");
+            //alert("Please Select Shipping Address");
             return;
         }
 
@@ -33,10 +35,12 @@
                 "PaymentMode": PaymentMode
             },
             success: function (result) {
-                console.log(result);
+                //console.log(result);
                 var response = JSON.parse(result);
-                alert(response[0].Response)
-                if (response[0].Response == "Order Saved") {
+                //alert(response[0].Response)
+                //if (response[0].Response == "Order Saved") 
+                swal(" ", response[0].Response, "success");
+                {
                     window.location.href = "/WebHome/MyOrders";
                 }
 
@@ -199,6 +203,21 @@
 
 
 
+                                                                @*<div class="col-lg-6">
+
+                                                                    <div class="form-group">
+
+                                                                        <label class="form-control-label">State: <span class="tx-danger">*</span></label>
+
+                                                                        <input class="form-control" type="text" name="City" value="" placeholder="State">
+
+                                                                        @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, "--Select--", new { @class = "form-control select2" })
+                                                                        @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+
+                                                                    </div>
+
+                                                                </div>*@<!-- col-6 -->
+
                                                                 <div class="col-lg-6">
 
                                                                     <div class="form-group">
@@ -206,21 +225,6 @@
                                                                         <label class="form-control-label">City: <span class="tx-danger">*</span></label>
 
                                                                         @*<input class="form-control" type="text" name="City" value="" placeholder="City">*@
-
-                                                                        @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, "--Select--", new { @class = "form-control select2" })
-                                                                        @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-
-                                                                    </div>
-
-                                                                </div><!-- col-6 -->
-
-                                                                <div class="col-lg-6">
-
-                                                                    <div class="form-group">
-
-                                                                        <label class="form-control-label">State: <span class="tx-danger">*</span></label>
-
-                                                                        @*<input class="form-control" type="text" name="State" value="" placeholder="State">*@
 
                                                                         @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
                                                                         @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
@@ -233,7 +237,7 @@
 
                                                                     <div class="form-group">
 
-                                                                        <label class="form-control-label">Landmark: <span class="tx-danger">*</span></label>
+                                                                        <label class="form-control-label">Landmark: <span class="tx-danger"></span></label>
 
                                                                         @*<input class="form-control" type="text" name="Landmark" value="" placeholder="Landmark">*@
 
@@ -248,7 +252,7 @@
 
                                                                     <div class="form-group">
 
-                                                                        <label class="form-control-label">Alternate phone: <span class="tx-danger">*</span></label>
+                                                                        <label class="form-control-label">Alternate phone: <span class="tx-danger"></span></label>
 
                                                                         @*<input class="form-control" type="text" name="State" value="" placeholder="Alternate phone">*@
 

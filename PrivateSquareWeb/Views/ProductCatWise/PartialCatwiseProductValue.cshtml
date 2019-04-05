@@ -1,5 +1,6 @@
 ﻿@model PrivateSquareWeb.Models.ProductModel
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
     var AddToCartCatWise = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage, ProductCatId) {
@@ -39,7 +40,7 @@
                 //console.log(result);
                 //window.location.href = "/ProductCatWise/Index/" + ProductCatId;
                 $("#Cartcontent").load(location.href + ' #Cartcontent');
-                alert('Product Added to the cart');
+                swal(" ", "Product Added to the Cart", "success");
             },
             error: function (error) {
                 console.log(error);
@@ -84,7 +85,17 @@
             url: "../../WebHome/AddToWishlist",
             type: "POST",
             data: { ProductId: ProductId },
-            success: function (result) { console.log('Product added to wishlist'); },
+            success: function (result) {
+                if (result == "Please Login to access wishlist") {
+                    swal(result);
+                }
+                else if (result == "Product Exists") {
+                    swal("Product already added to the Wishlist");
+                }
+                else {
+                    swal(" ", result, "success");
+                }
+            },
             error: function (error) {
                 console.log('error');
             }

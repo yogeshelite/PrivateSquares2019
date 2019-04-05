@@ -1,4 +1,4 @@
-﻿@model PrivateSquareWeb.Models.HeaderPartialModel
+﻿@model PrivateSquareWeb.Models.HeaderPartialModel 
 
 <script type="text/javascript">
     var DeleteItem = function (index) {
@@ -65,8 +65,11 @@
                 console.log(error);
             }
         });
-    }
+    }   
+
+
 </script>
+
 
 
 <div class="header--sidebar"></div>
@@ -91,7 +94,7 @@
 
                                             <li><a href="~/WebHome/MyOrders">My Orders</a></li>
                                             <li><a href="~/WebHome/WishList">My Wishlist</a></li>
-
+                                            <li><a href="~/ChangePassword/WebIndex">Change Password</a></li>
                                             <li><a href="/WebLogin/Logout">Log Out</a></li>
 
 
@@ -144,7 +147,7 @@
                             <option value="5">6</option>
                         </select>*@
 
-                    @Html.DropDownListFor(m => m.ParentCatId, ViewBag.ParentCategories as SelectList, "All Categories", new { @class = "ps-select selectpicker col-lg-4 pull-left" })
+                    @Html.DropDownListFor(m => m.ParentCatId, ViewBag.ParentCategories as SelectList, "All Categories", new { @class = "ps-select selectpicker col-lg-4 pull-left"})
                     <div class="col-lg-8 pull-left">
 
                         @*<form class="ps-form--search" action="do_action" method="post">*@
@@ -230,6 +233,13 @@
         </div>
     </nav>
 </header>
+
+@*<script type="text/javascript">
+    function SelectedIndexChanged() {
+
+        document.demoForm.submit();
+    }
+</script>*@
 
 
 
