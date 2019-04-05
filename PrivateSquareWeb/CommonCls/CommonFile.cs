@@ -172,10 +172,10 @@ namespace PrivateSquareWeb.CommonCls
             try
             {
                 string Host = string.Empty;
-                string Port = string.Empty; ;
+                string Port = string.Empty;
                 string EnableSsl = "false";
                 string UseDefaultCredentials = "false";
-                string FromMailAddress = string.Empty; ;
+                string FromMailAddress = string.Empty;
                 string FromMailerPWD = string.Empty;
                 bool IsGmailSmptServer = Convert.ToBoolean(ConfigurationManager.AppSettings["IsGmailSmpt"]);
                 if (IsGmailSmptServer)
@@ -399,6 +399,17 @@ namespace PrivateSquareWeb.CommonCls
             //{
             //    return false;
             //}
+        }
+        public static List<ProductModel> GetChildCategory(int id)
+        {
+            var Categories = new List<ProductModel>();
+            ProductModel objmodel = new ProductModel();
+            objmodel.ProductCatId = id;
+            var _request = JsonConvert.SerializeObject(objmodel);
+            ResponseModel objResponse = CommonFile.GetApiResponse(Constant.ApiGetChildCategory, _request);
+            Categories = JsonConvert.DeserializeObject<List<ProductModel>>(objResponse.Response);
+            return Categories;
+
         }
     }
 }

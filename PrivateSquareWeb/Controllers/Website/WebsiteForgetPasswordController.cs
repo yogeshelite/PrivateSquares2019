@@ -63,7 +63,7 @@ namespace PrivateSquareWeb.Controllers.Website
             String userName = objModel.EmailId;
             String Password = Forgetpassword;
             String domainName = Constant.DomainUrl;
-            String Path = "Login/ResetPasword/";
+            String Path = "Login/WebResetPassword/";
 
             var jsonString = "{\"EmailId\":\"" + objModel.EmailId + "\",\"Date\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " \",\"Id\":\"" + respoLinkId.ToString() + "\"}";
             //  String jwtToken=  _JwtTokenManager.GenerateToken(jsonString.ToString());

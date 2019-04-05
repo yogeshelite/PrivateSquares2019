@@ -462,7 +462,7 @@ namespace PrivateSquareWeb.Controllers
             FaceBookConnect.Authorize("user_photos,email", string.Format("{0}://{1}/{2}", Request.Url.Scheme, Request.Url.Authority, "Home/Index/"));
             return new EmptyResult();
         }
-        public ActionResult ResetPasword(string id)
+        public ActionResult WebResetPassword(string id)
         {
 
             String CheckId = id;
@@ -494,21 +494,21 @@ namespace PrivateSquareWeb.Controllers
             }
 
 
-            return View("ResetPasword");
+            return View("WebResetPassword");
         }
         [HttpPost]
-        public ActionResult ResetPasword(LoginModel ObjModel, string id)
+        public ActionResult WebResetPassword(LoginModel ObjModel, string id)
         {
 
             if (string.IsNullOrWhiteSpace(ObjModel.Password))
             {
                 ModelState.AddModelError("Password", "Password Is Required");
-                return View("ResetPasword", ObjModel);
+                return View("WebResetPassword", ObjModel);
             }
             if (string.IsNullOrWhiteSpace(ObjModel.ConfirmPassword))
             {
                 ModelState.AddModelError("ConfirmPassword", "ConfirmPassword Is Required");
-                return View("ResetPasword", ObjModel);
+                return View("WebResetPassword", ObjModel);
             }
             String CheckId = id;
             byte[] b = Convert.FromBase64String(id);
@@ -529,7 +529,7 @@ namespace PrivateSquareWeb.Controllers
             if (hours > 6)
             {
                 ViewBag.ResponseMassege = "Link Hasben Expired. Please Try Again..";
-                return View("ResetPasword", ObjModel);
+                return View("WebResetPassword", ObjModel);
             }
             bool IsValied = GetLinkValied(Email, StrLinkId);
 
@@ -564,10 +564,10 @@ namespace PrivateSquareWeb.Controllers
             }
             else
             {
-                ViewBag.ResponseMassege = "Password Not Match";
+                ViewBag.ResponseMassege = "Passwords don't Match";
                 // ModelState.AddModelError("Not Match", "New Password Or ConfirmPassword Not Match");
             }
-            return View("ResetPasword", ObjModel);
+            return View("WebResetPassword", ObjModel);
         }
         public bool GetLinkValied(String Email, String StrLinkId)
         {
