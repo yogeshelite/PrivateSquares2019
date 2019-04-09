@@ -82,35 +82,6 @@
         });
     }
 </script>
-<!-- Hide Quick View  -->
-@*<script>
-        var QuickView = function (ProductId) {
-            var ProductId = ProductId;
-            // Call AJAX here
-            $.ajax({
-                method: "POST",
-                url: "../../WebHome/ProductQuickView/", // Your URL here
-                data: { ProductId: ProductId },
-                success: function (result) {
-                    //debugger;
-                    console.log(result);
-
-                    //$('#quickView').innerhtml(result);
-                    //document.getElementById("quickView").innerHTML = result;
-                    $mymodal = $("#myModal");
-                    $mymodal.find("div.modal-body").html(result);
-                    $('#openpopup').click();
-                    console.log('Click triggered');
-                    $mymodal.modal("show");
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-
-            // Redirect here
-        }
-    </script>*@
 <script>
     var PriceLowToHigh = function () {
         alert('Product sorted by price (low to high)');
@@ -125,7 +96,7 @@
     <div class="ps-hero">
         <div class="container">
             <h3>SHOP PAGE</h3>
-            <p>Shop with Sidebar</p>
+            @*<p>Shop with Sidebar</p>*@
         </div>
     </div>
     <main class="ps-main ps-products-listing">
@@ -168,7 +139,66 @@
                     </div>
 
                 </div>
-                
+                @*<div class="ps-product-group__footer">
+                        <div class="ps-pagination">
+                            <ul class="pagination">
+                                <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">...</a></li>
+                                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>*@
+                <div class="ps-product-group__footer">
+                    <div class="ps-pagination mb-50">
+                        <ul class="pagination">
+                            @if ((ViewBag.SearchResultCount / 10) > 1)
+                            {
+                                var n = ViewBag.LowerLimit;
+                                <li><a href="~/ProductCatWise/PreviousPages/@(ViewBag.LowerLimit-1)"><i class="fa fa-angle-left"></i></a></li>
+                                do
+                                {
+                                    <li><a onclick="nextpage(@n)">@n</a></li>
+                                    n++;
+                                }
+                                while (n <= (ViewBag.NumberOfPages));
+                                if ((ViewBag.SearchResultCount / 10) > ViewBag.NumberOfPages)
+                                {
+                                    <li><a href="~/ProductCatWise/MorePages/@n"><i class="fa fa-angle-right"></i></a></li>
+                                }
+                                @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">...</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
+                            }
+                            else
+                            {
+                                if (ViewBag.SearchResultCount < 10)
+                                {
+                                    @*<li class="active"><a href="#">1</a></li>*@
+                                }
+                                else
+                                {
+                                    if ((ViewBag.SearchResultCount % 10) != 0)
+                                    {
+                                        @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
+                                        <li class="active" id="pagenumber1"><a onclick="nextpage(1)">1</a></li>
+                                        <li id="pagenumber2"><a onclick="nextpage(2)">2</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="active"><a href="#">1</a></li>
+                                    }
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
         <aside class="ps-sidebar" data-mh="product-page">
@@ -203,104 +233,104 @@
                 </div>
             </aside>
             @*<aside class="ps-widget--sidebar ps-widget--category">
-            <div class="ps-widget__header">
-                <h3>Brands</h3>
-            </div>
-            <div class="ps-widget__content">
-                <ul class="ps-list--checked">
-                    <li class="current"><a href="product-listing.html">Nike(521)</a></li>
-                    <li><a href="product-listing.html">Adidas(76)</a></li>
-                    <li><a href="product-listing.html">Baseball(69)</a></li>
-                    <li><a href="product-listing.html">Gucci(36)</a></li>
-                    <li><a href="product-listing.html">Dior(108)</a></li>
-                    <li><a href="product-listing.html">B&G(108)</a></li>
-                    <li><a href="product-listing.html">Louis Vuiton(47)</a></li>
-                </ul>
-            </div>
-        </aside>
-        <aside class="ps-widget--sidebar ps-widget--category">
-            <div class="ps-widget__header">
-                <h3>Width</h3>
-            </div>
-            <div class="ps-widget__content">
-                <ul class="ps-list--checked">
-                    <li class="current"><a href="product-listing.html">Narrow</a></li>
-                    <li><a href="product-listing.html">Regular</a></li>
-                    <li><a href="product-listing.html">Wide</a></li>
-                    <li><a href="product-listing.html">Extra Wide</a></li>
-                </ul>
-            </div>
-        </aside>
-        <div class="ps-sticky">
-            <aside class="ps-widget--sidebar">
-                <div class="ps-widget__header">
-                    <h3>Size</h3>
-                </div>
-                <div class="ps-widget__content">
-                    <table class="table ps-table--size">
-                        <tbody>
-                            <tr>
-                                <td class="active">3</td>
-                                <td>5.5</td>
-                                <td>8</td>
-                                <td>10.5</td>
-                                <td>13</td>
-                            </tr>
-                            <tr>
-                                <td>3.5</td>
-                                <td>6</td>
-                                <td>8.5</td>
-                                <td>11</td>
-                                <td>13.5</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>6.5</td>
-                                <td>9</td>
-                                <td>11.5</td>
-                                <td>14</td>
-                            </tr>
-                            <tr>
-                                <td>4.5</td>
-                                <td>7</td>
-                                <td>9.5</td>
-                                <td>12</td>
-                                <td>14.5</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>7.5</td>
-                                <td>10</td>
-                                <td>12.5</td>
-                                <td>15</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </aside>
-            <aside class="ps-widget--sidebar">
-                <div class="ps-widget__header">
-                    <h3>Color</h3>
-                </div>
-                <div class="ps-widget__content">
-                    <ul class="ps-list--color">
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                    </ul>
-                </div>
-            </aside>
-        </div>*@
+                    <div class="ps-widget__header">
+                        <h3>Brands</h3>
+                    </div>
+                    <div class="ps-widget__content">
+                        <ul class="ps-list--checked">
+                            <li class="current"><a href="product-listing.html">Nike(521)</a></li>
+                            <li><a href="product-listing.html">Adidas(76)</a></li>
+                            <li><a href="product-listing.html">Baseball(69)</a></li>
+                            <li><a href="product-listing.html">Gucci(36)</a></li>
+                            <li><a href="product-listing.html">Dior(108)</a></li>
+                            <li><a href="product-listing.html">B&G(108)</a></li>
+                            <li><a href="product-listing.html">Louis Vuiton(47)</a></li>
+                        </ul>
+                    </div>
+                </aside>
+                <aside class="ps-widget--sidebar ps-widget--category">
+                    <div class="ps-widget__header">
+                        <h3>Width</h3>
+                    </div>
+                    <div class="ps-widget__content">
+                        <ul class="ps-list--checked">
+                            <li class="current"><a href="product-listing.html">Narrow</a></li>
+                            <li><a href="product-listing.html">Regular</a></li>
+                            <li><a href="product-listing.html">Wide</a></li>
+                            <li><a href="product-listing.html">Extra Wide</a></li>
+                        </ul>
+                    </div>
+                </aside>
+                <div class="ps-sticky">
+                    <aside class="ps-widget--sidebar">
+                        <div class="ps-widget__header">
+                            <h3>Size</h3>
+                        </div>
+                        <div class="ps-widget__content">
+                            <table class="table ps-table--size">
+                                <tbody>
+                                    <tr>
+                                        <td class="active">3</td>
+                                        <td>5.5</td>
+                                        <td>8</td>
+                                        <td>10.5</td>
+                                        <td>13</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3.5</td>
+                                        <td>6</td>
+                                        <td>8.5</td>
+                                        <td>11</td>
+                                        <td>13.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>6.5</td>
+                                        <td>9</td>
+                                        <td>11.5</td>
+                                        <td>14</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4.5</td>
+                                        <td>7</td>
+                                        <td>9.5</td>
+                                        <td>12</td>
+                                        <td>14.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>7.5</td>
+                                        <td>10</td>
+                                        <td>12.5</td>
+                                        <td>15</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </aside>
+                    <aside class="ps-widget--sidebar">
+                        <div class="ps-widget__header">
+                            <h3>Color</h3>
+                        </div>
+                        <div class="ps-widget__content">
+                            <ul class="ps-list--color">
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                            </ul>
+                        </div>
+                    </aside>
+                </div>*@
         </aside>
     </main>
 
@@ -311,124 +341,124 @@
 
     <div class="slim-mainpanel">
         @*<div class="container">
-            <div class="manager-header">
-                <div class="slim-pageheader">
-                    <ol class="breadcrumb slim-breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Contact Manager</li>
-                    </ol>
-                    <!-- <h6 class="slim-pagetitle">Contact Manager</h6> -->
-                </div><!-- slim-pageheader -->
-                <a id="contactNavicon" href="" class="contact-navicon"><i class="icon ion-navicon-round"></i></a>
-            </div><!-- manager-header -->
+                <div class="manager-header">
+                    <div class="slim-pageheader">
+                        <ol class="breadcrumb slim-breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Contact Manager</li>
+                        </ol>
+                        <!-- <h6 class="slim-pagetitle">Contact Manager</h6> -->
+                    </div><!-- slim-pageheader -->
+                    <a id="contactNavicon" href="" class="contact-navicon"><i class="icon ion-navicon-round"></i></a>
+                </div><!-- manager-header -->
 
-            <div class="manager-wrapper">
-                <div class="manager-right">
-                    <div class="search-box">
-                        <input type="text" name="TxtSearch" id="TxtSearch" class="form-control" placeholder="Search">
-                        <input type="submit" name="submit" value="Search" class="btn btn-primary"><i class="fa fa-search"></i>
-                       
+                <div class="manager-wrapper">
+                    <div class="manager-right">
+                        <div class="search-box">
+                            <input type="text" name="TxtSearch" id="TxtSearch" class="form-control" placeholder="Search">
+                            <input type="submit" name="submit" value="Search" class="btn btn-primary"><i class="fa fa-search"></i>
+
+                        </div>
+
+
+
+
+                    </div>
+                    <!-- manager-right -->
+                    <div class="manager-left">
+                        <label class="section-label-sm mg-t-25">Categories</label>
+                        <nav class="nav">
+                            @foreach (var Cat in ViewBag.ProductCatList)
+                            {
+                                <a href="/ProductCatWise/Index/@Cat.Id" class="nav-link">
+                                    <span>@Cat.Name</span>
+                                    <span>@Cat.Id</span>
+                                </a>
+                            }
+
+                        </nav>
+                        <label class="section-label-sm mg-t-25">Filter Price</label>
+                        <nav class="nav">
+
+                        </nav>
+                        <label class="section-label-sm mg-t-25">Old</label>
+                        <nav class="nav">
+                            <a href="" class="nav-link active">
+                                <span>All Contacts</span>
+                                <span>120</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Family</span>
+                                <span>16</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Friends</span>
+                                <span>68</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Co-workers</span>
+                                <span>38</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Favorites</span>
+                                <span>9</span>
+                            </a>
+                        </nav>
+
+                        <label class="section-label-sm mg-t-25">Location</label>
+                        <nav class="nav">
+                            <a href="" class="nav-link">
+                                <span>San Francisco</span>
+                                <span>10</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Los Angeles</span>
+                                <span>16</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>New York</span>
+                                <span>15</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Las Vegas</span>
+                                <span>4</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Sacramento</span>
+                                <span>4</span>
+                            </a>
+                        </nav>
+
+                        <label class="section-label-sm mg-t-25">Job Position</label>
+                        <nav class="nav">
+                            <a href="" class="nav-link">
+                                <span>Software Engineer</span>
+                                <span>4</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>UI Designer</span>
+                                <span>6</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Sales Representative</span>
+                                <span>5</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Mechanical Engineer</span>
+                                <span>4</span>
+                            </a>
+                            <a href="" class="nav-link">
+                                <span>Nurse</span>
+                                <span>4</span>
+                            </a>
+                        </nav>
                     </div>
 
+                    <!-- manager-left -->
+                </div><!-- manager-wrapper -->
 
-
-
-                </div>
-                <!-- manager-right -->
-                <div class="manager-left">
-                    <label class="section-label-sm mg-t-25">Categories</label>
-                    <nav class="nav">
-                        @foreach (var Cat in ViewBag.ProductCatList)
-                        {
-                            <a href="/ProductCatWise/Index/@Cat.Id" class="nav-link">
-                                <span>@Cat.Name</span>
-                                <span>@Cat.Id</span>
-                            </a>
-                        }
-
-                    </nav>
-                    <label class="section-label-sm mg-t-25">Filter Price</label>
-                    <nav class="nav">
-
-                    </nav>
-                    <label class="section-label-sm mg-t-25">Old</label>
-                    <nav class="nav">
-                        <a href="" class="nav-link active">
-                            <span>All Contacts</span>
-                            <span>120</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Family</span>
-                            <span>16</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Friends</span>
-                            <span>68</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Co-workers</span>
-                            <span>38</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Favorites</span>
-                            <span>9</span>
-                        </a>
-                    </nav>
-
-                    <label class="section-label-sm mg-t-25">Location</label>
-                    <nav class="nav">
-                        <a href="" class="nav-link">
-                            <span>San Francisco</span>
-                            <span>10</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Los Angeles</span>
-                            <span>16</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>New York</span>
-                            <span>15</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Las Vegas</span>
-                            <span>4</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Sacramento</span>
-                            <span>4</span>
-                        </a>
-                    </nav>
-
-                    <label class="section-label-sm mg-t-25">Job Position</label>
-                    <nav class="nav">
-                        <a href="" class="nav-link">
-                            <span>Software Engineer</span>
-                            <span>4</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>UI Designer</span>
-                            <span>6</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Sales Representative</span>
-                            <span>5</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Mechanical Engineer</span>
-                            <span>4</span>
-                        </a>
-                        <a href="" class="nav-link">
-                            <span>Nurse</span>
-                            <span>4</span>
-                        </a>
-                    </nav>
-                </div>
-
-                <!-- manager-left -->
-            </div><!-- manager-wrapper -->
-
-        </div><!-- container -->*@
+            </div><!-- container -->*@
     </div><!-- slim-mainpanel -->
 }
 
@@ -475,5 +505,12 @@
                 $("#DivItemBind").html(result);
             }
         });
+        if (id == 1) {
+            $("#pagenumber2").removeClass("active");
+            $("#pagenumber1").addClass("active");}
+        else {
+            $("#pagenumber1").removeClass("active");
+            $("#pagenumber2").addClass("active");
+        }
     }
 </script>

@@ -561,6 +561,7 @@ namespace PrivateSquareWeb.Controllers
                 ResponseModel ObjResponseLink1 = JsonConvert.DeserializeObject<ResponseModel>(ObjResponseLink.Response);
 
                 string respoLinkId = ObjResponseLink1.Response;
+                return View("../WebLogin/Index");
             }
             else
             {

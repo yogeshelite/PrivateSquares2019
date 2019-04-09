@@ -73,7 +73,7 @@ namespace PrivateSquareWeb.Controllers.Website
             // convert the byte array to a Base64 string
             String Base64 = Convert.ToBase64String(byt);
             String ForgetLink = domainName + Path + Base64;
-            string body = "Click Here <br/> Reset Password <br/>" + ForgetLink;
+            string body = "Click Here <br/> Reset Password <br/>" + "<a href="+ForgetLink+">"+ForgetLink+"</a>";
             int respoEmail = CommonFile.SendMailContact(objModel.EmailId, subject, userName, Password, body);
             // Response = "[{\"Response\":\"" + respoEmail + "\"}]";
             if (respoEmail == 1)
