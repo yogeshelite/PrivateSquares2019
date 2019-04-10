@@ -199,8 +199,8 @@ namespace PrivateSquareWeb.CommonCls
                     FromMailerPWD = ConfigurationManager.AppSettings["FromMailerPWDGoD"];
                     #endregion
                 }
-                var senderEmail = new MailAddress(FromMailAddress, userName);
-                var receiverEmail = new MailAddress(receiverEmailId, "Receiver");
+                var senderEmail = new MailAddress(FromMailAddress, "Sender");
+                var receiverEmail = new MailAddress(receiverEmailId, userName);
                 var password = FromMailerPWD;
                 //var body = "<b>Thanks For Visit Your </b><p> User Name Is=" + userName + "</p><p> Password Is= " + userPassword + "</p>";
                 var smtp = new SmtpClient

@@ -172,7 +172,7 @@ namespace PrivateSquareWeb.Controllers.Website
             {
                 objmodel.UserId = Convert.ToInt64(MdUser.Id);
             }
-            else { return JavaScript("window.alert('Please Login to access wishlist');"); }
+            else { return JavaScript("window.swal('Please Login to access wishlist');"); }
             var _request = JsonConvert.SerializeObject(objmodel);
             ResponseModel ObjResponse = CommonFile.GetApiResponse(Constant.ApiGetWishlist, _request);
             var ProductWishlist = JsonConvert.DeserializeObject<List<ProductModel>>(ObjResponse.Response);

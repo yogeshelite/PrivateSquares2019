@@ -5,7 +5,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
 
                     <div class="ps-site-info site-info">
-                        <a class="ps-logo" href="index.html"><img src="~/WebSiteTheme/images/logo.png" alt=""></a>
+                        <a class="ps-logo" href="~/WebHome/Index"><img src="~/WebSiteTheme/images/logo.png" alt=""></a>
 
                         <p>NearByCart is a destination for 20-somethings. We sell cutting-edge products and offer a wide variety of all types of content, making NearByCart Store the hub of a thriving community.</p>
                         <div class="ps-site-info__contact">
@@ -61,15 +61,15 @@
 
                                 <ul class="ps-list--line">
 
-                                    <li><a href="#">About Us</a></li>
+                                    @*<li><a href="#">About Us</a></li>*@
 
                                     <li><a href="~/WebContactUs/Index">Contact Us</a></li>
 
                                     @*<li><a href="#">Customer Service</a></li>
 
-                                    <li><a href="#">FAQs</a></li>
+                                        <li><a href="#">FAQs</a></li>
 
-                                    <li><a href="#">Product Support</a></li>*@
+                                        <li><a href="#">Product Support</a></li>*@
 
                                 </ul>
 
@@ -87,13 +87,13 @@
 
                                     @*<li><a href="#">Your account</a></li>
 
-                                    <li><a href="#">Newsletter</a></li>
+                                        <li><a href="#">Newsletter</a></li>
 
-                                    <li><a href="#">Information</a></li>*@
+                                        <li><a href="#">Information</a></li>*@
 
                                     <li><a href="~/ViewCart/ViewCart">Your Cart</a></li>
 
-                                    <li><a href="/WebHome/Wishlist">Your wishlist</a></li>
+                                    <li><a onclick="OpenWishlist()">Your wishlist</a></li>
 
                                 </ul>
 
@@ -126,10 +126,10 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
 
                     <div class="ps-footer__payment-methods">
-                        <a href="#">
-                            @*<img src="~/WebSiteTheme/images/payment-method/paypal.png" alt="">
-                        </a><a href="#"><img src="~/WebSiteTheme/images/payment-method/visa.png" alt=""></a>
-                        <a href="#"><img src="~/WebSiteTheme/images/payment-method/master-card.png" alt=""></a>*@
+                        <a href="#"></a>
+                        @*<img src="~/WebSiteTheme/images/payment-method/paypal.png" alt="">
+                            </a><a href="#"><img src="~/WebSiteTheme/images/payment-method/visa.png" alt=""></a>
+                            <a href="#"><img src="~/WebSiteTheme/images/payment-method/master-card.png" alt=""></a>*@
                     </div>
 
                 </div>
@@ -141,3 +141,25 @@
     </div>
 
 </footer>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    var OpenWishlist = function () {
+        $.ajax({
+            url: "../../WebHome/Wishlist",
+            type: "POST",
+            success: function (result) {
+                if (result != "window.swal('Please Login to access wishlist');") {
+                    window.location.href = "../../WebHome/Wishlist";
+                }
+                //console.log(result);
+                //debugger;
+            },
+            error: function (error) {
+                console.log('error');
+            }
+
+        })
+    }
+</script>

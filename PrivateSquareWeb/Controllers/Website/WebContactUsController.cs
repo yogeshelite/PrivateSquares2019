@@ -39,6 +39,11 @@ namespace PrivateSquareWeb.Controllers.Website
                     return View("Index", ObjModel);
                 }
                 ViewBag.ResponseMessage = "Your Request has been submit";
+                //ObjModel.Email = string.Empty;
+                //ObjModel.FullName = string.Empty;
+                //ObjModel.Message = string.Empty;
+                ModelState.Clear();
+
                 return View("Index");
 
             }
