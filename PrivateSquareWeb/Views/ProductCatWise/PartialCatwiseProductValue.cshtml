@@ -4,12 +4,6 @@
 <script type="text/javascript">
 
     var AddToCartCatWise = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage, ProductCatId) {
-        //console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage + "  CategoryId" + ProductCatId);
-        //var Qty = document.getElementById('TxtQty').value;
-        //if (Qty.trim() == '' || Qty.trim() == null) {
-        //    alert('Minum 1 Qty Required');
-        //    return;
-        //}
         var salePrice = SellingPrice;
         var discountPrice = DiscountPrice;
         var ProductId = Id;
@@ -20,12 +14,9 @@
         var Amount = Number(Price) * Number(Qty);
 
         var TotalAmount = 0;
-        //console.log('ProductId' + ProductId);
         $.ajax({
             url: "../../WebHome/AddToCart",
             type: "POST",
-            //contentType: false,
-            //processData: false,
             data: {
                 ProductId: ProductId,
                 ProductName: ProductName,
@@ -37,8 +28,6 @@
                 TotalAmount: TotalAmount
             },
             success: function (result) {
-                //console.log(result);
-                //window.location.href = "/ProductCatWise/Index/" + ProductCatId;
                 $("#Cartcontent").load(location.href + ' #Cartcontent');
                 swal(" ", "Product Added to the Cart", "success");
             },
@@ -48,35 +37,7 @@
         });
     }
 </script>
-<!-- Hide Quick View  -->
-@*<script>
-        var QuickView = function (ProductId) {
-            var ProductId = ProductId;
-            // Call AJAX here
-            $.ajax({
-                method: "POST",
-                url: "../../WebHome/ProductQuickView/", // Your URL here
-                data: { ProductId: ProductId },
-                success: function (result) {
-                    //debugger;
-                    console.log(result);
 
-                    //$('#quickView').innerhtml(result);
-                    //document.getElementById("quickView").innerHTML = result;
-                    $mymodal = $("#myModal");
-                    $mymodal.find("div.modal-body").html(result);
-                    $('#openpopup').click();
-                    console.log('Click triggered');
-                    $mymodal.modal("show");
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-
-            // Redirect here
-        }
-    </script>*@
 <script type="text/javascript">
     var AddToWishlist = function (Id) {
 
@@ -101,7 +62,6 @@
             }
 
         })
-        //$('form#ajaxForm').trigger('submit');
 
     }
 </script>
@@ -127,10 +87,7 @@
                 }
                 <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
                 <ul class="ps-product__actions">
-                    <!-- Hide Quick View  -->
-                    @*<li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>*@
-                    <!-- Hide Compare -->
-                    @*<li><a href="#" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+               
                     <li><a href="#" title="Favorite"><i class="ps-icon-heart" onclick="AddToWishlist(@Users.Id)"></i></a></li>
                 </ul>
             </div>

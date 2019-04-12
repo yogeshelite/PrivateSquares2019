@@ -12,8 +12,7 @@
         $.ajax({
             url: "../../WebsiteHeader/RemoveToCart",
             type: "POST",
-            //contentType: false,
-            //processData: false,
+         
             data: {
                 index: index
             },
@@ -27,7 +26,7 @@
                 var TotalAmount = 0;
                 for (var i = 0; i < JsonResponse.length; i++) {
 
-                    // console.log(JsonResponse.ProductId);
+                   
                     ProductName = JsonResponse[i].ProductName;
                     Qty = JsonResponse[i].Qty;
                     TotalAmount = Number(TotalAmount) + Number(JsonResponse[i].Amount);
@@ -53,13 +52,11 @@
                         "<p>Item Total:<span>₹" + TotalAmount + "</span></p>";
 
                 }
-                //console.log(CartString);
-                //console.log(CartTotal);
-                // $("#CartList").append(CartString);
+              
                 divCart.innerHTML = CartString;
                 divCartTotal.innerHTML = CartTotal;
                 $("#CartCount").load(location.href + ' #CartCount');
-                //window.location.href = "/WebHome/ProductDetail/" + ProductId;
+              
             },
             error: function (error) {
                 console.log(error);
@@ -138,28 +135,18 @@
 
                 @using (Html.BeginForm("SearchBar", "WebHome", FormMethod.Post, new { @class = "" }))
                 {
-                    @*<select class="ps-select selectpicker col-lg-4 pull-left" title="Select Category">
-                            <option value="0">Select Category</option>
-                            <option value="1">2</option>
-                            <option value="2">3</option>
-                            <option value="3">4</option>
-                            <option value="4">5</option>
-                            <option value="5">6</option>
-                        </select>*@
+               
 
                     @Html.DropDownListFor(m => m.ParentCatId, ViewBag.ParentCategories as SelectList, "All Categories", new { @class = "ps-select selectpicker col-lg-4 pull-left"})
                     <div class="col-lg-8 pull-left">
 
-                        @*<form class="ps-form--search" action="do_action" method="post">*@
+                      
 
                         @Html.TextBoxFor(m => m.SearchBarText, new { @class = "form-control", placeholder = "Search Product…", value = "TxtSearch", id = "TxtSearch" })
-                        @*<input class="form-control" type="text" placeholder="Search Product…">*@
+                      
                         <button class="search-top"><i class="ps-icon-search"></i></button>
 
-                        @*<button><i class="ps-icon-search"></i></button>*@
-
-                        @*</form>*@
-
+                     
 
                     </div>
                 }
@@ -233,13 +220,6 @@
         </div>
     </nav>
 </header>
-
-@*<script type="text/javascript">
-    function SelectedIndexChanged() {
-
-        document.demoForm.submit();
-    }
-</script>*@
 
 
 

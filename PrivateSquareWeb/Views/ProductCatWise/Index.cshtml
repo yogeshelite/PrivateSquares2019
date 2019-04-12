@@ -11,11 +11,6 @@
 
     var AddToCart = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
         console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage);
-        //var Qty = document.getElementById('TxtQty').value;
-        //if (Qty.trim() == '' || Qty.trim() == null) {
-        //    alert('Minum 1 Qty Required');
-        //    return;
-        //}
         var salePrice = SellingPrice;
         var discountPrice = DiscountPrice;
         var ProductId = Id;
@@ -30,8 +25,7 @@
         $.ajax({
             url: "../../WebHome/AddToCart",
             type: "POST",
-            //contentType: false,
-            //processData: false,
+          
             data: {
                 ProductId: ProductId,
                 ProductName: ProductName,
@@ -43,7 +37,7 @@
                 TotalAmount: TotalAmount
             },
             success: function (result) {
-                //console.log(result);
+                
                 $("#Cartcontent").load(location.href + ' #Cartcontent');
                 swal(" ", "Product Added to the Cart", "success");
             },
@@ -56,11 +50,8 @@
 <script type="text/javascript">
     function showvalue(s) {
         var val = document.getElementById("firstslider").value;
-
-        //document.getElementById("slidervalue").innerHTML = val;
         document.getElementById("TxtPriceRange").value = val;
         ProductPriceWise(val);
-        // document.getElementById("BtnPriceRange").click();
     }
     var ProductPriceWise = function (val) {
 
@@ -82,11 +73,7 @@
         });
     }
 </script>
-<script>
-    var PriceLowToHigh = function () {
-        alert('Product sorted by price (low to high)');
-    }
-</script>
+
 
 
 @using (Html.BeginForm("ProcessForm", "ProductCatWise", FormMethod.Post))
@@ -96,22 +83,13 @@
     <div class="ps-hero">
         <div class="container">
             <h3>SHOP PAGE</h3>
-            @*<p>Shop with Sidebar</p>*@
         </div>
     </div>
     <main class="ps-main ps-products-listing">
         <div class="ps-content" data-mh="product-page">
             <div class="ps-product-group" data-item="5">
                 <div class="ps-product-group__header">
-                    <!-- Hide Nouthemes  -->
-                    @*<div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <a class="ps-collection" href="product-listing.html"><img src="~/WebSiteTheme/images/collection/product-grid/1.jpg" alt=""></a>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <a class="ps-collection" href="product-listing.html"><img src="~/WebSiteTheme/images/collection/product-grid/2.jpg" alt=""></a>
-                            </div>
-                        </div>*@
+                 
                 </div>
                 <div class="ps-product-group__content">
                     <div class="ps-product-group__action">
@@ -126,32 +104,20 @@
                                     <option value="3">Popularity</option>
                                     <option value="4">Newest Arrivals</option>
                                 </select>
-                                @*@Html.DropDownList("title", Model.ProductName, new { @class="ps-select"})*@
+                              
                             </div>
                         </div>
                     </div>
 
                     <div id="DivItemBind">
                         @{
-                            //Html.RenderPartial("_Header");
                             Html.RenderAction("PartialCatwiseProductValue", "ProductCatWise");
                         }
                     </div>
 
                 </div>
-                @*<div class="ps-product-group__footer">
-                        <div class="ps-pagination">
-                            <ul class="pagination">
-                                <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">...</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>*@
-                <div class="ps-product-group__footer">
+              
+                <div class="ps-product-group__footer" id="paginationfooter">
                     <div class="ps-pagination mb-50">
                         <ul class="pagination">
                             @if ((ViewBag.SearchResultCount / 10) > 1)
@@ -166,14 +132,9 @@
                                 while (n <= (ViewBag.NumberOfPages));
                                 if ((ViewBag.SearchResultCount / 10) > ViewBag.NumberOfPages)
                                 {
-                                    <li><a href="~/ProductCatWise/MorePages/@n"><i class="fa fa-angle-right"></i></a></li>
+                                    <li><a onclick="morepages(@n,@ViewBag.SearchResultCount,@ViewBag.NumberOfPages,@ViewBag.LowerLimit)"><i class="fa fa-angle-right"></i></a></li>
                                 }
-                                @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">...</a></li>
-                                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
+                               
                             }
                             else
                             {
@@ -185,7 +146,6 @@
                                 {
                                     if ((ViewBag.SearchResultCount % 10) != 0)
                                     {
-                                        @*<li><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
                                         <li class="active" id="pagenumber1"><a onclick="nextpage(1)">1</a></li>
                                         <li id="pagenumber2"><a onclick="nextpage(2)">2</a></li>
                                     }
@@ -232,105 +192,7 @@
 
                 </div>
             </aside>
-            @*<aside class="ps-widget--sidebar ps-widget--category">
-                    <div class="ps-widget__header">
-                        <h3>Brands</h3>
-                    </div>
-                    <div class="ps-widget__content">
-                        <ul class="ps-list--checked">
-                            <li class="current"><a href="product-listing.html">Nike(521)</a></li>
-                            <li><a href="product-listing.html">Adidas(76)</a></li>
-                            <li><a href="product-listing.html">Baseball(69)</a></li>
-                            <li><a href="product-listing.html">Gucci(36)</a></li>
-                            <li><a href="product-listing.html">Dior(108)</a></li>
-                            <li><a href="product-listing.html">B&G(108)</a></li>
-                            <li><a href="product-listing.html">Louis Vuiton(47)</a></li>
-                        </ul>
-                    </div>
-                </aside>
-                <aside class="ps-widget--sidebar ps-widget--category">
-                    <div class="ps-widget__header">
-                        <h3>Width</h3>
-                    </div>
-                    <div class="ps-widget__content">
-                        <ul class="ps-list--checked">
-                            <li class="current"><a href="product-listing.html">Narrow</a></li>
-                            <li><a href="product-listing.html">Regular</a></li>
-                            <li><a href="product-listing.html">Wide</a></li>
-                            <li><a href="product-listing.html">Extra Wide</a></li>
-                        </ul>
-                    </div>
-                </aside>
-                <div class="ps-sticky">
-                    <aside class="ps-widget--sidebar">
-                        <div class="ps-widget__header">
-                            <h3>Size</h3>
-                        </div>
-                        <div class="ps-widget__content">
-                            <table class="table ps-table--size">
-                                <tbody>
-                                    <tr>
-                                        <td class="active">3</td>
-                                        <td>5.5</td>
-                                        <td>8</td>
-                                        <td>10.5</td>
-                                        <td>13</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.5</td>
-                                        <td>6</td>
-                                        <td>8.5</td>
-                                        <td>11</td>
-                                        <td>13.5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>6.5</td>
-                                        <td>9</td>
-                                        <td>11.5</td>
-                                        <td>14</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4.5</td>
-                                        <td>7</td>
-                                        <td>9.5</td>
-                                        <td>12</td>
-                                        <td>14.5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>7.5</td>
-                                        <td>10</td>
-                                        <td>12.5</td>
-                                        <td>15</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </aside>
-                    <aside class="ps-widget--sidebar">
-                        <div class="ps-widget__header">
-                            <h3>Color</h3>
-                        </div>
-                        <div class="ps-widget__content">
-                            <ul class="ps-list--color">
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                            </ul>
-                        </div>
-                    </aside>
-                </div>*@
+            
         </aside>
     </main>
 
@@ -340,134 +202,15 @@
 
 
     <div class="slim-mainpanel">
-        @*<div class="container">
-                <div class="manager-header">
-                    <div class="slim-pageheader">
-                        <ol class="breadcrumb slim-breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Contact Manager</li>
-                        </ol>
-                        <!-- <h6 class="slim-pagetitle">Contact Manager</h6> -->
-                    </div><!-- slim-pageheader -->
-                    <a id="contactNavicon" href="" class="contact-navicon"><i class="icon ion-navicon-round"></i></a>
-                </div><!-- manager-header -->
-
-                <div class="manager-wrapper">
-                    <div class="manager-right">
-                        <div class="search-box">
-                            <input type="text" name="TxtSearch" id="TxtSearch" class="form-control" placeholder="Search">
-                            <input type="submit" name="submit" value="Search" class="btn btn-primary"><i class="fa fa-search"></i>
-
-                        </div>
-
-
-
-
-                    </div>
-                    <!-- manager-right -->
-                    <div class="manager-left">
-                        <label class="section-label-sm mg-t-25">Categories</label>
-                        <nav class="nav">
-                            @foreach (var Cat in ViewBag.ProductCatList)
-                            {
-                                <a href="/ProductCatWise/Index/@Cat.Id" class="nav-link">
-                                    <span>@Cat.Name</span>
-                                    <span>@Cat.Id</span>
-                                </a>
-                            }
-
-                        </nav>
-                        <label class="section-label-sm mg-t-25">Filter Price</label>
-                        <nav class="nav">
-
-                        </nav>
-                        <label class="section-label-sm mg-t-25">Old</label>
-                        <nav class="nav">
-                            <a href="" class="nav-link active">
-                                <span>All Contacts</span>
-                                <span>120</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Family</span>
-                                <span>16</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Friends</span>
-                                <span>68</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Co-workers</span>
-                                <span>38</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Favorites</span>
-                                <span>9</span>
-                            </a>
-                        </nav>
-
-                        <label class="section-label-sm mg-t-25">Location</label>
-                        <nav class="nav">
-                            <a href="" class="nav-link">
-                                <span>San Francisco</span>
-                                <span>10</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Los Angeles</span>
-                                <span>16</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>New York</span>
-                                <span>15</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Las Vegas</span>
-                                <span>4</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Sacramento</span>
-                                <span>4</span>
-                            </a>
-                        </nav>
-
-                        <label class="section-label-sm mg-t-25">Job Position</label>
-                        <nav class="nav">
-                            <a href="" class="nav-link">
-                                <span>Software Engineer</span>
-                                <span>4</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>UI Designer</span>
-                                <span>6</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Sales Representative</span>
-                                <span>5</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Mechanical Engineer</span>
-                                <span>4</span>
-                            </a>
-                            <a href="" class="nav-link">
-                                <span>Nurse</span>
-                                <span>4</span>
-                            </a>
-                        </nav>
-                    </div>
-
-                    <!-- manager-left -->
-                </div><!-- manager-wrapper -->
-
-            </div><!-- container -->*@
+     
     </div><!-- slim-mainpanel -->
 }
-
+                                                    @*//Below script is called when the a type of sort order is selected by the user from the dropdown*@ 
 <script>
     var pageindexcounter;
     var sortdropdown = document.getElementById("sortby");
     sortdropdown.onchange = function () {
         if (this.selectedIndex !== 0) {
-            //console.log('dropdown selected');
             var sortorder = this.value;
             pageindexcounter = 1;
             var productcatid = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
@@ -481,7 +224,6 @@
 
                 },
                 success: function (result) {
-                    //console.log(result);
                     $("#DivItemBind").html(result);
                     pageindexcounter++;
                 }
@@ -490,9 +232,9 @@
         }
     }
 </script>
+                                                     @*//Below script is called when the next page is requested by the user from the  pagination bar of the  Categorywise Product Page*@
 <script>
     var nextpage = function (id) {
-        //var productcatid = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
         console.log(id);
         $.ajax({
             url: "../../ProductCatWise/NextPage/",
@@ -501,16 +243,78 @@
                 "id": id
             },
             success: function (result) {
-                //console.log(result);
                 $("#DivItemBind").html(result);
             }
         });
         if (id == 1) {
             $("#pagenumber2").removeClass("active");
-            $("#pagenumber1").addClass("active");}
+            $("#pagenumber1").addClass("active");
+        }
         else {
             $("#pagenumber1").removeClass("active");
             $("#pagenumber2").addClass("active");
         }
     }
 </script>
+                                                    @*////Below is the script for fetching More pages in the pagination bar of the  Categorywise Product Page*@
+<script>
+    var morepages = function (id, searchresultcount, lowerlimit, numberofpages) {
+
+        $.ajax({
+            url: "../../ProductCatWise/MorePages",
+            type: "POST",
+            data: { "id": id },
+            success: function (result) {
+
+                $("#DivItemBind").html(result);
+          
+                if (searchresultcount == undefined) {
+                 
+
+                }
+                $.ajax({
+                    url: "../../ProductCatWise/_Pagination",
+                    type: "POST",
+                    data: {
+                        "id": id,
+                        "searchresultcount": searchresultcount,
+                        "lowerlimit": lowerlimit,
+                        "numberofpages": numberofpages
+                    },
+                    success: function (result) {
+                        $("#paginationfooter").html(result);
+                    }
+                })
+            }
+        });
+
+    }
+</script>
+                                                    @*//Below is the script for fetching previous pages in the pagination bar of the  Categorywise Product Page*@
+<script>
+    var previouspages = function (id, searchresultcount, lowerlimit, numberofpages) {
+        if (id == 0) { return false;}
+        $.ajax({
+            url: "../../ProductCatWise/PreviousPages",
+            type: "POST",
+            data: { "id": id },
+            success: function (result) {
+               
+                $("#DivItemBind").html(result);
+                $.ajax({
+                    url: "../../ProductCatWise/_Pagination",
+                    type: "POST",
+                    data: {
+                        "id": id,
+                        "searchresultcount": searchresultcount,
+                        "lowerlimit": lowerlimit,
+                        "numberofpages": numberofpages
+                    },
+                    success: function (result) {
+                        $("#paginationfooter").html(result);
+                    }
+                });
+            }
+        });
+    }
+</script>                   

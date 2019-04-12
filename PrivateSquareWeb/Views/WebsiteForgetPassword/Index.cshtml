@@ -24,9 +24,7 @@
     <div class="container mt-50 mb-45">
         <div class="col-lg-6 col-lg-offset-3">
             <p class="text-center private-squares-heading">Nearbycart<span class="pvt-sq-col"></span> helps to connect and share with the people in your life.</p>
-            @*<div class="col-md-7 pull-left"><img src="~/theme/img/login-img.jpg" class="img-full" /></div>*@
-            @*<div class="col-md-5 pull-left image-padding">
-                <div class="signin-box pull-right">*@
+           
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", placeholder = "Enter Email Id" })
@@ -38,7 +36,7 @@
                     @ViewBag.ResponseMessage
                 </p>
                 <input type="submit" value="Submit" class="ps-btn pl-60 pr-60" />
-                @*<a href="/WebLogin/Index" class="ps-btn pl-60 pr-60 pull-right">Login</a>*@
+               
             </div><!-- form-group -->
 
         </div>

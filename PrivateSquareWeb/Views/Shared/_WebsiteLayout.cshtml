@@ -16,7 +16,7 @@
 
     @Styles.Render("~/websitetheme/plugins/revolution/css")
 
-    @*@Scripts.Render("~/bundles/bootstrap")*@
+  
 
     @RenderSection("scripts", required: false)
 
@@ -32,7 +32,7 @@
 
         @{
 
-            //Html.RenderPartial("_Header");
+           
 
             Html.RenderAction("HeaderValue", "WebsiteHeader");
 
@@ -78,14 +78,7 @@
 
         })
     </script>
-    @*<script> 
-        $("#pagenumber1").click(function () {
-            console.log('You clicked on 1');
-            $("#pagenumber1").removeClass("active");
-            $("#pagenumber2").addClass("active");
-        });
-      
-    </script>*@
+  
 </body>
 
 </html>

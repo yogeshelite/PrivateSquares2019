@@ -34,7 +34,7 @@
             },
             success: function (result) {
                 $("#Cartcontent").load(location.href + ' #Cartcontent');
-                //window.location.href = "/WebHome/ProductDetail/" + location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+              
                 swal(" ", "Product Added to the Cart", "success");
             },
             error: function (error) {
@@ -67,18 +67,17 @@
             }
 
         })
-        //$('form#ajaxForm').trigger('submit');
+        
 
     }
 </script>
 <script>
     var ScrollTo = function () {
-        //window.location.href = "#tab_02";
-        //$('#reviewlink').click(function () {
+      
         $('html, body').animate({
             'scrollTop': $("#tab_02").position().top
         });
-        //});
+        
 
     }
 </script>
@@ -88,7 +87,7 @@
         console.log("GetTotal");
         var salePrice =@Model.SellingPrice;
         var discountPrice=@Model.DiscountPrice;
-        //console.log(salePrice);
+      
         var Qty = document.getElementById('TxtQty').value;
         var LblTotal = document.getElementById('TotalAmount');
         if (Qty.trim() == '' || Qty.trim() == null) {
@@ -114,7 +113,7 @@
         var ProductName ="@Model.ProductName";
 
         var ImageName = "@Model.ProductImage";
-        var Price = discountPrice; /*Number((Number(salePrice) - Number(discountPrice)));*/
+        var Price = discountPrice; 
         var Amount = Number(Price)*Number(Qty);
 
         var TotalAmount = 0;
@@ -122,8 +121,7 @@
         $.ajax({
             url: "../../WebHome/AddToCart",
             type: "POST",
-            //contentType: false,
-            //processData: false,
+          
             data: {
                 ProductId: ProductId,
                 ProductName: ProductName,
@@ -162,15 +160,7 @@
 
                         <div class="ps-product__image">
                             <div class="item"><img class="zoom" src="~/DocImg/@Model.ProductImage" alt="" data-zoom-image="~/DocImg/@Model.ProductImage"></div>
-                            @*@{ int index2 = 0;
-                                    foreach (var item in ViewBag.ProductImages)
-                                    {
-                                        <div class="item"><img class="zoom" src="~/DocImg/@item.Name" alt="" data-zoom-image="~/DocImg/@item.Name"></div>
-                                    }
-                                }*@
-                            @*<div class="item"><img class="zoom" src="~/DocImg/@Model.ProductImage" alt="" data-zoom-image="~/DocImg/@Model.ProductImage"></div>
-                                <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/2.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/2.jpg"></div>
-                                <div class="item"><img class="zoom" src="~/WebSiteTheme/images/shoe-detail/3.jpg" alt="" data-zoom-image="~/WebSiteTheme/images/shoe-detail/3.jpg"></div>*@
+                            
                         </div>
                     </div>
                 </div>
@@ -199,96 +189,10 @@
                     </div>
                 </div>
             </div>
-            @*<div class="ps-product__content">
-                <ul class="tab-list" role="tablist">
-                    <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Overview</a></li>
-                    <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">Review</a></li>
-                    <li><a href="#tab_03" aria-controls="tab_03" role="tab" data-toggle="tab">PRODUCT TAGs</a></li>
-                    <li><a href="#tab_04" aria-controls="tab_04" role="tab" data-toggle="tab">ADDITIONAL</a></li>
-                </ul>
-            </div>
-            <div class="tab-content">
-                <div class="tab-pane active" role="tabpanel" id="tab_01">
-                    <p>Caramels tootsie roll carrot cake sugar plum. Sweet roll jelly bear claw liquorice. Gingerbread lollipop dragée cake. Pie topping jelly-o. Fruitcake dragée candy canes tootsie roll. Pastry jelly-o cupcake. Bonbon brownie soufflé muffin.</p>
-                    <p>Sweet roll soufflé oat cake apple pie croissant. Pie gummi bears jujubes cake lemon drops gummi bears croissant macaroon pie. Fruitcake tootsie roll chocolate cake Carrot cake cake bear claw jujubes topping cake apple pie. Jujubes gummi bears soufflé candy canes topping gummi bears cake soufflé cake. Cotton candy soufflé sugar plum pastry sweet roll..</p>
-                </div>
-                <div class="tab-pane" role="tabpanel" id="tab_02">
-                    <p class="mb-20">1 review for <strong>@Model.ProductName</strong></p>
-                    @foreach (var review in ViewBag.ProductReviews)
-                    {
-                        <div class="ps-review">
-                            <div class="ps-review__thumbnail"><img src="images/user/1.jpg" alt=""></div>
-                            <div class="ps-review__content">
-                                <header>
-                                    <select class="ps-rating">
-                                        <option value="@review.GivenRating">1</option>
-                                        <option value="@review.GivenRating">2</option>
-                                        <option value="@review.GivenRating">3</option>
-                                        <option value="@review.GivenRating">4</option>
-                                        <option value="@review.GivenRating">5</option>
-                                    </select>
-                                    <p>By<a href=""> @review.Name</a> @review.RecordDate</p>
-                                </header>
-                                <p>@review.Review</p>
-                            </div>
-                        </div>
-                    }
-                    <form class="ps-form--product-review" action="do_action" method="post">
-                        <h4>ADD YOUR REVIEW</h4>
-                        <div class="row" id="productreviews">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 " id="allreviews">
-                                @*<div class="form-group">
-                                        <label>Name:<span>*</span></label>
-                                        <input class="form-control" type="text" placeholder="" id="reviewname">
-                                    </div>*@
-
-                                @*<div class="form-group">
-                                    <label>Your rating<span></span></label>
-                                    <select class="ps-rating" id="productrating">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>*@
-                            @*</div>*@
-                            @*<div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <label>Your Review:</label>
-                                    <input type="text" class="form-control" rows="6" id="reviewcomments" />
-                                </div>
-                                <div class="form-group">
-                                    @Html.HiddenFor(m => m.Id)
-                                    <button class="ps-btn--outline" onclick="submitreview(@Model.Id)">Submit Reviews</button>
-                                </div>
-                            </div>*@
-                        @*</div>*@
-                    @*</form>*@
-                @*</div>*@
-                @*<div class="tab-pane" role="tabpanel" id="tab_03">
-                    <p>Add your tag <span> *</span></p>
-                    <form class="ps-form--create-tags" action="_action" method="post">
-                        <div class="form-group">
-                            <input class="form-control" type="text" placeholder="">
-                            <button class="ps-btn">Add Tags</button>
-                        </div>
-                    </form>
-                    <p>Use spaces to separate tags. Use single quotes ( * ) for phrases.</p>
-                </div>*@
-                @*<div class="tab-pane" role="tabpanel" id="tab_04">
-                    <form class="ps-form--addition" action="do_action" method="post">
-                        <div class="form-group">
-                            <textarea class="form-control" rows="6" placeholder="Enter your addition here..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button class="ps-btn--outline">Submit</button>
-                        </div>
-                    </form>
-                </div>*@
+          
             </div>
         </div>
-    @*</div>*@
+   
 </main>
 <div class="ps-section pb-50">
     <div class="ps-container">
@@ -308,9 +212,8 @@
                             }
                             <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
                             <ul class="ps-product__actions">
-                                <!-- Hide Quick View  -->
-                                @*<li><a title="Quick View" onclick="QuickView(@Users.Id)"><i class="ps-icon-eye"></i></a></li>*@
-                                @*<li><a href="/WebCompare/Index/@Users.Id" title="Compare"><i class="ps-icon-compare"></i></a></li>*@
+                              
+                               
                                 <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
                             </ul>
                         </div>
@@ -333,26 +236,6 @@
     </div>
 </div>
 
-@*<input type="button" id="openpopup" href="#quickView" style="display:none" />
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">View Product</h4>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->*@
-
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
     var productstars;
@@ -364,12 +247,9 @@
 
         }
     }
-    //var reviewtextarea = document.getElementById("reviewtextarea").value;
-    //var reviewtext = document.getElementById("reviewtextarea").value;
-    //var reviewtext = reviewtextarea;
-    //debugger;
+   
     var submitreview = function (id) {
-        //debugger;
+     
         var reviewtext = $.trim($("#reviewcomments").val());
         var productid = id;
         $.ajax({
@@ -382,10 +262,7 @@
 
             },
             success: function (result) {
-                //console.log(result);
-                //$("#DivItemBind").html(result);
-                //pageindexcounter++;
-                //alert('Thanks for Reviewing this Product :)');
+                
                 window.location.href = "../../Webhome/ProductDetail/" + productid;
             }
         });

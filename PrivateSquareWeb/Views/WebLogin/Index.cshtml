@@ -55,7 +55,7 @@
         });
     }
     function SignUp() {
-        //emailIdRegister,passwordRegister
+       
         var email = document.getElementById('emailIdRegister').value;
         var password = document.getElementById('passwordRegister').value;
         var letters = /^[a-zA-Z]+(\s{0,1}[a-zA-Z ])*$/;
@@ -64,8 +64,7 @@
         if (name == '') {
             document.getElementById("valNameRegister").innerText = "Name Required";
 
-            //var p = document.getElementById("RegisMess");
-            //p.innerText = "Please Fill Email,Password,Name";
+        
             return;
         } else if (!name.match(letters)) {
             document.getElementById("valNameRegister").innerText = "Please input alphabet characters only.";
@@ -100,11 +99,7 @@
             document.getElementById("valpasswordRegister").innerText = "";
         }
 
-        //else if (!validateEmail(email)) {
-        //    document.getElementById("valemailIdRegister").innerText = "Email Incorrect";
-        //    return;
-        //}
-        //    else
+      
         {
 
             $.ajax({
@@ -177,12 +172,7 @@
 
             <div id="SignIn">
 
-                @*<button class="btn btn-block btn-sign-in">Login with facebook</button>
-
-                <h5 class="text-center login-or">OR</h5>*@
-
-
-
+          
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 <div class="form-group">
@@ -203,13 +193,11 @@
 
                         <a href="/WebsiteForgetPassword/Index">Forget Password</a>
 
-                        @*<input type="button" onclick="ForgetPassword()" class="sign-up-col btntoLink" value="Forget Password" />*@
 
                         <p style="color:red;">  @ViewBag.Response</p>
 
                     </div>
                     <p style="color:red;"> @ViewBag.ResponseMassege</p>
-                    <!-- <h6 class="forget-password">Forget Password</h6> -->
 
                 </div><!-- form-group -->
 
