@@ -71,16 +71,6 @@
 
     }
 </script>
-<script>
-    var ScrollTo = function () {
-      
-        $('html, body').animate({
-            'scrollTop': $("#tab_02").position().top
-        });
-        
-
-    }
-</script>
 <script type="text/javascript">
     var GetTotal = function ()
     {
@@ -99,29 +89,27 @@
             LblTotal.innerText = Number((Number(salePrice) - Number(discountPrice)) * Qty);
         }
     }
-    var AddToCart = function ()
-    {
-        var Qty = document.getElementById('TxtQty').value;
-        console.log('Qty===' + Qty);
-        if (Qty.trim() == '' || Qty.trim() == null) {
-            alert('Minum 1 Qty Required');
-            return;
-        }
-        var salePrice =@Model.SellingPrice;
-        var discountPrice=@Model.DiscountPrice;
-        var ProductId =@Model.Id;
-        var ProductName ="@Model.ProductName";
+    </script>
 
-        var ImageName = "@Model.ProductImage";
-        var Price = discountPrice; 
-        var Amount = Number(Price)*Number(Qty);
+<script>
+    var AddToCart = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
+        console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage);
+
+        var salePrice = SellingPrice;
+        var discountPrice = DiscountPrice;
+        var ProductId = Id;
+        var ProductName = "" + ProductName + "";
+        var Qty = 1;
+        var ImageName = ProductImage;
+        var Price = discountPrice;
+        var Amount = Number(Price) * Number(Qty);
 
         var TotalAmount = 0;
-        console.log('ProductId' + ProductId);
+
         $.ajax({
             url: "../../WebHome/AddToCart",
             type: "POST",
-          
+
             data: {
                 ProductId: ProductId,
                 ProductName: ProductName,
@@ -133,8 +121,11 @@
                 TotalAmount: TotalAmount
             },
             success: function (result) {
-                console.log(result);
-                window.location.href = "/ViewCart/ViewCart";
+
+                $("#Cartcontent").load(location.href + ' #Cartcontent');
+
+                swal(" ", "Product Added to the Cart", "success");
+
             },
             error: function (error) {
                 console.log(error);
@@ -183,7 +174,7 @@
                             </div>
                         </div>
                         <div class="ps-product__shopping">
-                            <a class="ps-btn" onclick="AddToCart()">Order Now</a>
+                            <a class="ps-btn" onclick="AddToCart('@Model.Id','@Model.ProductName.Replace("'",@"\'")','@Model.SellingPrice','@Model.DiscountPrice','@Model.ProductImage')">Order Now</a>
                             <div class="ps-product__actions"><a class="mr-10" href="#" onclick="AddToWishlist(@Model.Id)"><i class="ps-icon-heart"></i></a></div>
                         </div>
                     </div>
@@ -218,10 +209,10 @@
                             </ul>
                         </div>
                         <div class="ps-product__content">
-                            <a class="ps-product__title" href="product-detail.html">@Users.ProductName</a>
+                            <a class="ps-product__title" href="#">@Users.ProductName</a>
                             <p class="ps-product__price">
                                 <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
-                            </p><a class="ps-product__cart" href="#" onclick="AddToCartSimilarProducts('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                            </p><a class="ps-product__cart" href="#" onclick="AddToCartSimilarProducts('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
                         </div>
                     </div>
                 }
@@ -232,7 +223,7 @@
 </div>
 <div class="ps-section--partner">
     <div class="ps-container">
-        <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a></div>
+        
     </div>
 </div>
 

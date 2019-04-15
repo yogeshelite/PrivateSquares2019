@@ -1,10 +1,10 @@
 ﻿@model PrivateSquareWeb.Models.LoginModel
 
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Login";
-                Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_WebsiteLayout.cshtml";
 }
 
 @Styles.Render("~/theme/css")
@@ -55,7 +55,7 @@
         });
     }
     function SignUp() {
-       
+
         var email = document.getElementById('emailIdRegister').value;
         var password = document.getElementById('passwordRegister').value;
         var letters = /^[a-zA-Z]+(\s{0,1}[a-zA-Z ])*$/;
@@ -64,13 +64,19 @@
         if (name == '') {
             document.getElementById("valNameRegister").innerText = "Name Required";
 
-        
+
             return;
         } else if (!name.match(letters)) {
             document.getElementById("valNameRegister").innerText = "Please input alphabet characters only.";
             return;
-        }  
+        }
+        else if (name.length < 3) {
 
+            document.getElementById("valNameRegister").innerText = "Name must be at least 3 letters long.";
+
+            return;
+
+        }
         else {
 
             document.getElementById("valNameRegister").innerText = "";
@@ -83,7 +89,7 @@
         else if (!email.match(mailformat)) {
             document.getElementById("valemailIdRegister").innerText = "Incorrect Email.";
             return;
-        }  
+        }
         else {
             document.getElementById("valemailIdRegister").innerText = "";
         }
@@ -94,12 +100,12 @@
         else if (password.length < 6) {
             document.getElementById("valpasswordRegister").innerText = "Password must be at least 6 characters long.";
             return;
-        }  
+        }
         else {
             document.getElementById("valpasswordRegister").innerText = "";
         }
 
-      
+
         {
 
             $.ajax({
@@ -135,19 +141,19 @@
             });
         }
     }
-   
+
 
 </script>
 <script>
 
-    var HideSignIn = function() {
-       
-            $("#SignIn").hide();
+    var HideSignIn = function () {
+
+        $("#SignIn").hide();
     }
 
     var HideSignUp = function () {
         $("#SignIn").show();
-        
+
     }
 </script>
 
@@ -172,7 +178,7 @@
 
             <div id="SignIn">
 
-          
+
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 <div class="form-group">

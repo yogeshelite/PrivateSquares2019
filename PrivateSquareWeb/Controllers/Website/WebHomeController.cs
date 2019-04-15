@@ -320,6 +320,12 @@ namespace PrivateSquareWeb.Controllers.Website
                 else { ViewBag.NoResultFound = ""; }
                 //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
                 ViewBag.SearchResultCount = SearchList.Count;
+                if ((SearchList.Count / 12) < 5)
+                {
+                    if (SearchList.Count % 12 == 0) { ViewBag.NumberOfPages = SearchList.Count / 12; }
+                    else { ViewBag.NumberOfPages = (SearchList.Count / 12) + 1; }
+                }
+                else
                 ViewBag.NumberOfPages = 5;
             }
             else

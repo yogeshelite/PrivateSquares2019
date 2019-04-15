@@ -3,17 +3,7 @@
     var PlaceOrder = function () {
         var radioAddressBtns = document.getElementsByName("rdoAddress");
         var AddressId = 0;
-        for (var x = 0; x < radioAddressBtns.length; x++) {
-            if (radioAddressBtns[x].checked) {
-                AddressId = radioAddressBtns[x].value;
-                break;
-            }
-        }
-        if (AddressId == 0) {
-            swal("Please Select Shipping Address");
-            //alert("Please Select Shipping Address");
-            return;
-        }
+        
 
 
 
@@ -25,7 +15,18 @@
                 break;
             }
         }
-
+        for (var x = 0; x < radioAddressBtns.length; x++) {
+            if (radioAddressBtns[x].checked) {
+                AddressId = radioAddressBtns[x].value;
+                break;
+            }
+        }
+        if (PaymentMode == "COD") {
+            if (AddressId == 0) {
+                swal("Please Select Shipping Address");
+                return;
+            }}
+        
 
         $.ajax({
             url: "../../Checkout/PlaceOrder",
@@ -96,7 +97,7 @@
                                             <tr>
                                                 <td>
                                                     <input type="radio" name="rdoAddress" id="rdoAddress[]" value="@item.Id" />
-                                                    @*<input type="radio" name="rdoAddress" id="@("rdoAddress" + index)" value="@index" />*@
+                                                  
                                                     <p>@item.Type</p>
                                                     <h4 class="card-title">@item.Name</h4>
                                                     <p class="card-text">
@@ -147,12 +148,13 @@
 
                                                                         <label class="form-control-label">Name: <span class="tx-danger">*</span></label>
 
-                                                                        @*<input class="form-control" type="text" name="Name" value="" placeholder="Enter Name">*@
+
 
                                                                         @Html.HiddenFor(m => m.Id)
 
                                                                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Enter Name", @autocomplete = "off" })
                                                                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                                                        <span class="field-validation-error text-danger" id="SpanForName"></span>
 
                                                                     </div>
 
@@ -164,10 +166,9 @@
 
                                                                         <label class="form-control-label">Phone Number: <span class="tx-danger">*</span></label>
 
-                                                                        @*<input class="form-control" type="text" name="phonenumber" value="" placeholder="10-digit number">*@
-
                                                                         @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @placeholder = "10-digit number", @autocomplete = "off" })
                                                                         @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                                                                        <span class="field-validation-error text-danger" id="SpanForPhone"></span>
 
                                                                     </div>
 
@@ -179,10 +180,11 @@
 
                                                                         <label class="form-control-label">Pincode: <span class="tx-danger">*</span></label>
 
-                                                                        @*<input class="form-control" type="text" name="Pincode" value="" placeholder="Pincode">*@
+
 
                                                                         @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control", @placeholder = "Pincode", @autocomplete = "off" })
                                                                         @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
+                                                                        <span class="field-validation-error text-danger" id="SpanForPincode"></span>
 
                                                                     </div>
 
@@ -194,8 +196,9 @@
 
                                                                         <label class="form-control-label">Locality: <span class="tx-danger">*</span></label>
 
-                                                                        @Html.TextBoxFor(m => m.Locality, new { @class = "form-control", @placeholder = "Locality", @autocomplete = "off" })
+                                                                        @Html.TextBoxFor(m => m.Locality, new { @class = "form-control", @placeholder = "Locality", @autocomplete = "off",id="LocalityTextBox"})
                                                                         @Html.ValidationMessageFor(model => model.Locality, "", new { @class = "text-danger" })
+                                                                        <span class="field-validation-error text-danger" id="SpanForLocality"></span>
 
                                                                     </div>
 
@@ -203,20 +206,7 @@
 
 
 
-                                                                @*<div class="col-lg-6">
-
-                                                                    <div class="form-group">
-
-                                                                        <label class="form-control-label">State: <span class="tx-danger">*</span></label>
-
-                                                                        <input class="form-control" type="text" name="City" value="" placeholder="State">
-
-                                                                        @Html.DropDownListFor(m => m.StateId, ViewBag.StateList as SelectList, "--Select--", new { @class = "form-control select2" })
-                                                                        @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-
-                                                                    </div>
-
-                                                                </div>*@<!-- col-6 -->
+                                                               <!-- col-6 -->
 
                                                                 <div class="col-lg-6">
 
@@ -224,10 +214,9 @@
 
                                                                         <label class="form-control-label">City: <span class="tx-danger">*</span></label>
 
-                                                                        @*<input class="form-control" type="text" name="City" value="" placeholder="City">*@
-
                                                                         @Html.DropDownListFor(m => m.CityId, ViewBag.CityList as SelectList, "--Select--", new { @class = "form-control select2-show-search" })
                                                                         @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                                                                        <span class="field-validation-error text-danger" id="SpanForCity"></span>
 
                                                                     </div>
 
@@ -239,7 +228,7 @@
 
                                                                         <label class="form-control-label">Landmark: <span class="tx-danger"></span></label>
 
-                                                                        @*<input class="form-control" type="text" name="Landmark" value="" placeholder="Landmark">*@
+                                                                     
 
                                                                         @Html.TextBoxFor(m => m.Landmark, new { @class = "form-control", @placeholder = "Landmark", @autocomplete = "off" })
                                                                         @Html.ValidationMessageFor(model => model.Landmark, "", new { @class = "text-danger" })
@@ -254,7 +243,7 @@
 
                                                                         <label class="form-control-label">Alternate phone: <span class="tx-danger"></span></label>
 
-                                                                        @*<input class="form-control" type="text" name="State" value="" placeholder="Alternate phone">*@
+                                                                     
 
                                                                         @Html.TextBoxFor(m => m.AlternatePhone, new { @class = "form-control", @placeholder = "Alternate phone", @autocomplete = "off" })
                                                                         @Html.ValidationMessageFor(model => model.AlternatePhone, "", new { @class = "text-danger" })
@@ -336,24 +325,7 @@
                             </div>
                             <footer>
                                 <h3>Payment Method</h3>
-                                @*<div class="form-group cheque">
-                                    <div class="ps-radio ps-radio--small">
-
-
-                                        <input class="form-control" type="radio" id="rdoPaymentMode1" name="rdoPaymentMode" value="NETBANKING">
-                                        <label for="rdoPaymentMode1">Net Banking</label>
-                                    </div>
-
-                                </div>
-                                <div class="form-group cheque">
-                                    <div class="ps-radio ps-radio--small">
-
-
-                                        <input class="form-control" type="radio" id="rdoPaymentMode2" name="rdoPaymentMode" value="DEBITCARD">
-                                        <label for="rdoPaymentMode2">Debit Card</label>
-                                    </div>
-
-                                </div>*@
+                              
                                 <div class="form-group cheque">
                                     <div class="ps-radio ps-radio--small">
 
@@ -373,15 +345,7 @@
 
                                 </div>
                                 <div class="form-group paypal">
-                                    @*<div class="ps-radio ps-radio--small">
-                                        <input class="form-control" type="radio" name="rdoPaymentMode" id="rdoPaymentMode4" value="PAYPAL">
-                                        <label for="rdoPaymentMode4">Paypal</label>
-                                    </div>
-                                    <ul class="ps-payment-method">
-                                        <li><a href="#"><img src="~/WebSiteTheme/images/payment/1.png" alt=""></a></li>
-                                        <li><a href="#"><img src="~/WebSiteTheme/images/payment/2.png" alt=""></a></li>
-                                        <li><a href="#"><img src="~/WebSiteTheme/images/payment/3.png" alt=""></a></li>
-                                    </ul>*@
+                                
                                     @{
                                         if (ViewBag.TotalAmount == 0)
                                         {
@@ -496,6 +460,46 @@
 </script>
 <script>
     var AddAddress = function () {
-        $("#AddressForm").submit();
+        var ErrorOccured=false;
+        if ($.trim($("#LocalityTextBox").val()) == '') {
+            $("#SpanForLocality").html("Please mention locality");
+            ErrorOccured = true;
+        } else {
+            $("#SpanForLocality").html("");
+            ErrorOccured = false;
+        }
+        if ($.trim($("#Name").val()) == '') {
+            $("#SpanForName").html("Please mention Name");
+            ErrorOccured = true;
+        }
+        else {
+            $("#SpanForName").html("");
+            ErrorOccured = false;
+        }
+        if ($.trim($("#Mobile").val()) == '') {
+            $("#SpanForPhone").html("Please mention Mobile Number");
+            ErrorOccured = true;
+        }
+        else {
+            $("#SpanForPhone").html("");
+            ErrorOccured = false;
+        }
+        if ($.trim($("#Pincode").val()) == '' || $.trim($("#Pincode").val()).length != 6) {
+            $("#SpanForPincode").html("Invalid PIN/ZIP Code");
+            ErrorOccured = true;
+        }
+        else {
+            $("#SpanForPincode").html("");
+            ErrorOccured = false;
+        }
+        if ($("#CityId").val() === "") {
+            $("#SpanForCity").html("Please select a city");
+            ErrorOccured = true;
+        }
+        else {
+            $("#SpanForCity").html("");
+            ErrorOccured = false;
+        }
+        if(ErrorOccured==false) { $("#AddressForm").submit(); }
     }
 </script>

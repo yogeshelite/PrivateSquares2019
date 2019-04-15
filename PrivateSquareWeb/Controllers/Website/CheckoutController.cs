@@ -58,10 +58,9 @@ namespace PrivateSquareWeb.Controllers.Website
         }
         [HttpPost]
         public ActionResult AddressesList(AddressModel ObjModel)
-
         {
-            // List<AddressModel> ListUserAddress;
-            // ListUserAddress = GetUserAddress(null);
+            List<AddressModel> ListUserAddress;
+            ListUserAddress = GetUserAddress();
             LoginModel MdUser = Services.GetLoginWebUser(this.ControllerContext.HttpContext, _JwtTokenManager);
 
             if (ModelState.IsValid)
@@ -98,7 +97,7 @@ namespace PrivateSquareWeb.Controllers.Website
                 if (ObjResponse.Response.Equals("Save Address"))
                 {
                     //@ViewBag.ResponseMessage = "Your Current Password is Wrong";
-                    //ViewBag.UserAddress = ListUserAddress;
+                    ViewBag.UserAddress = ListUserAddress;
                     PreRequiestCheckout();
                     return View("Index", ObjModel);
                 }
@@ -135,7 +134,7 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.UserAddress = UserAddressList;
             bindCountryStateCity();
         }
-        //public static decimal totalamount;
+       
         [HttpPost]
         public JsonResult PlaceOrder(long AddressId, string PaymentMode)
         {

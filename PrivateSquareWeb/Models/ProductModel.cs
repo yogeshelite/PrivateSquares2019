@@ -9,9 +9,9 @@ namespace PrivateSquareWeb.Models
     public class ProductModel
     {
         public long Id { get; set; }
-        public string Sortby { get; set; }   //field used for sorting products
-        public long PageIndex { get; set; }     //field used for pagination of products while showing results in sorting
-        public long ProductId { get; set; } // extra productId field for binding the ViewBag.Wishlist
+        public string Sortby { get; set; }                                  //field used for sorting products
+        public long PageIndex { get; set; }                                //field used for pagination of products while showing results in sorting
+        public long ProductId { get; set; }                               // extra productId field for binding the ViewBag.Wishlist
         [Required(ErrorMessage = "Product Name cannot be empty")]
         public string ProductName { get; set; }
         public long? ProductCatId { get; set; }
@@ -27,6 +27,10 @@ namespace PrivateSquareWeb.Models
         public string ProductImages { get; set; }
         public string VendorName { get; set; }
         public string Operation { get; set; }
-        public int SearchResultCount { get; set; }
+        //public int SearchResultCount { get; set; }
+        //Below are the properties for pagination
+        public long SearchResultCount { get; set; } = 0;
+        public long LowerLimit { get; set; } = 0;
+        public long NumberOfPages { get; set; } = 0;
     }
 }

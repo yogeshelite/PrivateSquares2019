@@ -380,7 +380,7 @@ namespace PrivateSquareWeb.Controllers.Website
         public PartialViewResult _Pagination(long id, long? searchresultcount, long? lowerlimit, long? numberofpages)
         {
             ProductModel ObjModel = new ProductModel();
-            if (searchresultcount == null)
+            //if (searchresultcount == null)
             {
                 searchresultcount = long.Parse(Services.GetCookie(this.HttpContext, "SearchResutlCount").Value);
                 lowerlimit = long.Parse(Services.GetCookie(this.HttpContext, "LowerLimit").Value);
@@ -390,7 +390,7 @@ namespace PrivateSquareWeb.Controllers.Website
             ViewBag.LowerLimit = lowerlimit;
             ViewBag.SearchResultCount = searchresultcount;
             ViewBag.NumberOfPages = numberofpages;
-          
+
             return PartialView();
         }
     }

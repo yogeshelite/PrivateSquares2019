@@ -145,7 +145,7 @@
                                         <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
                                         <p class="ps-product__price">
                                             <del>@Users.SellingPrice</del>@Users.DiscountPrice
-                                        </p><a class="ps-product__cart" onclick="AddToCart('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                                        </p><a class="ps-product__cart" onclick="AddToCart('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cartqqq"><i class="ps-icon-cart-2"></i></a>
                                     </div>
                                    
                                 </div>
@@ -158,7 +158,7 @@
                     <div class="ps-product-group__footer">
                         <div class="ps-pagination mb-50">
                             <ul class="pagination">
-                                @if ((ViewBag.SearchResultCount / 10) > 1)
+                                @if ((ViewBag.SearchResultCount / 12) > 1)
                                 {
                                     var n = ViewBag.LowerLimit;
                                     <li><a href="~/WebHome/PreviousPages/@(ViewBag.LowerLimit-1)"><i class="fa fa-angle-left"></i></a></li>
@@ -176,13 +176,13 @@
                                 }
                                 else
                                 {
-                                    if (ViewBag.SearchResultCount < 10)
+                                    if (ViewBag.SearchResultCount < 12)
                                     {
                                         <li class="active"><a href="#">1</a></li>
                                     }
                                     else
                                     {
-                                        if ((ViewBag.SearchResultCount % 10) != 0)
+                                        if ((ViewBag.SearchResultCount % 12) != 0)
                                         {
                                      
                                             <li class="active"><a href="~/WebHome/NextPage/1">1</a></li>
@@ -201,11 +201,7 @@
             </div>
             }
     </main>
-<div class="ps-section--partner">
-    <div class="ps-container">
-        <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="60" data-owl-nav="false" data-owl-dots="false" data-owl-item="5" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-duration="1000" data-owl-mousedrag="on"><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a><a href="#"><img src="images/partner/1.png" alt=""></a><a href="#"><img src="images/partner/2.png" alt=""></a><a href="#"><img src="images/partner/3.png" alt=""></a><a href="#"><img src="images/partner/4.png" alt=""></a><a href="#"><img src="images/partner/5.png" alt=""></a></div>
-    </div>
-</div>
+
 <div class="ps-section--features">
     <div class="ps-container">
         <div class="row">

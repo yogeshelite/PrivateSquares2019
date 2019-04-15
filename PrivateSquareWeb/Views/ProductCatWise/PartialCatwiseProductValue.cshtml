@@ -95,7 +95,7 @@
                 <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
                 <p class="ps-product__price">
                     <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
-                </p><a class="ps-product__cart" onclick="AddToCartCatWise('@Users.Id','@Users.ProductName','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage','@Users.ProductCatId')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
+                </p><a class="ps-product__cart" onclick="AddToCartCatWise('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage','@Users.ProductCatId')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
             </div>
         </div>
     </div>

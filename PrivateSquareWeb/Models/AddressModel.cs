@@ -27,7 +27,7 @@ namespace PrivateSquareWeb.Models
         public long CityId { get; set; }
         public string CityName { get; set; }
         public long StateId { get; set; }
-        public string StateName { get; set; }
+        public string StateName { get; set; } = "";
         public string Landmark { get; set; }
         public string AlternatePhone { get; set; }
         public string Type { get; set; }

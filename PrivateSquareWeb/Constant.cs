@@ -7,7 +7,7 @@ namespace PrivateSquareWeb
 {
     public class Constant
     {
-        public const string DomainUrl = "http://localhost:53693/";//http://localhost:53693/        http://192.168.1.150:2552/
+        public const string DomainUrl = " http://192.168.1.150:2552/";//http://localhost:53693/        http://192.168.1.150:2552/
         public const string ApiRegister = "User/Registeration";// For Mobile Login
         public const string ApiLogin = "User/AuthenticateUser";// For Mobile With Otp
         public const string ApiLoginUser = "User/LoginUser";
