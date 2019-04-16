@@ -95,7 +95,10 @@
                     <div class="ps-product-group__action">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                <p>Showing 1–12 of @ViewBag.SearchResultCount results</p>
+                                <div id="abc">
+                                 <p>Showing @(ViewBag.ProductsFrom)–@((ViewBag.ProductsFrom) + ViewBag.ToProductsCount) of @ViewBag.SearchResultCount results</p>
+                                </div>
+                                @*<p>Showing <span id="FromProductsCount">1</span>–<span id="ToProductsCount">12</span> of @ViewBag.SearchResultCount results</p>*@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="sortbyclass">
                                 <select class="ps-select" id="sortby" title="Sort By--">
@@ -187,7 +190,7 @@
                     <p class="ac-slider__meta">Price:<span class="ac-slider__value ac-slider__min"> 10</span>-<span class="ac-slider__value ac-slider__max">10000</span></p>
 
                     <input type="range" id="firstslider" min="0" max="10000" step="100" value="0" onchange="showvalue(this.value)" /><br>
-                    <input type="text" id="TxtPriceRange" name="TxtPriceRange" />
+                    <input type="text" id="TxtPriceRange" name="TxtPriceRange" readonly />
                     <input type="submit" id="BtnPriceRange" name="submit" onclick="ProductPriceWise()" value="PriceRange" style="display:none;" />
 
                 </div>
@@ -234,8 +237,11 @@
 </script>
                                                      @*//Below script is called when the next page is requested by the user from the  pagination bar of the  Categorywise Product Page*@
 <script>
+    
     var nextpage = function (id) {
-        console.log(id);
+        //alert('bcxvj');
+        var FromProductsCount = '@ViewBag.ProductsFrom';
+        var ToProductsCount = '@ViewBag.ToProductsCount';
         $.ajax({
             url: "../../ProductCatWise/NextPage/",
             type: "POST",
@@ -243,9 +249,15 @@
                 "id": id
             },
             success: function (result) {
+                console.log('asdfghjkl');
+                //$("#Cartcontent").load(location.href + ' #FromProductsCount');
+                //$("#FromProductsCount").html(FromProductsCount);
+                //$("#ToProductsCount").html(FromProductsCount+ToProductsCount);
                 $("#DivItemBind").html(result);
             }
         });
+       
+        var ProductsCountNumber = PageCounting(id);
         if (id == 1) {
             $("#pagenumber2").removeClass("active");
             $("#pagenumber1").addClass("active");
@@ -285,6 +297,7 @@
                         $("#paginationfooter").html(result);
                     }
                 })
+                var ProductsCountNumber = PageCounting(id);
             }
         });
 
@@ -314,7 +327,23 @@
                         $("#paginationfooter").html(result);
                     }
                 });
+                var ProductsCountNumber = PageCounting(id);
             }
         });
     }
-</script>                   
+</script>      
+<script>
+     debugger;
+    var PageCounting= function(id){
+     $.ajax({
+         url: "../../ProductCatWise/PageCountingPartialView/",
+            type: "POST",
+            data: {
+                "id": id
+            },
+            success: function (result) {
+                $("#abc").html(result);
+            }
+        });
+    }
+</script>             
