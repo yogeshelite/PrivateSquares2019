@@ -32,5 +32,6 @@ namespace PrivateSquareWeb.Models
         public long SearchResultCount { get; set; } = 0;
         public long LowerLimit { get; set; } = 0;
         public long NumberOfPages { get; set; } = 0;
+        public string CategoryName { get; set; }
     }
 }
