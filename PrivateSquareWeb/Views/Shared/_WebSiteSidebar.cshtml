@@ -1,10 +1,17 @@
-﻿@model PrivateSquareWeb.Models.ProductModel
+﻿<style>
+    .ContainSpace {
+        margin-left: 25px;
+    }
+</style>
 
+@model PrivateSquareWeb.Models.ProductModel
+@*<link href="~/theme/css/slim.css" rel="stylesheet" />*@
 <aside class="ps-sidebar" data-mh="product-page">
     <aside class="ps-widget--sidebar ps-widget--category">
         <div class="ps-widget__header">
             <h3>Category</h3>
         </div>
+
         <div class="ps-widget__content">
             <ul class="ps-list--checked">
                 @{
@@ -16,51 +23,52 @@
 
                         }
                         <li>
-                            <div id="subcategories@(Cat.Id)" class="collapse">
+                            <div id="subcategories@(Cat.Id)" class="collapse ContainSpace">
                                 @{ if (Cat.Id == 36)
                                     {
                                         foreach (var item in ViewBag.ProdCatList36)
                                         {
-                                <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                           
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.EncodedId"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 37)
                                     {
                                         foreach (var item in ViewBag.ProdCatList37)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.EncodedId"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 38)
                                     {
                                         foreach (var item in ViewBag.ProdCatList38)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.EncodedId"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 39)
                                     {
                                         foreach (var item in ViewBag.ProdCatList39)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.EncodedId"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 41)
                                     {
                                         foreach (var item in ViewBag.ProdCatList41)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.EncodedId"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 42)
                                     {
                                         foreach (var item in ViewBag.ProdCatList42)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul><li><a href="~/ProductCatWise/Index/@item.EncodedId"> @item.Name</a></li></ul>
                                         }
                                     }
                                 }
-                                
+
                             </div>
                         </li>
                     }
@@ -71,4 +79,17 @@
     </aside>
 
 </aside>
+<link href="~/Content/common/bootstrap.css" rel="stylesheet" **media="screen" ** type="text/css" />
+<script>
 
+    //var url = function (id) {
+    //    debugger
+    //    //_web
+
+    //    l = document.getElementsByTagName("a");
+    //    a = document.getElementsByTagName("a")
+    //    for (var i = 0; i < l.length; i++) {
+    //        l[i].href = "ProductCatWise/Index" +"/";
+    //    }
+   // }
+</script>

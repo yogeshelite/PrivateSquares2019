@@ -393,12 +393,6 @@ namespace PrivateSquareWeb.CommonCls
             if(ObjResponse2.Response == "Exist")
             { return true; }
             else { return false; }
-            //return GetPopularProductList;
-            //if (id == 36 || id == 37 || id == 38 || id == 39 || id == 41 || id == 42) { return true; }
-            //else
-            //{
-            //    return false;
-            //}
         }
         public static List<ProductModel> GetChildCategory(int id)
         {
@@ -410,6 +404,16 @@ namespace PrivateSquareWeb.CommonCls
             Categories = JsonConvert.DeserializeObject<List<ProductModel>>(objResponse.Response);
             return Categories;
 
+        }
+        public static string Decode(string decodeMe)
+        {
+            byte[] encoded = Convert.FromBase64String(decodeMe);
+            return System.Text.Encoding.UTF8.GetString(encoded);
+        }
+        public static string Encode(string encodeMe)
+        {
+            byte[] encoded = System.Text.Encoding.UTF8.GetBytes(encodeMe);
+            return Convert.ToBase64String(encoded);
         }
     }
 }

@@ -342,6 +342,14 @@ namespace PrivateSquareWeb.Controllers.Website
             }
             var jsonString = "{\"ParentCatId\":\"" + objModel.ParentCatId + "\",\"SearchBarText\":\"" + objModel.SearchBarText + "\"}";
             Services.SetCookie(this.ControllerContext.HttpContext, "SearchBarCookie", jsonString.ToString());
+
+            int pageindex = ViewBag.PageIndex;
+            ViewBag.PageIndex = pageindex;
+            var SearchList1 = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
+            //ViewBag.UsersProduct = SearchList1.Skip((pageindex - 1) * 12).Take(12);
+            //ViewBag.ProductsFrom = ((pageindex - 1) * 12);
+            //ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
+            //ViewBag.SearchResultCount = SearchList1.Count;
             return View();
         }
         public ActionResult MyOrders(SaleOrderModel objmodel)
@@ -466,6 +474,10 @@ namespace PrivateSquareWeb.Controllers.Website
             else
             {
                 ViewBag.NumberOfPages = pageindex + 4;
+            }
+            if (ViewBag.ProductsFrom== ViewBag.SearchResultCount)
+            {
+                ViewBag.ToProductsCount = ViewBag.ToProductsCount - 1;
             }
             return View("SearchBar");
         }
