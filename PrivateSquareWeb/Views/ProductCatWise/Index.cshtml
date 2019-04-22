@@ -129,7 +129,9 @@
                                 <li><a href="~/ProductCatWise/PreviousPages/@(ViewBag.LowerLimit-1)"><i class="fa fa-angle-left"></i></a></li>
                                 do
                                 {
-                                    <li id="@n"><a href="javascript:void()" onclick="nextpage(@n)">@n</a></li>
+                                    if (n == 1) {<li id="@n" class="active"><a href="javascript:void()" onclick="nextpage(@n)">@n</a></li> }
+                                    else
+                                    { <li id="@n"><a href="javascript:void()" onclick="nextpage(@n)">@n</a></li>}
                                     n++;
                                 }
                                 while (n <= (ViewBag.NumberOfPages));

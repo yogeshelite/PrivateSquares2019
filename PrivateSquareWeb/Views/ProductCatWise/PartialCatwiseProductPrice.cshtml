@@ -74,10 +74,8 @@
 
                         }
                     }
-                    @{
-                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
-                    }
-                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                  
+                    @*<div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>*@
                     <ul class="ps-product__actions">
                         <li><a href="#" title="Favorite"><i class="ps-icon-heart" onclick="AddToWishlist(@Users.Id)"></i></a></li>
                     </ul>
@@ -85,7 +83,7 @@
                 <div class="ps-product__content">
                     <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
                     <p class="ps-product__price">
-                        <del>₹@Users.SellingPrice</del>₹@Users.DiscountPrice
+                        ₹@Users.DiscountPrice
                     </p><a class="ps-product__cart" onclick="AddToCartCatWise('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage','@Users.ProductCatId')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
                 </div>
             </div>
@@ -93,4 +91,4 @@
 
     }
 </div><!-- row -->
-<a href="" class="btn btn-light btn-block mg-t-20">Load more Products</a>
+

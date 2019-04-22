@@ -295,7 +295,7 @@ namespace PrivateSquareWeb.Controllers.Website
                 //var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
                 if (objModel.ParentCatId == 0)
                 {
-                    ViewBag.UsersProduct = ListAllProduct.Take(12);
+                    ViewBag.UsersProduct = ListAllProduct.Take(Constant.NumberOfProducts);
                     ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                     ViewBag.SearchResultCount = ListAllProduct.Count;
                     ViewBag.NumberOfPages = 5;
@@ -304,7 +304,7 @@ namespace PrivateSquareWeb.Controllers.Website
                     return View();
                 }
                 var SearchListWithCategory = ListAllProduct.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory.Take(12);
+                ViewBag.UsersProduct = SearchListWithCategory.Take(Constant.NumberOfProducts);
                 //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
                 ViewBag.NumberOfPages = 5;
@@ -315,15 +315,15 @@ namespace PrivateSquareWeb.Controllers.Website
             if (objModel.ParentCatId == 0)
             {
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
-                ViewBag.UsersProduct = SearchList.Take(12);
+                ViewBag.UsersProduct = SearchList.Take(Constant.NumberOfProducts);
                 if (SearchList.Count == 0) { ViewBag.NoResultFound = "No Result Found"; }
                 else { ViewBag.NoResultFound = ""; }
                 //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
                 ViewBag.SearchResultCount = SearchList.Count;
-                if ((SearchList.Count / 12) < 5)
+                if ((SearchList.Count / Constant.NumberOfProducts) < 5)
                 {
-                    if (SearchList.Count % 12 == 0) { ViewBag.NumberOfPages = SearchList.Count / 12; }
-                    else { ViewBag.NumberOfPages = (SearchList.Count / 12) + 1; }
+                    if (SearchList.Count % Constant.NumberOfProducts == 0) { ViewBag.NumberOfPages = SearchList.Count / Constant.NumberOfProducts; }
+                    else { ViewBag.NumberOfPages = (SearchList.Count / Constant.NumberOfProducts) + 1; }
                 }
                 else
                 ViewBag.NumberOfPages = 5;
@@ -334,7 +334,7 @@ namespace PrivateSquareWeb.Controllers.Website
 
                 var SearchListWithCategory = SearchList.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
 
-                ViewBag.UsersProduct = SearchListWithCategory.Take(12);
+                ViewBag.UsersProduct = SearchListWithCategory.Take(Constant.NumberOfProducts);
                 ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                 //ViewBag.PopularProducts = CommonFile.GetPopularProduct();
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
@@ -386,7 +386,14 @@ namespace PrivateSquareWeb.Controllers.Website
         public ActionResult NextPage(long id)
         {
             int pageindex = (int)id;
-            ViewBag.LowerLimit = ((pageindex / 5) * 5) + 1;
+            if ((pageindex % 5) == 0)
+            {
+                ViewBag.LowerLimit = (pageindex / 5) * 5;
+            }
+            else
+            {
+                ViewBag.LowerLimit = ((pageindex / 5) * 5) + 1;
+            }
             ViewBag.PageIndex = pageindex;
             HeaderPartialModel objModel = new HeaderPartialModel();
             string SearchCookieValue = Services.GetCookie(this.HttpContext, "SearchBarCookie").Value;
@@ -407,13 +414,17 @@ namespace PrivateSquareWeb.Controllers.Website
 
                 if (objModel.ParentCatId == 0)
                 {
-                    ViewBag.UsersProduct = ListAllProduct.Skip((pageindex - 1) * 12).Take(12);
-                    ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                    ViewBag.UsersProduct = ListAllProduct.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
+                    ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
                     ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                     ViewBag.SearchResultCount = ListAllProduct.Count;
-                    if ((ViewBag.SearchResultCount / 10) < (ViewBag.LowerLimit + 4))
+                    if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) < (ViewBag.LowerLimit + 4))
                     {
-                        ViewBag.NumberOfPages = ViewBag.LowerLimit + (((ViewBag.SearchResultCount / 10) - 5) - 1);
+                        if ((ViewBag.SearchResultCount % Constant.NumberOfProducts) == 0)
+                        {
+                            ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts);
+                        }
+                        else { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts) + 1; }
                     }
                     else
                     {
@@ -422,14 +433,14 @@ namespace PrivateSquareWeb.Controllers.Website
                     return View("SearchBar");
                 }
                 var SearchListWithCategory = ListAllProduct.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * 12).Take(12);
-                ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
+                ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
                 ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
-                if ((ViewBag.SearchResultCount / 12) < (pageindex + 4))
+                if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) < (pageindex + 4))
                 {
-                    if ((ViewBag.SearchResultCount % 12) != 0) { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / 12) + 1; }
-                    else { ViewBag.NumberOfPages = ViewBag.SearchResultCount / 12; }
+                    if ((ViewBag.SearchResultCount % Constant.NumberOfProducts) != 0) { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts) + 1; }
+                    else { ViewBag.NumberOfPages = ViewBag.SearchResultCount / Constant.NumberOfProducts; }
                     //ViewBag.NumberOfPages = ViewBag.LowerLimit + (((ViewBag.SearchResultCount / 10) - 5) - 1);
                 }
                 else
@@ -441,8 +452,8 @@ namespace PrivateSquareWeb.Controllers.Website
             if (objModel.ParentCatId == 0)
             {
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
-                ViewBag.UsersProduct = SearchList.Skip((pageindex - 1) * 12).Take(12);
-                ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                ViewBag.UsersProduct = SearchList.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
+                ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
                 ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                 ViewBag.SearchResultCount = SearchList.Count;
             }
@@ -451,17 +462,17 @@ namespace PrivateSquareWeb.Controllers.Website
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
 
                 var SearchListWithCategory = SearchList.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * 12).Take(12);
-                ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
+                ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
                 ViewBag.ToProductsCount = (Enumerable.Count(ViewBag.UsersProduct) - 1);
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
             }
 
             #endregion
-            if ((ViewBag.SearchResultCount / 12) < (pageindex + 4))
+            if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) < (pageindex + 4))
             {
-                if ((ViewBag.SearhResultCount % 12) != 0) { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / 12) + 1; }
-                else { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / 12); }
+                if ((ViewBag.SearhResultCount % Constant.NumberOfProducts) != 0) { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts) + 1; }
+                else { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts); }
             }
             else
             {
@@ -502,40 +513,40 @@ namespace PrivateSquareWeb.Controllers.Website
 
                 if (objModel.ParentCatId == 0)
                 {
-                    ViewBag.UsersProduct = ListAllProduct.Skip((pageindex - 1) * 12).Take(12);
+                    ViewBag.UsersProduct = ListAllProduct.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
                     ViewBag.SearchResultCount = ListAllProduct.Count;
-                    if ((ViewBag.SearchResultCount / 12) < (pageindex + 4))
+                    if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) < (pageindex + 4))
                     {
-                        ViewBag.NumberOfPages = (ViewBag.SearchResultCount / 12);
+                        ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts);
                     }
                     else
                     {
                         ViewBag.NumberOfPages = ViewBag.LowerLimit + 4;
                     }
-                    ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                    ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
                     ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                     return View("SearchBar");
                 }
                 var SearchListWithCategory = ListAllProduct.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * 12).Take(12);
+                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
-                if ((ViewBag.SearchResultCount / 12) < (pageindex + 4))
+                if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) < (pageindex + 4))
                 {
-                    if ((ViewBag.SearhResultCount % 12) != 0) { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / 12) + 1; }
-                    else { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / 12); }
+                    if ((ViewBag.SearhResultCount % Constant.NumberOfProducts) != 0) { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts) + 1; }
+                    else { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts); }
                 }
                 else
                 {
                     ViewBag.NumberOfPages = pageindex + 4;
                 }
-                ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
                 ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                 return View("SearchBar");
             }
             if (objModel.ParentCatId == 0)
             {
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
-                ViewBag.UsersProduct = SearchList.Skip((pageindex - 1) * 12).Take(12);
+                ViewBag.UsersProduct = SearchList.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
                 ViewBag.SearchResultCount = SearchList.Count;
             }
             else
@@ -543,28 +554,28 @@ namespace PrivateSquareWeb.Controllers.Website
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
 
                 var SearchListWithCategory = SearchList.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * 12).Take(12);
+                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
 
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
             }
 
             #endregion
-            if ((ViewBag.SearchResultCount / 12) < (pageindex + 4))
+            if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) < (pageindex + 4))
             {
-                if ((ViewBag.SearhResultCount % 12) != 0) { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / 12) + 1; }
-                else { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / 12); }
+                if ((ViewBag.SearhResultCount % Constant.NumberOfProducts) != 0) { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts) + 1; }
+                else { ViewBag.NumberOfPages = (ViewBag.SearchResultCount / Constant.NumberOfProducts); }
             }
             else
             {
                 ViewBag.NumberOfPages = pageindex + 4;
             }
-            ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+            ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
             ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
             return View("SearchBar");
         }
         public ActionResult PreviousPages(long id)
         {
-            if (id == 0) { id = 4; }
+            if (id == 0) { id = 1; }
             int pageindex = (int)id;
             ViewBag.PageIndex = pageindex;
             HeaderPartialModel objModel = new HeaderPartialModel();
@@ -590,7 +601,7 @@ namespace PrivateSquareWeb.Controllers.Website
 
                 if (objModel.ParentCatId == 0)
                 {
-                    ViewBag.UsersProduct = ListAllProduct.Skip((pageindex - 1) * 12).Take(12);
+                    ViewBag.UsersProduct = ListAllProduct.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
                     ViewBag.SearchResultCount = ListAllProduct.Count;
                     if ((ViewBag.SearchResultCount / 10) < (pageindex + 4))
                     {
@@ -600,12 +611,12 @@ namespace PrivateSquareWeb.Controllers.Website
                     {
                         ViewBag.NumberOfPages = ViewBag.LowerLimit + 5;
                     }
-                    ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                    ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
                     ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                     return View("SearchBar");
                 }
                 var SearchListWithCategory = ListAllProduct.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * 12).Take(12);
+                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
                 if ((ViewBag.SearchResultCount / 10) < (pageindex + 4))
                 {
@@ -615,14 +626,14 @@ namespace PrivateSquareWeb.Controllers.Website
                 {
                     ViewBag.NumberOfPages = pageindex + 4;
                 }
-                ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+                ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
                 ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
                 return View("SearchBar");
             }
             if (objModel.ParentCatId == 0)
             {
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
-                ViewBag.UsersProduct = SearchList.Skip((pageindex - 1) * 12).Take(12);
+                ViewBag.UsersProduct = SearchList.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
                 ViewBag.SearchResultCount = SearchList.Count;
             }
             else
@@ -630,13 +641,13 @@ namespace PrivateSquareWeb.Controllers.Website
                 var SearchList = ListAllProduct.Where(x => x.ProductName.ToUpper().Contains(objModel.SearchBarText.ToString().ToUpper())).ToList();
 
                 var SearchListWithCategory = SearchList.Where(x => x.ParentCatId.Equals(objModel.ParentCatId)).ToList();
-                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * 12).Take(12);
+                ViewBag.UsersProduct = SearchListWithCategory.Skip((pageindex - 1) * Constant.NumberOfProducts).Take(Constant.NumberOfProducts);
 
                 ViewBag.SearchResultCount = SearchListWithCategory.Count;
             }
 
             #endregion
-            ViewBag.ProductsFrom = ((pageindex - 1) * 12) + 1;
+            ViewBag.ProductsFrom = ((pageindex - 1) * Constant.NumberOfProducts) + 1;
             ViewBag.ToProductsCount = Enumerable.Count(ViewBag.UsersProduct);
             return View("SearchBar");
         }

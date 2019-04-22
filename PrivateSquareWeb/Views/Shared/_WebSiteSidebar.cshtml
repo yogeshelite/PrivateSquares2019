@@ -1,6 +1,6 @@
 ﻿@model PrivateSquareWeb.Models.ProductModel
 
-<aside class="ps-sidebar" data-mh="product-page">
+<aside class="ps-sidebar pt-40" data-mh="product-page">
     <aside class="ps-widget--sidebar ps-widget--category">
         <div class="ps-widget__header">
             <h3>Category</h3>
@@ -12,7 +12,7 @@
                     {
                         if (Cat.ParentCatId == 0)
                         {
-                            <li><a data-toggle="collapse" data-target="#subcategories@(Cat.Id)">@Cat.Name </a></li>
+                            <li id="@Cat.Id"><a  class="current" data-toggle="collapse" data-target="#subcategories@(Cat.Id)" onclick="SelectParentCategory(@Cat.Id)">@Cat.Name </a></li>
 
                         }
                         <li>
@@ -21,42 +21,42 @@
                                     {
                                         foreach (var item in ViewBag.ProdCatList36)
                                         {
-                                <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                <ul style="margin-left:20px;"><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 37)
                                     {
                                         foreach (var item in ViewBag.ProdCatList37)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul style="margin-left:20px;"><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 38)
                                     {
                                         foreach (var item in ViewBag.ProdCatList38)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul style="margin-left:20px;"><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 39)
                                     {
                                         foreach (var item in ViewBag.ProdCatList39)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul style="margin-left:20px;"><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 41)
                                     {
                                         foreach (var item in ViewBag.ProdCatList41)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul style="margin-left:20px;"><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
                                         }
                                     }
                                     if (Cat.Id == 42)
                                     {
                                         foreach (var item in ViewBag.ProdCatList42)
                                         {
-                                            <ul><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
+                                            <ul style="margin-left:20px;"><li><a href="~/ProductCatWise/Index/@item.Id"> @item.Name</a></li></ul>
                                         }
                                     }
                                 }
@@ -65,7 +65,7 @@
                         </li>
                     }
                 }
-                <li><a href="#">More</a></li>
+                @*<li><a href="#">More</a></li>*@
             </ul>
         </div>
     </aside>

@@ -11,7 +11,7 @@
 
     var AddToCart = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
         console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage);
-       
+
         var salePrice = SellingPrice;
         var discountPrice = DiscountPrice;
         var ProductId = Id;
@@ -26,7 +26,7 @@
         $.ajax({
             url: "../../WebHome/AddToCart",
             type: "POST",
-          
+
             data: {
                 ProductId: ProductId,
                 ProductName: ProductName,
@@ -38,7 +38,7 @@
                 TotalAmount: TotalAmount
             },
             success: function (result) {
-              
+
                 $("#Cartcontent").load(location.href + ' #Cartcontent');
                 swal(" ", "Product Added to the Cart", "success");
             },
@@ -50,7 +50,7 @@
 </script>
 <script type="text/javascript">
     var AddToWishlist = function (Id) {
-       
+
         var ProductId = Id;
         $.ajax({
             url: "../../WebHome/AddToWishlist",
@@ -72,7 +72,7 @@
             }
 
         })
-       
+
 
     }
 </script>
@@ -80,127 +80,127 @@
     <div class="ps-hero">
         <div class="container">
             <h3>SEARCH RESULTS</h3>
-           
+
         </div>
     </div>
     @using (Html.BeginForm("SearchBar", "WebHome", FormMethod.Post))
     {
 
-           {
-            Html.RenderAction("WebSiteSidebar", "WebSidebar"); 
+        {
+            Html.RenderAction("WebSiteSidebar", "WebSidebar");
 
-            }
+        }
         <div class="ps-content" data-mh="product-page">
-                <div class="ps-product-group no-sidebar pt-40" data-item="4">
-                    <div class="ps-product-group__header">
-                        <div class="ps-filter">
-                            <div class="row">
-                                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
-                                   
+            <div class="ps-product-group no-sidebar pt-40" data-item="4">
+                <div class="ps-product-group__header">
+                    <div class="ps-filter">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+                                <div class="ps-filter__result">
+                                    @if (ViewBag.SearchResultCount >= Constant.NumberOfProducts)
+                                    {
+
+                                        <p>Showing @(ViewBag.ProductsFrom)–@((ViewBag.ProductsFrom) + ViewBag.ToProductsCount) of @ViewBag.SearchResultCount results</p>
+
+
+                                    }
+                                    else
+                                    {<p>Showing 1–@ViewBag.SearchResultCount of @ViewBag.SearchResultCount results</p>}
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
-                                    <div class="ps-filter__result">
-                                        @if (ViewBag.SearchResultCount >= Constant.NumberOfProducts)
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ps-product-group__content">
+                    @foreach (var Users in ViewBag.UsersProduct)
+                    {
+                        <div class="ps-product-group__action"></div>
+                        <div class="ps-product-wrap">
+                            <div class="ps-product--fashion">
+                                <div class="ps-product__thumbnail">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    @{ if (@Users.ProductImage == null)
                                         {
-
-                                            <p>Showing @(ViewBag.ProductsFrom)–@((ViewBag.ProductsFrom) + ViewBag.ToProductsCount) of @ViewBag.SearchResultCount results</p>
-
-
+                                            <img src="~/DocImg/deafult.png" alt="">
                                         }
                                         else
-                                        {<p>Showing 1–@ViewBag.SearchResultCount of @ViewBag.SearchResultCount results</p>}
-                                    </div>
+                                        {
+                                            <img src="~/DocImg/@Users.ProductImage" alt="">
+                                        }
+                                    }
+                                    @{
+                                        string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
+                                    }
+                                    <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
+                                    <ul class="ps-product__actions">
+
+                                        <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                                    </ul>
                                 </div>
+                                <div class="ps-product__content">
+                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                                    <p class="ps-product__price">
+                                        <del>@Users.SellingPrice</del>@Users.DiscountPrice
+                                    </p><a class="ps-product__cart" onclick="AddToCart('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cartqqq"><i class="ps-icon-cart-2"></i></a>
+                                </div>
+
                             </div>
-                          
                         </div>
-                    </div>
-                    <div class="ps-product-group__content">
-                        @foreach (var Users in ViewBag.UsersProduct)
-                        {
-                            <div class="ps-product-group__action"></div>
-                            <div class="ps-product-wrap">
-                                <div class="ps-product--fashion">
-                                    <div class="ps-product__thumbnail">
-                                        <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
-                                        @{ if (@Users.ProductImage == null)
-                                            {
-                                                <img src="~/DocImg/deafult.png" alt="">
-                                            }
-                                            else
-                                            {
-                                                <img src="~/DocImg/@Users.ProductImage" alt="">
-                                            }
-                                        }
-                                        @{
-                                            string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
-                                        }
-                                        <div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>
-                                        <ul class="ps-product__actions">
-                                        
-                                            <li><a href="#" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="ps-product__content">
-                                        <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
-                                        <p class="ps-product__price">
-                                            <del>@Users.SellingPrice</del>@Users.DiscountPrice
-                                        </p><a class="ps-product__cart" onclick="AddToCart('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cartqqq"><i class="ps-icon-cart-2"></i></a>
-                                    </div>
-                                   
-                                </div>
-                            </div>
 
 
-                        }
-                        <h1>@ViewBag.NoResultFound</h1>
-                    </div>
-                    <div class="ps-product-group__footer">
-                        <div class="ps-pagination mb-50">
-                            <ul class="pagination">
-                                @if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) > 1)
+                    }
+                    <h1>@ViewBag.NoResultFound</h1>
+                </div>
+                <div class="ps-product-group__footer">
+                    <div class="ps-pagination mb-50">
+                        <ul class="pagination">
+                            @if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) > 1)
+                            {
+                                var n = ViewBag.LowerLimit;
+                                <li><a href="~/WebHome/PreviousPages/@(ViewBag.LowerLimit-1)" onclick="return ActivatePageNumber(@(ViewBag.LowerLimit-1))"><i class="fa fa-angle-left"></i></a></li>
+                                do
                                 {
-                                    var n = ViewBag.LowerLimit;
-                                    <li><a href="~/WebHome/PreviousPages/@(ViewBag.LowerLimit-1)"><i class="fa fa-angle-left"></i></a></li>
-                                    do
-                                    {
-                                        <li><a href="~/WebHome/NextPage/@n">@n</a></li>
-                                        n++;
-                                    }
-                                    while (n <= (ViewBag.NumberOfPages));
-                                    if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) > ViewBag.NumberOfPages)
-                                    {
-                                        <li><a href="~/WebHome/MorePages/@n"><i class="fa fa-angle-right"></i></a></li>
-                                    }
-                                 
+                                    <li id="@n"><a href="~/WebHome/NextPage/@n" onclick="return ActivatePageNumber(@n)">@n</a></li>
+                                    n++;
+                                }
+                                while (n <= (ViewBag.NumberOfPages));
+                                if ((ViewBag.SearchResultCount / Constant.NumberOfProducts) > ViewBag.NumberOfPages)
+                                {
+                                    <li><a href="~/WebHome/MorePages/@n" onclick="return ActivatePageNumber(@n)"><i class="fa fa-angle-right"></i></a></li>
+                                }
+
+                            }
+                            else
+                            {
+                                if (ViewBag.SearchResultCount < Constant.NumberOfProducts)
+                                {
+                                    <li class="active"><a href="#">1</a></li>
                                 }
                                 else
                                 {
-                                    if (ViewBag.SearchResultCount < Constant.NumberOfProducts)
+                                    if ((ViewBag.SearchResultCount % Constant.NumberOfProducts) != 0)
                                     {
-                                        <li class="active"><a href="#">1</a></li>
+
+                                        <li class="active"><a href="~/WebHome/NextPage/1">1</a></li>
+                                        <li><a href="~/WebHome/NextPage/2">2</a></li>
                                     }
                                     else
                                     {
-                                        if ((ViewBag.SearchResultCount % Constant.NumberOfProducts) != 0)
-                                        {
-                                     
-                                            <li class="active"><a href="~/WebHome/NextPage/1">1</a></li>
-                                            <li><a href="~/WebHome/NextPage/2">2</a></li>
-                                        }
-                                        else
-                                        {
-                                            <li class="active"><a href="#">1</a></li>
-                                        }
+                                        <li class="active"><a href="#">1</a></li>
                                     }
                                 }
-                            </ul>
-                        </div>
+                            }
+                        </ul>
                     </div>
                 </div>
             </div>
-            }
-    </main>
+        </div>
+    }
+</main>
 
 <div class="ps-section--features">
     <div class="ps-container">
@@ -240,3 +240,25 @@
 </div>
 
 
+<script>
+    var ActivatePageNumber = function (id) {
+        if (id == 0) { id = 1;}
+        localStorage.setItem("PageNumber", id);
+        return true;
+    }
+</script>
+<script>
+    window.onload = function () {
+        var id = localStorage.getItem("PageNumber");
+        var removefromlocalstorage=localStorage.setItem("PageNumber", -10);                 //sample value -10 -- put any value instead of -10
+        $(".active").removeClass("active");
+        //console.log('The id from the local storage is: ');
+        //console.log(id);
+        if (id == -10) {
+            $("#1").addClass("active");
+           // alert('Inside If condtion of If id==null');
+        }
+        //$("#1").removeClass("active");
+        else { $("#" + id + "").addClass("active"); }
+    }
+</script>

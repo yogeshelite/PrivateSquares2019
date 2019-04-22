@@ -57,14 +57,18 @@
     function SignUp() {
 
         var email = document.getElementById('emailIdRegister').value;
+        var newemail = email.trim();
+        email = newemail;
+        //var newStr = email.replace(/(^\s+|\s+$)/, '');
         var password = document.getElementById('passwordRegister').value;
         var letters = /^[a-zA-Z]+(\s{0,1}[a-zA-Z ])*$/;
         var mailformat = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var name = document.getElementById('Name').value;
+        var mobilenumber = /^\d{10}$/;
+
+
         if (name == '') {
             document.getElementById("valNameRegister").innerText = "Name Required";
-
-
             return;
         } else if (!name.match(letters)) {
             document.getElementById("valNameRegister").innerText = "Please input alphabet characters only.";
@@ -86,9 +90,20 @@
             return;
 
         }
-        else if (!email.match(mailformat)) {
-            document.getElementById("valemailIdRegister").innerText = "Incorrect Email.";
-            return;
+        else if (email != '') {
+            if (Number.isInteger(+email)) {
+                //var newemail = email.trim();
+                if (!newemail.match(mobilenumber)) {
+                    document.getElementById("valemailIdRegister").innerText = "Use 10 Digit Number.";
+                    return;
+                }
+            }
+            else {
+                if (!email.match(mailformat)) {
+                    document.getElementById("valemailIdRegister").innerText = "Incorrect Email or Phone Number";
+                    return;
+                }
+            }
         }
         else {
             document.getElementById("valemailIdRegister").innerText = "";
@@ -123,7 +138,8 @@
                     if (response == matchString.trim()) {
                         var p = document.getElementById("RegisMess");
                         p.innerText = data[0].Response;
-
+                        document.getElementById("valemailIdRegister").innerText = "";
+                        document.getElementById("valemailIdRegister").innerText = "";
                     }
                     else if (response == "Email Incorrect") {
                         document.getElementById("valemailIdRegister").innerText = "Email Incorrect";
@@ -156,7 +172,6 @@
 
     }
 </script>
-
 @using (Html.BeginForm("LoginUser", "WebLogin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -229,7 +244,7 @@
 
             <div class="ps-step-two" style="display: none">
 
-                <h2 class="sign-up-heading text-center">Sign Up to Write Quotes and earn points <br>from NearByCart</h2>
+                <h2 class="sign-up-heading text-center">Sign Up to Shop<br>from NearByCart</h2>
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

@@ -27,6 +27,8 @@ namespace PrivateSquareWeb.Controllers.Website
         [HttpPost]
         public ActionResult LoginUser(LoginModel ObjModel)
         {
+            //var abc = ObjModel.EmailId;
+            ObjModel.EmailId = (ObjModel.EmailId).Replace(" ", "");
             if (string.IsNullOrWhiteSpace(ObjModel.EmailId))
             {
                 ModelState.AddModelError("EmailId", "Email Or Mobile Required");
@@ -57,7 +59,7 @@ namespace PrivateSquareWeb.Controllers.Website
                 bool IsValidEmail = CommonFile.ValidateEmailIsValid(ObjModel.EmailId);
                 if (!IsValidEmail)
                 {
-                    ModelState.AddModelError("EmailId", "Email Incorrect");
+                    ModelState.AddModelError("EmailId", "Email / Mobile Incorrect");
                     return View("Index", ObjModel);
                 }
 
