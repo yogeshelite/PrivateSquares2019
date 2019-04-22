@@ -8,8 +8,9 @@
 }
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
+
     var AddToCart = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
-        console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage);
+
         var salePrice = SellingPrice;
         var discountPrice = DiscountPrice;
         var ProductId = Id;
@@ -20,11 +21,11 @@
         var Amount = Number(Price) * Number(Qty);
 
         var TotalAmount = 0;
-        console.log('ProductId' + ProductId);
+
         $.ajax({
             url: "../../WebHome/AddToCart",
             type: "POST",
-          
+
             data: {
                 ProductId: ProductId,
                 ProductName: ProductName,
@@ -36,12 +37,12 @@
                 TotalAmount: TotalAmount
             },
             success: function (result) {
-                
+
                 $("#Cartcontent").load(location.href + ' #Cartcontent');
                 swal(" ", "Product Added to the Cart", "success");
             },
             error: function (error) {
-                console.log(error);
+
             }
         });
     }
@@ -66,7 +67,7 @@
                 "CategoryId": CategoryId
             },
             success: function (result) {
-                console.log(result);
+
                 $("#DivItemBind").html(result);
             }
         });
@@ -77,24 +78,25 @@
 
 @using (Html.BeginForm("ProcessForm", "ProductCatWise", FormMethod.Post))
 {
-   
+
+
     <div class="ps-hero">
         <div class="container">
-            <h3>SHOP PAGE</h3>
+            <h3>@Model.CategoryName</h3>
         </div>
     </div>
     <main class="ps-main ps-products-listing">
         <div class="ps-content" data-mh="product-page">
             <div class="ps-product-group" data-item="5">
                 <div class="ps-product-group__header">
-                 
+
                 </div>
                 <div class="ps-product-group__content">
                     <div class="ps-product-group__action">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                 <div id="abc">
-                                 <p>Showing @(ViewBag.ProductsFrom)–@((ViewBag.ProductsFrom) + ViewBag.ToProductsCount) of @ViewBag.SearchResultCount results</p>
+                                    <p>Showing @(ViewBag.ProductsFrom)–@((ViewBag.ProductsFrom) + ViewBag.ToProductsCount) of @ViewBag.SearchResultCount results</p>
                                 </div>
                                 @*<p>Showing <span id="FromProductsCount">1</span>–<span id="ToProductsCount">12</span> of @ViewBag.SearchResultCount results</p>*@
                             </div>
@@ -105,7 +107,7 @@
                                     <option value="3">Popularity</option>
                                     <option value="4">Newest Arrivals</option>
                                 </select>
-                              
+
                             </div>
                         </div>
                     </div>
@@ -117,7 +119,7 @@
                     </div>
 
                 </div>
-              
+
                 <div class="ps-product-group__footer" id="paginationfooter">
                     <div class="ps-pagination mb-50">
                         <ul class="pagination">
@@ -127,15 +129,17 @@
                                 <li><a href="~/ProductCatWise/PreviousPages/@(ViewBag.LowerLimit-1)"><i class="fa fa-angle-left"></i></a></li>
                                 do
                                 {
-                                    <li><a onclick="nextpage(@n)">@n</a></li>
+                                    if (n == 1) {<li id="@n" class="active"><a href="javascript:void()" onclick="nextpage(@n)">@n</a></li> }
+                                    else
+                                    { <li id="@n"><a href="javascript:void()" onclick="nextpage(@n)">@n</a></li>}
                                     n++;
                                 }
                                 while (n <= (ViewBag.NumberOfPages));
                                 if ((ViewBag.SearchResultCount / 10) > ViewBag.NumberOfPages)
                                 {
-                                    <li><a onclick="morepages(@n,@ViewBag.SearchResultCount,@ViewBag.NumberOfPages,@ViewBag.LowerLimit)"><i class="fa fa-angle-right"></i></a></li>
+                                    <li><a href="javascript:void()" onclick="morepages(@n,@ViewBag.SearchResultCount,@ViewBag.NumberOfPages,@ViewBag.LowerLimit)"><i class="fa fa-angle-right"></i></a></li>
                                 }
-                               
+
                             }
                             else
                             {
@@ -147,8 +151,8 @@
                                 {
                                     if ((ViewBag.SearchResultCount % 10) != 0)
                                     {
-                                        <li class="active" id="pagenumber1"><a onclick="nextpage(1)">1</a></li>
-                                        <li id="pagenumber2"><a onclick="nextpage(2)">2</a></li>
+                                        <li class="active" id="pagenumber1"><a href="javascript:void()" onclick="nextpage(1)">1</a></li>
+                                        <li id="pagenumber2"><a href="javascript:void()" onclick="nextpage(2)">2</a></li>
                                     }
                                     else
                                     {
@@ -165,14 +169,13 @@
         <aside class="ps-sidebar" data-mh="product-page">
             <aside class="ps-widget--sidebar ps-widget--category">
                 <div class="ps-widget__header">
-                    <h3>Category</h3>
+                    <h3>Categories</h3>
                 </div>
                 <div class="ps-widget__content">
                     <ul class="ps-list--checked">
                         @foreach (var Cat in ViewBag.ProductCatList)
                         {
-
-                            <li class="@(ViewBag.SearchCatId==@Cat.Id ? "current":"")"><a href="/ProductCatWise/Index/@Cat.EncodedId">@Cat.Name </a></li>
+                            <li class="@(ViewBag.SearchCatId==@Cat.Id ? "current":"")"><a href="/ProductCatWise/Index/@Cat.Id">@Cat.Name </a></li>
 
                         }
                         <li><a href="#">More</a></li>
@@ -194,19 +197,23 @@
 
                 </div>
             </aside>
-            
+
         </aside>
     </main>
-    
+
+
+
+
+
+
     <div class="slim-mainpanel">
-     
+
     </div><!-- slim-mainpanel -->
 }
-                                                    @*//Below script is called when the a type of sort order is selected by the user from the dropdown*@ 
+@*//Below script is called when the a type of sort order is selected by the user from the dropdown*@
 <script>
     var pageindexcounter;
     var sortdropdown = document.getElementById("sortby");
-    debugger
     sortdropdown.onchange = function () {
         if (this.selectedIndex !== 0) {
             var sortorder = this.value;
@@ -230,11 +237,11 @@
         }
     }
 </script>
-                                                     @*//Below script is called when the next page is requested by the user from the  pagination bar of the  Categorywise Product Page*@
+@*//Below script is called when the next page is requested by the user from the  pagination bar of the  Categorywise Product Page*@
 <script>
-    
+
     var nextpage = function (id) {
-        //alert('bcxvj');
+        var ActivatePageNo = ActivatePagination(id);
         var FromProductsCount = '@ViewBag.ProductsFrom';
         var ToProductsCount = '@ViewBag.ToProductsCount';
         $.ajax({
@@ -244,14 +251,12 @@
                 "id": id
             },
             success: function (result) {
-                console.log('asdfghjkl');
-                //$("#Cartcontent").load(location.href + ' #FromProductsCount');
-                //$("#FromProductsCount").html(FromProductsCount);
-                //$("#ToProductsCount").html(FromProductsCount+ToProductsCount);
+
+
                 $("#DivItemBind").html(result);
             }
         });
-       
+
         var ProductsCountNumber = PageCounting(id);
         if (id == 1) {
             $("#pagenumber2").removeClass("active");
@@ -263,7 +268,7 @@
         }
     }
 </script>
-                                                    @*////Below is the script for fetching More pages in the pagination bar of the  Categorywise Product Page*@
+@*////Below is the script for fetching More pages in the pagination bar of the  Categorywise Product Page*@
 <script>
     var morepages = function (id, searchresultcount, lowerlimit, numberofpages) {
 
@@ -274,9 +279,9 @@
             success: function (result) {
 
                 $("#DivItemBind").html(result);
-          
+
                 if (searchresultcount == undefined) {
-                 
+
 
                 }
                 $.ajax({
@@ -290,6 +295,7 @@
                     },
                     success: function (result) {
                         $("#paginationfooter").html(result);
+                        var ActivatePageNo = ActivatePagination(id);
                     }
                 })
                 var ProductsCountNumber = PageCounting(id);
@@ -298,16 +304,16 @@
 
     }
 </script>
-                                                    @*//Below is the script for fetching previous pages in the pagination bar of the  Categorywise Product Page*@
+@*//Below is the script for fetching previous pages in the pagination bar of the  Categorywise Product Page*@
 <script>
     var previouspages = function (id, searchresultcount, lowerlimit, numberofpages) {
-        if (id == 0) { return false;}
+        if (id == 0) { return false; }
         $.ajax({
             url: "../../ProductCatWise/PreviousPages",
             type: "POST",
             data: { "id": id },
             success: function (result) {
-               
+
                 $("#DivItemBind").html(result);
                 $.ajax({
                     url: "../../ProductCatWise/_Pagination",
@@ -320,17 +326,18 @@
                     },
                     success: function (result) {
                         $("#paginationfooter").html(result);
+                        var ActivatePageNo = ActivatePagination(id);
                     }
                 });
                 var ProductsCountNumber = PageCounting(id);
             }
         });
     }
-</script>      
+</script>
 <script>
-    var PageCounting= function(id){
-     $.ajax({
-         url: "../../ProductCatWise/PageCountingPartialView/",
+    var PageCounting = function (id) {
+        $.ajax({
+            url: "../../ProductCatWise/PageCountingPartialView/",
             type: "POST",
             data: {
                 "id": id
@@ -340,4 +347,11 @@
             }
         });
     }
-</script>      
+</script>
+<script>
+    var ActivatePagination = function (id) {
+        $(".active").removeClass("active");
+        $("#" + id + "").addClass("active");
+
+    }
+</script>          

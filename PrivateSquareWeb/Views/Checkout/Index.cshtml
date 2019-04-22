@@ -159,7 +159,23 @@
                                                                     </div>
 
                                                                 </div><!-- col-6 -->
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-control-label">Address Line 1 : <span class="tx-danger">*</span></label>
+                                                                        <input type="text" class="form-control" id="AddressLine1" placeholder="Line 1" autocomplete="off" />
+                                                                        <span class="field-validation-error text-danger" id="SpanForAddressLine1"></span>
+                                                                    </div>
+                                                                </div>
 
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-control-label">Address Line 2 :</label>
+                                                                        <input type="text" class="form-control" id="AddressLine2" placeholder="Line 2" autocomplete="off" />
+                                                                    </div>
+                                                                </div>
+                                                                <div style="display:none">
+                                                                    @Html.TextBoxFor(m=>m.Address,new {id="CompleteAddress" })
+                                                                </div>
                                                                 <div class="col-lg-6">
 
                                                                     <div class="form-group">
@@ -196,17 +212,14 @@
 
                                                                         <label class="form-control-label">Locality: <span class="tx-danger">*</span></label>
 
-                                                                        @Html.TextBoxFor(m => m.Locality, new { @class = "form-control", @placeholder = "Locality", @autocomplete = "off",id="LocalityTextBox"})
+                                                                        @Html.TextBoxFor(m => m.Locality, new { @class = "form-control", @placeholder = "Locality", @autocomplete = "off", id = "LocalityTextBox" })
                                                                         @Html.ValidationMessageFor(model => model.Locality, "", new { @class = "text-danger" })
                                                                         <span class="field-validation-error text-danger" id="SpanForLocality"></span>
 
                                                                     </div>
 
                                                                 </div><!-- col-6 -->
-
-
-
-                                                               <!-- col-6 -->
+                                                                <!-- col-6 -->
 
                                                                 <div class="col-lg-6">
 
@@ -228,7 +241,7 @@
 
                                                                         <label class="form-control-label">Landmark: <span class="tx-danger"></span></label>
 
-                                                                     
+
 
                                                                         @Html.TextBoxFor(m => m.Landmark, new { @class = "form-control", @placeholder = "Landmark", @autocomplete = "off" })
                                                                         @Html.ValidationMessageFor(model => model.Landmark, "", new { @class = "text-danger" })
@@ -243,7 +256,7 @@
 
                                                                         <label class="form-control-label">Alternate phone: <span class="tx-danger"></span></label>
 
-                                                                     
+
 
                                                                         @Html.TextBoxFor(m => m.AlternatePhone, new { @class = "form-control", @placeholder = "Alternate phone", @autocomplete = "off" })
                                                                         @Html.ValidationMessageFor(model => model.AlternatePhone, "", new { @class = "text-danger" })
@@ -296,21 +309,26 @@
 
                                         <tr>
                                             <td> Price(@ViewBag.ItemCount)=@ViewBag.TotalAmount</td>
-                                            <td class="replaceme">@ViewBag.TotalAmount</td>
+                                            <td class="totalamount">@ViewBag.TotalAmount</td>
                                         </tr>
                                         <tr>
                                             <td>Delivery Charges</td>
                                             <td class="replacedeliverycharges">₹@ViewBag.ShippingCharges</td>
                                         </tr>
+                                        <tr id="coupondiscount" style="display:none">
+                                            <td>Coupon Discount</td>
+                                            <td class="coupondiscount"></td>
+                                        </tr>
                                         <tr>
                                             <td>Order Total</td>
-                                            <td class="replaceme2">₹@ViewBag.TotalAmountAfterCharges</td>
+                                            <td class="totalamountaftercharges">₹@ViewBag.TotalAmountAfterCharges</td>
                                         </tr>
+
                                         <tr>
                                             <td>  </td>
                                             <td>
                                                 <a onclick="showpromocode()" class="float-right" id="promocode">Apply Promo Code</a>
-                                                <label class="replaceme3">@ViewBag.CouponResponse</label>
+                                                <label class="couponresponse">@ViewBag.CouponResponse</label>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -418,18 +436,25 @@
                     if (result < 0)             //It means amount is less than 500
                     {
                         //result -= 50;
-                        $('.replaceme').html(-result);
-                        $('.replaceme2').html(-result);
+                        //$('.totalamount').html(-result);
+                        $('.totalamountaftercharges').html(-result);
                         $('.replacedeliverycharges').html(50);
-
-                        $('.replaceme3').html(CouponCode+' Coupon applied successfully');
+                        var coupondiscount ='@ViewBag.TotalAmount';
+                        coupondiscount += result;
+                        $('.coupondiscount').html(coupondiscount);
+                        $('#coupondiscount').toggle("slide");
+                        $('.couponresponse').html(CouponCode+' Coupon applied successfully');
                         $('.ps-form--icon').toggle("slide");
                     }
                     else                        //means total amount is greater than or equal to 500
                     {
-                        $('.replaceme').html(result);
-                        $('.replaceme2').html(result);
-                        $('.replaceme3').html(CouponCode+' Coupon applied successfully');
+                        //$('.totalamount').html(result);
+                        $('.totalamountaftercharges').html(result);
+                         var coupondiscount =parseInt(@ViewBag.TotalAmount);
+                        coupondiscount = parseInt(result)- coupondiscount;
+                        $('.coupondiscount').html(coupondiscount);
+                        $('#coupondiscount').toggle("slide");
+                        $('.couponresponse').html(CouponCode+' Coupon applied successfully');
                         $('.ps-form--icon').toggle("slide");
                     }
                     
@@ -460,7 +485,7 @@
 </script>
 <script>
     var AddAddress = function () {
-        var ErrorOccured=false;
+        var ErrorOccured = false;
         if ($.trim($("#LocalityTextBox").val()) == '') {
             $("#SpanForLocality").html("Please mention locality");
             ErrorOccured = true;
@@ -500,6 +525,23 @@
             $("#SpanForCity").html("");
             ErrorOccured = false;
         }
-        if(ErrorOccured==false) { $("#AddressForm").submit(); }
+        if ($("#AddressLine1").val() == "") {
+            $("#SpanForAddressLine1").html("Address cannot be empty");
+            ErrorOccured = true;
+        }
+        else {
+            $("#SpanForAddressLine1").html("");
+            ErrorOccured = false;
+        }
+        if (ErrorOccured == false) {
+            //var CompleteAddress = $("AddressLine1").val() + $("AddressLine2").val();
+            var x = $("#CompleteAddress").val($("AddressLine1").val());
+            console.log($("#AddressLine1").val() + $("#AddressLine2").val());
+            $("#CompleteAddress").val($("#AddressLine1").val() +" "+$("#AddressLine2").val());
+
+            //var AddresstoLog = null;
+          
+            $("#AddressForm").submit();
+        }
     }
 </script>

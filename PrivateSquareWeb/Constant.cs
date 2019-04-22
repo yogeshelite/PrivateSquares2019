@@ -58,6 +58,7 @@ namespace PrivateSquareWeb
         public const string ApiSaveCouponHistory = "User/SaveCouponHistory";
         public const string ApiIsParentCategory = "User/IsParentCategory";
         public const string ApiGetChildCategory = "User/GetChildCategory";
+        public const int NumberOfProducts = 12;
 
     }
 }
