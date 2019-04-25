@@ -103,16 +103,16 @@
                     </div>
                 </div>
                 <div class="nearCart_header col-lg-12">
-                    <h2>Beauty & Personal care</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/36">View More</a>
+                    <h2>Beauty & Personal care</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/@Constant.EncodeNumber(Constant.ParentCategories[0])">View More</a>
                 </div>
                 <div class="ps-section__content">
                     @*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">*@
-                    @foreach (var Users in ViewBag.PopularProducts36)
+                    @foreach (var Users in ViewBag.FirstCategory)
                     {
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                             <div class="ps-product--fashion">
                                 <div class="ps-product__thumbnail">
-                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@(Constant.EncodeNumber(int.Parse((Users.Id).ToString())))"></a>
                                     @{ if (@Users.ProductImage == null)
 
                                         {
@@ -154,16 +154,16 @@
         <div class="ps-content" data-mh="product-page">
             <div class="ps-product-group" data-item="5">
                 <div class="nearCart_header col-lg-12 mt-15">
-                    <h2>Household Supplies</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/37">View More</a>
+                    <h2>Household Supplies</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/@Constant.EncodeNumber(Constant.ParentCategories[1])">View More</a>
                 </div>
                 <div class="ps-section__content">
 
-                    @foreach (var Users in ViewBag.PopularProducts37)
+                    @foreach (var Users in ViewBag.SecondCategory)
                     {
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                             <div class="ps-product--fashion">
                                 <div class="ps-product__thumbnail">
-                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@(Constant.EncodeNumber(int.Parse((Users.Id).ToString())))"></a>
                                     @{ if (@Users.ProductImage == null)
 
                                         {
@@ -188,7 +188,7 @@
                                 </div>
 
                                 <div class="ps-product__content">
-                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@(Constant.EncodeNumber(int.Parse((Users.Id).ToString())))">@Users.ProductName</a>
                                     <p class="ps-product__price">
                                         ₹@Users.DiscountPrice
                                     </p>
@@ -205,16 +205,66 @@
         <div class="ps-content" data-mh="product-page">
             <div class="ps-product-group" data-item="5">
                 <div class="nearCart_header col-lg-12 mt-15">
-                    <h2>Diet & Nutrition</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/38">View More</a>
+                    <h2>Diet & Nutrition</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/@Constant.EncodeNumber(Constant.ParentCategories[2])">View More</a>
                 </div>
                 <div class="ps-section__content">
 
-                    @foreach (var Users in ViewBag.PopularProducts38)
+                    @foreach (var Users in ViewBag.ThirdCategory)
                     {
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                             <div class="ps-product--fashion">
                                 <div class="ps-product__thumbnail">
-                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@(Constant.EncodeNumber(int.Parse((Users.Id).ToString())))"></a>
+                                    @{ if (@Users.ProductImage == null)
+
+                                        {
+                                            <img class="lazy" src="~/DocImg/deafult.png" alt="">
+
+                                        }
+                                        else
+                                        {
+                                            <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
+
+                                        }
+                                    }
+                                 
+                                    @*<div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>*@
+
+                                    <ul class="ps-product__actions">
+
+                                        <li><a href="javascript:void();" onclick="AddToCart('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
+                                        <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-product__content">
+                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@(Constant.EncodeNumber(int.Parse((Users.Id).ToString())))">@Users.ProductName</a>
+                                    <p class="ps-product__price">
+                                        ₹@Users.DiscountPrice
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="ps-content" data-mh="product-page">
+            <div class="ps-product-group" data-item="5">
+                <div class="nearCart_header col-lg-12 mt-15">
+                    <h2>All Grocery & Gourmet Foods</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/@Constant.EncodeNumber(Constant.ParentCategories[3])">View More</a>
+                </div>
+                <div class="ps-section__content">
+
+                    @foreach (var Users in ViewBag.FourthCategory)
+                    {
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="ps-product--fashion">
+                                <div class="ps-product__thumbnail">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@(Constant.EncodeNumber(int.Parse((Users.Id).ToString())))"></a>
                                     @{ if (@Users.ProductImage == null)
 
                                         {
@@ -255,66 +305,16 @@
         <div class="ps-content" data-mh="product-page">
             <div class="ps-product-group" data-item="5">
                 <div class="nearCart_header col-lg-12 mt-15">
-                    <h2>All Grocery & Gourmet Foods</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/39">View More</a>
+                    <h2>Baby Care</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/@Constant.EncodeNumber(Constant.ParentCategories[4])">View More</a>
                 </div>
                 <div class="ps-section__content">
 
-                    @foreach (var Users in ViewBag.PopularProducts39)
+                    @foreach (var Users in ViewBag.FifthCategory)
                     {
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                             <div class="ps-product--fashion">
                                 <div class="ps-product__thumbnail">
-                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
-                                    @{ if (@Users.ProductImage == null)
-
-                                        {
-                                            <img class="lazy" src="~/DocImg/deafult.png" alt="">
-
-                                        }
-                                        else
-                                        {
-                                            <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
-
-                                        }
-                                    }
-                                 
-                                    @*<div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>*@
-
-                                    <ul class="ps-product__actions">
-
-                                        <li><a href="javascript:void();" onclick="AddToCart('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
-                                        <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="ps-product__content">
-                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
-                                    <p class="ps-product__price">
-                                        ₹@Users.DiscountPrice
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    }
-
-
-                </div>
-            </div>
-        </div>
-
-        <div class="ps-content" data-mh="product-page">
-            <div class="ps-product-group" data-item="5">
-                <div class="nearCart_header col-lg-12 mt-15">
-                    <h2>Baby Care</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/41">View More</a>
-                </div>
-                <div class="ps-section__content">
-
-                    @foreach (var Users in ViewBag.PopularProducts41)
-                    {
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                            <div class="ps-product--fashion">
-                                <div class="ps-product__thumbnail">
-                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@(Constant.EncodeNumber(int.Parse((Users.Id).ToString())))"></a>
                                     @{ if (@Users.ProductImage == null)
 
                                         {
@@ -353,54 +353,7 @@
         </div>
 
         <div class="ps-content" data-mh="product-page">
-            <div class="ps-product-group" data-item="5">
-                <div class="nearCart_header col-lg-12 mt-15">
-                    <h2>Bakery, Cakes & Dairy</h2><a class="ps-product-link pull-right" href="/ProductCatWise/Index/42">View More</a>
-                </div>
-                <div class="ps-section__content">
-
-                    @foreach (var Users in ViewBag.PopularProducts42)
-                    {
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                            <div class="ps-product--fashion">
-                                <div class="ps-product__thumbnail">
-                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
-                                    @{ if (@Users.ProductImage == null)
-
-                                        {
-                                            <img class="lazy" src="~/DocImg/deafult.png" alt="">
-
-                                        }
-                                        else
-                                        {
-                                            <img class="lazy" src="~/DocImg/@Users.ProductImage" alt="">
-
-                                        }
-                                    }
-                                   
-                                    @*<div class="ps-badge ps-badge--sale-off"><span>-@off%</span></div>*@
-
-                                    <ul class="ps-product__actions">
-
-
-                                        <li><a href="javascript:void();" onclick="AddToCart('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a></li>
-                                        <li><a href="javascript:void();" title="Favorite" onclick="AddToWishlist(@Users.Id)"><i class="ps-icon-heart"></i></a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="ps-product__content">
-                                    <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
-                                    <p class="ps-product__price">
-                                       ₹@Users.DiscountPrice
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    }
-
-
-                </div>
-            </div>
+           
         </div>
         <div class="clearfix"></div>
         <div class="ps-section mt-100 pb-30">
@@ -415,7 +368,7 @@
                         {
                             <div class="ps-product--fashion">
                                 <div class="ps-product__thumbnail">
-                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a><img class="lazy" src="~/DocImg/@Users.ProductImage" alt="Product">
+                                    <a class="ps-product__overlay" href="/WebHome/ProductDetail/@(Constant.EncodeNumber(int.Parse((Users.Id).ToString())))"></a><img class="lazy" src="~/DocImg/@Users.ProductImage" alt="Product">
                                     @*@{
                                         string off = (100 - Math.Round((@Users.DiscountPrice / @Users.SellingPrice) * 100)).ToString();
                                     }

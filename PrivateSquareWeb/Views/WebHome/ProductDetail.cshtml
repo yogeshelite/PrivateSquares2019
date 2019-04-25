@@ -18,7 +18,7 @@
         var Amount = Number(Price) * Number(Qty);
 
         var TotalAmount = 0;
-        console.log('ProductId' + ProductId);
+        
         $.ajax({
             url: "../../WebHome/AddToCart",
             type: "POST",
@@ -74,11 +74,12 @@
 <script type="text/javascript">
     var GetTotal = function ()
     {
-        console.log("GetTotal");
+      
         var salePrice =@Model.SellingPrice;
         var discountPrice=@Model.DiscountPrice;
       
         var Qty = document.getElementById('TxtQty').value;
+       
         var LblTotal = document.getElementById('TotalAmount');
         if (Qty.trim() == '' || Qty.trim() == null) {
             alert('Minum 1 Qty Required');
@@ -93,13 +94,13 @@
 
 <script>
     var AddToCart = function (Id, ProductName, SellingPrice, DiscountPrice, ProductImage) {
-        console.log(Id + ProductName + SellingPrice + DiscountPrice + ProductImage);
-
+    
         var salePrice = SellingPrice;
         var discountPrice = DiscountPrice;
         var ProductId = Id;
         var ProductName = "" + ProductName + "";
-        var Qty = 1;
+        var Qty =document.getElementById('TxtQty').value;
+      
         var ImageName = ProductImage;
         var Price = discountPrice;
         var Amount = Number(Price) * Number(Qty);
@@ -139,7 +140,7 @@
 <div class="ps-hero">
     <div class="container">
         <h3>@Model.ProductName</h3>
-        <p>Single Product Page</p>
+        @*<p>Single Product Page</p>*@
     </div>
 </div>
 <main class="ps-main">
@@ -160,7 +161,7 @@
                         
                         <h1>@Model.ProductName</h1>
                         <p class="ps-product__category">@*<a href="#">Men</a>,<a href="#">  Nike</a>,<a href="#">  Jordan</a>*@</p>
-                        <h3 class="ps-product__price"><span>₹</span> @Model.DiscountPrice <del><span>₹</span> @Model.SellingPrice</del></h3>
+                        <h3 class="ps-product__price"><span>₹</span> @Model.DiscountPrice </h3>
                         <div class="ps-product__short-desc">
                             <p>@Model.Description</p>
                         </div>
@@ -227,35 +228,3 @@
     </div>
 </div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>
-    var productstars;
-    var productrating = document.getElementById("productrating");
-
-    productrating.onchange = function () {
-        if (this.selectedIndex !== 0) {
-            productstars = this.value;
-
-        }
-    }
-   
-    var submitreview = function (id) {
-     
-        var reviewtext = $.trim($("#reviewcomments").val());
-        var productid = id;
-        $.ajax({
-            url: "../../WebHome/SaveReviews",
-            type: "POST",
-            data: {
-                "productid": productid,
-                "productstars": productstars,
-                "reviewtext": reviewtext,
-
-            },
-            success: function (result) {
-                
-                window.location.href = "../../Webhome/ProductDetail/" + productid;
-            }
-        });
-    }
-</script>

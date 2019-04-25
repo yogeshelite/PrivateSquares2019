@@ -29,7 +29,7 @@
                         <tr>
                             <td><a class="ps-product--compare" href="#"><img class="mr-15" src="~/DocImg/user.png" alt="">@orders.OrderNo</a></td>
                             <td>₹ @orders.Amount</td>
-                            <td><a class="ps-product-link" href="~/WebHome/OrderDetails/@orders.Id">View Order</a></td>
+                            <td><a class="ps-product-link" href="~/WebHome/OrderDetails/@(Constant.EncodeNumber(int.Parse((orders.Id).ToString())))">View Order</a></td>
                             <td>
                                 @orders.OrderDate
                             

@@ -175,7 +175,7 @@
                     <ul class="ps-list--checked">
                         @foreach (var Cat in ViewBag.ProductCatList)
                         {
-                            <li class="@(ViewBag.SearchCatId==@Cat.Id ? "current":"")"><a href="/ProductCatWise/Index/@Cat.Id">@Cat.Name </a></li>
+                            <li class="@(ViewBag.SearchCatId==Cat.EncodedId ? "current":"")"><a href="/ProductCatWise/Index/@Cat.EncodedId">@Cat.Name </a></li>
 
                         }
                         <li><a href="#">More</a></li>

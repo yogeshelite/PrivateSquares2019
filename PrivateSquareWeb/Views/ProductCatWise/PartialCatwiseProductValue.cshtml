@@ -71,7 +71,7 @@
     <div class="ps-product-wrap">
         <div class="ps-product--fashion">
             <div class="ps-product__thumbnail">
-                <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Users.Id"></a>
+                <a class="ps-product__overlay" href="/WebHome/ProductDetail/@Constant.EncodeNumber(int.Parse((Users.Id).ToString()))"></a>
                 @{ if (@Users.ProductImage != null)
                     {
                         <img src="~/DocImg/@Users.ProductImage" alt="">
@@ -90,7 +90,7 @@
                 </ul>
             </div>
             <div class="ps-product__content">
-                <a class="ps-product__title" href="/WebHome/ProductDetail/@Users.Id">@Users.ProductName</a>
+                <a class="ps-product__title" href="/WebHome/ProductDetail/@Constant.EncodeNumber(int.Parse((Users.Id).ToString()))">@Users.ProductName</a>
                 <p class="ps-product__price">
                    ₹@Users.DiscountPrice
                 </p><a class="ps-product__cart" onclick="AddToCartCatWise('@Users.Id','@Users.ProductName.Replace("'",@"\'")','@Users.SellingPrice','@Users.DiscountPrice','@Users.ProductImage','@Users.ProductCatId')" title="Add To Cart"><i class="ps-icon-cart-2"></i></a>
