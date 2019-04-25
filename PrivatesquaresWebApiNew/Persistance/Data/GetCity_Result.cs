@@ -11,10 +11,14 @@ namespace PrivatesquaresWebApiNew.Persistance.Data
 {
     using System;
     
-    public partial class UserInterestedCategory_Result
+    public partial class GetCity_Result
     {
-        public Nullable<long> InterestCatId { get; set; }
-        public Nullable<long> UserId { get; set; }
-        public Nullable<long> InterestId { get; set; }
+        public long Id { get; set; }
+        public string Name { get; set; }
+        public Nullable<System.DateTime> RecordDate { get; set; }
+        public Nullable<System.DateTime> DeletedStatus { get; set; }
+        public Nullable<System.DateTime> UpdatedStatus { get; set; }
+        public string AppStatus { get; set; }
+        public Nullable<long> StateId { get; set; }
     }
 }

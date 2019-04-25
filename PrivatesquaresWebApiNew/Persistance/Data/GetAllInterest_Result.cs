@@ -11,10 +11,11 @@ namespace PrivatesquaresWebApiNew.Persistance.Data
 {
     using System;
     
-    public partial class UserInterestedCategory_Result
+    public partial class GetAllInterest_Result
     {
+        public long InterestId { get; set; }
+        public string InterestName { get; set; }
         public Nullable<long> InterestCatId { get; set; }
-        public Nullable<long> UserId { get; set; }
-        public Nullable<long> InterestId { get; set; }
+        public string InterestCatName { get; set; }
     }
 }

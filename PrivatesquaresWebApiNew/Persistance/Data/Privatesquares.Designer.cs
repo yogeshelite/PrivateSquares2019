@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\Puneet\EliteWebSoluction\PrivateSquares\PrivatesquaresNew\PrivatesquaresWeb\PrivatesquaresWebApiNew\Persistance\Data\Privatesquares.edmx'. 
+﻿// T4 code generation is enabled for model 'S:\Projects\Private Squares\Private Squares Backup\Backup Slack - Gurvinder Sir(Mar 29,2019)\PSQDotnet\PrivatesquaresWebApiNew\Persistance\Data\Privatesquares.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

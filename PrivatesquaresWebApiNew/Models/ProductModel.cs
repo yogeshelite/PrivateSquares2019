@@ -22,5 +22,6 @@ namespace PrivatesquaresWebApiNew.Models
         public string Sortby { get; set; }
         public long PageIndex { get; set; }
         public string Operation { get; set; }
+        public long? ParentCatId { get; set; }
     }
 }

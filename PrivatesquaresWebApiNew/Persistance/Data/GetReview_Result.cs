@@ -11,10 +11,15 @@ namespace PrivatesquaresWebApiNew.Persistance.Data
 {
     using System;
     
-    public partial class UserInterestedCategory_Result
+    public partial class GetReview_Result
     {
-        public Nullable<long> InterestCatId { get; set; }
+        public Nullable<long> ProductId { get; set; }
         public Nullable<long> UserId { get; set; }
-        public Nullable<long> InterestId { get; set; }
+        public string Name { get; set; }
+        public Nullable<decimal> TotalRating { get; set; }
+        public Nullable<decimal> GivenRating { get; set; }
+        public string Review { get; set; }
+        public Nullable<System.DateTime> RecordDate { get; set; }
+        public string AppStatus { get; set; }
     }
 }

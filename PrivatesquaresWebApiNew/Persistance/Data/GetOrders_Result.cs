@@ -11,10 +11,16 @@ namespace PrivatesquaresWebApiNew.Persistance.Data
 {
     using System;
     
-    public partial class UserInterestedCategory_Result
+    public partial class GetOrders_Result
     {
-        public Nullable<long> InterestCatId { get; set; }
-        public Nullable<long> UserId { get; set; }
-        public Nullable<long> InterestId { get; set; }
+        public string ProductName { get; set; }
+        public string ProductImage { get; set; }
+        public string ProductImages { get; set; }
+        public int Quantity { get; set; }
+        public long Id { get; set; }
+        public string OrderNo { get; set; }
+        public System.DateTime OrderDate { get; set; }
+        public decimal Amount { get; set; }
+        public string PaymentMode { get; set; }
     }
 }

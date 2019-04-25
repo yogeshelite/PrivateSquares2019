@@ -19,7 +19,7 @@
                     {
                         if (Cat.ParentCatId == 0)
                         {
-                            <li><a data-toggle="collapse" data-target="#subcategories@(Cat.Id)">@Cat.Name </a></li>
+                            <li><a href="javascript:void()" data-toggle="collapse" data-target="#subcategories@(Cat.Id)">@Cat.Name </a></li>
 
                         }
                         <li>
@@ -73,23 +73,9 @@
                         </li>
                     }
                 }
-                <li><a href="#">More</a></li>
+                
             </ul>
         </div>
     </aside>
 
 </aside>
-<link href="~/Content/common/bootstrap.css" rel="stylesheet" **media="screen" ** type="text/css" />
-<script>
-
-    //var url = function (id) {
-    //    debugger
-    //    //_web
-
-    //    l = document.getElementsByTagName("a");
-    //    a = document.getElementsByTagName("a")
-    //    for (var i = 0; i < l.length; i++) {
-    //        l[i].href = "ProductCatWise/Index" +"/";
-    //    }
-   // }
-</script>

@@ -11,10 +11,9 @@ namespace PrivatesquaresWebApiNew.Persistance.Data
 {
     using System;
     
-    public partial class UserInterestedCategory_Result
+    public partial class SaveAddress_Result
     {
-        public Nullable<long> InterestCatId { get; set; }
-        public Nullable<long> UserId { get; set; }
-        public Nullable<long> InterestId { get; set; }
+        public string Response { get; set; }
+        public Nullable<bool> Success { get; set; }
     }
 }
